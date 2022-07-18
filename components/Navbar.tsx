@@ -4,9 +4,12 @@ import styles from "../styles/navbar.module.css";
 import { useMediaQuery } from "@mui/material";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import MenuIcon from "@mui/icons-material/Menu";
+import MobileNavModal from "./Products/MobileNavModal";
 
 const Navbar = () => {
   const [textColor, setTextColor] = useState("black");
+  const [mobileNavModalOpen, setMobileNavModalOpen] = useState(false);
   const isMobile = useMediaQuery("(max-width: 900px)");
   const query = useRouter();
 
@@ -34,56 +37,67 @@ const Navbar = () => {
           </Typography>
         </Link>
       </div>
-      <div className={styles.navbar_selector}>
-        <Link href="/">
-          <Typography
-            className={
-              textColor === "white"
-                ? styles.selector_text_white
-                : styles.selector_text
-            }
-            variant="overline"
-          >
-            Home
-          </Typography>
-        </Link>
-        <Link href="/about">
-          <Typography
-            className={
-              textColor === "white"
-                ? styles.selector_text_white
-                : styles.selector_text
-            }
-            variant="overline"
-          >
-            About
-          </Typography>
-        </Link>
-        <Link href="/subscriptions">
-          <Typography
-            className={
-              textColor === "white"
-                ? styles.selector_text_white
-                : styles.selector_text
-            }
-            variant="overline"
-          >
-            Subscriptions
-          </Typography>
-        </Link>
-        <Link href="/products">
-          <Typography
-            className={
-              textColor === "white"
-                ? styles.selector_text_white
-                : styles.selector_text
-            }
-            variant="overline"
-          >
-            Products
-          </Typography>
-        </Link>
-      </div>
+      {isMobile ? (
+        <MenuIcon
+          fontSize="large"
+          onClick={() => setMobileNavModalOpen(true)}
+        />
+      ) : (
+        <div className={styles.navbar_selector}>
+          <Link href="/">
+            <Typography
+              className={
+                textColor === "white"
+                  ? styles.selector_text_white
+                  : styles.selector_text
+              }
+              variant="overline"
+            >
+              Home
+            </Typography>
+          </Link>
+          <Link href="/about">
+            <Typography
+              className={
+                textColor === "white"
+                  ? styles.selector_text_white
+                  : styles.selector_text
+              }
+              variant="overline"
+            >
+              About
+            </Typography>
+          </Link>
+          <Link href="/subscriptions">
+            <Typography
+              className={
+                textColor === "white"
+                  ? styles.selector_text_white
+                  : styles.selector_text
+              }
+              variant="overline"
+            >
+              Subscriptions
+            </Typography>
+          </Link>
+          <Link href="/products">
+            <Typography
+              className={
+                textColor === "white"
+                  ? styles.selector_text_white
+                  : styles.selector_text
+              }
+              variant="overline"
+            >
+              Products
+            </Typography>
+          </Link>
+        </div>
+      )}
+      <MobileNavModal
+        setMobileNavModalOpen={setMobileNavModalOpen}
+        mobileNavModalOpen={mobileNavModalOpen}
+      />
     </div>
   );
 };

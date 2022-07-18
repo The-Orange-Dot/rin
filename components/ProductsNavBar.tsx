@@ -3,10 +3,12 @@ import { Box, Container } from "@mui/system";
 import React, { useEffect, useState } from "react";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import gsap from "gsap";
+import { useMediaQuery } from "@mui/material";
 
 const ProductsNavBar = () => {
   const categories = ["BATH", "SKINCARE", "HAIRCARE", "LOTION"];
   const [highlighted, setHighlighted] = useState("");
+  const isMobile = useMediaQuery("(max-width: 900px)");
 
   const mouseHoverSelectorHandler = (
     id: string,
@@ -65,11 +67,20 @@ const ProductsNavBar = () => {
 
   return (
     <Container
-      sx={{
-        width: "100%",
-        flex: "display",
-        justifyContent: "space-between",
-      }}
+      sx={
+        isMobile
+          ? {
+              mb: 4,
+              width: "100%",
+              flex: "display",
+              justifyContent: "space-between",
+            }
+          : {
+              width: "100%",
+              flex: "display",
+              justifyContent: "space-between",
+            }
+      }
     >
       <Container
         sx={{

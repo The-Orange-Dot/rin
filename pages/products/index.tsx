@@ -45,9 +45,12 @@ const Products = ({
       >
         <Grid
           container
-          columns={isMobile ? 8 : 12}
-          spacing={{ xs: 2, md: 3 }}
-          sx={{ display: "flex", justifyContent: "center", maxWidth: 2000 }}
+          columns={isMobile ? 8 : 15}
+          sx={{
+            display: "flex",
+            justifyContent: "space-around",
+            maxWidth: 2000,
+          }}
         >
           {productCards}
         </Grid>

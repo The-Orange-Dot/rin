@@ -9,7 +9,7 @@ interface ProductData {
   description: string[];
   quantity: number;
   price: number;
-  reviews: number;
+  rating: number;
   image: string;
   category: string;
   brand: string;
@@ -28,7 +28,7 @@ const seed = async () => {
       ],
       quantity: 100,
       price: 50.0,
-      reviews: 0,
+      rating: 0,
       image: "https://www.threecosmetics.com/img/goods/L/t1b219.jpg",
       category: "skincare",
       brand: "THREE",
@@ -43,7 +43,7 @@ const seed = async () => {
       ],
       quantity: 100,
       price: 60.0,
-      reviews: 0,
+      rating: 0,
       image: "https://www.threecosmetics.com/img/goods/L/t1b264.jpg",
       category: "skincare",
       brand: "THREE",
@@ -57,7 +57,7 @@ const seed = async () => {
       ],
       quantity: 100,
       price: 40.0,
-      reviews: 0,
+      rating: 0,
       image: "https://www.threecosmetics.com/img/goods/S/t1b104.jpg",
       category: "skincare",
       brand: "THREE",
@@ -71,11 +71,71 @@ const seed = async () => {
       ],
       quantity: 100,
       price: 25.0,
-      reviews: 0,
+      rating: 0,
       image:
         "https://romand.co.kr/web/product/big/202206/ceb0ed2f0e3d9595e96e154d4c127c94.jpg",
       category: "skincare",
       brand: "rom&nd",
+    },
+    {
+      name: "Hinoko Bathsalt",
+      subtitle: "400g",
+      description: [
+        "This is a test description of a Korean Product rom&nd Whitening Sun Screen",
+        "Checking to see how it looks in english to see what i can fit blah blah blah blu blu blu beep boop boop bop",
+      ],
+      quantity: 100,
+      price: 50.0,
+      rating: 0,
+      image:
+        "https://shiro-shiro.jp/client_info/SHIRO/itemimage/12555/12555.jpg",
+      category: "skincare",
+      brand: "SHIRO",
+    },
+    {
+      name: "Point Make Off",
+      subtitle: "120mL (4.5oz)",
+      description: [
+        "This is a test description of a Korean Product rom&nd Whitening Sun Screen",
+        "Checking to see how it looks in english to see what i can fit blah blah blah blu blu blu beep boop boop bop",
+      ],
+      quantity: 100,
+      price: 15.0,
+      rating: 0,
+      image:
+        "https://kao-h.assetsadobe3.com/is/image/content/dam/sites/kanebo/www-kanebo-cosmetics-jp/lunasol/details/pointmake/p0601015/p0601015.jpg",
+      category: "skincare",
+      brand: "LUNASOL",
+    },
+    {
+      name: "Tender Hug Balm Oil Cleansing",
+      subtitle: "150mL (5.6oz)",
+      description: [
+        "This is a test description of a Korean Product rom&nd Whitening Sun Screen",
+        "Checking to see how it looks in english to see what i can fit blah blah blah blu blu blu beep boop boop bop",
+      ],
+      quantity: 100,
+      price: 50.0,
+      rating: 0,
+      image:
+        "https://kao-h.assetsadobe3.com/is/image/content/dam/sites/kanebo/www-kanebo-cosmetics-jp/lunasol/renew/details/skincare/s0101011/s0101011.png",
+      category: "skincare",
+      brand: "LUNASOL",
+    },
+    {
+      name: "Oil-In Solution",
+      subtitle: "180mL (6.5oz)",
+      description: [
+        "This is a test description of a Korean Product rom&nd Whitening Sun Screen",
+        "Checking to see how it looks in english to see what i can fit blah blah blah blu blu blu beep boop boop bop",
+      ],
+      quantity: 100,
+      price: 66.0,
+      rating: 0,
+      image:
+        "https://kao-h.assetsadobe3.com/is/image/content/dam/sites/kanebo/www-kanebo-cosmetics-jp/lunasol/details/skincare/s0101008/s0101008.jpg?fmt=jpeg",
+      category: "skincare",
+      brand: "LUNASOL",
     },
   ];
 
