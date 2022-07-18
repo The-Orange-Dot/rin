@@ -8,6 +8,9 @@
     "start": "next start",
     "lint": "next lint"
   },
+  "prisma": {
+    "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
+  },
   "dependencies": {
     "@emotion/react": "^11.9.3",
     "@emotion/styled": "^11.9.3",
@@ -15,6 +18,7 @@
     "@mui/material": "^5.9.0",
     "@prisma/client": "^4.0.0",
     "@reduxjs/toolkit": "^1.8.3",
+    "gsap": "npm:@gsap/member@^3.10.4",
     "next": "12.2.2",
     "next-auth": "^4.10.0",
     "prisma": "^4.0.0",

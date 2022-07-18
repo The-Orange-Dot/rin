@@ -1,129 +1,78 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "../../styles/products.module.css";
 import ProductsNavBar from "../../components/ProductsNavBar";
-import {
-  Typography,
-  Container,
-  Grid,
-  Box,
-  Card,
-  CardMedia,
-  CardContent,
-  Button,
-} from "@mui/material";
-import Image from "next/image";
+import { GetStaticProps, InferGetStaticPropsType } from "next";
+import { Container, Grid } from "@mui/material";
+import { server } from "../../config";
+import ProductCards from "../../components/Products/ProductCards";
+import ProductModal from "../../components/Products/ProductModal";
+import { useMediaQuery } from "@mui/material";
 
-const products = () => {
+const Products = ({
+  productsData,
+}: InferGetStaticPropsType<typeof getStaticProps>) => {
+  const isMobile = useMediaQuery("(max-width: 900px)");
+  const [products, setProducts] = useState(productsData);
+  const [productModalOpen, setProductModalOpen] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState({});
+
+  const productCards = products.map((product: any) => (
+    <ProductCards
+      product={product}
+      key={product.name}
+      setProductModalOpen={setProductModalOpen}
+    />
+  ));
+
   return (
     <div className={styles.main}>
       <ProductsNavBar />
-
       <Container
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          mt: 5,
-        }}
+        sx={
+          isMobile
+            ? {
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }
+            : {
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                mt: 5,
+              }
+        }
       >
         <Grid
           container
+          columns={isMobile ? 8 : 12}
           spacing={{ xs: 2, md: 3 }}
           sx={{ display: "flex", justifyContent: "center", maxWidth: 2000 }}
         >
-          <Grid item xs={4} md={4}>
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                border: "1px solid black",
-                width: "100%",
-                height: 500,
-              }}
-            >
-              Test
-            </Box>
-          </Grid>
-          <Grid item xs={4} md={4}>
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                width: "100%",
-                height: 500,
-              }}
-            >
-              <Card
-                sx={{
-                  width: "100%",
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "space-around",
-                  alignItems: "center",
-                }}
-                elevation={0}
-                square
-              >
-                <CardMedia
-                  component="img"
-                  alt="product-name"
-                  image="/facemask-main.webp"
-                  height={250}
-                  sx={{ objectFit: "contain" }}
-                />
-                <CardContent
-                  sx={{
-                    flex: 1,
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <Box sx={{ width: "100%" }}>
-                    <Typography variant="caption">
-                      The Brand or maker
-                    </Typography>
-                  </Box>
-                  <Typography variant="h5">Test product</Typography>
-                  <Typography variant="body2">
-                    This is a test desciption for the product. I want to see how
-                    much I can fit in this text box
-                  </Typography>
-                  <Typography>$10.00 (tax included)</Typography>
-                </CardContent>
-                <Button
-                  variant="contained"
-                  disableElevation
-                  sx={{
-                    m: 0,
-                    p: 0,
-                    borderRadius: 0,
-                    height: 50,
-                    width: "100%",
-                  }}
-                >
-                  Add to shopping cart
-                </Button>
-              </Card>
-            </Box>
-          </Grid>
-          <Grid item xs={4} md={4}>
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                border: "1px solid black",
-                width: "100%",
-                height: 500,
-              }}
-            >
-              Test
-            </Box>
-          </Grid>
+          {productCards}
         </Grid>
+        <ProductModal
+          productModalOpen={productModalOpen}
+          setProductModalOpen={setProductModalOpen}
+          selectedProduct={selectedProduct}
+        />
       </Container>
     </div>
   );
 };
 
-export default products;
+export const getStaticProps: GetStaticProps = async () => {
+  try {
+    const res = await fetch(`${server}/api/products`);
+    const productsData = await res.json();
+    return {
+      props: {
+        productsData,
+      },
+    };
+  } catch {
+    return { notFound: true };
+  }
+};
+
+export default Products;
