@@ -21,6 +21,7 @@ model Product {
   updatedAt   DateTime @updatedAt @map("updated_at")
   description String[]
   rating      Float    @default(0.0)
+  ingredients String[]
   reviews     Review[]
 }
 

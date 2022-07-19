@@ -4,18 +4,15 @@ import {
   Modal,
   Fade,
   Paper,
-  Button,
   Box,
   Typography,
   Divider,
-  NativeSelect,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  TextField,
+  Grid,
 } from "@mui/material";
 import styles from "../../styles/products.module.css";
 import { useRouter } from "next/router";
+import CheckoutButton from "./CheckoutButton";
+import { server } from "../../config";
 
 const MobileProductsModal = ({
   productModalOpen,
@@ -25,7 +22,16 @@ const MobileProductsModal = ({
   const [quantity, setQuantity] = useState<number>(1);
   const [description, setDescription] = useState([]);
   const [options, setOptions] = useState("");
+  const [reviews, setReviews] = useState([]);
   const router = useRouter();
+
+  useEffect(() => {
+    if (product) {
+      fetch(`api/productReviews/${product.id}`)
+        .then((res) => res.json())
+        .then((data) => setReviews(data));
+    }
+  }, [product]);
 
   useEffect(() => {
     if (product?.description?.length > 0) {
@@ -57,6 +63,18 @@ const MobileProductsModal = ({
       return false;
     });
   }, []); //eslint-disable-line
+
+  const ingredients = product?.ingredients?.map((item: string) => {
+    const itemSplit = item.split(" ");
+    const itemName = itemSplit
+      .map((word) => `${word.slice(0, 1).toUpperCase()}${word.slice(1)}`)
+      .join(" ");
+    return (
+      <Grid item key={item} xs={12}>
+        <Typography variant="caption">{itemName}</Typography>
+      </Grid>
+    );
+  });
 
   return (
     <Modal
@@ -111,121 +129,47 @@ const MobileProductsModal = ({
                 </Typography>
               ) : null}
             </Box>
-            <Box sx={{ display: "flex", flexDirection: "column" }}>
+            <Box sx={{ display: "flex", flexDirection: "column", mb: 20 }}>
               <Typography variant="body2" sx={{ fontWeight: 600, mb: 2 }}>
                 What it is:
               </Typography>
               {description}
               <Divider sx={{ mt: 2 }} />
+              <Typography
+                variant="body2"
+                sx={{ fontWeight: 600, mb: 2, mt: 2 }}
+              >
+                What&apos;s in it:
+              </Typography>
+              <Grid container sx={{ width: "100%" }}>
+                {ingredients}
+              </Grid>
+              <Divider sx={{ mt: 2 }} />
+              <Box
+                sx={{
+                  width: "100%",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                }}
+              >
+                <Typography
+                  variant="body1"
+                  sx={{ fontWeight: 600, mt: 1, fontSize: "1.2rem" }}
+                >
+                  {reviews.length} Reviews
+                </Typography>
+              </Box>
             </Box>
-          </Box>
-          <Box sx={{ pt: 10 }}>
-            <Divider />
           </Box>
 
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              position: "fixed",
-              width: "100%",
-              bottom: 0,
-              backgroundColor: "white",
-              height: "18vh",
-              flexDirection: "column",
-              pt: 1,
-            }}
-          >
-            <Box
-              sx={{
-                width: "100%",
-                pl: 1,
-                pr: 1,
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "flex-start",
-                height: "100%",
-              }}
-            >
-              <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  width: "65%",
-                  alignItems: "center",
-                }}
-              >
-                <FormControl fullWidth>
-                  <InputLabel variant="standard" htmlFor="options-native">
-                    Options
-                  </InputLabel>
-                  <NativeSelect size="small" defaultValue={options}>
-                    <option value={"none"}>None</option>
-                  </NativeSelect>
-                </FormControl>
-              </Box>
-              <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  width: 100,
-                  alignItems: "center",
-                }}
-              >
-                <FormControl fullWidth>
-                  <InputLabel variant="standard" htmlFor="quantity-native">
-                    Quantity
-                  </InputLabel>
-                  <NativeSelect
-                    size="small"
-                    defaultValue={1}
-                    onChange={(e) => {
-                      setQuantity(parseInt(e.target.value));
-                    }}
-                  >
-                    <option value={1}>One</option>
-                    <option value={2}>Two</option>
-                    <option value={3}>Three</option>
-                  </NativeSelect>
-                </FormControl>
-              </Box>
-            </Box>
-            <Box sx={{ width: "100%", display: "flex" }}>
-              <Button
-                onClick={() => {
-                  closeModalHandler();
-                }}
-                variant="contained"
-                sx={{ height: "50px", width: "50%", m: 1 }}
-                color="secondary"
-              >
-                Back
-              </Button>
-              <Button
-                variant="contained"
-                sx={{
-                  height: "50px",
-                  width: "50%",
-                  m: 1,
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <Typography variant="body1" sx={{ lineHeight: 1.5, flex: 1 }}>
-                  ${quantity * product.price}.00
-                </Typography>
-                <Typography
-                  variant="overline"
-                  sx={{ fontSize: ".5rem", flex: 1, lineHeight: 1.5 }}
-                >
-                  Add to Card
-                </Typography>
-              </Button>
-            </Box>
-          </Box>
+          <CheckoutButton
+            closeModalHandler={closeModalHandler}
+            quantity={quantity}
+            setQuantity={setQuantity}
+            options={options}
+            product={product}
+          />
         </Paper>
       </Fade>
     </Modal>

@@ -5,7 +5,6 @@ const client = new PrismaClient();
 
 interface ProductData {
   name: string;
-
   details: string;
   size: string;
   description: string[];
@@ -15,6 +14,7 @@ interface ProductData {
   image: string;
   category: string;
   brand: string;
+  ingredients: string[];
 }
 
 const seed = async () => {
@@ -35,6 +35,30 @@ const seed = async () => {
       image: "https://www.threecosmetics.com/img/goods/L/t1b219.jpg",
       category: "skincare",
       brand: "THREE",
+      ingredients: [
+        "Tri(caprylic/capric acid) glyceryl",
+        "Polyglyceryl-2 sesquioleate",
+        "Olive fruit oil",
+        "Polyglyceryl-2 caprate",
+        "Jojoba seed oil",
+        "Squalane",
+        "Cha seed oil",
+        "Pentacres la chloroba seed oil",
+        "Crissimum maritimum extract",
+        "Cha flower extract",
+        "Orange peel oil",
+        "mallow flower oil",
+        "nucifugium vulgare oil",
+        "Bitter orange leaf",
+        "Branch oil",
+        "Hypophaea ramnoides fruit oil",
+        "carrot root extract",
+        "Rice nucumber oil",
+        "American oil palm fruit oil",
+        "Hydrogenated vegetable oil",
+        "Tocotrienol",
+        "Tocopherol",
+      ],
     },
     {
       name: "Balancing Cleansing Oil (Gel version)",
@@ -51,6 +75,39 @@ const seed = async () => {
       image: "https://www.threecosmetics.com/img/goods/L/t1b264.jpg",
       category: "skincare",
       brand: "THREE",
+      ingredients: [
+        "(Caprylic/capric) coconut alkyl",
+        "Octyldodecanol",
+        "Glycerin",
+        "Olive fruit oil",
+        "Hexyl laurate",
+        "Polyglyceryl-10 myristate",
+        "Kaolin",
+        "Jojoba seed oil",
+        "Water",
+        "Sucrose stearate",
+        "Mandarin orange peel oil",
+        "Sucrose laurate",
+        "Argania spinosa husk",
+        "mallow flower oil",
+        "Bergamot peel oil",
+        "Lavandula hybrida oil",
+        "Nucifugium vulgare oil",
+        "Brassica seed oil",
+        "Opuntia ficus indica flower extract",
+        "Amanazuna seed oil",
+        "Rice nut oil",
+        "Cha seed oil",
+        "Carrot root extract",
+        "Shea fat",
+        "Oleic acid",
+        "Cha flower extract",
+        "Terminalia arguta extract",
+        "Squalane",
+        "Lecithin",
+        "Tocotrienol",
+        "Tocopherol",
+      ],
     },
     {
       name: "Balancing SQ Lip Balm",
@@ -66,6 +123,30 @@ const seed = async () => {
       image: "https://www.threecosmetics.com/img/goods/S/t1b104.jpg",
       category: "skincare",
       brand: "THREE",
+      ingredients: [
+        "Tri (caprylic/capric) glyceryl",
+        "Beeswax",
+        "Jojoba seed oil",
+        "Jojoba ester",
+        "Olive fruit oil",
+        "Amani-oil",
+        "Candelilla wax",
+        "African mango kernel oil",
+        "Cha seed oil",
+        "Rice nuka oil",
+        "squalane",
+        "Cha flower extract",
+        "Uraboshi yahuzu extract",
+        "Mayolana leaf oil",
+        "Bergamot fruit oil",
+        "mallow flower oil",
+        "Mandarin orange peel oil",
+        "mandarin orange peel oil",
+        "octhyldodecanol",
+        "Hydrogenated coco glyceryl",
+        "Tocotrienol",
+        "Tocopherol",
+      ],
     },
     {
       name: "Whitening Sun Screen (Set of 2)",
@@ -82,6 +163,7 @@ const seed = async () => {
         "https://romand.co.kr/web/product/big/202206/ceb0ed2f0e3d9595e96e154d4c127c94.jpg",
       category: "skincare",
       brand: "rom&nd",
+      ingredients: [],
     },
     {
       name: "Hinoko Bathsalt",
@@ -98,6 +180,7 @@ const seed = async () => {
         "https://shiro-shiro.jp/client_info/SHIRO/itemimage/12555/12555.jpg",
       category: "skincare",
       brand: "SHIRO",
+      ingredients: [],
     },
     {
       name: "Point Make Off",
@@ -114,6 +197,7 @@ const seed = async () => {
         "https://kao-h.assetsadobe3.com/is/image/content/dam/sites/kanebo/www-kanebo-cosmetics-jp/lunasol/details/pointmake/p0601015/p0601015.jpg",
       category: "skincare",
       brand: "LUNASOL",
+      ingredients: [],
     },
     {
       name: "Tender Hug Balm Oil Cleansing",
@@ -130,6 +214,7 @@ const seed = async () => {
         "https://kao-h.assetsadobe3.com/is/image/content/dam/sites/kanebo/www-kanebo-cosmetics-jp/lunasol/renew/details/skincare/s0101011/s0101011.png",
       category: "skincare",
       brand: "LUNASOL",
+      ingredients: [],
     },
     {
       name: "Oil-In Solution",
@@ -146,6 +231,7 @@ const seed = async () => {
         "https://kao-h.assetsadobe3.com/is/image/content/dam/sites/kanebo/www-kanebo-cosmetics-jp/lunasol/details/skincare/s0101008/s0101008.jpg?fmt=jpeg",
       category: "skincare",
       brand: "LUNASOL",
+      ingredients: [],
     },
   ];
 
