@@ -155,7 +155,7 @@ const ProductCards = ({
                 value={product.rating}
               />{" "}
               <Typography variant="overline" color="secondary">
-                ({product?.reviews?.length})
+                ({product?.reviews.length})
               </Typography>
               {isMobile ? null : (
                 <Typography
@@ -183,7 +183,8 @@ const ProductCards = ({
                 ? {
                     m: 0,
                     p: 0,
-                    height: 90,
+                    maxHeight: 45,
+                    minHeight: 45,
                     width: "100%",
                     display: "flex",
                     flexDirection: "column",
