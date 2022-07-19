@@ -153,7 +153,10 @@ const ProductCards = ({
                 sx={{ mr: 0.5, color: "#3f312b" }}
                 precision={0.5}
                 value={product.rating}
-              />
+              />{" "}
+              <Typography variant="overline" color="secondary">
+                ({product.reviews.length})
+              </Typography>
               {isMobile ? null : (
                 <Typography
                   variant="caption"

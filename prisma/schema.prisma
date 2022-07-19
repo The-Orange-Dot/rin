@@ -29,9 +29,17 @@ model User {
   id         String  @id @default(cuid())
   username   String
   password   String
-  subscriber Boolean
+  subscriber Boolean @default(false)
+  image      String  @default("/default_profile_image.jpeg")
   firstName  String  @map("first_name")
   lastName   String  @map("last_name")
+  address    String?
+  city       String?
+  country    String?
+  zipcode    String?
+  email      String
+  homePhone  String? @map("home_phone")
+  mobilePhone String? @map("mobile_phone")
   reviews    Review[]
   comments   Comment[]
 }

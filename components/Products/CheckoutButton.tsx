@@ -97,7 +97,7 @@ const CheckoutButton = ({
             closeModalHandler();
           }}
           variant="contained"
-          sx={{ height: "50px", width: "50%", m: 1 }}
+          sx={{ height: "50px", width: "50%", m: 1, flex: 1 }}
           color="secondary"
         >
           Back
@@ -112,6 +112,7 @@ const CheckoutButton = ({
             flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
+            flex: 1.5,
           }}
         >
           <Typography variant="body1" sx={{ lineHeight: 1.5, flex: 1 }}>

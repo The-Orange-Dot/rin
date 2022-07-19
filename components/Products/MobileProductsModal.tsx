@@ -12,7 +12,7 @@ import {
 import styles from "../../styles/products.module.css";
 import { useRouter } from "next/router";
 import CheckoutButton from "./CheckoutButton";
-import { server } from "../../config";
+import { DateFormatter } from "../DateFormatter";
 
 const MobileProductsModal = ({
   productModalOpen,
@@ -22,16 +22,7 @@ const MobileProductsModal = ({
   const [quantity, setQuantity] = useState<number>(1);
   const [description, setDescription] = useState([]);
   const [options, setOptions] = useState("");
-  const [reviews, setReviews] = useState([]);
   const router = useRouter();
-
-  useEffect(() => {
-    if (product) {
-      fetch(`api/productReviews/${product.id}`)
-        .then((res) => res.json())
-        .then((data) => setReviews(data));
-    }
-  }, [product]);
 
   useEffect(() => {
     if (product?.description?.length > 0) {
@@ -48,6 +39,13 @@ const MobileProductsModal = ({
     }
   }, [product.description]);
 
+  useEffect(() => {
+    router.beforePopState(() => {
+      closeModalHandler();
+      return false;
+    });
+  }, []); //eslint-disable-line
+
   const closeModalHandler = async () => {
     setProductModalOpen(false);
     await router.push({
@@ -56,13 +54,6 @@ const MobileProductsModal = ({
     setQuantity(1);
     setDescription([]);
   };
-
-  useEffect(() => {
-    router.beforePopState(() => {
-      closeModalHandler();
-      return false;
-    });
-  }, []); //eslint-disable-line
 
   const ingredients = product?.ingredients?.map((item: string) => {
     const itemSplit = item.split(" ");
@@ -73,6 +64,42 @@ const MobileProductsModal = ({
       <Grid item key={item} xs={12}>
         <Typography variant="caption">{itemName}</Typography>
       </Grid>
+    );
+  });
+
+  const reviews = product?.reviews?.map((review: any) => {
+    DateFormatter(review.createdAt.toString());
+
+    return (
+      <>
+        <Box key={review.createdAt} sx={{ mt: 2, minWidth: "100%" }}>
+          <Box sx={{ display: "flex", alignItems: "flex-end", mb: 1 }}>
+            {/*eslint-disable*/}
+            <img
+              src={review.userReview.image}
+              width={50}
+              height={50}
+              style={{ borderRadius: "20rem" }}
+            />
+            {/*eslint-enable*/}
+            <Typography
+              variant="overline"
+              sx={{ mb: 0, ml: 1, fontWeight: 600, lineHeight: 1.5 }}
+            >
+              {review?.userReview?.username}
+            </Typography>
+          </Box>
+          <Box>
+            <Typography>{review.description}</Typography>
+          </Box>
+          <Box>
+            <Typography variant="caption" color="secondary">
+              Posted: {DateFormatter(review.createdAt.toString())}
+            </Typography>
+          </Box>
+          <Divider sx={{ mt: 2 }} />
+        </Box>
+      </>
     );
   });
 
@@ -157,8 +184,9 @@ const MobileProductsModal = ({
                   variant="body1"
                   sx={{ fontWeight: 600, mt: 1, fontSize: "1.2rem" }}
                 >
-                  {reviews.length} Reviews
+                  {product?.reviews?.length} Reviews
                 </Typography>
+                {reviews}
               </Box>
             </Box>
           </Box>

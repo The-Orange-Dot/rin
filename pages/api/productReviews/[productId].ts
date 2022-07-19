@@ -10,6 +10,7 @@ export default async function handler(
     const id = req.query.productId;
     const productReviews = await prisma.review.findMany({
       where: { productId: <any>{ equals: id } },
+      include: { userReview: true },
     });
 
     console.log(productReviews);

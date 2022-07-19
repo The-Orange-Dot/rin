@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import products from "../pages/products";
+import { faker } from "@faker-js/faker";
 
 const client = new PrismaClient();
 
@@ -15,9 +16,37 @@ interface ProductData {
   category: string;
   brand: string;
   ingredients: string[];
+  id: string;
+}
+
+interface UserData {
+  username: string;
+  password: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  city: string;
+  address: string;
+  zipcode: string;
+  country: string;
+  homePhone: string;
+  mobilePhone: string;
+  id: string;
+}
+
+interface ReviewData {
+  rating: number;
+  description: string;
+  helpful: number;
+  userId: string;
+  productId: string;
 }
 
 const seed = async () => {
+  await client.review.deleteMany({});
+  await client.user.deleteMany({});
+  await client.product.deleteMany({});
+
   const products: ProductData[] = [
     {
       name: "Balancing Cleansing Oil R (Refill)",
@@ -59,6 +88,7 @@ const seed = async () => {
         "Tocotrienol",
         "Tocopherol",
       ],
+      id: "0",
     },
     {
       name: "Balancing Cleansing Oil (Gel version)",
@@ -108,6 +138,7 @@ const seed = async () => {
         "Tocotrienol",
         "Tocopherol",
       ],
+      id: "1",
     },
     {
       name: "Balancing SQ Lip Balm",
@@ -147,6 +178,7 @@ const seed = async () => {
         "Tocotrienol",
         "Tocopherol",
       ],
+      id: "2",
     },
     {
       name: "Whitening Sun Screen (Set of 2)",
@@ -164,6 +196,7 @@ const seed = async () => {
       category: "skincare",
       brand: "rom&nd",
       ingredients: [],
+      id: "3",
     },
     {
       name: "Hinoko Bathsalt",
@@ -181,6 +214,7 @@ const seed = async () => {
       category: "skincare",
       brand: "SHIRO",
       ingredients: [],
+      id: "4",
     },
     {
       name: "Point Make Off",
@@ -198,6 +232,7 @@ const seed = async () => {
       category: "skincare",
       brand: "LUNASOL",
       ingredients: [],
+      id: "5",
     },
     {
       name: "Tender Hug Balm Oil Cleansing",
@@ -215,6 +250,7 @@ const seed = async () => {
       category: "skincare",
       brand: "LUNASOL",
       ingredients: [],
+      id: "6",
     },
     {
       name: "Oil-In Solution",
@@ -232,12 +268,52 @@ const seed = async () => {
       category: "skincare",
       brand: "LUNASOL",
       ingredients: [],
+      id: "7",
     },
   ];
 
   products.map(
     async (product) => await client.product.create({ data: product })
   );
+
+  //Creates a lot of user data
+  for (let i = 0; i < 50; i++) {
+    const firstName = faker.name.firstName();
+    const lastName = faker.name.lastName();
+
+    const testUser: UserData = {
+      id: i.toString(),
+      username: faker.internet.userName(firstName, lastName),
+      password: "password",
+      firstName: firstName,
+      lastName: lastName,
+      email: faker.internet.email(),
+      city: faker.address.city(),
+      address: faker.address.streetAddress(),
+      zipcode: faker.address.zipCode("NY"),
+      country: "United States",
+      homePhone: faker.phone.number(),
+      mobilePhone: faker.phone.number(),
+    };
+
+    await client.user.create({
+      data: testUser,
+    });
+  }
+
+  //Creates a lot of reviews
+  for (let i = 0; i < 100; i++) {
+    const testReviews: ReviewData = {
+      userId: Math.floor(Math.random() * 49).toString(),
+      productId: Math.floor(Math.random() * 8).toString(),
+      rating: Math.floor(Math.random() * 6),
+      description: faker.lorem.lines(),
+      helpful: Math.floor(Math.random() * 120),
+    };
+    await client.review.create({
+      data: testReviews,
+    });
+  }
 };
 
 seed();

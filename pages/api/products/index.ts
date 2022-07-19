@@ -9,6 +9,18 @@ export default async function handler(
   if (req.method === "GET") {
     const products = await prisma.product.findMany({
       orderBy: { createdAt: "desc" },
+      include: {
+        reviews: {
+          select: {
+            userReview: { select: { username: true, image: true } },
+            description: true,
+            helpful: true,
+            rating: true,
+            createdAt: true,
+            updatedAt: true,
+          },
+        },
+      },
     });
 
     res.status(200).json(products);
