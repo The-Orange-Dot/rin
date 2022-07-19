@@ -34,7 +34,7 @@ const Products = ({
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
   const isMobile = useMediaQuery("(max-width: 900px)");
   const [mobile, setMobile] = useState(isMobile);
-  const [products, setProducts] = useState<ProductData[]>([]);
+  const [products, setProducts] = useState([]);
   const [productModalOpen, setProductModalOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState({});
   const [filterDrawerOpened, setFilterDrawerOpened] = useState(false);
@@ -66,27 +66,29 @@ const Products = ({
     }
   }, [pageLoaded]);
 
-  useEffect(() => {
-    console.log(productsData);
-    if (productsData) {
-      const productCards = productsData.map((product: ProductData) => {
-        if (!brands.includes(product.brand)) {
-          setBrands([...brands, product.brand]);
-        }
+  useEffect(
+    () => {
+      if (productsData) {
+        const productCards = productsData.map((product: ProductData) => {
+          if (!brands.includes(product.brand)) {
+            setBrands([...brands, product.brand]);
+          }
 
-        return (
-          <ProductCards
-            product={product}
-            key={product.name}
-            setProductModalOpen={setProductModalOpen}
-            setSelectedProduct={setSelectedProduct}
-          />
-        );
-      });
+          return (
+            <ProductCards
+              product={product}
+              key={product.name}
+              setProductModalOpen={setProductModalOpen}
+              setSelectedProduct={setSelectedProduct}
+            />
+          );
+        });
 
-      setProducts(productCards);
-    }
-  }, [productsData]);
+        setProducts(productCards);
+      }
+    },
+    [productsData] // eslint-disable-line
+  );
 
   return (
     <div className={styles.main}>
