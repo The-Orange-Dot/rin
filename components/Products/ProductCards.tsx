@@ -136,16 +136,8 @@ const ProductCards = ({
                 sx={isMobile ? { fontSize: ".7rem" } : {}}
               >
                 {product.size}
+                {product.details.length ? ` - ${product.details}` : null}
               </Typography>
-              {product.details ? (
-                <Typography
-                  variant="body2"
-                  color="gray"
-                  sx={isMobile ? { fontSize: ".7rem" } : {}}
-                >
-                  - {product.details}
-                </Typography>
-              ) : null}
             </Box>
             <Box
               sx={{

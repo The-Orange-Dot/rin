@@ -42,22 +42,21 @@ const MobileProductsModal = ({
     }
   }, [product.description]);
 
-  const closeModalHandler = () => {
+  const closeModalHandler = async () => {
     setProductModalOpen(false);
-    router.push({
+    await router.push({
       pathname: "/products",
     });
+    setQuantity(1);
+    setDescription([]);
   };
 
-  /* eslint-disable */
   useEffect(() => {
     router.beforePopState(() => {
       closeModalHandler();
       return false;
     });
-  }, []);
-
-  /* eslint-enable */
+  }, []); //eslint-disable-line
 
   return (
     <Modal
@@ -178,7 +177,13 @@ const MobileProductsModal = ({
                   <InputLabel variant="standard" htmlFor="quantity-native">
                     Quantity
                   </InputLabel>
-                  <NativeSelect size="small" defaultValue={1}>
+                  <NativeSelect
+                    size="small"
+                    defaultValue={1}
+                    onChange={(e) => {
+                      setQuantity(parseInt(e.target.value));
+                    }}
+                  >
                     <option value={1}>One</option>
                     <option value={2}>Two</option>
                     <option value={3}>Three</option>
@@ -199,9 +204,25 @@ const MobileProductsModal = ({
               </Button>
               <Button
                 variant="contained"
-                sx={{ height: "50px", width: "50%", m: 1 }}
+                sx={{
+                  height: "50px",
+                  width: "50%",
+                  m: 1,
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
               >
-                Add to Card
+                <Typography variant="body1" sx={{ lineHeight: 1.5, flex: 1 }}>
+                  ${quantity * product.price}.00
+                </Typography>
+                <Typography
+                  variant="overline"
+                  sx={{ fontSize: ".5rem", flex: 1, lineHeight: 1.5 }}
+                >
+                  Add to Card
+                </Typography>
               </Button>
             </Box>
           </Box>
