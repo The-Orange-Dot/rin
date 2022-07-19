@@ -13,16 +13,32 @@ import MobileProductsModal from "../../components/Products/MobileProductsModal";
 import gsap from "gsap";
 import { useSession } from "next-auth/react";
 
+interface ProductData {
+  id: string;
+  category: string;
+  createdAt: string;
+  description: string[];
+  details: string;
+  brand: string;
+  image: string;
+  name: string;
+  size: string;
+  updatedAt: string;
+  price: number;
+  quantity: number;
+  rating: number;
+}
+
 const Products = ({
   productsData,
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
   const isMobile = useMediaQuery("(max-width: 900px)");
   const [mobile, setMobile] = useState(isMobile);
-  const [products, setProducts] = useState(productsData);
+  const [products, setProducts] = useState<ProductData[]>([]);
   const [productModalOpen, setProductModalOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState({});
   const [filterDrawerOpened, setFilterDrawerOpened] = useState(false);
-  let brands: string[] = [];
+  const [brands, setBrands] = useState<string[]>([]);
   const session = useSession();
   const [pageLoaded, setPageLoaded] = useState(false);
 
@@ -50,20 +66,27 @@ const Products = ({
     }
   }, [pageLoaded]);
 
-  const productCards = products.map((product: any) => {
-    if (!brands.includes(product.brand)) {
-      brands = [...brands, product.brand];
-    }
+  useEffect(() => {
+    console.log(productsData);
+    if (productsData) {
+      const productCards = productsData.map((product: ProductData) => {
+        if (!brands.includes(product.brand)) {
+          setBrands([...brands, product.brand]);
+        }
 
-    return (
-      <ProductCards
-        product={product}
-        key={product.name}
-        setProductModalOpen={setProductModalOpen}
-        setSelectedProduct={setSelectedProduct}
-      />
-    );
-  });
+        return (
+          <ProductCards
+            product={product}
+            key={product.name}
+            setProductModalOpen={setProductModalOpen}
+            setSelectedProduct={setSelectedProduct}
+          />
+        );
+      });
+
+      setProducts(productCards);
+    }
+  }, [productsData]);
 
   return (
     <div className={styles.main}>
@@ -121,7 +144,7 @@ const Products = ({
             maxWidth: 2000,
           }}
         >
-          {productCards}
+          {products}
         </Grid>
         {isMobile ? (
           <MobileProductsModal
