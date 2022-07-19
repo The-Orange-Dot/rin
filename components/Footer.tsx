@@ -46,10 +46,24 @@ const Footer: NextComponentType = () => {
         isMobile ? styles.mobile_footer_container : styles.footer_container
       }
     >
-      <Box className={styles.footer_contact}>
+      <Box
+        sx={
+          isMobile
+            ? {
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                width: "100%",
+                ml: 1,
+                mr: 1,
+                flex: 0.7,
+              }
+            : { display: "flex", ml: 1, mr: 1, flex: 0.7 }
+        }
+      >
         <Typography
+          color="primary"
           sx={{
-            color: "#312f2f",
             fontWeight: 200,
             cursor: "pointer",
             letterSpacing: 4,
@@ -58,12 +72,14 @@ const Footer: NextComponentType = () => {
         >
           rin
         </Typography>
-        <IconButton>
-          <TwitterIcon />
-        </IconButton>
-        <IconButton>
-          <InstagramIcon />
-        </IconButton>
+        <Box>
+          <IconButton>
+            <TwitterIcon />
+          </IconButton>
+          <IconButton>
+            <InstagramIcon />
+          </IconButton>
+        </Box>
       </Box>
 
       <Grid

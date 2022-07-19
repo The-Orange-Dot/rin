@@ -47,9 +47,9 @@ const Navbar = () => {
       <div>
         <Link href="/">
           <Typography
+            color="primary"
             sx={{
               width: "100%",
-              color: "#312f2f",
               fontWeight: 200,
               cursor: "pointer",
               letterSpacing: 4,
@@ -63,6 +63,7 @@ const Navbar = () => {
       </div>
       {isMobile ? (
         <MenuIcon
+          color="primary"
           fontSize="large"
           onClick={() => setMobileNavModalOpen(true)}
         />

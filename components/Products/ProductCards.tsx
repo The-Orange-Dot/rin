@@ -38,8 +38,8 @@ const ProductCards = ({
                 display: "flex",
                 justifyContent: "center",
                 width: "100%",
-                height: 330,
-                maxHeight: 330,
+                height: 360,
+                maxHeight: 360,
                 mb: 3,
               }
             : {
@@ -145,6 +145,7 @@ const ProductCards = ({
                 height: "20px",
                 display: "flex",
                 alignItems: "center",
+                mb: 1,
               }}
             >
               <Rating
