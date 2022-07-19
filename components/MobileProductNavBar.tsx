@@ -10,7 +10,7 @@ import {
   Divider,
   Button,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 const MobileProductNavBar = ({
@@ -44,17 +44,17 @@ const MobileProductNavBar = ({
     </Box>
   ));
 
-  const brandSelector = brands.map((brand: string) => {
+  const brandSelector = Object.entries(brands).map(([key, value]) => {
     return (
-      <Box key={brand}>
+      <Box key={key}>
         <Typography
           sx={{ m: 1 }}
           onClick={() => {
             setExpandBrands(false);
-            setBrandSelected(brand);
+            setBrandSelected(key);
           }}
         >
-          {brand}
+          {`${key} (${value})`}
         </Typography>
         <Divider />
       </Box>

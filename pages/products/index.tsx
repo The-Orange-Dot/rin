@@ -38,9 +38,9 @@ const Products = ({
   const [productModalOpen, setProductModalOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState({});
   const [filterDrawerOpened, setFilterDrawerOpened] = useState(false);
-  const [brands, setBrands] = useState<string[]>([]);
   const session = useSession();
   const [pageLoaded, setPageLoaded] = useState(false);
+  const [brands, setBrands] = useState([]);
 
   useEffect(() => {
     gsap.set(".card", { opacity: 0 });
@@ -70,10 +70,6 @@ const Products = ({
     () => {
       if (productsData) {
         const productCards = productsData.map((product: ProductData) => {
-          if (!brands.includes(product.brand)) {
-            setBrands([...brands, product.brand]);
-          }
-
           return (
             <ProductCards
               product={product}
@@ -89,6 +85,19 @@ const Products = ({
     },
     [productsData] // eslint-disable-line
   );
+
+  useEffect(() => {
+    let hash: any = {};
+
+    for (let product of productsData) {
+      if (hash[product.brand]) {
+        hash[product.brand] += 1;
+      } else {
+        hash[product.brand] = 1;
+      }
+    }
+    setBrands(hash);
+  }, [productsData]);
 
   return (
     <div className={styles.main}>

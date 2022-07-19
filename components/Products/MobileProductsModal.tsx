@@ -15,17 +15,17 @@ import {
   TextField,
 } from "@mui/material";
 import styles from "../../styles/products.module.css";
-import AddIcon from "@mui/icons-material/Add";
-import RemoveIcon from "@mui/icons-material/Remove";
+import { useRouter } from "next/router";
 
 const MobileProductsModal = ({
   productModalOpen,
   setProductModalOpen,
   product,
 }: any) => {
-  const [quantity, setQuantity] = useState<any>(1);
+  const [quantity, setQuantity] = useState<number>(1);
   const [description, setDescription] = useState([]);
   const [options, setOptions] = useState("");
+  const router = useRouter();
 
   useEffect(() => {
     if (product?.description?.length > 0) {
@@ -41,6 +41,20 @@ const MobileProductsModal = ({
       setDescription(productDescriptionArray);
     }
   }, [product.description]);
+
+  /* eslint-disable */
+  useEffect(() => {
+    router.beforePopState(({ as }) => {
+      if (as.includes("modal_open=true")) {
+        setProductModalOpen(false);
+        router.push("/products");
+      }
+      return true;
+
+      console.log(as);
+    });
+  }, [productModalOpen]);
+  /* eslint-enable */
 
   return (
     <Modal

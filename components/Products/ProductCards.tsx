@@ -12,6 +12,7 @@ import {
   Rating,
 } from "@mui/material";
 import { useMediaQuery } from "@mui/material";
+import { useRouter } from "next/router";
 
 const ProductCards = ({
   product,
@@ -19,6 +20,13 @@ const ProductCards = ({
   setSelectedProduct,
 }: any) => {
   const isMobile = useMediaQuery("(max-width: 900px)");
+  const router = useRouter();
+
+  const routerHandler = () => {
+    router.query.view_product = product.id;
+    router.query.modal_open = "true";
+    router.push(router);
+  };
 
   return (
     <Grid item xs={3.8} md={3.5}>
@@ -64,6 +72,7 @@ const ProductCards = ({
             onClick={() => {
               setProductModalOpen(true);
               setSelectedProduct(product);
+              routerHandler();
             }}
           />
           <CardContent
@@ -111,6 +120,7 @@ const ProductCards = ({
                 onClick={() => {
                   setProductModalOpen(true);
                   setSelectedProduct(product);
+                  routerHandler();
                 }}
                 color="primary"
                 variant={isMobile ? "body2" : "h6"}
