@@ -2,11 +2,14 @@ import React, { useState } from "react";
 import styles from "../../styles/products.module.css";
 import ProductsNavBar from "../../components/ProductsNavBar";
 import { GetStaticProps, InferGetStaticPropsType } from "next";
-import { Container, Grid } from "@mui/material";
+import { Button, Container, Grid, Box } from "@mui/material";
 import { server } from "../../config";
 import ProductCards from "../../components/Products/ProductCards";
 import ProductModal from "../../components/Products/ProductModal";
 import { useMediaQuery } from "@mui/material";
+import MobileProductNavBar from "../../components/MobileProductNavBar";
+import FilterListIcon from "@mui/icons-material/FilterList";
+import MobileProductsModal from "../../components/Products/MobileProductsModal";
 
 const Products = ({
   productsData,
@@ -15,18 +18,39 @@ const Products = ({
   const [products, setProducts] = useState(productsData);
   const [productModalOpen, setProductModalOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState({});
+  const [filterDrawerOpened, setFilterDrawerOpened] = useState(false);
+  let brands: string[] = [];
 
-  const productCards = products.map((product: any) => (
-    <ProductCards
-      product={product}
-      key={product.name}
-      setProductModalOpen={setProductModalOpen}
-    />
-  ));
+  const productCards = products.map((product: any) => {
+    if (!brands.includes(product.brand)) {
+      brands = [...brands, product.brand];
+    }
+
+    return (
+      <ProductCards
+        product={product}
+        key={product.name}
+        setProductModalOpen={setProductModalOpen}
+      />
+    );
+  });
 
   return (
     <div className={styles.main}>
-      <ProductsNavBar />
+      {isMobile ? (
+        <Box sx={{ width: "80%", display: "flex", justifyContent: "center" }}>
+          <Button
+            variant="outlined"
+            color="primary"
+            fullWidth
+            onClick={() => setFilterDrawerOpened(true)}
+          >
+            Filter <FilterListIcon />
+          </Button>
+        </Box>
+      ) : (
+        <ProductsNavBar />
+      )}
       <Container
         sx={
           isMobile
@@ -34,6 +58,7 @@ const Products = ({
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
+                mt: 2,
               }
             : {
                 display: "flex",
@@ -54,10 +79,23 @@ const Products = ({
         >
           {productCards}
         </Grid>
-        <ProductModal
-          productModalOpen={productModalOpen}
-          setProductModalOpen={setProductModalOpen}
-          selectedProduct={selectedProduct}
+        {isMobile ? (
+          <MobileProductsModal
+            productModalOpen={productModalOpen}
+            setProductModalOpen={setProductModalOpen}
+            selectedProduct={selectedProduct}
+          />
+        ) : (
+          <ProductModal
+            productModalOpen={productModalOpen}
+            setProductModalOpen={setProductModalOpen}
+            selectedProduct={selectedProduct}
+          />
+        )}
+        <MobileProductNavBar
+          setFilterDrawerOpened={setFilterDrawerOpened}
+          filterDrawerOpened={filterDrawerOpened}
+          brands={brands}
         />
       </Container>
     </div>
