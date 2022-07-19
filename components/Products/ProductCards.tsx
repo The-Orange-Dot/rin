@@ -136,7 +136,7 @@ const ProductCards = ({
                 sx={isMobile ? { fontSize: ".7rem" } : {}}
               >
                 {product.size}
-                {product.details.length ? ` - ${product.details}` : null}
+                {product?.details?.length ? ` - ${product.details}` : null}
               </Typography>
             </Box>
             <Box
@@ -155,7 +155,7 @@ const ProductCards = ({
                 value={product.rating}
               />{" "}
               <Typography variant="overline" color="secondary">
-                ({product.reviews.length})
+                ({product?.reviews?.length})
               </Typography>
               {isMobile ? null : (
                 <Typography
