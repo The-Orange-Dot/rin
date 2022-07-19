@@ -183,8 +183,8 @@ const ProductCards = ({
                 ? {
                     m: 0,
                     p: 0,
-                    maxHeight: 45,
-                    minHeight: 45,
+                    maxHeight: 40,
+                    minHeight: 40,
                     width: "100%",
                     display: "flex",
                     flexDirection: "column",
