@@ -22,10 +22,11 @@ const ProductCards = ({
   const isMobile = useMediaQuery("(max-width: 900px)");
   const router = useRouter();
 
-  const routerHandler = () => {
-    router.query.view_product = product.id;
-    router.query.modal_open = "true";
-    router.push(router);
+  const routerHandler = async () => {
+    router.push({
+      pathname: "/products",
+      query: { ...router.query, view_product: product.id, modal_open: "true" },
+    });
   };
 
   return (

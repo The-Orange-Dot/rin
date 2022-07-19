@@ -42,24 +42,26 @@ const MobileProductsModal = ({
     }
   }, [product.description]);
 
+  const closeModalHandler = () => {
+    setProductModalOpen(false);
+    router.push({
+      pathname: "/products",
+    });
+  };
+
   /* eslint-disable */
   useEffect(() => {
-    router.beforePopState(({ as }) => {
-      if (as.includes("modal_open=true")) {
-        setProductModalOpen(false);
-        router.push("/products");
-      }
-      return true;
-
-      console.log(as);
+    router.beforePopState(() => {
+      closeModalHandler();
+      return false;
     });
-  }, [productModalOpen]);
+  }, []);
+
   /* eslint-enable */
 
   return (
     <Modal
       open={productModalOpen}
-      onClose={() => setProductModalOpen(false)}
       sx={{ display: "flex", justifyContent: "center" }}
       hideBackdrop
     >
@@ -186,7 +188,9 @@ const MobileProductsModal = ({
             </Box>
             <Box sx={{ width: "100%", display: "flex" }}>
               <Button
-                onClick={() => setProductModalOpen(false)}
+                onClick={() => {
+                  closeModalHandler();
+                }}
                 variant="contained"
                 sx={{ height: "50px", width: "50%", m: 1 }}
                 color="secondary"
