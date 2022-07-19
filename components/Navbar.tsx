@@ -3,11 +3,11 @@ import React, { useEffect, useState } from "react";
 import styles from "../styles/navbar.module.css";
 import { useMediaQuery } from "@mui/material";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import MenuIcon from "@mui/icons-material/Menu";
 import MobileNavModal from "./Products/MobileNavModal";
 import { useSession } from "next-auth/react";
 import gsap from "gsap";
+import { useRouter } from "next/router";
 
 const Navbar = () => {
   const [textColor, setTextColor] = useState("black");
@@ -16,6 +16,7 @@ const Navbar = () => {
   const query = useRouter();
   const [pageLoaded, setPageLoaded] = useState(false);
   const session = useSession();
+  const router = useRouter();
 
   useEffect(() => {
     if (session.status !== "loading") {
@@ -37,6 +38,9 @@ const Navbar = () => {
     <div
       className={
         isMobile ? styles.mobileNavbarContainer : styles.navbarContainer
+      }
+      style={
+        router.pathname.includes("/products") ? { background: "white" } : {}
       }
       id={"container"}
     >
