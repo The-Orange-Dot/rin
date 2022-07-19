@@ -8,7 +8,7 @@ import {
   Box,
   Container,
 } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "../styles/footer.module.css";
 import EmailIcon from "@mui/icons-material/Email";
 import { useMediaQuery } from "@mui/material";
@@ -16,9 +16,29 @@ import Link from "next/link";
 import type { NextComponentType } from "next";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import InstagramIcon from "@mui/icons-material/Instagram";
+import { useSession } from "next-auth/react";
+import gsap from "gsap";
 
 const Footer: NextComponentType = () => {
   const isMobile = useMediaQuery("(max-width: 900px)");
+  const [pageLoaded, setPageLoaded] = useState(false);
+  const session = useSession();
+
+  useEffect(() => {
+    if (session.status !== "loading") {
+      setPageLoaded(true);
+    }
+  }, [session.status]);
+
+  useEffect(() => {
+    const tl = gsap
+      .timeline({ paused: true })
+      .fromTo(".footer", { opacity: 0 }, { opacity: 1 });
+
+    if (pageLoaded) {
+      tl.play(0);
+    }
+  }, [pageLoaded]);
 
   return (
     <div

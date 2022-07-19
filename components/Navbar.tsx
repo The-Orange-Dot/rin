@@ -6,12 +6,32 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import MenuIcon from "@mui/icons-material/Menu";
 import MobileNavModal from "./Products/MobileNavModal";
+import { useSession } from "next-auth/react";
+import gsap from "gsap";
 
 const Navbar = () => {
   const [textColor, setTextColor] = useState("black");
   const [mobileNavModalOpen, setMobileNavModalOpen] = useState(false);
   const isMobile = useMediaQuery("(max-width: 900px)");
   const query = useRouter();
+  const [pageLoaded, setPageLoaded] = useState(false);
+  const session = useSession();
+
+  useEffect(() => {
+    if (session.status !== "loading") {
+      setPageLoaded(true);
+    }
+  }, [session.status]);
+
+  useEffect(() => {
+    gsap.set("#container", { opacity: 0 });
+    const tl = gsap
+      .timeline({ paused: true })
+      .fromTo("#container", { opacity: 0 }, { opacity: 1, delay: 0.5 });
+    if (pageLoaded) {
+      tl.play(0);
+    }
+  }, [pageLoaded]);
 
   return (
     <div

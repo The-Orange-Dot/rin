@@ -1,6 +1,6 @@
 .navbarContainer {
   position: fixed;
-  height: 5vh;
+  height: 8vh;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -11,6 +11,7 @@
   margin-left: auto;
   margin-right: auto;
   padding: 0 2%;
+  opacity: 0;
 }
 
 .mobileNavbarContainer {
@@ -24,6 +25,7 @@
   left: 0%;
   right: 0%;
   padding: 0 10px;
+  opacity: 0;
 }
 
 .logo_white {

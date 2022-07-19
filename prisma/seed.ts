@@ -5,7 +5,9 @@ const client = new PrismaClient();
 
 interface ProductData {
   name: string;
-  subtitle: string;
+
+  details: string;
+  size: string;
   description: string[];
   quantity: number;
   price: number;
@@ -16,10 +18,11 @@ interface ProductData {
 }
 
 const seed = async () => {
-  const products = [
+  const products: ProductData[] = [
     {
       name: "Balancing Cleansing Oil R (Refill)",
-      subtitle: "180ml (6.0oz) - 100% Naturally cultivated",
+      size: "180ml (6.0oz)",
+      details: "100% Naturally cultivated",
       description: [
         "「バランシング クレンジング オイル R」のリフィルが登場",
         "数々の賞を受賞してきたTHREEの王道クレンジングオイルに、詰め替えタイプが登場。環境にもライフスタイルにも寄り添うリフィルタイプで、THREEのベーシックなクレンジングアイテムを一層身近にお楽しみください。",
@@ -28,14 +31,15 @@ const seed = async () => {
       ],
       quantity: 100,
       price: 50.0,
-      rating: 0,
+      rating: 3.4,
       image: "https://www.threecosmetics.com/img/goods/L/t1b219.jpg",
       category: "skincare",
       brand: "THREE",
     },
     {
       name: "Balancing Cleansing Oil (Gel version)",
-      subtitle: "125ml (4.6oz) - 100% Naturally cultivated",
+      size: "125ml (4.6oz)",
+      details: "100% Naturally cultivated",
       description: [
         "「発売1周年記念、バリューなラージサイズが限定で登場",
         "3種の天然クレンザーで毛穴の汚れまでするんとオフする、クレンジングオイルジェル。油性の汚れと親和性に優れた「植物オイル」、肌の凹凸汚れに微細な粒子の「天然スクラブ」、毛穴やキメの汚れを吸着する「天然クレイ」によるトリプル処方で、メイクを落としながら、肌をおだやかにディープクレンジング。心地よさで包みながら素肌を明るく導き、翌朝のメイクのりにまで違いが出ます。",
@@ -43,35 +47,37 @@ const seed = async () => {
       ],
       quantity: 100,
       price: 60.0,
-      rating: 0,
+      rating: 4.6,
       image: "https://www.threecosmetics.com/img/goods/L/t1b264.jpg",
       category: "skincare",
       brand: "THREE",
     },
     {
       name: "Balancing SQ Lip Balm",
-      subtitle: "7g",
+      size: "7g",
+      details: "",
       description: [
         "唇の乾燥ダメージを集中ケアする、濃密リップバーム",
         "乾燥によりダメージを受けた唇をトリートメントするリップバーム。固形のバームが体温でとろけ、睡眠中の唇をなめらかに整えます。甘くフルーティな精油の芳香が緊張をゆるめ、リラックスした気分へ。",
       ],
       quantity: 100,
       price: 40.0,
-      rating: 0,
+      rating: 5,
       image: "https://www.threecosmetics.com/img/goods/S/t1b104.jpg",
       category: "skincare",
       brand: "THREE",
     },
     {
       name: "Whitening Sun Screen (Set of 2)",
-      subtitle: "50mL (1.69oz) 5g SPF50+",
+      size: "50mL (1.69oz)",
+      details: "SPF50+",
       description: [
         "This is a test description of a Korean Product rom&nd Whitening Sun Screen",
         "Checking to see how it looks in english to see what i can fit blah blah blah blu blu blu beep boop boop bop",
       ],
       quantity: 100,
       price: 25.0,
-      rating: 0,
+      rating: 3.5,
       image:
         "https://romand.co.kr/web/product/big/202206/ceb0ed2f0e3d9595e96e154d4c127c94.jpg",
       category: "skincare",
@@ -79,14 +85,15 @@ const seed = async () => {
     },
     {
       name: "Hinoko Bathsalt",
-      subtitle: "400g",
+      size: "400g",
+      details: "",
       description: [
         "This is a test description of a Korean Product rom&nd Whitening Sun Screen",
         "Checking to see how it looks in english to see what i can fit blah blah blah blu blu blu beep boop boop bop",
       ],
       quantity: 100,
       price: 50.0,
-      rating: 0,
+      rating: 2.3,
       image:
         "https://shiro-shiro.jp/client_info/SHIRO/itemimage/12555/12555.jpg",
       category: "skincare",
@@ -94,14 +101,15 @@ const seed = async () => {
     },
     {
       name: "Point Make Off",
-      subtitle: "120mL (4.5oz)",
+      size: "120mL (4.5oz)",
+      details: "",
       description: [
         "This is a test description of a Korean Product rom&nd Whitening Sun Screen",
         "Checking to see how it looks in english to see what i can fit blah blah blah blu blu blu beep boop boop bop",
       ],
       quantity: 100,
       price: 15.0,
-      rating: 0,
+      rating: 4.5,
       image:
         "https://kao-h.assetsadobe3.com/is/image/content/dam/sites/kanebo/www-kanebo-cosmetics-jp/lunasol/details/pointmake/p0601015/p0601015.jpg",
       category: "skincare",
@@ -109,14 +117,15 @@ const seed = async () => {
     },
     {
       name: "Tender Hug Balm Oil Cleansing",
-      subtitle: "150mL (5.6oz)",
+      size: "150mL (5.6oz)",
+      details: "",
       description: [
         "This is a test description of a Korean Product rom&nd Whitening Sun Screen",
         "Checking to see how it looks in english to see what i can fit blah blah blah blu blu blu beep boop boop bop",
       ],
       quantity: 100,
       price: 50.0,
-      rating: 0,
+      rating: 4.4,
       image:
         "https://kao-h.assetsadobe3.com/is/image/content/dam/sites/kanebo/www-kanebo-cosmetics-jp/lunasol/renew/details/skincare/s0101011/s0101011.png",
       category: "skincare",
@@ -124,14 +133,15 @@ const seed = async () => {
     },
     {
       name: "Oil-In Solution",
-      subtitle: "180mL (6.5oz)",
+      size: "180mL (6.5oz)",
+      details: "",
       description: [
         "This is a test description of a Korean Product rom&nd Whitening Sun Screen",
         "Checking to see how it looks in english to see what i can fit blah blah blah blu blu blu beep boop boop bop",
       ],
       quantity: 100,
       price: 66.0,
-      rating: 0,
+      rating: 4.0,
       image:
         "https://kao-h.assetsadobe3.com/is/image/content/dam/sites/kanebo/www-kanebo-cosmetics-jp/lunasol/details/skincare/s0101008/s0101008.jpg?fmt=jpeg",
       category: "skincare",

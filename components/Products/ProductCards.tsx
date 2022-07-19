@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Typography,
   Container,
@@ -12,9 +12,12 @@ import {
   Rating,
 } from "@mui/material";
 import { useMediaQuery } from "@mui/material";
-import { display, fontSize } from "@mui/system";
 
-const ProductCards = ({ product, setProductModalOpen }: any) => {
+const ProductCards = ({
+  product,
+  setProductModalOpen,
+  setSelectedProduct,
+}: any) => {
   const isMobile = useMediaQuery("(max-width: 900px)");
 
   return (
@@ -46,9 +49,11 @@ const ProductCards = ({ product, setProductModalOpen }: any) => {
             flexDirection: "column",
             justifyContent: "space-between",
             alignItems: "center",
+            opacity: 0,
           }}
           elevation={0}
           square
+          className="card"
         >
           <CardMedia
             component="img"
@@ -56,7 +61,10 @@ const ProductCards = ({ product, setProductModalOpen }: any) => {
             image={product.image}
             height={350}
             sx={{ objectFit: "contain", cursor: "pointer" }}
-            onClick={() => setProductModalOpen(true)}
+            onClick={() => {
+              setProductModalOpen(true);
+              setSelectedProduct(product);
+            }}
           />
           <CardContent
             sx={
@@ -100,7 +108,10 @@ const ProductCards = ({ product, setProductModalOpen }: any) => {
               }
             >
               <Typography
-                onClick={() => setProductModalOpen(true)}
+                onClick={() => {
+                  setProductModalOpen(true);
+                  setSelectedProduct(product);
+                }}
                 color="primary"
                 variant={isMobile ? "body2" : "h6"}
               >
@@ -113,8 +124,17 @@ const ProductCards = ({ product, setProductModalOpen }: any) => {
                 color="gray"
                 sx={isMobile ? { fontSize: ".7rem" } : {}}
               >
-                {product.subtitle}
+                {product.size}
               </Typography>
+              {product.details ? (
+                <Typography
+                  variant="body2"
+                  color="gray"
+                  sx={isMobile ? { fontSize: ".7rem" } : {}}
+                >
+                  - {product.details}
+                </Typography>
+              ) : null}
             </Box>
             <Box
               sx={{

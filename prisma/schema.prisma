@@ -10,7 +10,8 @@ datasource db {
 model Product {
   id          String   @id @default(cuid())
   name        String
-  subtitle    String
+  size        String
+  details     String
   quantity    Int      @default(1)
   price       Float    @default(0.00)
   image       String
@@ -20,6 +21,7 @@ model Product {
   updatedAt   DateTime @updatedAt @map("updated_at")
   description String[]
   rating      Float    @default(0.0)
+  reviews     Review[]
 }
 
 model User {
@@ -29,4 +31,27 @@ model User {
   subscriber Boolean
   firstName  String  @map("first_name")
   lastName   String  @map("last_name")
+  reviews    Review[]
+  comments   Comment[]
+}
+
+model Review {
+  id            String  @id @default(cuid())
+  userReview    User @relation(fields: [userId], references: [id])
+  userId        String
+  productReview Product @relation(fields: [productId], references: [id])
+  productId     String
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+  rating        Int 
+  description   String
+  helpful       Int @default(0)
+  report        Int @default(0)
+}
+
+model Comment {
+  id            String  @id @default(cuid())
+  userReview    User @relation(fields: [userId], references: [id])
+  userId        String
+  comment       String
 }
