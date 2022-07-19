@@ -120,7 +120,7 @@ const Products = ({
               fullWidth
               onClick={() => setFilterDrawerOpened(true)}
             >
-              Filter <FilterListIcon />
+              Filter <FilterListIcon color="primary" />
             </Button>
           ) : (
             <ProductsNavBar />

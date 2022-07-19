@@ -29,6 +29,16 @@ const ProductCards = ({
     });
   };
 
+  const ratingArray = product?.reviews.map((review) => {
+    return review.rating;
+  });
+
+  const summedRating = ratingArray.reduce((val: number, total: number) => {
+    return val + total;
+  }, 0);
+
+  const averageRating = summedRating / ratingArray.length;
+
   return (
     <Grid item xs={3.8} md={3.5}>
       <Box
@@ -132,7 +142,7 @@ const ProductCards = ({
             <Box sx={{ width: "100%", minHeight: "35px" }}>
               <Typography
                 variant="body2"
-                color="gray"
+                color="secondary"
                 sx={isMobile ? { fontSize: ".7rem" } : {}}
               >
                 {product.size}
@@ -152,8 +162,8 @@ const ProductCards = ({
                 size="small"
                 readOnly={true}
                 sx={{ mr: 0.5, color: "#3f312b" }}
-                precision={0.5}
-                value={product.rating}
+                precision={0.25}
+                value={averageRating}
               />{" "}
               <Typography variant="overline" color="secondary">
                 ({product?.reviews.length})

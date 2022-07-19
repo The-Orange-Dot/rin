@@ -73,15 +73,14 @@ const Footer: NextComponentType = () => {
           rin
         </Typography>
         <Box>
-          <IconButton>
+          <IconButton color="secondary">
             <TwitterIcon />
           </IconButton>
-          <IconButton>
+          <IconButton color="secondary">
             <InstagramIcon />
           </IconButton>
         </Box>
       </Box>
-
       <Grid
         sx={
           isMobile
@@ -104,11 +103,16 @@ const Footer: NextComponentType = () => {
         spacing={2}
       >
         <Grid item xl={4}>
-          <Typography variant="body2" sx={{ fontWeight: "bold", mb: 1 }}>
+          <Typography
+            variant="body2"
+            sx={{ fontWeight: "bold", mb: 1 }}
+            color="primary"
+          >
             Explore
           </Typography>
           <Link href="/">
             <Typography
+              color="primary"
               variant="body2"
               sx={{ cursor: "pointer", "&:hover": { opacity: 0.5 } }}
             >
@@ -117,6 +121,7 @@ const Footer: NextComponentType = () => {
           </Link>
           <Link href="/products">
             <Typography
+              color="primary"
               variant="body2"
               sx={{ cursor: "pointer", "&:hover": { opacity: 0.5 } }}
             >
@@ -125,12 +130,17 @@ const Footer: NextComponentType = () => {
           </Link>
         </Grid>
         <Grid item xl={4}>
-          <Typography variant="body2" sx={{ fontWeight: "bold", mb: 1 }}>
+          <Typography
+            variant="body2"
+            color="primary"
+            sx={{ fontWeight: "bold", mb: 1 }}
+          >
             Company
           </Typography>
           <Link href={"/about"}>
             <Typography
               variant="body2"
+              color="primary"
               sx={{ cursor: "pointer", "&:hover": { opacity: 0.5 } }}
             >
               About
@@ -140,6 +150,7 @@ const Footer: NextComponentType = () => {
         <Grid item xl={4}>
           <Typography
             variant="body2"
+            color="primary"
             sx={{ fontWeight: "bold", mb: 1, min: "30%" }}
           >
             Services
@@ -147,6 +158,7 @@ const Footer: NextComponentType = () => {
           {/* <Link href={"/contact"}> */}
           <Typography
             variant="body2"
+            color="primary"
             sx={{ cursor: "pointer", "&:hover": { opacity: 0.5 } }}
           >
             Contact us
