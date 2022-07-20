@@ -41,6 +41,7 @@ const AccordionSummary = styled((props: AccordionSummaryProps) => (
     marginLeft: theme.spacing(1),
   },
   width: "100%",
+  padding: 0,
 }));
 
 const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
@@ -56,7 +57,7 @@ const MobileIngredientsAccordion = ({ product }: any) => {
       .map((word) => `${word.slice(0, 1).toUpperCase()}${word.slice(1)}`)
       .join(" ");
     return (
-      <Grid item key={item} xs={12}>
+      <Grid item key={item}>
         <Typography variant="caption">{itemName}</Typography>
       </Grid>
     );
