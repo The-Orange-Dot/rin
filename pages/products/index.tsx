@@ -13,6 +13,7 @@ import MobileProductsModal from "../../components/Products/MobileProductsModal";
 import gsap from "gsap";
 import { useSession } from "next-auth/react";
 import { ProductType } from "../../types/productTypes";
+import ShoppingCartButton from "../../components/Products/ShoppingCartButton";
 
 const Products = ({
   productsData,
@@ -174,6 +175,7 @@ const Products = ({
           filterDrawerOpened={filterDrawerOpened}
           brands={brands}
         />
+        <ShoppingCartButton />
       </Container>
     </div>
   );

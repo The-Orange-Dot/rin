@@ -4,6 +4,8 @@ import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { SessionProvider } from "next-auth/react";
+import { store } from "../redux/store";
+import { Provider } from "react-redux";
 
 const theme = createTheme({
   palette: {
@@ -21,13 +23,15 @@ const theme = createTheme({
 function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   return (
     <>
-      <SessionProvider session={session}>
-        <ThemeProvider theme={theme}>
-          <Navbar />
-          <Component {...pageProps} />
-          <Footer />
-        </ThemeProvider>
-      </SessionProvider>
+      <Provider store={store}>
+        <SessionProvider session={session}>
+          <ThemeProvider theme={theme}>
+            <Navbar />
+            <Component {...pageProps} />
+            <Footer />
+          </ThemeProvider>
+        </SessionProvider>
+      </Provider>
     </>
   );
 }

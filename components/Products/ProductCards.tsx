@@ -13,9 +13,9 @@ import {
 } from "@mui/material";
 import { useMediaQuery } from "@mui/material";
 import { useRouter } from "next/router";
-import { createDeflate } from "zlib";
-import { stringify } from "querystring";
 import { ProductReviewType } from "../../types/productTypes";
+import { addItem } from "../../redux/reducers/shoppingCartReducer";
+import { useSelector, useDispatch } from "react-redux";
 
 const ProductCards = ({
   product,
@@ -24,6 +24,22 @@ const ProductCards = ({
 }: any) => {
   const isMobile = useMediaQuery("(max-width: 900px)");
   const router = useRouter();
+  const shoppingCart = useSelector((state: any) => state.shoppingCart.value);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    console.log(shoppingCart);
+  }, [shoppingCart]);
+
+  const addItemToCartHandler = () => {
+    const item = {
+      name: product.name,
+      quantity: 1,
+      price: product.price,
+    };
+
+    dispatch(addItem(item));
+  };
 
   const routerHandler = async () => {
     setSelectedProduct(product);
@@ -209,6 +225,9 @@ const ProductCards = ({
             variant="contained"
             disableElevation
             color="primary"
+            onClick={() => {
+              addItemToCartHandler();
+            }}
             sx={
               isMobile
                 ? {
