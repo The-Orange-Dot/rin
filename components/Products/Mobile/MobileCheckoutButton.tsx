@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Typography,
@@ -6,7 +6,11 @@ import {
   InputLabel,
   NativeSelect,
   Button,
+  Alert,
 } from "@mui/material";
+import { useSelector, useDispatch } from "react-redux";
+import { addItem } from "../../../redux/reducers/shoppingCartReducer";
+import { gsap } from "gsap/dist/gsap";
 
 const MobileCheckoutButton = ({
   closeModalHandler,
@@ -15,6 +19,54 @@ const MobileCheckoutButton = ({
   options,
   product,
 }: any) => {
+  const dispatch = useDispatch();
+  const shoppingCart = useSelector((state: any) => state.shoppingCart.value);
+  const [openAlert, setOpenAlert] = useState(false);
+
+  const successTl = gsap
+    .timeline({ paused: true })
+    .fromTo("#success-alert", { y: 100 }, { y: 0, ease: "Expo.easeOut" })
+    .to("#success-alert", { y: 100, delay: 3, ease: "Expo.easeIn" });
+
+  const errorTl = gsap
+    .timeline({ paused: true })
+    .fromTo("#error-alert", { y: 100 }, { y: 0, ease: "Expo.easeOut" })
+    .to("#error-alert", { y: 100, delay: 3, ease: "Expo.easeIn" });
+
+  const addItemToCartHandler = async () => {
+    try {
+      const item = {
+        id: product.id,
+        name: product.name,
+        quantity: quantity,
+        price: product.price,
+      };
+
+      let foundItem = await shoppingCart.find((item: any) => {
+        return item.id === product.id;
+      });
+      if (foundItem) {
+        const updatedCart = await shoppingCart.filter((item: any) => {
+          return item.id !== product.id;
+        });
+        const updatedItem = {
+          id: product.id,
+          name: product.name,
+          quantity: foundItem.quantity + quantity,
+          price: product.price,
+        };
+
+        dispatch(addItem([...updatedCart, updatedItem]));
+      } else {
+        console.log([...shoppingCart, item]);
+        dispatch(addItem([...shoppingCart, item]));
+      }
+      successTl.play();
+    } catch {
+      errorTl.play();
+    }
+  };
+
   return (
     <Box
       sx={{
@@ -39,6 +91,7 @@ const MobileCheckoutButton = ({
           justifyContent: "space-between",
           alignItems: "flex-start",
           height: "100%",
+          backgroundColor: "white",
         }}
       >
         <Box
@@ -91,7 +144,7 @@ const MobileCheckoutButton = ({
           </FormControl>
         </Box>
       </Box>
-      <Box sx={{ width: "100%", display: "flex" }}>
+      <Box sx={{ width: "100%", display: "flex", background: "white" }}>
         <Button
           onClick={() => {
             closeModalHandler("modal_open=true");
@@ -114,6 +167,9 @@ const MobileCheckoutButton = ({
             alignItems: "center",
             flex: 1.5,
           }}
+          onClick={() => {
+            addItemToCartHandler();
+          }}
         >
           <Typography variant="body1" sx={{ lineHeight: 1.5, flex: 1 }}>
             ${quantity * product.price}.00
@@ -126,6 +182,27 @@ const MobileCheckoutButton = ({
           </Typography>
         </Button>
       </Box>
+      <Alert
+        id="success-alert"
+        severity="success"
+        sx={{
+          position: "fixed",
+          zIndex: -1,
+          bottom: 55,
+          pb: 10,
+          textAlign: "center",
+        }}
+      >
+        {product.name} has been added to your cart
+      </Alert>
+
+      <Alert
+        id="error-alert"
+        severity="error"
+        sx={{ position: "fixed", zIndex: -1, bottom: 55, pb: 10 }}
+      >
+        Error
+      </Alert>
     </Box>
   );
 };

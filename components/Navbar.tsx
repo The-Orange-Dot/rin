@@ -20,6 +20,14 @@ const Navbar = () => {
   const session = useSession();
   const router = useRouter();
   const shoppingCart = useSelector((state: any) => state.shoppingCart.value);
+  const [itemsInCart, setItemsInCart] = useState(0);
+
+  useEffect(() => {
+    const totalItems = shoppingCart?.reduce((total: number, item: any) => {
+      return (total = total + item.quantity);
+    }, 0);
+    setItemsInCart(totalItems);
+  }, [shoppingCart]);
 
   useEffect(() => {
     if (session.status !== "loading") {
@@ -123,7 +131,7 @@ const Navbar = () => {
           <Box sx={{ display: "flex" }}>
             <ShoppingCartIcon />
             {shoppingCart?.length > 0 ? (
-              <Typography>{shoppingCart?.length}</Typography>
+              <Typography>{itemsInCart}</Typography>
             ) : null}
           </Box>
         </div>

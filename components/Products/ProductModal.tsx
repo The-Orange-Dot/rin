@@ -15,7 +15,7 @@ import { ProductType, ProductReviewType } from "../../types/productTypes";
 import { useRouter } from "next/router";
 import IngredientsAccordion from "./IngredientsAccordion";
 import ProductReviews from "./ProductReviews";
-import CheckoutButton from "./Mobile/MobileCheckoutButton";
+import CheckoutButton from "./CheckoutButton";
 
 const ProductModal = ({
   productModalOpen,
@@ -65,6 +65,7 @@ const ProductModal = ({
     });
   }, []); //eslint-disable-line
 
+  //Logic for closing modal and setting modal_open to false
   const closeModalHandler = async (url: string) => {
     setProductModalOpen(false);
 
@@ -153,12 +154,14 @@ const ProductModal = ({
               sx={{
                 width: 600,
                 height: 200,
-                border: "1px solid black",
-                position: "absolute",
-                left: 0,
-                bottom: 0,
               }}
-            ></Box>
+            >
+              <CheckoutButton
+                product={product}
+                quantity={quantity}
+                setQuantity={setQuantity}
+              />
+            </Box>
           </Box>
 
           {/* Right Side */}

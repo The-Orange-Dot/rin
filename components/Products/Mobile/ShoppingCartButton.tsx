@@ -17,13 +17,11 @@ const ShoppingCartButton = () => {
   );
 
   useEffect(() => {
-    let inBag = 0;
-    shoppingCart?.map((item: Item) => {
-      inBag += item.quantity;
-    });
-
-    setItemsInBag(inBag);
-  }, [shoppingCart]); //eslint-disable-line
+    const totalItems = shoppingCart?.reduce((total: number, item: any) => {
+      return (total = total + item.quantity);
+    }, 0);
+    setItemsInBag(totalItems);
+  }, [shoppingCart]);
 
   if (itemsInBag > 0) {
     return (
