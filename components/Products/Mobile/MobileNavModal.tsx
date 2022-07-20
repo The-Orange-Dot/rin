@@ -47,7 +47,7 @@ const MobileNavModal = ({ mobileNavModalOpen, setMobileNavModalOpen }: any) => {
         </Typography>
       </Link>
       <Link href="/products">
-        <Typography variant="body1" sx={{ m: 0.5, fontWeight: 200 }}>
+        <Typography variant="body1" sx={{ m: 0.5, fontWeight: 200, mb: 3 }}>
           Products
         </Typography>
       </Link>

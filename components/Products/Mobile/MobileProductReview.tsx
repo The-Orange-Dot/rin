@@ -9,7 +9,7 @@ import {
   Grid,
   Rating,
 } from "@mui/material";
-import { DateFormatter } from "../DateFormatter";
+import { DateFormatter } from "../../DateFormatter";
 
 const MobileProductReview = ({ review }: any) => {
   const [reviewTooLong, setReviewTooLong] = useState(false);

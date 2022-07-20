@@ -1,13 +1,15 @@
-import { Typography, Container } from "@mui/material";
+import { Typography, Container, Box } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import styles from "../styles/navbar.module.css";
 import { useMediaQuery } from "@mui/material";
 import Link from "next/link";
 import MenuIcon from "@mui/icons-material/Menu";
-import MobileNavModal from "./Products/MobileNavModal";
+import MobileNavModal from "./Products/Mobile/MobileNavModal";
 import { useSession } from "next-auth/react";
 import gsap from "gsap";
 import { useRouter } from "next/router";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import { useSelector } from "react-redux";
 
 const Navbar = () => {
   const [textColor, setTextColor] = useState("black");
@@ -17,6 +19,7 @@ const Navbar = () => {
   const [pageLoaded, setPageLoaded] = useState(false);
   const session = useSession();
   const router = useRouter();
+  const shoppingCart = useSelector((state: any) => state.shoppingCart.value);
 
   useEffect(() => {
     if (session.status !== "loading") {
@@ -117,6 +120,12 @@ const Navbar = () => {
               Products
             </Typography>
           </Link>
+          <Box sx={{ display: "flex" }}>
+            <ShoppingCartIcon />
+            {shoppingCart?.length > 0 ? (
+              <Typography>{shoppingCart?.length}</Typography>
+            ) : null}
+          </Box>
         </div>
       )}
       <MobileNavModal

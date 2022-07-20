@@ -15,6 +15,7 @@ import { ProductType, ProductReviewType } from "../../types/productTypes";
 import { useRouter } from "next/router";
 import IngredientsAccordion from "./IngredientsAccordion";
 import ProductReviews from "./ProductReviews";
+import CheckoutButton from "./Mobile/MobileCheckoutButton";
 
 const ProductModal = ({
   productModalOpen,
@@ -27,6 +28,7 @@ const ProductModal = ({
   const router = useRouter();
   const [numberOfReviews, setNumberOfreviews] = useState(8);
   const [loadMoreReviews, setLoadMoreReviews] = useState(false);
+  const [options, setOptions] = useState("");
 
   //Sets description from selected product
   useEffect(() => {
@@ -57,23 +59,27 @@ const ProductModal = ({
 
   //Disables back button if modal is open
   useEffect(() => {
-    router.beforePopState(() => {
-      closeModalHandler();
-      return false;
+    router.beforePopState(({ url }) => {
+      closeModalHandler(url);
+      return true;
     });
   }, []); //eslint-disable-line
 
-  const closeModalHandler = async () => {
+  const closeModalHandler = async (url: string) => {
     setProductModalOpen(false);
-    await router.push(
-      {
-        pathname: "/products",
-      },
-      {},
-      { scroll: false }
-    );
-    setQuantity(1);
-    setDescription([]);
+
+    if (url.includes("modal_open=true")) {
+      await router.replace(
+        {
+          pathname: "/products",
+        },
+        {},
+        { scroll: false, shallow: true }
+      );
+
+      setQuantity(1);
+      setDescription([]);
+    }
   };
 
   const sortedReviews = selectedProduct?.reviews?.sort(
@@ -152,9 +158,7 @@ const ProductModal = ({
                 left: 0,
                 bottom: 0,
               }}
-            >
-              <Button color="primary">Add to card</Button>
-            </Box>
+            ></Box>
           </Box>
 
           {/* Right Side */}

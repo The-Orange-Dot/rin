@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Button, Typography, Box } from "@mui/material";
 import { ShoppingBagOutlined } from "@mui/icons-material";
 import { useSelector } from "react-redux";
-import { RootState } from "../../redux/store";
+import { RootState } from "../../../redux/store";
 
 interface Item {
   name: string;
@@ -45,7 +45,7 @@ const ShoppingCartButton = () => {
         <ShoppingBagOutlined fontSize="large" />
         <Box
           sx={{
-            position: "inherit",
+            position: "fixed",
             ml: 3,
             mb: 3,
             backgroundColor: "white",

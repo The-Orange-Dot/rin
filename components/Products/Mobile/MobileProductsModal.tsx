@@ -8,10 +8,10 @@ import {
   Divider,
   Button,
 } from "@mui/material";
-import styles from "../../styles/products.module.css";
+import styles from "../../../styles/products.module.css";
 import { useRouter } from "next/router";
-import CheckoutButton from "./CheckoutButton";
-import { ProductReviewType } from "../../types/productTypes";
+import MobileCheckoutButton from "./MobileCheckoutButton";
+import { ProductReviewType } from "../../../types/productTypes";
 import MobileIngredientsAccordion from "./MobileIngredientsAccordian";
 import MobileProductReview from "./MobileProductReview";
 
@@ -46,22 +46,27 @@ const MobileProductsModal = ({
   }, [product.description]);
 
   useEffect(() => {
-    router.beforePopState(() => {
-      closeModalHandler();
+    router.beforePopState(({ url }) => {
+      closeModalHandler(url);
       return false;
     });
   }, []); //eslint-disable-line
 
-  const closeModalHandler = async () => {
+  const closeModalHandler = async (url: string) => {
     setProductModalOpen(false);
-    await router.push(
-      {
-        pathname: "/products",
-      },
-      {},
-      { scroll: false }
-    );
-    setQuantity(1);
+
+    if (url?.includes("modal_open=true")) {
+      await router.replace(
+        {
+          pathname: "/products",
+        },
+        {},
+        { scroll: false }
+      );
+
+      setQuantity(1);
+      setDescription([]);
+    }
   };
 
   const sortedReviews = product?.reviews?.sort(
@@ -169,7 +174,7 @@ const MobileProductsModal = ({
             </Box>
           </Box>
 
-          <CheckoutButton
+          <MobileCheckoutButton
             closeModalHandler={closeModalHandler}
             quantity={quantity}
             setQuantity={setQuantity}

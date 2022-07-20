@@ -3,6 +3,7 @@ import { PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 
 interface Item {
+  id: string;
   name: string;
   quantity: number;
   price: number;
@@ -21,12 +22,15 @@ export const shoppingCartSlice = createSlice({
   initialState,
   reducers: {
     addItem: (state: ShoppingCart, action) => {
-      state.value = [...state.value, action.payload];
+      state.value = action.payload;
+    },
+    removeItem: (state: ShoppingCart, action) => {
+      state.value = action.payload;
     },
   },
 });
 
-export const { addItem } = shoppingCartSlice.actions;
+export const { addItem, removeItem } = shoppingCartSlice.actions;
 
 export const shoppingCart = (state: RootState) => state.shoppingCart.value;
 

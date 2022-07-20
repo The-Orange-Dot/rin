@@ -1,7 +1,6 @@
 import { Typography } from "@mui/material";
 import { Box, Container } from "@mui/system";
 import React, { useEffect, useState } from "react";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import gsap from "gsap";
 import { useMediaQuery } from "@mui/material";
 
@@ -85,11 +84,10 @@ const ProductsNavBar = () => {
       <Container
         sx={{
           display: "flex",
-          justifyContent: "space-between",
+          justifyContent: "center",
           width: "100%",
         }}
       >
-        <Box />
         <Box
           sx={{
             display: "flex",
@@ -99,7 +97,6 @@ const ProductsNavBar = () => {
         >
           {categorySelector}
         </Box>
-        <ShoppingCartIcon />
       </Container>
     </Container>
   );

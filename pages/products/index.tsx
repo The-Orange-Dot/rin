@@ -7,13 +7,13 @@ import { server } from "../../config";
 import ProductCards from "../../components/Products/ProductCards";
 import ProductModal from "../../components/Products/ProductModal";
 import { useMediaQuery } from "@mui/material";
-import MobileProductNavBar from "../../components/MobileProductNavBar";
+import MobileProductNavBar from "../../components/Products/MobileProductNavBar";
 import FilterListIcon from "@mui/icons-material/FilterList";
-import MobileProductsModal from "../../components/Products/MobileProductsModal";
+import MobileProductsModal from "../../components/Products/Mobile/MobileProductsModal";
 import gsap from "gsap";
 import { useSession } from "next-auth/react";
 import { ProductType } from "../../types/productTypes";
-import ShoppingCartButton from "../../components/Products/ShoppingCartButton";
+import ShoppingCartButton from "../../components/Products/Mobile/ShoppingCartButton";
 
 const Products = ({
   productsData,
@@ -175,7 +175,7 @@ const Products = ({
           filterDrawerOpened={filterDrawerOpened}
           brands={brands}
         />
-        <ShoppingCartButton />
+        {isMobile ? <ShoppingCartButton /> : null}
       </Container>
     </div>
   );

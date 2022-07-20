@@ -27,27 +27,44 @@ const ProductCards = ({
   const shoppingCart = useSelector((state: any) => state.shoppingCart.value);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    console.log(shoppingCart);
-  }, [shoppingCart]);
-
   const addItemToCartHandler = () => {
     const item = {
+      id: product.id,
       name: product.name,
       quantity: 1,
       price: product.price,
     };
+    let foundItem = shoppingCart.find((item: any) => {
+      return item.id === product.id;
+    });
+    if (foundItem) {
+      const updatedCart = shoppingCart.filter((item: any) => {
+        return item.id !== product.id;
+      });
+      const updatedItem = {
+        id: product.id,
+        name: product.name,
+        quantity: foundItem.quantity + 1,
+        price: product.price,
+      };
 
-    dispatch(addItem(item));
+      dispatch(addItem([...updatedCart, updatedItem]));
+    } else {
+      dispatch(addItem([...shoppingCart, item]));
+    }
   };
 
   const routerHandler = async () => {
+    await router.push({
+      pathname: "/products",
+      query: {
+        ...router.query,
+        view_product: product.id,
+        modal_open: "true",
+      },
+    });
     setSelectedProduct(product);
     setProductModalOpen(true);
-    router.push({
-      pathname: "/products",
-      query: { ...router.query, view_product: product.id, modal_open: "true" },
-    });
   };
 
   const ratingArray = product?.reviews.map((review: ProductReviewType) => {
