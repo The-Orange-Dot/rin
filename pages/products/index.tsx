@@ -12,22 +12,7 @@ import FilterListIcon from "@mui/icons-material/FilterList";
 import MobileProductsModal from "../../components/Products/MobileProductsModal";
 import gsap from "gsap";
 import { useSession } from "next-auth/react";
-
-interface ProductData {
-  id: string;
-  category: string;
-  createdAt: string;
-  description: string[];
-  details: string;
-  brand: string;
-  image: string;
-  name: string;
-  size: string;
-  updatedAt: string;
-  price: number;
-  quantity: number;
-  rating: number;
-}
+import { ProductType } from "../../types/productTypes";
 
 const Products = ({
   productsData,
@@ -43,33 +28,40 @@ const Products = ({
   const [brands, setBrands] = useState([]);
 
   useEffect(() => {
-    gsap.set(".card", { opacity: 0 });
-    gsap.set(".filter", { opacity: 0 });
-
+    if (document.querySelector(".card")) {
+      gsap.set(".card", { opacity: 0 });
+    }
+    if (document.querySelector(".filter")) {
+      gsap.set(".filter", { opacity: 0 });
+    }
     if (session.status !== "loading") {
       setPageLoaded(true);
     }
   }, [session.status]);
 
+  //Filter selectors animation once page is loaded
   useEffect(() => {
-    const tl = gsap
-      .timeline({ paused: true })
-      .fromTo(
-        ".card",
-        { opacity: 0, y: -10 },
-        { opacity: 1, stagger: 0.2, duration: 0.5, delay: 0.5, y: 0 }
-      )
-      .fromTo(".filter", { opacity: 0 }, { opacity: 1, delay: 0.5 }, 0);
+    if (document.querySelector(".filter")) {
+      const tl = gsap
+        .timeline({ paused: true })
+        .fromTo(
+          ".card",
+          { opacity: 0, y: -10 },
+          { opacity: 1, stagger: 0.2, duration: 0.5, delay: 0.5, y: 0 }
+        )
+        .fromTo(".filter", { opacity: 0 }, { opacity: 1, delay: 0.5 }, 0);
 
-    if (pageLoaded) {
-      tl.play(0);
+      if (pageLoaded) {
+        tl.play(0);
+      }
     }
   }, [pageLoaded]);
 
+  //Maps all products data into cards
   useEffect(
     () => {
       if (productsData) {
-        const productCards = productsData.map((product: ProductData) => {
+        const productCards = productsData.map((product: ProductType) => {
           return (
             <ProductCards
               product={product}
@@ -86,9 +78,9 @@ const Products = ({
     [productsData] // eslint-disable-line
   );
 
+  //Sets brands and amount of products for brands filter display
   useEffect(() => {
     let hash: any = {};
-
     for (let product of productsData) {
       if (hash[product.brand]) {
         hash[product.brand] += 1;

@@ -13,6 +13,7 @@ import styles from "../../styles/products.module.css";
 import { useRouter } from "next/router";
 import CheckoutButton from "./CheckoutButton";
 import { DateFormatter } from "../DateFormatter";
+import { ProductReviewType } from "../../types/productTypes";
 
 const MobileProductsModal = ({
   productModalOpen,
@@ -48,9 +49,13 @@ const MobileProductsModal = ({
 
   const closeModalHandler = async () => {
     setProductModalOpen(false);
-    await router.push({
-      pathname: "/products",
-    });
+    await router.push(
+      {
+        pathname: "/products",
+      },
+      {},
+      { scroll: false }
+    );
     setQuantity(1);
     setDescription([]);
   };
@@ -67,7 +72,7 @@ const MobileProductsModal = ({
     );
   });
 
-  const reviews = product?.reviews?.map((review: any) => {
+  const reviews = product?.reviews?.map((review: ProductReviewType) => {
     DateFormatter(review.createdAt.toString());
 
     return (

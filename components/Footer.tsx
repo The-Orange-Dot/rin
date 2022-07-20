@@ -31,12 +31,14 @@ const Footer: NextComponentType = () => {
   }, [session.status]);
 
   useEffect(() => {
-    const tl = gsap
-      .timeline({ paused: true })
-      .fromTo(".footer", { opacity: 0 }, { opacity: 1 });
+    if (document.querySelector(".footer")) {
+      const tl = gsap
+        .timeline({ paused: true })
+        .fromTo(".footer", { opacity: 0 }, { opacity: 1 });
 
-    if (pageLoaded) {
-      tl.play(0);
+      if (pageLoaded) {
+        tl.play(0);
+      }
     }
   }, [pageLoaded]);
 

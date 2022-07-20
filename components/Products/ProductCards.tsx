@@ -13,6 +13,9 @@ import {
 } from "@mui/material";
 import { useMediaQuery } from "@mui/material";
 import { useRouter } from "next/router";
+import { createDeflate } from "zlib";
+import { stringify } from "querystring";
+import { ProductReviewType } from "../../types/productTypes";
 
 const ProductCards = ({
   product,
@@ -29,7 +32,7 @@ const ProductCards = ({
     });
   };
 
-  const ratingArray = product?.reviews.map((review) => {
+  const ratingArray = product?.reviews.map((review: ProductReviewType) => {
     return review.rating;
   });
 
@@ -78,8 +81,17 @@ const ProductCards = ({
             component="img"
             alt={product.name}
             image={product.image}
-            height={350}
-            sx={{ objectFit: "contain", cursor: "pointer" }}
+            height={280}
+            sx={
+              isMobile
+                ? { objectFit: "contain", cursor: "pointer" }
+                : {
+                    maxHeight: 280,
+                    minHeight: 280,
+                    objectFit: "contain",
+                    cursor: "pointer",
+                  }
+            }
             onClick={() => {
               setProductModalOpen(true);
               setSelectedProduct(product);
@@ -150,13 +162,22 @@ const ProductCards = ({
               </Typography>
             </Box>
             <Box
-              sx={{
-                width: "100%",
-                height: "20px",
-                display: "flex",
-                alignItems: "center",
-                mb: 1,
-              }}
+              sx={
+                isMobile
+                  ? {
+                      width: "100%",
+                      height: "20px",
+                      display: "flex",
+                      alignItems: "center",
+                      mb: 1,
+                    }
+                  : {
+                      width: "100%",
+                      height: "20px",
+                      display: "flex",
+                      alignItems: "center",
+                    }
+              }
             >
               <Rating
                 size="small"
@@ -164,11 +185,12 @@ const ProductCards = ({
                 sx={{ mr: 0.5, color: "#3f312b" }}
                 precision={0.25}
                 value={averageRating}
-              />{" "}
-              <Typography variant="overline" color="secondary">
-                ({product?.reviews.length})
-              </Typography>
-              {isMobile ? null : (
+              />
+              {isMobile ? (
+                <Typography variant="overline" color="secondary">
+                  ({product?.reviews.length})
+                </Typography>
+              ) : (
                 <Typography
                   variant="caption"
                   sx={{
@@ -177,7 +199,7 @@ const ProductCards = ({
                     textDecoration: "underline",
                   }}
                 >
-                  Reviews 0
+                  {product?.reviews.length} Reviews
                 </Typography>
               )}
             </Box>
