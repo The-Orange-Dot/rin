@@ -58,20 +58,7 @@ const MobileProductsModal = ({
       { scroll: false }
     );
     setQuantity(1);
-    setDescription([]);
   };
-
-  const ingredients = product?.ingredients?.map((item: string) => {
-    const itemSplit = item.split(" ");
-    const itemName = itemSplit
-      .map((word) => `${word.slice(0, 1).toUpperCase()}${word.slice(1)}`)
-      .join(" ");
-    return (
-      <Grid item key={item} xs={12}>
-        <Typography variant="caption">{itemName}</Typography>
-      </Grid>
-    );
-  });
 
   const reviews = product?.reviews?.map((review: ProductReviewType) => {
     DateFormatter(review.createdAt.toString());

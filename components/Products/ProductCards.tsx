@@ -26,6 +26,8 @@ const ProductCards = ({
   const router = useRouter();
 
   const routerHandler = async () => {
+    setSelectedProduct(product);
+    setProductModalOpen(true);
     router.push({
       pathname: "/products",
       query: { ...router.query, view_product: product.id, modal_open: "true" },
@@ -92,9 +94,7 @@ const ProductCards = ({
                     cursor: "pointer",
                   }
             }
-            onClick={() => {
-              setProductModalOpen(true);
-              setSelectedProduct(product);
+            onClick={async () => {
               routerHandler();
             }}
           />
@@ -141,8 +141,6 @@ const ProductCards = ({
             >
               <Typography
                 onClick={() => {
-                  setProductModalOpen(true);
-                  setSelectedProduct(product);
                   routerHandler();
                 }}
                 color="primary"

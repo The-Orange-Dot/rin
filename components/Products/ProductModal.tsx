@@ -190,11 +190,15 @@ const ProductModal = ({
                     {description}
                   </Box>
                 </Box>
-                <Divider sx={{ mt: 5 }} />
+                <Divider sx={{ mt: 2 }} />
 
                 <IngredientsAccordion product={product} />
 
                 <Divider />
+
+                <Box>
+                  <Typography>Reviews</Typography>
+                </Box>
               </Box>
             </Box>
           </Box>

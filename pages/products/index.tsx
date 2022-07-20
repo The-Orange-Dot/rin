@@ -27,6 +27,8 @@ const Products = ({
   const [pageLoaded, setPageLoaded] = useState(false);
   const [brands, setBrands] = useState([]);
 
+  //Sets up initial state for animation
+  //When session loads, pageLoaded set to true
   useEffect(() => {
     if (document.querySelector(".card")) {
       gsap.set(".card", { opacity: 0 });
@@ -90,6 +92,11 @@ const Products = ({
     }
     setBrands(hash);
   }, [productsData]);
+
+  const productSelectHandler = async (product: any) => {
+    await setProducts(product);
+    setProductModalOpen(true);
+  };
 
   return (
     <div className={styles.main}>
