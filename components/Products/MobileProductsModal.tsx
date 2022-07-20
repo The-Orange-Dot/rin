@@ -64,7 +64,13 @@ const MobileProductsModal = ({
     setQuantity(1);
   };
 
-  const reviews = product?.reviews?.map((review: ProductReviewType) => {
+  const sortedReviews = product?.reviews?.sort(
+    (a: ProductReviewType, b: ProductReviewType) => {
+      return b.helpful - a.helpful;
+    }
+  );
+
+  const reviews = sortedReviews?.map((review: ProductReviewType) => {
     return <MobileProductReview review={review} key={review.createdAt} />;
   });
 

@@ -12,11 +12,6 @@ import {
   Rating,
 } from "@mui/material";
 import { DateFormatter } from "../DateFormatter";
-import {
-  ProductType,
-  ProductReviewType,
-  UserReviewType,
-} from "../../types/productTypes";
 
 const ProductReviews = ({ review }: any) => {
   const [reviewTooLong, setReviewTooLong] = useState(false);
