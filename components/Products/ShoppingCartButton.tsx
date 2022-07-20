@@ -68,6 +68,8 @@ const ShoppingCartButton = () => {
         </Box>
       </Button>
     );
+  } else {
+    return <Box></Box>;
   }
 };
 
