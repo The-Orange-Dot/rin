@@ -306,7 +306,7 @@ const seed = async () => {
     const testReviews: ReviewData = {
       userId: Math.floor(Math.random() * 49).toString(),
       productId: Math.floor(Math.random() * 8).toString(),
-      rating: Math.floor(Math.random() * 6),
+      rating: Math.floor(Math.random() * 5) + 1,
       description: faker.lorem.lines(),
       helpful: Math.floor(Math.random() * 120),
     };

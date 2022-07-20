@@ -11,9 +11,10 @@ import {
 } from "@mui/material";
 
 import React, { useEffect, useState } from "react";
-import { ProductType } from "../../types/productTypes";
+import { ProductType, ProductReviewType } from "../../types/productTypes";
 import { useRouter } from "next/router";
 import IngredientsAccordion from "./IngredientsAccordion";
+import ProductReviews from "./ProductReviews";
 
 const ProductModal = ({
   productModalOpen,
@@ -24,10 +25,14 @@ const ProductModal = ({
   const [description, setDescription] = useState<any[]>([]);
   const [quantity, setQuantity] = useState<number>(1);
   const router = useRouter();
+  const [numberOfReviews, setNumberOfreviews] = useState(8);
+  const [loadMoreReviews, setLoadMoreReviews] = useState(false);
 
   //Sets description from selected product
   useEffect(() => {
     setProduct(selectedProduct);
+    setNumberOfreviews(8);
+    setLoadMoreReviews(false);
   }, [selectedProduct]); //eslint-disable-line
 
   //Maps through product description to render
@@ -71,22 +76,42 @@ const ProductModal = ({
     setDescription([]);
   };
 
+  const sortedReviews = selectedProduct?.reviews?.sort(
+    (a: ProductReviewType, b: ProductReviewType) => {
+      return b.helpful - a.helpful;
+    }
+  );
+
+  const reviews = sortedReviews?.map((review: ProductReviewType) => {
+    return <ProductReviews review={review} key={review.createdAt} />;
+  });
+
+  const mostHelpfulReviews = reviews?.slice(0, 3);
+  const allReviews = reviews?.slice(3, numberOfReviews);
+
   return (
     <Modal
       open={productModalOpen}
       onClose={() => setProductModalOpen(false)}
-      sx={{ display: "flex", justifyContent: "center", zIndex: 0 }}
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+        zIndex: 0,
+      }}
       hideBackdrop
     >
       <Fade in={productModalOpen}>
         <Paper
           square
+          elevation={0}
           sx={{
             width: "100%",
             display: "flex",
             pl: 2,
             pr: 2,
             pt: "10vh",
+            maxWidth: 1500,
+            outline: "none",
           }}
         >
           {/* Left side */}
@@ -134,7 +159,13 @@ const ProductModal = ({
 
           {/* Right Side */}
           <Box
-            sx={{ width: "55%", height: "100%", overflowY: "scroll", pb: 20 }}
+            sx={{
+              width: "56%",
+              height: "100%",
+              overflowY: "scroll",
+              pb: 20,
+              pr: 3,
+            }}
           >
             <Box
               sx={{
@@ -197,8 +228,32 @@ const ProductModal = ({
                 <Divider />
 
                 <Box>
-                  <Typography>Reviews</Typography>
+                  <Typography>{reviews?.length} Reviews</Typography>
+                  <Box>
+                    <Typography>Voted most helpful review</Typography>
+                    {mostHelpfulReviews}
+                  </Box>
                 </Box>
+                {loadMoreReviews ? (
+                  <Box>{allReviews}</Box>
+                ) : (
+                  <Button
+                    onClick={() => {
+                      setLoadMoreReviews(true);
+                    }}
+                  >
+                    See more reviews
+                  </Button>
+                )}
+                {numberOfReviews <= reviews?.length && loadMoreReviews ? (
+                  <Button
+                    onClick={() => {
+                      setNumberOfreviews(numberOfReviews + 5);
+                    }}
+                  >
+                    See more reviews
+                  </Button>
+                ) : null}
               </Box>
             </Box>
           </Box>

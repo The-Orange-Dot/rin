@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Image from "next/image";
 import {
   Modal,
   Fade,
@@ -7,14 +6,14 @@ import {
   Box,
   Typography,
   Divider,
-  Grid,
+  Button,
 } from "@mui/material";
 import styles from "../../styles/products.module.css";
 import { useRouter } from "next/router";
 import CheckoutButton from "./CheckoutButton";
-import { DateFormatter } from "../DateFormatter";
 import { ProductReviewType } from "../../types/productTypes";
 import MobileIngredientsAccordion from "./MobileIngredientsAccordian";
+import MobileProductReview from "./MobileProductReview";
 
 const MobileProductsModal = ({
   productModalOpen,
@@ -25,6 +24,11 @@ const MobileProductsModal = ({
   const [description, setDescription] = useState([]);
   const [options, setOptions] = useState("");
   const router = useRouter();
+  const [loadMoreReviews, setLoadMoreReviews] = useState(false);
+
+  useEffect(() => {
+    setLoadMoreReviews(false);
+  }, [product]);
 
   useEffect(() => {
     if (product?.description?.length > 0) {
@@ -61,40 +65,11 @@ const MobileProductsModal = ({
   };
 
   const reviews = product?.reviews?.map((review: ProductReviewType) => {
-    DateFormatter(review.createdAt.toString());
-
-    return (
-      <>
-        <Box key={review.createdAt} sx={{ mt: 2, minWidth: "100%" }}>
-          <Box sx={{ display: "flex", alignItems: "flex-end", mb: 1 }}>
-            {/*eslint-disable*/}
-            <img
-              src={review.userReview.image}
-              width={50}
-              height={50}
-              style={{ borderRadius: "20rem" }}
-            />
-            {/*eslint-enable*/}
-            <Typography
-              variant="overline"
-              sx={{ mb: 0, ml: 1, fontWeight: 600, lineHeight: 1.5 }}
-            >
-              {review?.userReview?.username}
-            </Typography>
-          </Box>
-          <Box>
-            <Typography>{review.description}</Typography>
-          </Box>
-          <Box>
-            <Typography variant="caption" color="secondary">
-              Posted: {DateFormatter(review.createdAt.toString())}
-            </Typography>
-          </Box>
-          <Divider sx={{ mt: 2 }} />
-        </Box>
-      </>
-    );
+    return <MobileProductReview review={review} key={review.createdAt} />;
   });
+
+  const mostHelpfulReviews = reviews?.slice(0, 3);
+  const allReviews = reviews?.slice(3);
 
   return (
     <Modal
@@ -172,7 +147,18 @@ const MobileProductsModal = ({
                 >
                   {product?.reviews?.length} Reviews
                 </Typography>
-                {reviews}
+                <Typography>Top most helpful reviews</Typography>
+                {mostHelpfulReviews}
+                {loadMoreReviews ? (
+                  allReviews
+                ) : (
+                  <Button
+                    sx={{ mt: 2 }}
+                    onClick={() => setLoadMoreReviews(true)}
+                  >
+                    See more reviews
+                  </Button>
+                )}
               </Box>
             </Box>
           </Box>
