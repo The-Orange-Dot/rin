@@ -14,6 +14,7 @@ import { useRouter } from "next/router";
 import CheckoutButton from "./CheckoutButton";
 import { DateFormatter } from "../DateFormatter";
 import { ProductReviewType } from "../../types/productTypes";
+import MobileIngredientsAccordion from "./MobileIngredientsAccordian";
 
 const MobileProductsModal = ({
   productModalOpen,
@@ -167,16 +168,9 @@ const MobileProductsModal = ({
               </Typography>
               {description}
               <Divider sx={{ mt: 2 }} />
-              <Typography
-                variant="body2"
-                sx={{ fontWeight: 600, mb: 2, mt: 2 }}
-              >
-                What&apos;s in it:
-              </Typography>
-              <Grid container sx={{ width: "100%" }}>
-                {ingredients}
-              </Grid>
-              <Divider sx={{ mt: 2 }} />
+
+              <MobileIngredientsAccordion product={product} />
+              <Divider />
               <Box
                 sx={{
                   width: "100%",
