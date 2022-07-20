@@ -37,6 +37,7 @@ const MobileCheckoutButton = ({
     try {
       const item = {
         id: product.id,
+        image: product.image,
         name: product.name,
         quantity: quantity,
         price: product.price,
@@ -52,6 +53,7 @@ const MobileCheckoutButton = ({
         const updatedItem = {
           id: product.id,
           name: product.name,
+          image: product.image,
           quantity: foundItem.quantity + quantity,
           price: product.price,
         };

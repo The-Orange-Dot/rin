@@ -12,6 +12,7 @@ import {
   Rating,
 } from "@mui/material";
 import { DateFormatter } from "../DateFormatter";
+import SentimentVerySatisfiedIcon from "@mui/icons-material/SentimentVerySatisfied";
 
 const ProductReviews = ({ review }: any) => {
   const [reviewTooLong, setReviewTooLong] = useState(false);
@@ -106,9 +107,12 @@ const ProductReviews = ({ review }: any) => {
           <Typography variant="caption" color="secondary">
             Posted: {DateFormatter(review.createdAt.toString())}
           </Typography>
-          <Typography variant="caption" color="secondary">
-            {review.helpful} found this helpful
-          </Typography>
+          <Box sx={{ display: "flex", alignItems: "center" }}>
+            <SentimentVerySatisfiedIcon fontSize="small" />
+            <Typography variant="caption" color="secondary">
+              {review.helpful} found this helpful
+            </Typography>
+          </Box>
         </Box>
         <Divider sx={{ mt: 2 }} />
       </Box>

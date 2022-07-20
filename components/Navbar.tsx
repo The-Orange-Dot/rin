@@ -1,15 +1,15 @@
-import { Typography, Container, Box } from "@mui/material";
+import { Typography, Container, Box, Drawer, Paper } from "@mui/material";
+import MobileNavModal from "./Products/Mobile/MobileNavModal";
 import React, { useEffect, useState } from "react";
 import styles from "../styles/navbar.module.css";
 import { useMediaQuery } from "@mui/material";
-import Link from "next/link";
-import MenuIcon from "@mui/icons-material/Menu";
-import MobileNavModal from "./Products/Mobile/MobileNavModal";
 import { useSession } from "next-auth/react";
 import gsap from "gsap";
 import { useRouter } from "next/router";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { useSelector } from "react-redux";
+import Link from "next/link";
+import MenuIcon from "@mui/icons-material/Menu";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
 const Navbar = () => {
   const [textColor, setTextColor] = useState("black");
@@ -21,6 +21,7 @@ const Navbar = () => {
   const router = useRouter();
   const shoppingCart = useSelector((state: any) => state.shoppingCart.value);
   const [itemsInCart, setItemsInCart] = useState(0);
+  const [openCheckoutDrawer, setOpenCheckoutDrawer] = useState<boolean>(false);
 
   useEffect(() => {
     const totalItems = shoppingCart?.reduce((total: number, item: any) => {
@@ -44,6 +45,24 @@ const Navbar = () => {
       tl.play(0);
     }
   }, [pageLoaded]);
+
+  const shoppingCartCheckout = shoppingCart.map((product: any) => {
+    return (
+      <Box key={product.name} sx={{ display: "flex", mb: 2 }}>
+        {/* eslint-disable */}
+        <img src={product.image} width={70} height={70} alt={product.name} />
+        {/* eslint-enable */}
+        <Box sx={{ display: "flex", flexDirection: "column", ml: 1 }}>
+          <Typography>{product.name}</Typography>
+          <Typography>Quantity: {product.quantity}</Typography>
+          <Typography>
+            Cost: ${product.price * product.quantity} (${product.price} per
+            item)
+          </Typography>
+        </Box>
+      </Box>
+    );
+  });
 
   return (
     <div
@@ -129,7 +148,13 @@ const Navbar = () => {
             </Typography>
           </Link>
           <Box sx={{ display: "flex" }}>
-            <ShoppingCartIcon />
+            <ShoppingCartIcon
+              onClick={() => {
+                if (shoppingCart?.length > 0) {
+                  setOpenCheckoutDrawer(true);
+                }
+              }}
+            />
             {shoppingCart?.length > 0 ? (
               <Typography>{itemsInCart}</Typography>
             ) : null}
@@ -140,6 +165,17 @@ const Navbar = () => {
         setMobileNavModalOpen={setMobileNavModalOpen}
         mobileNavModalOpen={mobileNavModalOpen}
       />
+      <Drawer
+        open={openCheckoutDrawer}
+        onClose={() => {
+          setOpenCheckoutDrawer(false);
+        }}
+        anchor="right"
+      >
+        <Paper sx={{ width: 400, height: "100%", p: 2 }} square>
+          {shoppingCartCheckout}
+        </Paper>
+      </Drawer>
     </div>
   );
 };

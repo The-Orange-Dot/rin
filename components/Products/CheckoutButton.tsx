@@ -21,6 +21,7 @@ const CheckoutButton = ({ quantity, setQuantity, product }: any) => {
   const addItemToCartHandler = async () => {
     const item = {
       id: product.id,
+      image: product.image,
       name: product.name,
       quantity: quantity,
       price: product.price,
@@ -35,6 +36,7 @@ const CheckoutButton = ({ quantity, setQuantity, product }: any) => {
       });
       const updatedItem = {
         id: product.id,
+        image: product.image,
         name: product.name,
         quantity: foundItem.quantity + quantity,
         price: product.price,

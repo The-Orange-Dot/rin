@@ -33,6 +33,7 @@ const ProductCards = ({
       name: product.name,
       quantity: 1,
       price: product.price,
+      image: product.image,
     };
     let foundItem = shoppingCart.find((item: any) => {
       return item.id === product.id;
@@ -43,6 +44,7 @@ const ProductCards = ({
       });
       const updatedItem = {
         id: product.id,
+        image: product.image,
         name: product.name,
         quantity: foundItem.quantity + 1,
         price: product.price,
