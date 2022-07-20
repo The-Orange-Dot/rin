@@ -175,8 +175,8 @@ const Products = ({
           filterDrawerOpened={filterDrawerOpened}
           brands={brands}
         />
-        <ShoppingCartButton />
       </Container>
+      <ShoppingCartButton />
     </div>
   );
 };
