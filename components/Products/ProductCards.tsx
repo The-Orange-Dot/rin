@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Typography,
   Container,
@@ -34,6 +34,7 @@ const ProductCards = ({
       quantity: 1,
       price: product.price,
       image: product.image,
+      stock: product.quantity,
     };
     let foundItem = shoppingCart.find((item: any) => {
       return item.id === product.id;
@@ -48,9 +49,11 @@ const ProductCards = ({
         name: product.name,
         quantity: foundItem.quantity + 1,
         price: product.price,
+        stock: product.quantity,
       };
-
-      dispatch(addItem([...updatedCart, updatedItem]));
+      if (updatedItem.quantity < product.stock) {
+        dispatch(addItem([...updatedCart, updatedItem]));
+      }
     } else {
       dispatch(addItem([...shoppingCart, item]));
     }
@@ -96,7 +99,7 @@ const ProductCards = ({
                 display: "flex",
                 justifyContent: "center",
                 width: "100%",
-                height: 550,
+                height: 560,
                 mb: 8,
               }
         }
@@ -194,6 +197,15 @@ const ProductCards = ({
                 {product?.details?.length ? ` - ${product.details}` : null}
               </Typography>
             </Box>
+            <Typography
+              variant="caption"
+              sx={{
+                color: "#949495",
+                fontSize: ".7rem",
+              }}
+            >
+              ({product?.quantity} items in stock)
+            </Typography>
             <Box
               sx={
                 isMobile
@@ -227,7 +239,7 @@ const ProductCards = ({
                 <Typography
                   variant="caption"
                   sx={{
-                    color: "gray",
+                    color: "#949495",
                     fontSize: ".7rem",
                     textDecoration: "underline",
                   }}

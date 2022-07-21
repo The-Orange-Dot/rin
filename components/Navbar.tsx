@@ -10,6 +10,7 @@ import { useSelector } from "react-redux";
 import Link from "next/link";
 import MenuIcon from "@mui/icons-material/Menu";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import CheckoutDrawer from "./Products/CheckoutDrawer";
 
 const Navbar = () => {
   const [textColor, setTextColor] = useState("black");
@@ -45,24 +46,6 @@ const Navbar = () => {
       tl.play(0);
     }
   }, [pageLoaded]);
-
-  const shoppingCartCheckout = shoppingCart.map((product: any) => {
-    return (
-      <Box key={product.name} sx={{ display: "flex", mb: 2 }}>
-        {/* eslint-disable */}
-        <img src={product.image} width={70} height={70} alt={product.name} />
-        {/* eslint-enable */}
-        <Box sx={{ display: "flex", flexDirection: "column", ml: 1 }}>
-          <Typography>{product.name}</Typography>
-          <Typography>Quantity: {product.quantity}</Typography>
-          <Typography>
-            Cost: ${product.price * product.quantity} (${product.price} per
-            item)
-          </Typography>
-        </Box>
-      </Box>
-    );
-  });
 
   return (
     <div
@@ -147,14 +130,15 @@ const Navbar = () => {
               Products
             </Typography>
           </Link>
-          <Box sx={{ display: "flex" }}>
-            <ShoppingCartIcon
-              onClick={() => {
-                if (shoppingCart?.length > 0) {
-                  setOpenCheckoutDrawer(true);
-                }
-              }}
-            />
+          <Box
+            sx={{ display: "flex", width: "10%" }}
+            onClick={() => {
+              if (shoppingCart?.length > 0) {
+                setOpenCheckoutDrawer(true);
+              }
+            }}
+          >
+            <ShoppingCartIcon />
             {shoppingCart?.length > 0 ? (
               <Typography>{itemsInCart}</Typography>
             ) : null}
@@ -172,9 +156,7 @@ const Navbar = () => {
         }}
         anchor="right"
       >
-        <Paper sx={{ width: 400, height: "100%", p: 2 }} square>
-          {shoppingCartCheckout}
-        </Paper>
+        <CheckoutDrawer />
       </Drawer>
     </div>
   );

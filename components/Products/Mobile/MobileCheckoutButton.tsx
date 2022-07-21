@@ -41,6 +41,7 @@ const MobileCheckoutButton = ({
         name: product.name,
         quantity: quantity,
         price: product.price,
+        stock: product.quantity,
       };
 
       let foundItem = await shoppingCart.find((item: any) => {
@@ -56,6 +57,7 @@ const MobileCheckoutButton = ({
           image: product.image,
           quantity: foundItem.quantity + quantity,
           price: product.price,
+          stock: product.quantity,
         };
 
         dispatch(addItem([...updatedCart, updatedItem]));

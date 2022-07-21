@@ -133,27 +133,22 @@ const ProductModal = ({
           >
             <Box
               sx={{
-                width: 600,
-                height: 600,
+                width: "100%",
                 display: "flex",
                 flexDirection: "column",
                 mt: 2,
+                minHeight: "65vh",
               }}
             >
               {/* eslint-disable */}
-              <img
-                src={product.image}
-                alt={product.name}
-                width={600}
-                height={600}
-              />
+              <img src={product.image} alt={product.name} width={"100%"} />
               {/* eslint-enable */}
             </Box>
 
             <Box
               sx={{
-                width: 600,
-                height: 200,
+                width: "100%",
+                height: "20vh",
               }}
             >
               <CheckoutButton

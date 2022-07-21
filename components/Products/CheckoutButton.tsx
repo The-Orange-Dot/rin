@@ -25,6 +25,7 @@ const CheckoutButton = ({ quantity, setQuantity, product }: any) => {
       name: product.name,
       quantity: quantity,
       price: product.price,
+      stock: product.quantity,
     };
 
     let foundItem = await shoppingCart.find((item: any) => {
@@ -40,6 +41,7 @@ const CheckoutButton = ({ quantity, setQuantity, product }: any) => {
         name: product.name,
         quantity: foundItem.quantity + quantity,
         price: product.price,
+        stock: product.quantity,
       };
 
       dispatch(addItem([...updatedCart, updatedItem]));
@@ -65,6 +67,7 @@ const CheckoutButton = ({ quantity, setQuantity, product }: any) => {
             variant="outlined"
             inputProps={{ min: 0, style: { textAlign: "center" } }}
             sx={{
+              minWidth: 70,
               width: "100%",
               display: "flex",
               justifyItems: "center",

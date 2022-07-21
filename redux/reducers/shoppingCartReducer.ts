@@ -7,6 +7,7 @@ interface Item {
   name: string;
   quantity: number;
   price: number;
+  stock: number;
 }
 
 interface ShoppingCart {
@@ -27,10 +28,18 @@ export const shoppingCartSlice = createSlice({
     removeItem: (state: ShoppingCart, action) => {
       state.value = action.payload;
     },
+    editQuantity: (state: ShoppingCart, action) => {
+      const item = state.value.find((item) => {
+        return item.name === action.payload.name;
+      });
+      if (item && item.quantity >= 1 && item.stock >= action.payload.quantity) {
+        item.quantity = action.payload.quantity;
+      }
+    },
   },
 });
 
-export const { addItem, removeItem } = shoppingCartSlice.actions;
+export const { addItem, removeItem, editQuantity } = shoppingCartSlice.actions;
 
 export const shoppingCart = (state: RootState) => state.shoppingCart.value;
 
