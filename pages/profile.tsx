@@ -5,7 +5,7 @@ import styles from "../styles/profile.module.css";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 
-const profile = () => {
+const Profile = () => {
   const session = useSession();
   const router = useRouter();
 
@@ -41,4 +41,4 @@ const profile = () => {
   }
 };
 
-export default profile;
+export default Profile;
