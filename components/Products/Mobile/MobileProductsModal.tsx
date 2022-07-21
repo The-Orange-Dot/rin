@@ -7,28 +7,37 @@ import {
   Typography,
   Divider,
   Button,
+  CircularProgress,
 } from "@mui/material";
 import styles from "../../../styles/products.module.css";
 import { useRouter } from "next/router";
 import MobileCheckoutButton from "./MobileCheckoutButton";
-import { ProductReviewType } from "../../../types/productTypes";
+import { ProductReviewType, ProductType } from "../../../types/productTypes";
 import MobileIngredientsAccordion from "./MobileIngredientsAccordian";
 import MobileProductReview from "./MobileProductReview";
 
 const MobileProductsModal = ({
   productModalOpen,
   setProductModalOpen,
-  product,
+  selectedProduct,
 }: any) => {
+  const [product, setProduct] = useState<ProductType>(selectedProduct);
   const [quantity, setQuantity] = useState<number>(1);
-  const [description, setDescription] = useState([]);
+  const [description, setDescription] = useState<any[]>([]);
   const [options, setOptions] = useState("");
   const router = useRouter();
   const [loadMoreReviews, setLoadMoreReviews] = useState(false);
+  const [reviewsData, setReviewsData] = useState<any[]>(
+    selectedProduct?.reviews
+  );
+  const [numberOfReviews, setNumberOfreviews] = useState<number>(3);
 
   useEffect(() => {
     setLoadMoreReviews(false);
-  }, [product]);
+    setProduct(selectedProduct);
+    setNumberOfreviews(3);
+    setReviewsData(selectedProduct?.reviews);
+  }, [selectedProduct]);
 
   useEffect(() => {
     if (product?.description?.length > 0) {
@@ -69,13 +78,24 @@ const MobileProductsModal = ({
     }
   };
 
-  const sortedReviews = product?.reviews?.sort(
-    (a: ProductReviewType, b: ProductReviewType) => {
-      return b.helpful - a.helpful;
-    }
-  );
+  const fetchMoreReviews = async () => {
+    setLoadMoreReviews(true);
+    const res = await fetch(`/api/productReviews/${selectedProduct.id}`, {
+      method: "PATCH",
+      body: JSON.stringify(numberOfReviews),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
 
-  const reviews = sortedReviews?.map((review: ProductReviewType) => {
+    const reviews: any[] = await res.json();
+
+    setNumberOfreviews(numberOfReviews + 5);
+    setReviewsData([...reviewsData, ...reviews]);
+    setLoadMoreReviews(false);
+  };
+
+  const reviews = reviewsData?.map((review: ProductReviewType) => {
     return <MobileProductReview review={review} key={review.createdAt} />;
   });
 
@@ -156,20 +176,23 @@ const MobileProductsModal = ({
                   variant="body1"
                   sx={{ fontWeight: 600, mt: 1, fontSize: "1.2rem" }}
                 >
-                  {product?.reviews?.length} Reviews
+                  {product?._count?.reviews} Reviews
                 </Typography>
                 <Typography>Top most helpful reviews</Typography>
-                {mostHelpfulReviews}
-                {loadMoreReviews ? (
-                  allReviews
-                ) : (
+                {reviews}
+                {numberOfReviews <= selectedProduct?._count?.reviews ? (
                   <Button
+                    disabled={loadMoreReviews}
                     sx={{ mt: 2 }}
-                    onClick={() => setLoadMoreReviews(true)}
+                    onClick={() => fetchMoreReviews()}
                   >
-                    See more reviews
+                    {loadMoreReviews ? (
+                      <CircularProgress color="inherit" size={25} />
+                    ) : (
+                      "See more reviews"
+                    )}
                   </Button>
-                )}
+                ) : null}
               </Box>
             </Box>
           </Box>

@@ -58,7 +58,7 @@ const seed = async () => {
         "植物の恵みを凝縮したクレンジング。黄金色のオイルがとろけるように肌に広がり、メイクや肌に付着した大気中の汚れまでも速やかにオフ。深みのある心地良い香りに包まれて、1日がんばった肌と心をリラックスさせて。洗い流した後は、しっとりしなやかな肌へと導きます。",
         "■有機認証「COSMOS」を取得こちらの商品は、国際的な有機認証「COSMOS」を取得しています。原料の栽培法や、環境に配慮した製造工程、包装資材に関して厳しい基準が定められており、これら全てをクリアしています。",
       ],
-      quantity: 100,
+      quantity: 10,
       price: 50.0,
       rating: 3.4,
       image: "https://www.threecosmetics.com/img/goods/L/t1b219.jpg",
@@ -99,7 +99,7 @@ const seed = async () => {
         "3種の天然クレンザーで毛穴の汚れまでするんとオフする、クレンジングオイルジェル。油性の汚れと親和性に優れた「植物オイル」、肌の凹凸汚れに微細な粒子の「天然スクラブ」、毛穴やキメの汚れを吸着する「天然クレイ」によるトリプル処方で、メイクを落としながら、肌をおだやかにディープクレンジング。心地よさで包みながら素肌を明るく導き、翌朝のメイクのりにまで違いが出ます。",
         "■有機認証「COSMOS」を取得こちらの商品は、国際的な有機認証「COSMOS」を取得しています。原料の栽培法や、環境に配慮した製造工程、包装資材に関して厳しい基準が定められており、これら全てをクリアしています。",
       ],
-      quantity: 100,
+      quantity: 43,
       price: 60.0,
       rating: 4.6,
       image: "https://www.threecosmetics.com/img/goods/L/t1b264.jpg",
@@ -148,7 +148,7 @@ const seed = async () => {
         "唇の乾燥ダメージを集中ケアする、濃密リップバーム",
         "乾燥によりダメージを受けた唇をトリートメントするリップバーム。固形のバームが体温でとろけ、睡眠中の唇をなめらかに整えます。甘くフルーティな精油の芳香が緊張をゆるめ、リラックスした気分へ。",
       ],
-      quantity: 100,
+      quantity: 9,
       price: 40.0,
       rating: 5,
       image: "https://www.threecosmetics.com/img/goods/S/t1b104.jpg",
@@ -188,7 +188,7 @@ const seed = async () => {
         "This is a test description of a Korean Product rom&nd Whitening Sun Screen",
         "Checking to see how it looks in english to see what i can fit blah blah blah blu blu blu beep boop boop bop",
       ],
-      quantity: 100,
+      quantity: 2,
       price: 25.0,
       rating: 3.5,
       image:
@@ -206,7 +206,7 @@ const seed = async () => {
         "This is a test description of a Korean Product rom&nd Whitening Sun Screen",
         "Checking to see how it looks in english to see what i can fit blah blah blah blu blu blu beep boop boop bop",
       ],
-      quantity: 100,
+      quantity: 54,
       price: 50.0,
       rating: 2.3,
       image:
@@ -224,7 +224,7 @@ const seed = async () => {
         "This is a test description of a Korean Product rom&nd Whitening Sun Screen",
         "Checking to see how it looks in english to see what i can fit blah blah blah blu blu blu beep boop boop bop",
       ],
-      quantity: 100,
+      quantity: 1,
       price: 15.0,
       rating: 4.5,
       image:
@@ -242,7 +242,7 @@ const seed = async () => {
         "This is a test description of a Korean Product rom&nd Whitening Sun Screen",
         "Checking to see how it looks in english to see what i can fit blah blah blah blu blu blu beep boop boop bop",
       ],
-      quantity: 100,
+      quantity: 0,
       price: 50.0,
       rating: 4.4,
       image:
@@ -260,7 +260,7 @@ const seed = async () => {
         "This is a test description of a Korean Product rom&nd Whitening Sun Screen",
         "Checking to see how it looks in english to see what i can fit blah blah blah blu blu blu beep boop boop bop",
       ],
-      quantity: 100,
+      quantity: 1,
       price: 66.0,
       rating: 4.0,
       image:
@@ -300,6 +300,25 @@ const seed = async () => {
       data: testUser,
     });
   }
+
+  const testUser: UserData = {
+    id: "100",
+    username: "test_account",
+    password: "password",
+    firstName: "Hung",
+    lastName: "Le",
+    email: "testAccount@example.com",
+    city: "city",
+    address: "123 city address",
+    zipcode: faker.address.zipCode("NY"),
+    country: "United States",
+    homePhone: "123-4567",
+    mobilePhone: "123-8654",
+  };
+
+  client.user.create({
+    data: testUser,
+  });
 
   //Creates a lot of reviews
   for (let i = 0; i < 100; i++) {

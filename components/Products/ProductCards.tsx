@@ -225,7 +225,7 @@ const ProductCards = ({
               />
               {isMobile ? (
                 <Typography variant="overline" color="secondary">
-                  ({product?.reviews.length})
+                  ({product?._count?.reviews})
                 </Typography>
               ) : (
                 <Typography
@@ -236,7 +236,7 @@ const ProductCards = ({
                     textDecoration: "underline",
                   }}
                 >
-                  {product?.reviews.length} Reviews
+                  {product?._count?.reviews} Reviews
                 </Typography>
               )}
             </Box>
@@ -247,6 +247,7 @@ const ProductCards = ({
           <Button
             variant="contained"
             disableElevation
+            disabled={product.quantity <= 0}
             color="primary"
             onClick={() => {
               addItemToCartHandler();
@@ -272,15 +273,21 @@ const ProductCards = ({
                   }
             }
           >
-            {isMobile ? `$${product.price}.00` : "Add to shopping cart"}
-            {isMobile ? (
-              <Typography
-                variant="caption"
-                sx={{ fontSize: ".6rem", fontWeight: 200 }}
-              >
-                Add to cart
-              </Typography>
-            ) : null}
+            {product.quantity <= 0 ? (
+              <Typography variant="body2">Sold out</Typography>
+            ) : (
+              <>
+                {isMobile ? `$${product.price}.00` : "Add to shopping cart"}
+                {isMobile ? (
+                  <Typography
+                    variant="caption"
+                    sx={{ fontSize: ".6rem", fontWeight: 200 }}
+                  >
+                    Add to cart
+                  </Typography>
+                ) : null}
+              </>
+            )}
           </Button>
         </Card>
       </Box>

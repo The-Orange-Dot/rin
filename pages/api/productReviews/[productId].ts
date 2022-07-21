@@ -5,16 +5,33 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  if (req.method === "GET") {
-    //Fetches product reviews
+  if (req.method === "PATCH") {
     const id = req.query.productId;
-    const productReviews = await prisma.review.findMany({
-      where: { productId: <any>{ equals: id } },
-      include: { userReview: true },
+    const numberOfReviews: number = req.body;
+
+    const product = await prisma.product.findFirst({
+      where: { id: id?.toString() },
+      include: {
+        reviews: {
+          orderBy: { helpful: "desc" },
+          skip: numberOfReviews,
+          take: 5,
+          select: {
+            userReview: { select: { username: true, image: true } },
+            description: true,
+            helpful: true,
+            rating: true,
+            createdAt: true,
+            updatedAt: true,
+          },
+        },
+      },
     });
 
-    console.log(productReviews);
-
-    res.status(200).json(productReviews);
+    if (product) {
+      res.status(200).json(product.reviews);
+    } else {
+      res.status(400).json("Error: Coultn't find product");
+    }
   }
 }

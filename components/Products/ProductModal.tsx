@@ -8,6 +8,7 @@ import {
   Divider,
   Grid,
   styled,
+  CircularProgress,
 } from "@mui/material";
 
 import React, { useEffect, useState } from "react";
@@ -26,15 +27,19 @@ const ProductModal = ({
   const [description, setDescription] = useState<any[]>([]);
   const [quantity, setQuantity] = useState<number>(1);
   const router = useRouter();
-  const [numberOfReviews, setNumberOfreviews] = useState(8);
+  const [numberOfReviews, setNumberOfreviews] = useState<number>(3);
   const [loadMoreReviews, setLoadMoreReviews] = useState(false);
   const [options, setOptions] = useState("");
+  const [reviewsData, setReviewsData] = useState<any[]>(
+    selectedProduct?.reviews
+  );
 
   //Sets description from selected product
   useEffect(() => {
     setProduct(selectedProduct);
-    setNumberOfreviews(8);
     setLoadMoreReviews(false);
+    setReviewsData(selectedProduct?.reviews);
+    setNumberOfreviews(3);
   }, [selectedProduct]); //eslint-disable-line
 
   //Maps through product description to render
@@ -83,19 +88,26 @@ const ProductModal = ({
     }
   };
 
-  const sortedReviews = selectedProduct?.reviews?.sort(
-    (a: ProductReviewType, b: ProductReviewType) => {
-      return b.helpful - a.helpful;
-    }
-  );
+  const fetchMoreReviews = async () => {
+    setLoadMoreReviews(true);
+    const res = await fetch(`/api/productReviews/${selectedProduct.id}`, {
+      method: "PATCH",
+      body: JSON.stringify(numberOfReviews),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
 
-  const reviews = sortedReviews?.map((review: ProductReviewType) => {
+    const reviews: any[] = await res.json();
+
+    setNumberOfreviews(numberOfReviews + 5);
+    setReviewsData([...reviewsData, ...reviews]);
+    setLoadMoreReviews(false);
+  };
+
+  const reviews = reviewsData?.map((review: ProductReviewType) => {
     return <ProductReviews review={review} key={review.createdAt} />;
   });
-
-  const mostHelpfulReviews = reviews?.slice(0, 3);
-  const allReviews = reviews?.slice(3, numberOfReviews);
-
   return (
     <Modal
       open={productModalOpen}
@@ -233,27 +245,22 @@ const ProductModal = ({
                   <Typography>{reviews?.length} Reviews</Typography>
                   <Box>
                     <Typography>Voted most helpful review</Typography>
-                    {mostHelpfulReviews}
+                    {reviews}
                   </Box>
                 </Box>
-                {loadMoreReviews ? (
-                  <Box>{allReviews}</Box>
-                ) : (
+
+                {numberOfReviews <= selectedProduct?._count?.reviews ? (
                   <Button
+                    disabled={loadMoreReviews}
                     onClick={() => {
-                      setLoadMoreReviews(true);
+                      fetchMoreReviews();
                     }}
                   >
-                    See more reviews
-                  </Button>
-                )}
-                {numberOfReviews <= reviews?.length && loadMoreReviews ? (
-                  <Button
-                    onClick={() => {
-                      setNumberOfreviews(numberOfReviews + 5);
-                    }}
-                  >
-                    See more reviews
+                    {loadMoreReviews ? (
+                      <CircularProgress color="inherit" size={25} />
+                    ) : (
+                      "See more reviews"
+                    )}
                   </Button>
                 ) : null}
               </Box>

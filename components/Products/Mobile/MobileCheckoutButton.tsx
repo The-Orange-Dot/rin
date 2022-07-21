@@ -77,13 +77,16 @@ const MobileCheckoutButton = ({
     const cartItem = shoppingCart.find((item: any) => {
       return (product.name = item.name);
     });
+
+    let cartQuantity = cartItem?.quantity ? cartItem.quantity : 0;
+
     let changeQuantity = quantity;
-    const checkQuantity = amount + cartItem.quantity < product.quantity;
+    const checkQuantity = amount + cartQuantity < product.quantity;
 
     if (checkQuantity) {
       changeQuantity = amount;
     } else {
-      changeQuantity = product.quantity - cartItem.quantity;
+      changeQuantity = product.quantity - cartQuantity;
     }
     console.log(changeQuantity);
 
@@ -180,6 +183,7 @@ const MobileCheckoutButton = ({
           Back
         </Button>
         <Button
+          disabled={product.quantity <= 0}
           variant="contained"
           sx={{
             height: "50px",
@@ -195,15 +199,21 @@ const MobileCheckoutButton = ({
             addItemToCartHandler();
           }}
         >
-          <Typography variant="body1" sx={{ lineHeight: 1.5, flex: 1 }}>
-            ${quantity * product.price}.00
-          </Typography>
-          <Typography
-            variant="overline"
-            sx={{ fontSize: ".5rem", flex: 1, lineHeight: 1.5 }}
-          >
-            Add to Card
-          </Typography>
+          {product.quantity <= 0 ? (
+            <Typography variant="body2">Sold out</Typography>
+          ) : (
+            <>
+              <Typography variant="body1" sx={{ lineHeight: 1.5, flex: 1 }}>
+                ${quantity * product.price}.00
+              </Typography>
+              <Typography
+                variant="overline"
+                sx={{ fontSize: ".5rem", flex: 1, lineHeight: 1.5 }}
+              >
+                Add to Card
+              </Typography>
+            </>
+          )}
         </Button>
       </Box>
       <Alert

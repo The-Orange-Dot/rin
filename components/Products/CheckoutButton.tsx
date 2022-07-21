@@ -56,12 +56,13 @@ const CheckoutButton = ({ quantity, setQuantity, product }: any) => {
     });
 
     let changeQuantity = quantity;
+    let cartQuantity = cartItem?.quantity ? cartItem.quantity : 0;
 
     if (action === "+") {
-      if (quantity + cartItem.quantity < product.quantity) {
+      if (quantity + cartQuantity < product.quantity) {
         changeQuantity = changeQuantity + 1;
       } else {
-        changeQuantity = product.quantity - cartItem.quantity;
+        changeQuantity = product.quantity - cartQuantity;
       }
     } else {
       if (product.quantity > 1) {
@@ -124,6 +125,7 @@ const CheckoutButton = ({ quantity, setQuantity, product }: any) => {
         </Box>
         <Box sx={{ width: "75%" }}>
           <Button
+            disabled={product.quantity <= 0}
             fullWidth
             variant="contained"
             sx={{ height: 55, display: "flex" }}
@@ -132,16 +134,22 @@ const CheckoutButton = ({ quantity, setQuantity, product }: any) => {
               addItemToCartHandler();
             }}
           >
-            <Typography variant="button" sx={{ m: 0 }}>
-              Add to cart
-            </Typography>
-            <Typography
-              sx={{ ml: 1, mr: 1, fontWeight: 200 }}
-              variant="overline"
-            >
-              ---
-            </Typography>
-            <Typography>${product.price * quantity}.00</Typography>
+            {product.quantity <= 0 ? (
+              <Typography variant="body2">Sold out</Typography>
+            ) : (
+              <>
+                <Typography variant="button" sx={{ m: 0 }}>
+                  Add to cart
+                </Typography>
+                <Typography
+                  sx={{ ml: 1, mr: 1, fontWeight: 200 }}
+                  variant="overline"
+                >
+                  ---
+                </Typography>
+                <Typography>${product.price * quantity}.00</Typography>
+              </>
+            )}
           </Button>
         </Box>
       </Box>

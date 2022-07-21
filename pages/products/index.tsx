@@ -161,7 +161,7 @@ const Products = ({
           <MobileProductsModal
             productModalOpen={productModalOpen}
             setProductModalOpen={setProductModalOpen}
-            product={selectedProduct}
+            selectedProduct={selectedProduct}
           />
         ) : (
           <ProductModal

@@ -12,6 +12,10 @@ export type ProductReviewType = {
   userReview: UserReviewType;
 };
 
+type Count = {
+  reviews: number;
+};
+
 export type ProductType = {
   name: string;
   details: string;
@@ -26,4 +30,5 @@ export type ProductType = {
   ingredients: string[];
   id: string;
   review: ProductReviewType[];
+  _count: Count;
 };

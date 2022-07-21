@@ -10,17 +10,22 @@ export default NextAuth({
   providers: [
     CredentialsProvider({
       name: "Credentials",
-      id: "login",
+      id: "credentials",
       credentials: {
         username: { label: "Username", type: "text" },
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        const staff = await prisma.staff.findFirst({
-          where: { username: credentials.username },
+        const user = await prisma.user.findFirst({
+          where: {
+            username: {
+              equals: credentials.username.toLowerCase(),
+              mode: "insensitive",
+            },
+          },
         });
-        if (staff.password === credentials.password) {
-          return staff;
+        if (user.password === credentials.password) {
+          return user;
         }
 
         return null;
@@ -46,10 +51,16 @@ export default NextAuth({
     },
     async session({ session, token }) {
       //PUT ANY INFO TO BE SENT TO THE FRONT HERE!!
+      //MUST AT LEAST HAVE NAME EMAIL AND IMAGE
+
       session.user = {
-        name: `${token.user.firstName} ${token.user.lastName}`,
-        username: user.username,
+        name: token.user.firstName,
+        email: token.user.email,
+        image: token.user.image,
+        username: token.user.username,
+        id: token.user.id,
       };
+
       return session;
     },
   },

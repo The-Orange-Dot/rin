@@ -10,7 +10,9 @@ export default async function handler(
     const products = await prisma.product.findMany({
       orderBy: { createdAt: "desc" },
       include: {
+        _count: { select: { reviews: true } },
         reviews: {
+          orderBy: { helpful: "desc" },
           select: {
             userReview: { select: { username: true, image: true } },
             description: true,
@@ -19,6 +21,7 @@ export default async function handler(
             createdAt: true,
             updatedAt: true,
           },
+          take: 3,
         },
       },
     });

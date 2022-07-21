@@ -1,4 +1,11 @@
-import { Typography, Container, Box, Drawer, Paper } from "@mui/material";
+import {
+  Typography,
+  Container,
+  Box,
+  Drawer,
+  Paper,
+  Backdrop,
+} from "@mui/material";
 import MobileNavModal from "./Products/Mobile/MobileNavModal";
 import React, { useEffect, useState } from "react";
 import styles from "../styles/navbar.module.css";
@@ -11,6 +18,7 @@ import Link from "next/link";
 import MenuIcon from "@mui/icons-material/Menu";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import CheckoutDrawer from "./Products/CheckoutDrawer";
+import LoginDrawer from "./LoginDrawer";
 
 const Navbar = () => {
   const [textColor, setTextColor] = useState("black");
@@ -23,6 +31,7 @@ const Navbar = () => {
   const shoppingCart = useSelector((state: any) => state.shoppingCart.value);
   const [itemsInCart, setItemsInCart] = useState(0);
   const [openCheckoutDrawer, setOpenCheckoutDrawer] = useState<boolean>(false);
+  const [openLoginDrawer, setOpenLoginDrawer] = useState(false);
 
   useEffect(() => {
     const totalItems = shoppingCart?.reduce((total: number, item: any) => {
@@ -106,18 +115,7 @@ const Navbar = () => {
               About
             </Typography>
           </Link>
-          <Link href="/subscriptions">
-            <Typography
-              className={
-                textColor === "white"
-                  ? styles.selector_text_white
-                  : styles.selector_text
-              }
-              variant="overline"
-            >
-              Subscriptions
-            </Typography>
-          </Link>
+
           <Link href="/products">
             <Typography
               className={
@@ -130,6 +128,32 @@ const Navbar = () => {
               Products
             </Typography>
           </Link>
+          {session.status === "authenticated" ? (
+            <Link href="/profile">
+              <Typography
+                className={
+                  textColor === "white"
+                    ? styles.selector_text_white
+                    : styles.selector_text
+                }
+                variant="overline"
+              >
+                Profile
+              </Typography>
+            </Link>
+          ) : (
+            <Typography
+              className={
+                textColor === "white"
+                  ? styles.selector_text_white
+                  : styles.selector_text
+              }
+              variant="overline"
+              onClick={() => setOpenLoginDrawer(true)}
+            >
+              Login
+            </Typography>
+          )}
           <Box
             sx={{ display: "flex", width: "10%" }}
             onClick={() => {
@@ -155,8 +179,18 @@ const Navbar = () => {
           setOpenCheckoutDrawer(false);
         }}
         anchor="right"
+        BackdropProps={{ style: { backgroundColor: "transparent" } }}
       >
         <CheckoutDrawer />
+      </Drawer>
+
+      <Drawer
+        open={openLoginDrawer}
+        anchor="right"
+        onClose={() => setOpenLoginDrawer(false)}
+        BackdropProps={{ style: { backgroundColor: "transparent" } }}
+      >
+        <LoginDrawer setOpenLoginDrawer={setOpenLoginDrawer} />
       </Drawer>
     </div>
   );
