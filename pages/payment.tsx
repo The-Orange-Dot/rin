@@ -43,7 +43,7 @@ const Payment = () => {
   };
 
   const cartContent = shoppingCart.map((product) => {
-    return <PaymentCartItems product={product} />;
+    return <PaymentCartItems product={product} key={product.name} />;
   });
 
   const total = shoppingCart.reduce((total: number, item: any) => {
