@@ -7,9 +7,8 @@ import { RootState } from "../redux/store";
 import { Box, Paper, Input, Typography } from "@mui/material";
 import { Elements } from "@stripe/react-stripe-js";
 import PaymentCartItems from "../components/PaymentCartItems";
-import { numberWithCommas } from "../components/numberWithCommas";
 
-const payment = () => {
+const Payment = () => {
   const shoppingCart = useSelector(
     (state: RootState) => state.shoppingCart.value
   );
@@ -153,4 +152,4 @@ const payment = () => {
   );
 };
 
-export default payment;
+export default Payment;
