@@ -40,6 +40,7 @@ const ProductModal = ({
     setLoadMoreReviews(false);
     setReviewsData(selectedProduct?.reviews);
     setNumberOfreviews(3);
+    setProductModalOpen(true);
   }, [selectedProduct]); //eslint-disable-line
 
   //Maps through product description to render

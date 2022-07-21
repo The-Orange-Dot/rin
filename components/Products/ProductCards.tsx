@@ -69,7 +69,6 @@ const ProductCards = ({
       },
     });
     setSelectedProduct(product);
-    setProductModalOpen(true);
   };
 
   const ratingArray = product?.reviews.map((review: ProductReviewType) => {
