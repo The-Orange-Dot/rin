@@ -53,7 +53,7 @@ const MobileCheckout = () => {
           overflowY: "scroll",
         }}
       >
-        {cartContent}
+        <Box sx={{ minHeight: "30vh", width: "100%" }}>{cartContent}</Box>
         <Divider />
         <Box sx={{ p: 2 }}>
           <Typography>+ Apply promo code or coupon</Typography>
