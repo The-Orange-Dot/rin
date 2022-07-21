@@ -4,7 +4,7 @@ import {
   useStripe,
   useElements,
 } from "@stripe/react-stripe-js";
-import { Button, TextField, styled } from "@mui/material";
+import { Button, TextField, styled, Typography } from "@mui/material";
 
 const CustomTextField = styled(TextField, {
   shouldForwardProp: (props) => props !== "focusColor",
@@ -33,7 +33,6 @@ const CustomTextField = styled(TextField, {
 export default function CheckoutForm() {
   const stripe = useStripe();
   const elements = useElements();
-
   const [email, setEmail] = React.useState("");
   const [message, setMessage] = React.useState(null);
   const [isLoading, setIsLoading] = React.useState(false);
@@ -105,6 +104,9 @@ export default function CheckoutForm() {
 
   return (
     <form id="payment-form" onSubmit={handleSubmit}>
+      <Typography sx={{ fontWeight: 200, fontSize: ".9rem", color: "#949495" }}>
+        Email
+      </Typography>
       <CustomTextField
         sx={{
           fieldset: {
@@ -124,6 +126,7 @@ export default function CheckoutForm() {
         placeholder="Enter email address"
       />
       <PaymentElement id="payment-element" />
+
       <Button
         sx={{ mt: 5 }}
         fullWidth
