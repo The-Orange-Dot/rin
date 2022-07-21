@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Button, Typography, Box } from "@mui/material";
+import { Button, Typography, Box, Drawer } from "@mui/material";
 import { ShoppingBagOutlined } from "@mui/icons-material";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
+import MobileCheckout from "./MobileCheckout";
 
 interface Item {
   name: string;
@@ -11,6 +12,7 @@ interface Item {
 }
 
 const ShoppingCartButton = () => {
+  const [openDrawer, setOpenDrawer] = useState(false);
   const [itemsInBag, setItemsInBag] = useState(0);
   const shoppingCart = useSelector(
     (state: RootState) => state.shoppingCart.value
@@ -20,51 +22,62 @@ const ShoppingCartButton = () => {
     const totalItems = shoppingCart?.reduce((total: number, item: any) => {
       return (total = total + item.quantity);
     }, 0);
+
     setItemsInBag(totalItems);
   }, [shoppingCart]);
 
   if (itemsInBag > 0) {
     return (
-      <Button
-        color="primary"
-        variant="contained"
-        sx={{
-          position: "fixed",
-          width: "70px",
-          height: "70px",
-          right: 16,
-          bottom: 16,
-          borderRadius: "100rem",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <ShoppingBagOutlined fontSize="large" />
-        <Box
+      <>
+        <Button
+          color="primary"
+          variant="contained"
           sx={{
             position: "fixed",
-            ml: 3,
-            mb: 3,
-            backgroundColor: "white",
-            width: 15,
-            height: 15,
+            width: "70px",
+            height: "70px",
+            right: 16,
+            bottom: 16,
             borderRadius: "100rem",
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            p: 0,
           }}
+          onClick={() => setOpenDrawer(true)}
         >
-          <Typography
-            variant="caption"
-            color="primary"
-            sx={{ p: 0, lineHeight: 0, fontWeight: 600 }}
+          <ShoppingBagOutlined fontSize="large" />
+          <Box
+            sx={{
+              position: "fixed",
+              ml: 3,
+              mb: 3,
+              backgroundColor: "white",
+              width: 15,
+              height: 15,
+              borderRadius: "100rem",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              p: 0,
+            }}
           >
-            {itemsInBag}
-          </Typography>
-        </Box>
-      </Button>
+            <Typography
+              variant="caption"
+              color="primary"
+              sx={{ p: 0, lineHeight: 0, fontWeight: 600 }}
+            >
+              {itemsInBag}
+            </Typography>
+          </Box>
+        </Button>
+        <Drawer
+          open={openDrawer}
+          anchor="bottom"
+          onClose={() => setOpenDrawer(false)}
+        >
+          <MobileCheckout />
+        </Drawer>
+      </>
     );
   } else {
     return <Box></Box>;

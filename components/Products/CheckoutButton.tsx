@@ -50,6 +50,30 @@ const CheckoutButton = ({ quantity, setQuantity, product }: any) => {
     }
   };
 
+  const quantityHandler = (action: string) => {
+    const cartItem = shoppingCart.find((item: any) => {
+      return (product.name = item.name);
+    });
+
+    let changeQuantity = quantity;
+
+    if (action === "+") {
+      if (quantity + cartItem.quantity < product.quantity) {
+        changeQuantity = changeQuantity + 1;
+      } else {
+        changeQuantity = product.quantity - cartItem.quantity;
+      }
+    } else {
+      if (product.quantity > 1) {
+        changeQuantity = changeQuantity - 1;
+      } else {
+        changeQuantity = 1;
+      }
+    }
+
+    setQuantity(changeQuantity);
+  };
+
   return (
     <Box
       sx={{
@@ -81,7 +105,7 @@ const CheckoutButton = ({ quantity, setQuantity, product }: any) => {
                 <AddIcon
                   fontSize="small"
                   sx={{ cursor: "pointer" }}
-                  onClick={() => setQuantity(quantity + 1)}
+                  onClick={() => quantityHandler("+")}
                 />
               ),
               startAdornment: (
@@ -90,7 +114,7 @@ const CheckoutButton = ({ quantity, setQuantity, product }: any) => {
                   sx={{ cursor: "pointer" }}
                   onClick={() => {
                     if (quantity > 1) {
-                      setQuantity(quantity - 1);
+                      quantityHandler("-");
                     }
                   }}
                 />

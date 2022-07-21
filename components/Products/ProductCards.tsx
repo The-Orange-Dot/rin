@@ -51,7 +51,7 @@ const ProductCards = ({
         price: product.price,
         stock: product.quantity,
       };
-      if (updatedItem.quantity < product.stock) {
+      if (updatedItem.quantity < product.quantity) {
         dispatch(addItem([...updatedCart, updatedItem]));
       }
     } else {
@@ -99,7 +99,7 @@ const ProductCards = ({
                 display: "flex",
                 justifyContent: "center",
                 width: "100%",
-                height: 560,
+                height: 550,
                 mb: 8,
               }
         }
@@ -197,15 +197,7 @@ const ProductCards = ({
                 {product?.details?.length ? ` - ${product.details}` : null}
               </Typography>
             </Box>
-            <Typography
-              variant="caption"
-              sx={{
-                color: "#949495",
-                fontSize: ".7rem",
-              }}
-            >
-              ({product?.quantity} items in stock)
-            </Typography>
+
             <Box
               sx={
                 isMobile

@@ -71,6 +71,25 @@ const MobileCheckoutButton = ({
     }
   };
 
+  const quantityHandler = (value: string) => {
+    const amount = parseInt(value);
+
+    const cartItem = shoppingCart.find((item: any) => {
+      return (product.name = item.name);
+    });
+    let changeQuantity = quantity;
+    const checkQuantity = amount + cartItem.quantity < product.quantity;
+
+    if (checkQuantity) {
+      changeQuantity = amount;
+    } else {
+      changeQuantity = product.quantity - cartItem.quantity;
+    }
+    console.log(changeQuantity);
+
+    setQuantity(changeQuantity);
+  };
+
   return (
     <Box
       sx={{
@@ -130,8 +149,9 @@ const MobileCheckoutButton = ({
             <NativeSelect
               size="small"
               defaultValue={1}
+              value={quantity}
               onChange={(e: any) => {
-                setQuantity(parseInt(e.target.value));
+                quantityHandler(e.target.value);
               }}
             >
               <option value={1}>1</option>
