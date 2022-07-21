@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Paper, Box, Typography, Button, Divider } from "@mui/material";
 import { RootState } from "../../redux/store";
 import ItemInCheckoutDrawer from "./ItemInCheckoutDrawer";
 import { useSelector } from "react-redux";
+import { useRouter } from "next/router";
 
 const CheckoutDrawer = () => {
+  const router = useRouter();
   const shoppingCart = useSelector(
     (state: RootState) => state.shoppingCart.value
   );
@@ -64,7 +66,11 @@ const CheckoutDrawer = () => {
         <Typography sx={{ fontWeight: 600 }}>Total: ${total}</Typography>
         <Typography>Tax and promotions calculated in checkout.</Typography>
         <Box sx={{ width: "100%", display: "flex", justifyContent: "center" }}>
-          <Button variant="contained" sx={{ width: "80%", height: 60, mt: 2 }}>
+          <Button
+            variant="contained"
+            sx={{ width: "80%", height: 60, mt: 2 }}
+            onClick={() => router.push("/payment")}
+          >
             Checkout
           </Button>
         </Box>

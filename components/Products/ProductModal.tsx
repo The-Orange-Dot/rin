@@ -150,6 +150,7 @@ const ProductModal = ({
                 flexDirection: "column",
                 mt: 2,
                 minHeight: "65vh",
+                mr: 2,
               }}
             >
               {/* eslint-disable */}

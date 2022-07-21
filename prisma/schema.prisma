@@ -12,6 +12,7 @@ model Product {
   name        String
   size        String
   details     String
+  likes       Int      @default(0)
   quantity    Int      @default(1)
   price       Float    @default(0.00)
   image       String

@@ -6,6 +6,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { SessionProvider } from "next-auth/react";
 import { store } from "../redux/store";
 import { Provider } from "react-redux";
+import { useRouter } from "next/router";
 
 const theme = createTheme({
   palette: {
@@ -21,14 +22,21 @@ const theme = createTheme({
 // #2b2b2b
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
+  const router = useRouter();
   return (
     <>
       <Provider store={store}>
         <SessionProvider session={session}>
           <ThemeProvider theme={theme}>
-            <Navbar />
-            <Component {...pageProps} />
-            <Footer />
+            {router.pathname.includes("/payment") ? (
+              <Component {...pageProps} />
+            ) : (
+              <>
+                <Navbar />
+                <Component {...pageProps} />
+                <Footer />
+              </>
+            )}
           </ThemeProvider>
         </SessionProvider>
       </Provider>
