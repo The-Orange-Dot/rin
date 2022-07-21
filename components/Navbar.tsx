@@ -41,7 +41,7 @@ const Navbar = () => {
     gsap.set("#container", { opacity: 0 });
     const tl = gsap
       .timeline({ paused: true })
-      .fromTo("#container", { opacity: 0 }, { opacity: 1, delay: 0.5 });
+      .fromTo("#container", { opacity: 0 }, { opacity: 1 });
     if (pageLoaded) {
       tl.play(0);
     }

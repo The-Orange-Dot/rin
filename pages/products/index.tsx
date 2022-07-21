@@ -50,9 +50,9 @@ const Products = ({
         .fromTo(
           ".card",
           { opacity: 0, y: -10 },
-          { opacity: 1, stagger: 0.2, duration: 0.5, delay: 0.5, y: 0 }
+          { opacity: 1, stagger: 0.2, duration: 0.5, y: 0 }
         )
-        .fromTo(".filter", { opacity: 0 }, { opacity: 1, delay: 0.5 }, 0);
+        .fromTo(".filter", { opacity: 0 }, { opacity: 1 }, 0);
 
       if (pageLoaded) {
         tl.play(0);
