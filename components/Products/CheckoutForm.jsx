@@ -83,7 +83,7 @@ export default function CheckoutForm() {
       elements,
       confirmParams: {
         // Make sure to change this to your payment completion page
-        return_url: "http://localhost:3000",
+        return_url: "http://localhost:3000/products",
         receipt_email: email,
       },
     });
@@ -128,6 +128,7 @@ export default function CheckoutForm() {
       <PaymentElement id="payment-element" />
 
       <Button
+        type="submit"
         sx={{ mt: 5 }}
         fullWidth
         variant="contained"

@@ -43,6 +43,21 @@ model User {
   mobilePhone String? @map("mobile_phone")
   reviews    Review[]
   comments   Comment[]
+  orderHistory OrderHistory[]
+}
+
+model OrderHistory {
+  id            String  @id @default(cuid())
+  userId        String
+  userOrderHistory User @relation(fields: [userId], references: [id])
+  name          String
+  quantity      Int
+  createdAt     DateTime @default(now()) @map("created_at")
+  image         String
+  brand         String
+  price         Float    @default(0.00)
+  size          String
+  details       String
 }
 
 model Review {

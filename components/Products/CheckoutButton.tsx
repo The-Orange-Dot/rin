@@ -26,6 +26,8 @@ const CheckoutButton = ({ quantity, setQuantity, product }: any) => {
       quantity: quantity,
       price: product.price,
       stock: product.quantity,
+      size: product.size,
+      details: product.details,
     };
 
     let foundItem = await shoppingCart.find((item: any) => {

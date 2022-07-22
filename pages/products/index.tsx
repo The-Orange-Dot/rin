@@ -40,6 +40,8 @@ const Products = ({
     if (session.status !== "loading") {
       setPageLoaded(true);
     }
+
+    setProductModalOpen(false);
   }, [session.status]);
 
   //Filter selectors animation once page is loaded
@@ -69,7 +71,6 @@ const Products = ({
             <ProductCards
               product={product}
               key={product.name}
-              setProductModalOpen={setProductModalOpen}
               setSelectedProduct={setSelectedProduct}
             />
           );
@@ -93,11 +94,6 @@ const Products = ({
     }
     setBrands(hash);
   }, [productsData]);
-
-  const productSelectHandler = async (product: any) => {
-    await setProducts(product);
-    setProductModalOpen(true);
-  };
 
   return (
     <div className={styles.main}>

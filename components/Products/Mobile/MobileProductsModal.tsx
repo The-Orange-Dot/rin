@@ -37,7 +37,11 @@ const MobileProductsModal = ({
     setProduct(selectedProduct);
     setNumberOfreviews(3);
     setReviewsData(selectedProduct?.reviews);
-    setProductModalOpen(true);
+    if (selectedProduct !== {}) {
+      setProductModalOpen(true);
+    } else {
+      setProductModalOpen(false);
+    }
   }, [selectedProduct]);
 
   useEffect(() => {

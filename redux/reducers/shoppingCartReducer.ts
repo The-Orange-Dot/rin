@@ -8,6 +8,8 @@ interface Item {
   quantity: number;
   price: number;
   stock: number;
+  details: string;
+  size: string;
 }
 
 interface ShoppingCart {

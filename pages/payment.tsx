@@ -47,15 +47,16 @@ const Payment = () => {
   });
 
   const total = shoppingCart.reduce((total: number, item: any) => {
-    return (total += item);
+    return (total += item.price * item.quantity);
   }, 0);
 
   useEffect(() => {
     // Create PaymentIntent as soon as the page loads
+    const cardItemsId = shoppingCart.map((item) => item.id);
     fetch("/api/create_payment_intent", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ items: shoppingCart }),
+      body: JSON.stringify({ items: shoppingCart, ids: cardItemsId }),
     })
       .then((res) => res.json())
       .then((data) => setClientSecret(data.clientSecret));
@@ -79,23 +80,46 @@ const Payment = () => {
             justifyContent: "center",
           }}
         >
-          <Box
-            sx={{ width: "70%", minHeight: "50vh", border: "1px solid black" }}
-          >
+          <Box sx={{ width: "70%", minHeight: "50vh" }}>
             <Box
               sx={{
                 width: "100%",
                 height: "25vh",
                 display: "flex",
                 flexDirection: "column",
-                justifyContent: "flex-end",
-                border: "1px solid black",
+                justifyContent: "space-around",
               }}
             >
-              <Typography variant="h4">${total}</Typography>
-              <Typography variant="h6" color="secondary">
-                {shoppingCart?.length}
+              <Typography
+                color="primary"
+                sx={{
+                  width: "100%",
+                  fontWeight: 200,
+                  cursor: "pointer",
+                  letterSpacing: 4,
+                  fontSize: "2.5rem",
+                }}
+                variant="h4"
+              >
+                rin
               </Typography>
+              <Box sx={{ display: "flex", flexDirection: "column" }}>
+                <Typography
+                  variant="overline"
+                  sx={{ fontSize: "2rem", lineHeight: "3rem" }}
+                >
+                  {total.toString().includes(".")
+                    ? `$${total}`
+                    : `$${total}.00`}
+                </Typography>
+                <Typography
+                  variant="overline"
+                  color="secondary"
+                  sx={{ fontSize: "1rem", lineHeight: "1.2rem" }}
+                >
+                  {shoppingCart?.length} items
+                </Typography>
+              </Box>
             </Box>
             {cartContent}
           </Box>

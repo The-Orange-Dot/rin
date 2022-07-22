@@ -17,11 +17,7 @@ import { ProductReviewType } from "../../types/productTypes";
 import { addItem } from "../../redux/reducers/shoppingCartReducer";
 import { useSelector, useDispatch } from "react-redux";
 
-const ProductCards = ({
-  product,
-  setProductModalOpen,
-  setSelectedProduct,
-}: any) => {
+const ProductCards = ({ product, setSelectedProduct }: any) => {
   const isMobile = useMediaQuery("(max-width: 900px)");
   const router = useRouter();
   const shoppingCart = useSelector((state: any) => state.shoppingCart.value);
@@ -35,6 +31,8 @@ const ProductCards = ({
       price: product.price,
       image: product.image,
       stock: product.quantity,
+      size: product.size,
+      details: product.details,
     };
     let foundItem = shoppingCart.find((item: any) => {
       return item.id === product.id;
