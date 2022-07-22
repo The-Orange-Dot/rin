@@ -75,7 +75,6 @@ const Payment = () => {
           setClientSecret(data.clientSecret);
           setShippingDetails(data.shipping);
           setTotal(data.total);
-          console.log(data);
         });
     }
   }, [session.status]);

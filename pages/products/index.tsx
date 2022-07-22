@@ -28,8 +28,6 @@ const Products = ({
   const [pageLoaded, setPageLoaded] = useState(false);
   const [brands, setBrands] = useState([]);
 
-  console.log(Object.keys(selectedProduct).length === 0);
-
   //Sets up initial state for animation
   //When session loads, pageLoaded set to true
   useEffect(() => {

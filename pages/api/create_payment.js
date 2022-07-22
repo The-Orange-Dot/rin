@@ -79,7 +79,9 @@ export default async function handler(req, res) {
     },
     discounts: null, //Change this for coupons in the future
 
-    payment: { settings: { return_url: "http://localhost:3000/products" } },
+    // payment: {
+    //   settings: { return_url: "http://localhost:3000/stripeSuccess" },
+    // },
   });
 
   // console.log("ORDER DETAIL: ", order);

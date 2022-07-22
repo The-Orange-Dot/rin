@@ -4,7 +4,9 @@ import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { SessionProvider } from "next-auth/react";
-import { store } from "../redux/store";
+import { PersistGate } from "redux-persist/integration/react";
+import { persistStore } from "redux-persist";
+import store from "../redux/store";
 import { Provider } from "react-redux";
 import { useRouter } from "next/router";
 
@@ -21,26 +23,30 @@ const theme = createTheme({
 });
 // #2b2b2b
 
+let persistor = persistStore(store);
+
 function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   const router = useRouter();
 
   return (
     <>
       <Provider store={store}>
-        <SessionProvider session={session}>
-          <ThemeProvider theme={theme}>
-            {router.pathname.includes("/payment") ||
-            router.pathname.includes("/stripeSuccess") ? (
-              <Component {...pageProps} />
-            ) : (
-              <>
-                <Navbar />
+        <PersistGate loading={null} persistor={persistor}>
+          <SessionProvider session={session}>
+            <ThemeProvider theme={theme}>
+              {router.pathname.includes("/payment") ||
+              router.pathname.includes("/stripeSuccess") ? (
                 <Component {...pageProps} />
-                <Footer />
-              </>
-            )}
-          </ThemeProvider>
-        </SessionProvider>
+              ) : (
+                <>
+                  <Navbar />
+                  <Component {...pageProps} />
+                  <Footer />
+                </>
+              )}
+            </ThemeProvider>
+          </SessionProvider>
+        </PersistGate>
       </Provider>
     </>
   );

@@ -48,7 +48,6 @@ const LoginDrawer = ({ setOpenLoginDrawer }: any) => {
         setOpenLoginDrawer(false);
         setSignInLoading(false);
       } else {
-        console.log(res.error);
         setSignInLoading(false);
         tl.play();
       }

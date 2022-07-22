@@ -84,7 +84,7 @@ export default function CheckoutForm({ shoppingCart }) {
         elements,
         confirmParams: {
           // Make sure to change this to your payment completion page
-          return_url: "http://localhost:3000/products",
+          return_url: "http://localhost:3000/stripeSuccess",
           receipt_email: email,
         },
       })

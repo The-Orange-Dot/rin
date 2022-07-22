@@ -64,7 +64,6 @@ const MobileCheckoutButton = ({
 
         dispatch(addItem([...updatedCart, updatedItem]));
       } else {
-        console.log([...shoppingCart, item]);
         dispatch(addItem([...shoppingCart, item]));
       }
       successTl.play();
@@ -90,7 +89,6 @@ const MobileCheckoutButton = ({
     } else {
       changeQuantity = product.quantity - cartQuantity;
     }
-    console.log(changeQuantity);
 
     setQuantity(changeQuantity);
   };

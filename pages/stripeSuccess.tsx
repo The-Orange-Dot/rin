@@ -5,8 +5,10 @@ import { useRouter } from "next/router";
 import { removeItem } from "../redux/reducers/shoppingCartReducer";
 import { Container } from "@mui/system";
 import { Typography } from "@mui/material";
+import { useSession } from "next-auth/react";
 
 const StripeSuccess = () => {
+  const session = useSession();
   const dispatch = useDispatch();
   const router = useRouter();
   const shoppingCart = useSelector(
@@ -15,13 +17,29 @@ const StripeSuccess = () => {
 
   useEffect(() => {
     if (shoppingCart.length <= 0) {
-      // router.push("/products");
-    } else {
-      setTimeout(() => {
-        dispatch(removeItem([]));
-      }, 5000);
+      router.push("/products");
     }
   }, [shoppingCart]);
+
+  useEffect(() => {
+    if (shoppingCart.length > 0 && session.status !== "loading") {
+      fetch("/api/products", {
+        method: "PATCH",
+        body: JSON.stringify({ items: shoppingCart }),
+        headers: { "Content-Type": "application/json" },
+      }).then((res) => {
+        if (res.ok) {
+          res.json().then((data) => {
+            setTimeout(() => {
+              dispatch(removeItem([]));
+            }, 2000);
+
+            console.log(data.res, data.items);
+          });
+        }
+      });
+    }
+  }, [session.status]);
 
   return (
     <Container
