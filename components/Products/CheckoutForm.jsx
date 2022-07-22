@@ -30,7 +30,7 @@ const CustomTextField = styled(TextField, {
   },
 }));
 
-export default function CheckoutForm() {
+export default function CheckoutForm({ shoppingCart }) {
   const stripe = useStripe();
   const elements = useElements();
   const [email, setEmail] = React.useState("");
@@ -79,14 +79,22 @@ export default function CheckoutForm() {
 
     setIsLoading(true);
 
-    const { error } = await stripe.confirmPayment({
-      elements,
-      confirmParams: {
-        // Make sure to change this to your payment completion page
-        return_url: "http://localhost:3000/products",
-        receipt_email: email,
-      },
-    });
+    const { error } = await stripe
+      .processOrder({
+        elements,
+        confirmParams: {
+          // Make sure to change this to your payment completion page
+          return_url: "http://localhost:3000/products",
+          receipt_email: email,
+        },
+      })
+      .then((res) => {
+        fetch("/api/products", {
+          method: "PATCH",
+          body: JSON.stringify({ cart: shoppingCart, error: res }),
+          headers: { "Content-Type": "application/json" },
+        });
+      });
 
     // This point will only be reached if there is an immediate error when
     // confirming the payment. Otherwise, your customer will be redirected to

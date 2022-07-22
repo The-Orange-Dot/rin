@@ -23,12 +23,14 @@ const theme = createTheme({
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   const router = useRouter();
+
   return (
     <>
       <Provider store={store}>
         <SessionProvider session={session}>
           <ThemeProvider theme={theme}>
-            {router.pathname.includes("/payment") ? (
+            {router.pathname.includes("/payment") ||
+            router.pathname.includes("/stripeSuccess") ? (
               <Component {...pageProps} />
             ) : (
               <>

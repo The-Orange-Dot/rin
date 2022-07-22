@@ -37,6 +37,7 @@ model User {
   address    String?
   city       String?
   country    String?
+  state      String?
   zipcode    String?
   email      String
   homePhone  String? @map("home_phone")

@@ -32,6 +32,7 @@ interface UserData {
   homePhone: string;
   mobilePhone: string;
   id: string;
+  state: string;
 }
 
 interface ReviewData {
@@ -290,8 +291,9 @@ const seed = async () => {
       email: faker.internet.email(),
       city: faker.address.city(),
       address: faker.address.streetAddress(),
-      zipcode: faker.address.zipCode("NY"),
-      country: "United States",
+      zipcode: faker.address.zipCodeByState("NY"),
+      state: faker.address.stateAbbr(),
+      country: "US",
       homePhone: faker.phone.number(),
       mobilePhone: faker.phone.number(),
     };
@@ -310,7 +312,8 @@ const seed = async () => {
     email: "testAccount@example.com",
     city: "city",
     address: "123 city address",
-    zipcode: faker.address.zipCode("NY"),
+    zipcode: faker.address.zipCode(),
+    state: "NY",
     country: "United States",
     homePhone: "123-4567",
     mobilePhone: "123-8654",

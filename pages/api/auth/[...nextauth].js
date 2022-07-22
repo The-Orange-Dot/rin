@@ -55,10 +55,16 @@ export default NextAuth({
 
       session.user = {
         name: token.user.firstName,
+        lastName: token.user.lastName,
         email: token.user.email,
         image: token.user.image,
         username: token.user.username,
         id: token.user.id,
+        address: token.user.address,
+        zipcode: token.user.zipcode,
+        city: token.user.city,
+        state: token.user.state,
+        country: token.user.country,
       };
 
       return session;
