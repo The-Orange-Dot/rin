@@ -30,8 +30,6 @@ export default async function handler(
   } else if (req.method === "PATCH") {
     const { items } = req.body;
 
-    console.log(items);
-
     const updatedItems = await Promise.all(
       items.map(async (item: any) => {
         const updatedItem = await prisma.product.update({
@@ -40,7 +38,11 @@ export default async function handler(
             quantity: { decrement: item.quantity },
           },
         });
-        console.log(updatedItem.quantity);
+        console.log(
+          `Updated ${updatedItem.name}'s quantity from ${
+            updatedItem.quantity + 1
+          } to ${updatedItem.quantity}`
+        );
         return updatedItem.name;
       })
     );
