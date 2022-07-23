@@ -26,7 +26,7 @@ interface UserData {
   lastName: string;
   email: string;
   city: string;
-  address: string;
+  address1: string;
   zipcode: string;
   country: string;
   homePhone: string;
@@ -278,7 +278,7 @@ const seed = async () => {
   );
 
   //Creates a lot of user data
-  for (let i = 0; i < 50; i++) {
+  for (let i = 2; i < 50; i++) {
     const firstName = faker.name.firstName();
     const lastName = faker.name.lastName();
 
@@ -290,7 +290,7 @@ const seed = async () => {
       lastName: lastName,
       email: faker.internet.email(),
       city: faker.address.city(),
-      address: faker.address.streetAddress(),
+      address1: faker.address.streetAddress(),
       zipcode: faker.address.zipCodeByState("NY"),
       state: faker.address.stateAbbr(),
       country: "US",
@@ -303,23 +303,43 @@ const seed = async () => {
     });
   }
 
-  const testUser: UserData = {
-    id: "100",
-    username: "test_account",
+  const guest: UserData = {
+    id: "0",
+    username: "guest",
     password: "password",
-    firstName: "Hung",
-    lastName: "Le",
-    email: "testAccount@example.com",
-    city: "city",
-    address: "123 city address",
-    zipcode: faker.address.zipCode(),
-    state: "NY",
-    country: "United States",
-    homePhone: "123-4567",
-    mobilePhone: "123-8654",
+    firstName: "guest",
+    lastName: "guest",
+    email: "guest@example.com",
+    city: "",
+    address1: "",
+    zipcode: "",
+    state: "",
+    country: "",
+    homePhone: "",
+    mobilePhone: "",
   };
 
-  client.user.create({
+  await client.user.create({
+    data: guest,
+  });
+
+  const testUser: UserData = {
+    id: "1",
+    username: "test_account",
+    password: "password",
+    firstName: "test",
+    lastName: "McTestFace",
+    email: faker.internet.email(),
+    city: faker.address.city(),
+    address1: faker.address.streetAddress(),
+    zipcode: faker.address.zipCodeByState("NY"),
+    state: faker.address.stateAbbr(),
+    country: "US",
+    homePhone: faker.phone.number(),
+    mobilePhone: faker.phone.number(),
+  };
+
+  await client.user.create({
     data: testUser,
   });
 

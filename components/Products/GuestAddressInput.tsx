@@ -1,4 +1,4 @@
-import React, { SyntheticEvent, useState } from "react";
+import React, { SyntheticEvent, useEffect, useState } from "react";
 import {
   Typography,
   FormControl,
@@ -20,7 +20,10 @@ import {
 import { RootState } from "../../redux/store";
 import { useRouter } from "next/router";
 
-const GuestAddressInput = ({ setGuestShippingForm }: any) => {
+const GuestAddressInput = ({
+  setGuestShippingForm,
+  guestShippingForm,
+}: any) => {
   const storeInfo = useSelector(
     (state: RootState) => state.guestShipping.saveAddress
   );
@@ -47,6 +50,11 @@ const GuestAddressInput = ({ setGuestShippingForm }: any) => {
   );
   const [stateInput, setStateInput] = useState(storedAddress.address?.state);
   const [storeAddressChecked, setStoreAddressChecked] = useState(storeInfo);
+  const [tosChecked, setTosChecked] = useState(false);
+
+  useEffect(() => {
+    setTosChecked(false);
+  }, [guestShippingForm]);
 
   const stateArray = [
     { id: "AL", name: "Alabama" },
@@ -253,6 +261,7 @@ const GuestAddressInput = ({ setGuestShippingForm }: any) => {
               onChange={(e) => setStateInput(e.target.value)}
               required
               defaultValue={stateInput}
+              sx={{ textAlign: "start", pl: 1 }}
             >
               {states}
             </Select>
@@ -292,7 +301,7 @@ const GuestAddressInput = ({ setGuestShippingForm }: any) => {
 
           <FormControlLabel
             sx={{ mt: 2, width: "95%" }}
-            control={<Checkbox defaultChecked={storeAddressChecked} required />}
+            control={<Checkbox defaultChecked={tosChecked} required />}
             label={
               <Typography
                 variant="overline"

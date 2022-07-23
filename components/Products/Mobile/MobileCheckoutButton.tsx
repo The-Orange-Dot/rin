@@ -21,7 +21,6 @@ const MobileCheckoutButton = ({
 }: any) => {
   const dispatch = useDispatch();
   const shoppingCart = useSelector((state: any) => state.shoppingCart.value);
-  const [openAlert, setOpenAlert] = useState(false);
 
   const successTl = gsap
     .timeline({ paused: true })

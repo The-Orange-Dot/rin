@@ -198,7 +198,10 @@ const Products = ({
           anchor="bottom"
           onClose={() => setOpenDrawer(false)}
         >
-          <MobileCheckout setOpenDrawer={setOpenDrawer} />
+          <MobileCheckout
+            openDrawer={openDrawer}
+            setOpenDrawer={setOpenDrawer}
+          />
         </Drawer>
       </Container>
     </div>

@@ -18,6 +18,9 @@ const StripeSuccess = () => {
   const saveAddress = useSelector(
     (state: RootState) => state.guestShipping.saveAddress
   );
+  const userAddress = useSelector(
+    (state: RootState) => state.guestShipping.value
+  );
 
   useEffect(() => {
     if (shoppingCart.length <= 0) {
@@ -33,7 +36,20 @@ const StripeSuccess = () => {
         headers: { "Content-Type": "application/json" },
       }).then((res) => {
         if (res.ok) {
-          res.json().then((data) => {
+          res.json().then(async (data) => {
+            const registeredUser = session.status === "authenticated";
+
+            await fetch("/api/orderHistory", {
+              method: "POST",
+              body: JSON.stringify({
+                products: shoppingCart,
+                user: userAddress,
+                registeredUser: registeredUser,
+                registeredUserData: session.data?.user,
+              }),
+              headers: { "Content-Type": "application/json" },
+            });
+
             if (!saveAddress) {
               dispatch(
                 removeShipping({

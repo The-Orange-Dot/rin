@@ -32,3 +32,31 @@ export type ProductType = {
   review: ProductReviewType[];
   _count: Count;
 };
+
+export type Item = {
+  id: string;
+  name: string;
+  quantity: number;
+  price: number;
+  stock: number;
+  details: string;
+  size: string;
+  image: string;
+};
+
+export type ShoppingCart = {
+  value: Item[];
+};
+
+export type OrderHistoryType = {
+  username: string;
+  products: ShoppingCart;
+  registeredUser: boolean;
+  name: string;
+  address1: string;
+  address2: string;
+  city: string;
+  state: string;
+  zipcode: string;
+  country: string;
+};

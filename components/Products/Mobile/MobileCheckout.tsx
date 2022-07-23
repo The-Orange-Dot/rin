@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import MobileGuestAddressForm from "./MobileGuestAddressForm";
 
-const MobileCheckout = ({ setOpenDrawer }: any) => {
+const MobileCheckout = ({ setOpenDrawer, openDrawer }: any) => {
   const [guestShippingForm, setGuestShippingForm] = useState(false);
   const router = useRouter();
   const session = useSession();
@@ -61,7 +61,10 @@ const MobileCheckout = ({ setOpenDrawer }: any) => {
       square
     >
       {guestShippingForm ? (
-        <MobileGuestAddressForm setOpenDrawer={setOpenDrawer} />
+        <MobileGuestAddressForm
+          openDrawer={openDrawer}
+          setOpenDrawer={setOpenDrawer}
+        />
       ) : (
         <>
           <Box
