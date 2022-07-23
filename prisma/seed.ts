@@ -225,7 +225,7 @@ const seed = async () => {
         "This is a test description of a Korean Product rom&nd Whitening Sun Screen",
         "Checking to see how it looks in english to see what i can fit blah blah blah blu blu blu beep boop boop bop",
       ],
-      quantity: 1,
+      quantity: 0,
       price: 15.0,
       rating: 4.5,
       image:

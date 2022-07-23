@@ -32,6 +32,7 @@ const Payment = () => {
   const [total, setTotal] = useState(0);
   const [clientSecret, setClientSecret] = useState("");
   const [mobileDrawer, setMobileDrawer] = useState(false);
+  const [stripeLoaded, setStripeLoaded] = useState(false);
   const shoppingCart = useSelector(
     (state: RootState) => state.shoppingCart.value
   );
@@ -42,8 +43,6 @@ const Payment = () => {
     (state: RootState) => state.guestShipping.email
   );
 
-  console.log(storedShipping);
-
   const stripePromise = loadStripe(
     // @ts-ignore
     process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY,
@@ -52,6 +51,8 @@ const Payment = () => {
       apiVersion: "2020-08-27; orders_beta=v4",
     }
   );
+
+  console.log(stripeLoaded);
 
   useEffect(() => {
     // The items the customer wants to buy
@@ -87,6 +88,7 @@ const Payment = () => {
     })
       .then((res) => res.json())
       .then((data) => {
+        setStripeLoaded(true);
         setClientSecret(data.clientSecret);
         setShippingDetails(data.shipping);
         setTotal(data.total);
@@ -246,7 +248,7 @@ const Payment = () => {
             {clientSecret && (
               // @ts-ignore
               <Elements options={options} stripe={stripePromise}>
-                <CheckoutForm shoppingCart={shoppingCart} />
+                <CheckoutForm />
               </Elements>
             )}
           </Paper>
@@ -268,7 +270,18 @@ const Payment = () => {
               justifyContent: "center",
             }}
           >
-            <Box sx={{ width: "70%", minHeight: "50vh" }}>
+            <Box
+              sx={
+                stripeLoaded
+                  ? {
+                      width: "70%",
+                      minHeight: "50vh",
+                      opacity: 1,
+                      transition: "0.3s",
+                    }
+                  : { width: "70%", minHeight: "50vh", opacity: 0 }
+              }
+            >
               <Box
                 sx={{
                   width: "100%",
@@ -328,14 +341,28 @@ const Payment = () => {
             }}
           >
             <Box
-              sx={{
-                width: "100%",
-                height: "80%",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
+              sx={
+                stripeLoaded
+                  ? {
+                      width: "100%",
+                      height: "80%",
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      opacity: 1,
+                      transition: "0.3s",
+                    }
+                  : {
+                      width: "100%",
+                      height: "80%",
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      opacity: 0,
+                    }
+              }
             >
               <Box
                 sx={{
@@ -387,7 +414,7 @@ const Payment = () => {
                 {clientSecret && (
                   // @ts-ignore
                   <Elements options={options} stripe={stripePromise}>
-                    <CheckoutForm shoppingCart={shoppingCart} />
+                    <CheckoutForm />
                   </Elements>
                 )}
               </Box>

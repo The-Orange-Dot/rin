@@ -4,12 +4,12 @@ import {
   useStripe,
   useElements,
 } from "@stripe/react-stripe-js";
-import { Button, TextField, styled } from "@mui/material";
+import { Button, CircularProgress, Box } from "@mui/material";
 import { useSelector } from "react-redux";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 
-export default function CheckoutForm({ shoppingCart }) {
+export default function CheckoutForm() {
   const router = useRouter();
   const session = useSession();
   const stripe = useStripe();
@@ -63,22 +63,14 @@ export default function CheckoutForm({ shoppingCart }) {
 
     setIsLoading(true);
 
-    const { error } = await stripe
-      .processOrder({
-        elements,
-        confirmParams: {
-          // Make sure to change this to your payment completion page
-          return_url: "http://localhost:3000/stripeSuccess",
-          receipt_email: email,
-        },
-      })
-      .then((res) => {
-        fetch("/api/products", {
-          method: "PATCH",
-          body: JSON.stringify({ cart: shoppingCart, error: res }),
-          headers: { "Content-Type": "application/json" },
-        });
-      });
+    const { error } = await stripe.processOrder({
+      elements,
+      confirmParams: {
+        // Make sure to change this to your payment completion page
+        return_url: "http://localhost:3000/stripeSuccess",
+        receipt_email: email,
+      },
+    });
 
     // This point will only be reached if there is an immediate error when
     // confirming the payment. Otherwise, your customer will be redirected to
@@ -96,8 +88,9 @@ export default function CheckoutForm({ shoppingCart }) {
 
   return (
     <form id="payment-form" onSubmit={handleSubmit}>
-      <PaymentElement id="payment-element" />
-
+      <Box sx={{ width: "100%", minHeight: "24vh" }}>
+        <PaymentElement id="payment-element" />
+      </Box>
       <Button
         type="submit"
         sx={{ mt: 3, height: 50 }}
@@ -107,7 +100,11 @@ export default function CheckoutForm({ shoppingCart }) {
         id="submit"
       >
         <span id="button-text">
-          {isLoading ? <div className="spinner" id="spinner"></div> : "Pay now"}
+          {isLoading ? (
+            <CircularProgress color="inherit" size={25} />
+          ) : (
+            "Pay now"
+          )}
         </span>
       </Button>
       <Button

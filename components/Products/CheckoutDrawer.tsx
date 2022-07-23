@@ -59,7 +59,7 @@ const CheckoutDrawer = () => {
       square
     >
       {guestShippingForm ? (
-        <GuestAddressInput />
+        <GuestAddressInput setGuestShippingForm={setGuestShippingForm} />
       ) : (
         <>
           <Box
