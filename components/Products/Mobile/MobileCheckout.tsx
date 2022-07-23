@@ -1,13 +1,27 @@
 import { Paper, Box, Typography, Divider, Button } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import { RootState } from "../../../redux/store";
 import { useSelector } from "react-redux";
 import MobileCheckoutContent from "./MobileCheckoutContent";
+import { useRouter } from "next/router";
+import { useSession } from "next-auth/react";
 
 const MobileCheckout = () => {
+  const [guestShippingForm, setGuestShippingForm] = useState(false);
+  const router = useRouter();
+  const session = useSession();
+
   const shoppingCart = useSelector(
     (state: RootState) => state.shoppingCart.value
   );
+
+  const checkoutRouterHandler = () => {
+    if (session.status === "authenticated") {
+      router.push("/payment");
+    } else {
+      setGuestShippingForm(true);
+    }
+  };
 
   const cartContent = shoppingCart.map((product: any) => {
     return <MobileCheckoutContent product={product} key={product.name} />;
@@ -19,7 +33,9 @@ const MobileCheckout = () => {
 
   const shipping = 0;
 
-  const total = Math.floor(subtotal * 1.086 * 100) / 100 + shipping;
+  const tax = Math.floor(subtotal * 0.086 * 100) / 100;
+
+  const total = tax + shipping + subtotal;
 
   return (
     <Paper
@@ -50,6 +66,7 @@ const MobileCheckout = () => {
           height: "60%",
           pl: 1,
           pr: 1,
+          pb: 2,
           overflowY: "scroll",
         }}
       >
@@ -64,16 +81,19 @@ const MobileCheckout = () => {
             Subtotal: ${subtotal}.00
           </Typography>
           <Typography sx={{ lineHeight: 1.5 }} variant="overline">
-            Shipping: ${shipping}
+            Shipping: ${shipping} (Add this logic later)
           </Typography>
           <Typography sx={{ lineHeight: 1.5 }} variant="overline">
-            Tax: --- (Calculated at checkout)
+            Tax: ${tax} (Calculated at checkout)
           </Typography>
         </Box>
         <Divider />
         <Box>
-          <Typography variant="overline" sx={{ lineHeight: 1.5, mt: 1 }}>
-            Shipping and tax are calculated at checkout
+          <Typography
+            variant="overline"
+            sx={{ lineHeight: 1.2, mt: 1, fontSize: ".65rem" }}
+          >
+            Final shipping and tax are calculated at checkout
           </Typography>
         </Box>
       </Box>
@@ -81,7 +101,7 @@ const MobileCheckout = () => {
       <Box
         sx={{
           width: "100%",
-          height: "27%",
+          height: "30%",
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
@@ -113,7 +133,12 @@ const MobileCheckout = () => {
           </Typography>
         </Box>
         <Box sx={{ width: "100%", height: "35%" }}>
-          <Button variant="contained" fullWidth sx={{ height: "100%" }}>
+          <Button
+            variant="contained"
+            fullWidth
+            sx={{ height: "100%" }}
+            onClick={() => checkoutRouterHandler()}
+          >
             Checkout
           </Button>
         </Box>
