@@ -104,9 +104,6 @@ const MobileProductsModal = ({
     return <MobileProductReview review={review} key={review.createdAt} />;
   });
 
-  const mostHelpfulReviews = reviews?.slice(0, 3);
-  const allReviews = reviews?.slice(3);
-
   return (
     <Modal
       open={productModalOpen}

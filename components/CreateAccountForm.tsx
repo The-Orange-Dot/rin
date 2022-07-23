@@ -9,6 +9,7 @@ import {
   InputAdornment,
   Select,
   MenuItem,
+  NativeSelect,
 } from "@mui/material";
 import { VisibilityOff } from "@mui/icons-material";
 import { Visibility } from "@mui/icons-material";
@@ -26,6 +27,7 @@ const CreateAccountForm = () => {
   const [address2, setAddress2] = useState("");
   const [cityInput, setCityInput] = useState("");
   const [zipcodeInput, setZipcodeInput] = useState("");
+  const [stateInput, setStateInput] = useState("");
 
   const stateArray = [
     { id: "AL", name: "Alabama" },
@@ -228,7 +230,12 @@ const CreateAccountForm = () => {
         <FormControl sx={{ m: 1, width: "30ch" }} variant="standard">
           <InputLabel htmlFor="state">State</InputLabel>
 
-          <Select id="state">{states}</Select>
+          <NativeSelect
+            id="state"
+            onChange={(e) => setStateInput(e.target.value as string)}
+          >
+            {states}
+          </NativeSelect>
         </FormControl>
 
         <FormControl sx={{ m: 1, width: "30ch" }} variant="standard">

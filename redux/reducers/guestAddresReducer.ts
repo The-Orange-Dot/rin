@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { PayloadAction } from "@reduxjs/toolkit";
+import Email from "next-auth/providers/email";
 import { RootState } from "../store";
 
 interface Address {
@@ -13,6 +14,8 @@ interface Address {
 
 interface User {
   value: { name: string; address: Address };
+  saveAddress: boolean;
+  email: "";
 }
 
 const initialState: User = {
@@ -27,6 +30,8 @@ const initialState: User = {
       country: "US",
     },
   },
+  saveAddress: false,
+  email: "",
 };
 
 export const guestShippingSlice = createSlice({
@@ -39,10 +44,17 @@ export const guestShippingSlice = createSlice({
     removeShipping: (state: User, action) => {
       state.value = action.payload;
     },
+    saveAddress: (state: User, action) => {
+      state.saveAddress = action.payload;
+    },
+    saveEmail: (state: User, action) => {
+      state.email = action.payload;
+    },
   },
 });
 
-export const { addShipping, removeShipping } = guestShippingSlice.actions;
+export const { saveEmail, addShipping, removeShipping, saveAddress } =
+  guestShippingSlice.actions;
 
 export const guestShipping = (state: RootState) => state.guestShipping.value;
 
