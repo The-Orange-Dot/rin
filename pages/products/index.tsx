@@ -2,7 +2,14 @@ import React, { useState, useEffect } from "react";
 import styles from "../../styles/products.module.css";
 import ProductsNavBar from "../../components/ProductsNavBar";
 import { GetStaticProps, InferGetStaticPropsType } from "next";
-import { Button, Container, Grid, Box, Typography } from "@mui/material";
+import {
+  Button,
+  Container,
+  Grid,
+  Box,
+  Typography,
+  Drawer,
+} from "@mui/material";
 import { server } from "../../config";
 import ProductCards from "../../components/Products/ProductCards";
 import ProductModal from "../../components/Products/ProductModal";
@@ -14,10 +21,14 @@ import gsap from "gsap";
 import { useSession } from "next-auth/react";
 import { ProductType } from "../../types/productTypes";
 import ShoppingCartButton from "../../components/Products/Mobile/ShoppingCartButton";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
+import MobileCheckout from "../../components/Products/Mobile/MobileCheckout";
 
 const Products = ({
   productsData,
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
+  const [openDrawer, setOpenDrawer] = useState(false);
   const isMobile = useMediaQuery("(max-width: 900px)");
   const [mobile, setMobile] = useState(isMobile);
   const [products, setProducts] = useState([]);
@@ -27,6 +38,9 @@ const Products = ({
   const session = useSession();
   const [pageLoaded, setPageLoaded] = useState(false);
   const [brands, setBrands] = useState([]);
+  const shoppingCart = useSelector(
+    (state: RootState) => state.shoppingCart.value
+  );
 
   //Sets up initial state for animation
   //When session loads, pageLoaded set to true
@@ -94,6 +108,12 @@ const Products = ({
     }
     setBrands(hash);
   }, [productsData]);
+
+  useEffect(() => {
+    if (shoppingCart.length <= 0) {
+      setOpenDrawer(false);
+    }
+  }, [shoppingCart]);
 
   return (
     <div className={styles.main}>
@@ -171,7 +191,16 @@ const Products = ({
           filterDrawerOpened={filterDrawerOpened}
           brands={brands}
         />
-        {isMobile ? <ShoppingCartButton /> : null}
+        {isMobile && shoppingCart.length > 0 ? (
+          <ShoppingCartButton setOpenDrawer={setOpenDrawer} />
+        ) : null}
+        <Drawer
+          open={openDrawer}
+          anchor="bottom"
+          onClose={() => setOpenDrawer(false)}
+        >
+          <MobileCheckout setOpenDrawer={setOpenDrawer} />
+        </Drawer>
       </Container>
     </div>
   );

@@ -56,7 +56,7 @@ const MobileNavModal = ({ mobileNavModalOpen, setMobileNavModalOpen }: any) => {
         }
       >
         {openLoginForm ? (
-          <MobileLoginForm />
+          <MobileLoginForm setMobileNavModalOpen={setMobileNavModalOpen} />
         ) : (
           <>
             <Typography
@@ -81,8 +81,10 @@ const MobileNavModal = ({ mobileNavModalOpen, setMobileNavModalOpen }: any) => {
               <Typography variant="body1" sx={{ m: 0.5, fontWeight: 200 }}>
                 About
               </Typography>
-            </Link>{" "}
-            <Link href="/subscription">
+            </Link>
+            <Link
+            // href="/subscription"
+            >
               <Typography variant="body1" sx={{ m: 0.5, fontWeight: 200 }}>
                 Subscription
               </Typography>

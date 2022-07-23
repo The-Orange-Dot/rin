@@ -6,7 +6,7 @@ import MobileCheckoutContent from "./MobileCheckoutContent";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 
-const MobileCheckout = () => {
+const MobileCheckout = ({ setOpenDrawer }: any) => {
   const [guestShippingForm, setGuestShippingForm] = useState(false);
   const router = useRouter();
   const session = useSession();

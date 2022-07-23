@@ -19,7 +19,8 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "pages/api/auth/signin.js"
+    "pages/api/auth/signIn.js",
+    "pages/api/checkout_sessions.js"
   ],
   "exclude": ["node_modules"]
 }
