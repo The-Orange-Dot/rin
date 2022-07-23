@@ -174,7 +174,7 @@ const MobileGuestAddressForm = ({ setOpenDrawer }: any) => {
             alignItems: "center",
           }}
         >
-          <FormControl sx={{ m: 1, width: "30ch" }} variant="standard">
+          <FormControl sx={{ mb: 1, width: "30ch" }} variant="standard">
             <InputLabel htmlFor="first-name">First Name / Surname</InputLabel>
             <Input
               required
@@ -186,7 +186,7 @@ const MobileGuestAddressForm = ({ setOpenDrawer }: any) => {
             />
           </FormControl>
 
-          <FormControl sx={{ m: 1, width: "30ch" }} variant="standard">
+          <FormControl sx={{ mb: 1, width: "30ch" }} variant="standard">
             <InputLabel htmlFor="last-name">Last Name / Family Name</InputLabel>
             <Input
               required
@@ -198,7 +198,7 @@ const MobileGuestAddressForm = ({ setOpenDrawer }: any) => {
             />
           </FormControl>
 
-          <FormControl sx={{ m: 1, width: "30ch" }} variant="standard">
+          <FormControl sx={{ mb: 1, width: "30ch" }} variant="standard">
             <InputLabel htmlFor="email">Email</InputLabel>
             <Input
               required
@@ -210,7 +210,7 @@ const MobileGuestAddressForm = ({ setOpenDrawer }: any) => {
             />
           </FormControl>
 
-          <FormControl sx={{ m: 1, width: "30ch" }} variant="standard">
+          <FormControl sx={{ mb: 1, width: "30ch" }} variant="standard">
             <InputLabel htmlFor="address-1">Street address</InputLabel>
             <Input
               required
@@ -222,7 +222,7 @@ const MobileGuestAddressForm = ({ setOpenDrawer }: any) => {
             />
           </FormControl>
 
-          <FormControl sx={{ m: 1, width: "30ch" }} variant="standard">
+          <FormControl sx={{ mb: 1, width: "30ch" }} variant="standard">
             <InputLabel htmlFor="address-2">Apt building / etc.</InputLabel>
             <Input
               id="address-2"
@@ -233,7 +233,7 @@ const MobileGuestAddressForm = ({ setOpenDrawer }: any) => {
             />
           </FormControl>
 
-          <FormControl sx={{ m: 1, width: "30ch" }} variant="standard">
+          <FormControl sx={{ mb: 1, width: "30ch" }} variant="standard">
             <InputLabel htmlFor="city">City</InputLabel>
             <Input
               required
@@ -245,7 +245,7 @@ const MobileGuestAddressForm = ({ setOpenDrawer }: any) => {
             />
           </FormControl>
 
-          <FormControl sx={{ m: 1, width: "30ch" }} variant="standard">
+          <FormControl sx={{ mb: 1, width: "30ch" }} variant="standard">
             <InputLabel htmlFor="state">State</InputLabel>
 
             <Select
@@ -258,7 +258,7 @@ const MobileGuestAddressForm = ({ setOpenDrawer }: any) => {
             </Select>
           </FormControl>
 
-          <FormControl sx={{ m: 1, width: "30ch" }} variant="standard">
+          <FormControl sx={{ mb: 1, width: "30ch" }} variant="standard">
             <InputLabel htmlFor="zipcode">Zipcode / Postal code</InputLabel>
             <Input
               required
@@ -271,7 +271,7 @@ const MobileGuestAddressForm = ({ setOpenDrawer }: any) => {
           </FormControl>
 
           <FormControlLabel
-            sx={{ mt: 2, width: "95%" }}
+            sx={{ mt: 1, width: "95%" }}
             control={
               <Checkbox
                 defaultChecked={storeAddressChecked}
@@ -291,7 +291,7 @@ const MobileGuestAddressForm = ({ setOpenDrawer }: any) => {
           />
 
           <FormControlLabel
-            sx={{ mt: 2, width: "95%" }}
+            sx={{ mt: 1, width: "95%" }}
             control={<Checkbox defaultChecked={storeAddressChecked} required />}
             label={
               <Typography
