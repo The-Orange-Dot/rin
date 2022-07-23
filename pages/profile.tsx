@@ -17,7 +17,7 @@ const Profile = () => {
     if (session.status === "unauthenticated") {
       router.push("/");
     }
-  }, [session.status]);
+  }, [session.status]); //eslint-disable-line
 
   if (session.status === "loading") {
     return (

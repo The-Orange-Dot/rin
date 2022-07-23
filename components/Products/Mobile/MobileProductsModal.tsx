@@ -42,7 +42,7 @@ const MobileProductsModal = ({
     } else {
       setProductModalOpen(false);
     }
-  }, [selectedProduct]);
+  }, [selectedProduct]); //eslint-disable-line
 
   useEffect(() => {
     if (product?.description?.length > 0) {

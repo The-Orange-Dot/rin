@@ -16,10 +16,9 @@ export default function CheckoutForm() {
   const elements = useElements();
   const [message, setMessage] = React.useState(null);
   const [isLoading, setIsLoading] = React.useState(false);
+  const storedEmail = useSelector((state) => state.guestShipping.email);
   const email =
-    session.status === "authenticated"
-      ? session.data.user.email
-      : useSelector((state) => state.guestShipping.email);
+    session.status === "authenticated" ? session.data.user.email : storedEmail;
 
   React.useEffect(() => {
     if (!stripe) {

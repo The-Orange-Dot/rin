@@ -102,7 +102,11 @@ const MobileGuestAddressForm = ({ setOpenDrawer }: any) => {
   ];
 
   const states = stateArray.map((state) => {
-    return <MenuItem value={state.id}>{state.name}</MenuItem>;
+    return (
+      <MenuItem value={state.id} key={state.id}>
+        {state.name}
+      </MenuItem>
+    );
   });
 
   const submitGuestShippingHandler = (e: SyntheticEvent) => {

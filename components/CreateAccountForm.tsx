@@ -83,7 +83,11 @@ const CreateAccountForm = () => {
   ];
 
   const states = stateArray.map((state) => {
-    return <MenuItem value={state.id}>{state.name}</MenuItem>;
+    return (
+      <MenuItem value={state.id} key={state.id}>
+        {state.name}
+      </MenuItem>
+    );
   });
 
   return (

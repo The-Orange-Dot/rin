@@ -52,8 +52,6 @@ const Payment = () => {
     }
   );
 
-  console.log(stripeLoaded);
-
   useEffect(() => {
     // The items the customer wants to buy
     const cardItemsId = shoppingCart.map((item) => item.id);
@@ -93,7 +91,7 @@ const Payment = () => {
         setShippingDetails(data.shipping);
         setTotal(data.total);
       });
-  }, [session.status]);
+  }, [session.status]); //eslint-disable-line
 
   const appearance = {
     theme: "stripe",

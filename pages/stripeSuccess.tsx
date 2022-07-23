@@ -23,7 +23,7 @@ const StripeSuccess = () => {
     if (shoppingCart.length <= 0) {
       router.push("/products");
     }
-  }, [shoppingCart]);
+  }, [shoppingCart]); //eslint-disable-line
 
   useEffect(() => {
     if (shoppingCart.length > 0 && session.status !== "loading") {
@@ -59,7 +59,7 @@ const StripeSuccess = () => {
         }
       });
     }
-  }, [session.status]);
+  }, [session.status]); //eslint-disable-line
 
   return (
     <Container
@@ -72,7 +72,7 @@ const StripeSuccess = () => {
       }}
     >
       <Typography>Thank you very much for your purchase</Typography>
-      <Typography>You'll be redirected in a few seconds</Typography>
+      <Typography>You&apos;ll be redirected in a few seconds</Typography>
       <Typography>Click here if page does not redirect</Typography>
     </Container>
   );
