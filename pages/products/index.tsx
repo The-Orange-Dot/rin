@@ -30,7 +30,6 @@ const Products = ({
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
   const [openDrawer, setOpenDrawer] = useState(false);
   const isMobile = useMediaQuery("(max-width: 900px)");
-  const [mobile, setMobile] = useState(isMobile);
   const [products, setProducts] = useState([]);
   const [productModalOpen, setProductModalOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState({});

@@ -59,6 +59,7 @@ const MobileCheckoutButton = ({
           image: product.image,
           quantity: foundItem.quantity + quantity,
           price: product.price,
+          size: product.size,
           stock: product.quantity,
         };
 

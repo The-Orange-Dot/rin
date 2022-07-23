@@ -6,6 +6,7 @@ import { removeItem } from "../redux/reducers/shoppingCartReducer";
 import { Container } from "@mui/system";
 import { Typography } from "@mui/material";
 import { useSession } from "next-auth/react";
+import { removeShipping } from "../redux/reducers/guestAddresReducer";
 
 const StripeSuccess = () => {
   const session = useSession();
@@ -13,6 +14,9 @@ const StripeSuccess = () => {
   const router = useRouter();
   const shoppingCart = useSelector(
     (state: RootState) => state.shoppingCart.value
+  );
+  const saveAddress = useSelector(
+    (state: RootState) => state.guestShipping.saveAddress
   );
 
   useEffect(() => {
@@ -30,6 +34,22 @@ const StripeSuccess = () => {
       }).then((res) => {
         if (res.ok) {
           res.json().then((data) => {
+            if (!saveAddress) {
+              dispatch(
+                removeShipping({
+                  name: "",
+                  address: {
+                    line1: "",
+                    line2: "",
+                    city: "",
+                    state: "",
+                    postal_code: "",
+                    country: "US",
+                  },
+                })
+              );
+            }
+
             setTimeout(() => {
               dispatch(removeItem([]));
             }, 2000);

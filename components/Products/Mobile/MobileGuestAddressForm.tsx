@@ -18,6 +18,7 @@ import {
   saveEmail,
 } from "../../../redux/reducers/guestAddresReducer";
 import { RootState } from "../../../redux/store";
+import { useRouter } from "next/router";
 
 const MobileGuestAddressForm = ({ setOpenDrawer }: any) => {
   const storeInfo = useSelector(
@@ -30,14 +31,21 @@ const MobileGuestAddressForm = ({ setOpenDrawer }: any) => {
     (state: RootState) => state.guestShipping.email
   );
   const dispatch = useDispatch();
-  const [firstNameInput, setFirstNameInput] = useState("");
-  const [lastNameInput, setLastNameInput] = useState("");
-  const [address1, setAddress1] = useState("");
-  const [address2, setAddress2] = useState("");
-  const [cityInput, setCityInput] = useState("");
-  const [zipcodeInput, setZipcodeInput] = useState("");
-  const [emailInput, setEmailInput] = useState("");
-  const [stateInput, setStateInput] = useState("");
+  const router = useRouter();
+  const [firstNameInput, setFirstNameInput] = useState(
+    storedAddress.name?.split(" ")[0]
+  );
+  const [lastNameInput, setLastNameInput] = useState(
+    storedAddress.name?.split(" ")[1]
+  );
+  const [emailInput, setEmailInput] = useState<string>(storedEmail);
+  const [address1, setAddress1] = useState(storedAddress.address?.line1);
+  const [address2, setAddress2] = useState(storedAddress.address?.line2);
+  const [cityInput, setCityInput] = useState(storedAddress.address?.city);
+  const [zipcodeInput, setZipcodeInput] = useState(
+    storedAddress.address?.postal_code
+  );
+  const [stateInput, setStateInput] = useState(storedAddress.address?.state);
   const [storeAddressChecked, setStoreAddressChecked] = useState(storeInfo);
 
   const stateArray = [
@@ -101,20 +109,31 @@ const MobileGuestAddressForm = ({ setOpenDrawer }: any) => {
     e.preventDefault();
 
     const shipping = {
-      value: {
-        name: `${firstNameInput} ${lastNameInput}`,
-        address: {
-          line1: address1,
-          line2: address2,
-          city: cityInput,
-          state: stateInput,
-          postal_code: zipcodeInput,
-          country: "US",
-        },
+      name: `${firstNameInput} ${lastNameInput}`,
+      address: {
+        line1: address1,
+        line2: address2,
+        city: cityInput,
+        state: stateInput,
+        postal_code: zipcodeInput,
+        country: "US",
       },
     };
     dispatch(addShipping(shipping));
     dispatch(saveEmail(emailInput));
+    setTimeout(() => {
+      router.push("/payment");
+    }, 500);
+  };
+
+  const storeAddressHandler = (e: boolean) => {
+    if (e) {
+      setStoreAddressChecked(true);
+      dispatch(saveAddress(true));
+    } else {
+      setStoreAddressChecked(false);
+      dispatch(saveAddress(false));
+    }
   };
 
   return (
@@ -159,7 +178,7 @@ const MobileGuestAddressForm = ({ setOpenDrawer }: any) => {
               value={firstNameInput}
               inputProps={{ style: { paddingLeft: 10 } }}
               onChange={(e) => setFirstNameInput(e.target.value)}
-              defaultValue={storedAddress.name?.split(" ")[0]}
+              defaultValue={firstNameInput}
             />
           </FormControl>
 
@@ -171,7 +190,7 @@ const MobileGuestAddressForm = ({ setOpenDrawer }: any) => {
               value={lastNameInput}
               inputProps={{ style: { paddingLeft: 10 } }}
               onChange={(e) => setLastNameInput(e.target.value)}
-              defaultValue={storedAddress.name?.split(" ")[1]}
+              defaultValue={lastNameInput}
             />
           </FormControl>
 
@@ -182,8 +201,8 @@ const MobileGuestAddressForm = ({ setOpenDrawer }: any) => {
               id="email"
               value={emailInput}
               inputProps={{ style: { paddingLeft: 10 } }}
-              onChange={(e) => setEmailInput(e.target.value)}
-              defaultValue={storedEmail}
+              onChange={(e) => setEmailInput(e.target.value as string)}
+              defaultValue={emailInput}
             />
           </FormControl>
 
@@ -195,7 +214,7 @@ const MobileGuestAddressForm = ({ setOpenDrawer }: any) => {
               value={address1}
               inputProps={{ style: { paddingLeft: 10 } }}
               onChange={(e) => setAddress1(e.target.value)}
-              defaultValue={storedAddress.address?.line1}
+              defaultValue={address1}
             />
           </FormControl>
 
@@ -206,7 +225,7 @@ const MobileGuestAddressForm = ({ setOpenDrawer }: any) => {
               value={address2}
               inputProps={{ style: { paddingLeft: 10 } }}
               onChange={(e) => setAddress2(e.target.value)}
-              defaultValue={storedAddress.address?.line2}
+              defaultValue={address2}
             />
           </FormControl>
 
@@ -218,7 +237,7 @@ const MobileGuestAddressForm = ({ setOpenDrawer }: any) => {
               value={cityInput}
               inputProps={{ style: { paddingLeft: 10 } }}
               onChange={(e) => setCityInput(e.target.value)}
-              defaultValue={storedAddress.address?.city}
+              defaultValue={cityInput}
             />
           </FormControl>
 
@@ -227,9 +246,9 @@ const MobileGuestAddressForm = ({ setOpenDrawer }: any) => {
 
             <Select
               id="state"
-              onChange={(e) => setStateInput(e.target.value as string)}
+              onChange={(e) => setStateInput(e.target.value)}
               required
-              defaultValue={storedAddress.address?.state}
+              defaultValue={stateInput}
             >
               {states}
             </Select>
@@ -241,7 +260,7 @@ const MobileGuestAddressForm = ({ setOpenDrawer }: any) => {
               required
               id="zipcode"
               value={zipcodeInput}
-              defaultValue={storedAddress.address?.postal_code}
+              defaultValue={zipcodeInput}
               inputProps={{ style: { paddingLeft: 10 } }}
               onChange={(e) => setZipcodeInput(e.target.value)}
             />
@@ -253,7 +272,7 @@ const MobileGuestAddressForm = ({ setOpenDrawer }: any) => {
               <Checkbox
                 defaultChecked={storeAddressChecked}
                 onChange={(e) => {
-                  setStoreAddressChecked(e.target.checked);
+                  storeAddressHandler(e.target.checked);
                 }}
               />
             }
@@ -269,7 +288,7 @@ const MobileGuestAddressForm = ({ setOpenDrawer }: any) => {
 
           <FormControlLabel
             sx={{ mt: 2, width: "95%" }}
-            control={<Checkbox defaultChecked={storeAddressChecked} />}
+            control={<Checkbox defaultChecked={storeAddressChecked} required />}
             label={
               <Typography
                 variant="overline"

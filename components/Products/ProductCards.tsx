@@ -47,6 +47,7 @@ const ProductCards = ({ product, setSelectedProduct }: any) => {
         name: product.name,
         quantity: foundItem.quantity + 1,
         price: product.price,
+        size: product.size,
         stock: product.quantity,
       };
       if (updatedItem.quantity < product.quantity) {

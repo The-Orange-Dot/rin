@@ -4,38 +4,22 @@ import {
   useStripe,
   useElements,
 } from "@stripe/react-stripe-js";
-import { Button, TextField, styled, Typography } from "@mui/material";
-
-const CustomTextField = styled(TextField, {
-  shouldForwardProp: (props) => props !== "focusColor",
-})((p) => ({
-  // input label when focused
-  "& label.Mui-focused": {
-    color: p.focusColor,
-  },
-  // focused color for input with variant='standard'
-  "& .MuiInput-underline:after": {
-    borderBottomColor: p.focusColor,
-  },
-  // focused color for input with variant='filled'
-  "& .MuiFilledInput-underline:after": {
-    borderBottomColor: p.focusColor,
-  },
-  // focused color for input with variant='outlined'
-  "& .MuiOutlinedInput-root": {
-    "&.Mui-focused fieldset": {
-      boxShadow: "0px 0px 0px 3px rgba(148,148,149,.5)",
-      border: "1px solid #949495",
-    },
-  },
-}));
+import { Button, TextField, styled } from "@mui/material";
+import { useSelector } from "react-redux";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 
 export default function CheckoutForm({ shoppingCart }) {
+  const router = useRouter();
+  const session = useSession();
   const stripe = useStripe();
   const elements = useElements();
-  const [email, setEmail] = React.useState("");
   const [message, setMessage] = React.useState(null);
   const [isLoading, setIsLoading] = React.useState(false);
+  const email =
+    session.status === "authenticated"
+      ? session.data.user.email
+      : useSelector((state) => state.guestShipping.email);
 
   React.useEffect(() => {
     if (!stripe) {
@@ -112,32 +96,11 @@ export default function CheckoutForm({ shoppingCart }) {
 
   return (
     <form id="payment-form" onSubmit={handleSubmit}>
-      <Typography sx={{ fontWeight: 200, fontSize: ".9rem", color: "#949495" }}>
-        Email
-      </Typography>
-      <CustomTextField
-        sx={{
-          fieldset: {
-            borderColor: "#949495",
-            borderWidth: "1",
-            outline: "none",
-          },
-          mb: 2,
-        }}
-        color="secondary"
-        fullWidth
-        size="small"
-        id="email"
-        type="text"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        placeholder="Enter email address"
-      />
       <PaymentElement id="payment-element" />
 
       <Button
         type="submit"
-        sx={{ mt: 5 }}
+        sx={{ mt: 3, height: 50 }}
         fullWidth
         variant="contained"
         disabled={isLoading || !stripe || !elements}
@@ -146,6 +109,15 @@ export default function CheckoutForm({ shoppingCart }) {
         <span id="button-text">
           {isLoading ? <div className="spinner" id="spinner"></div> : "Pay now"}
         </span>
+      </Button>
+      <Button
+        color="secondary"
+        sx={{ mt: 2, height: 50 }}
+        fullWidth
+        variant="contained"
+        onClick={() => router.push("/products")}
+      >
+        Back
       </Button>
       {/* Show any error or success messages */}
       {message && <div id="payment-message">{message}</div>}

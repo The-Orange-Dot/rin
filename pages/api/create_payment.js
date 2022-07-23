@@ -84,7 +84,7 @@ export default async function handler(req, res) {
     // },
   });
 
-  // console.log("ORDER DETAIL: ", order);
+  console.log("ORDER DETAIL: ", order);
 
   res.status(200).json({
     clientSecret: order.client_secret,

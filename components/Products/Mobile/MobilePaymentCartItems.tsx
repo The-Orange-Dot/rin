@@ -4,10 +4,12 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   editQuantity,
   removeItem,
-} from "../redux/reducers/shoppingCartReducer";
-import { RootState } from "../redux/store";
+} from "../../../redux/reducers/shoppingCartReducer";
+import { RootState } from "../../../redux/store";
+import styles from "../../../styles/payment.module.css";
 
-const PaymentCartItems = ({ product }: any) => {
+const MobilePaymentCartItems = ({ product }: any) => {
+  console.log(product);
   return (
     <Box
       key={product.name}
@@ -25,8 +27,6 @@ const PaymentCartItems = ({ product }: any) => {
           height: "100%",
           justifyContent: "space-between",
           alignItems: "center",
-          overflowY: "scroll",
-          p: 2,
         }}
       >
         <Box
@@ -39,12 +39,7 @@ const PaymentCartItems = ({ product }: any) => {
           }}
         >
           {/* eslint-disable */}
-          <img
-            src={product.image}
-            width={100}
-            height={100}
-            alt={product.name}
-          />
+          <img src={product.image} width={70} height={70} alt={product.name} />
           {/* eslint-enable */}
         </Box>
         <Box
@@ -63,8 +58,8 @@ const PaymentCartItems = ({ product }: any) => {
               variant="overline"
               sx={{
                 fontWeight: "bold",
-                fontSize: ".8rem",
-                lineHeight: "1rem",
+                fontSize: ".6rem",
+                lineHeight: ".5rem",
               }}
             >
               {product.name}
@@ -72,14 +67,17 @@ const PaymentCartItems = ({ product }: any) => {
           </Box>
           {product?.detail !== "" ? (
             <Box>
-              <Typography sx={{ lineHeight: "1rem" }} variant="overline">
+              <Typography
+                sx={{ lineHeight: ".5rem", fontSize: ".5rem" }}
+                variant="overline"
+              >
                 {product.details}
               </Typography>
             </Box>
           ) : null}
           <Typography
             variant="overline"
-            sx={{ lineHeight: "1rem", color: "#949495", fontSize: ".7rem" }}
+            sx={{ lineHeight: "1rem", color: "#949495", fontSize: ".5rem" }}
           >
             {product.size}, Qty: {product.quantity} - ${product.price} per unit
           </Typography>
@@ -105,4 +103,4 @@ const PaymentCartItems = ({ product }: any) => {
   );
 };
 
-export default PaymentCartItems;
+export default MobilePaymentCartItems;
