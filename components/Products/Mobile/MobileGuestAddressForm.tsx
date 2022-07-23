@@ -10,6 +10,7 @@ import {
   Button,
   FormControlLabel,
   Checkbox,
+  CircularProgress,
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -48,6 +49,7 @@ const MobileGuestAddressForm = ({ setOpenDrawer, openDrawer }: any) => {
   const [stateInput, setStateInput] = useState(storedAddress.address?.state);
   const [storeAddressChecked, setStoreAddressChecked] = useState(storeInfo);
   const [tosChecked, setTosChecked] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     setTosChecked(false);
@@ -116,6 +118,7 @@ const MobileGuestAddressForm = ({ setOpenDrawer, openDrawer }: any) => {
 
   const submitGuestShippingHandler = (e: SyntheticEvent) => {
     e.preventDefault();
+    setIsLoading(true);
 
     const shipping = {
       name: `${firstNameInput} ${lastNameInput}`,
@@ -331,8 +334,13 @@ const MobileGuestAddressForm = ({ setOpenDrawer, openDrawer }: any) => {
             variant="contained"
             type="submit"
             sx={{ width: "50%", height: 50, ml: 1 }}
+            disabled={isLoading}
           >
-            Checkout
+            {isLoading ? (
+              <CircularProgress color="inherit" size={25} />
+            ) : (
+              "Checkout"
+            )}
           </Button>
         </Box>
       </form>
