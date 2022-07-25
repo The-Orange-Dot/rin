@@ -199,13 +199,13 @@ const Products = ({
             setProductModalOpen={setProductModalOpen}
             selectedProduct={selectedProduct}
           />
-        ) : selectedProduct ? (
+        ) : (
           <ProductModal
             productModalOpen={productModalOpen}
             setProductModalOpen={setProductModalOpen}
             selectedProduct={selectedProduct}
           />
-        ) : null}
+        )}
         <MobileProductNavBar
           setFilterDrawerOpened={setFilterDrawerOpened}
           filterDrawerOpened={filterDrawerOpened}

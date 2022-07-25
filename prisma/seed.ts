@@ -314,10 +314,10 @@ const seed = async () => {
     },
   ];
 
-  products.map(
-    //@ts-ignore
-    async (product) => await client.product.create({ data: product })
-  );
+  // products.map(
+  //   //@ts-ignore
+  //   async (product) => await client.product.create({ data: product })
+  // );
 
   //Creates a lot of user data
   for (let i = 2; i < 50; i++) {
