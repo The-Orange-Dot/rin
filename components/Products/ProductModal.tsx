@@ -17,6 +17,7 @@ import { useRouter } from "next/router";
 import IngredientsAccordion from "./IngredientsAccordion";
 import ProductReviews from "./ProductReviews";
 import CheckoutButton from "./CheckoutButton";
+import Image from "next/image";
 
 const ProductModal = ({
   productModalOpen,
@@ -79,7 +80,7 @@ const ProductModal = ({
   const closeModalHandler = async (url: string) => {
     setProductModalOpen(false);
 
-    if (url.includes("modal_open=true")) {
+    if (productModalOpen) {
       await router.replace(
         {
           pathname: "/products",
@@ -156,11 +157,22 @@ const ProductModal = ({
                 mt: 2,
                 minHeight: "65vh",
                 mr: 2,
+                position: "relative",
               }}
             >
-              {/* eslint-disable */}
-              <img src={product.image} alt={product.name} width={"100%"} />
-              {/* eslint-enable */}
+              {productModalOpen ? (
+                <Image
+                  src={product.thumbnail}
+                  alt={product.name}
+                  layout="fill"
+                  objectFit="contain"
+                  unoptimized={true}
+                  loading="lazy"
+                  placeholder="blur"
+                  blurDataURL={product.thumbnail}
+                  quality="100"
+                />
+              ) : null}
             </Box>
 
             <Box

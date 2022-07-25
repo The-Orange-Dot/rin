@@ -49,7 +49,12 @@ const ItemInCheckoutDrawer = ({ product }: any) => {
     <Box key={product.name}>
       <Box sx={{ display: "flex", mb: 2 }}>
         {/* eslint-disable */}
-        <img src={product.image} width={70} height={70} alt={product.name} />
+        <img
+          src={product.thumbnail}
+          width={70}
+          height={70}
+          alt={product.name}
+        />
         {/* eslint-enable */}
         <Box sx={{ display: "flex", flexDirection: "column", ml: 1 }}>
           <Typography>{product.name}</Typography>

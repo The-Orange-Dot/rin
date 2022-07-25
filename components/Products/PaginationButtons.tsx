@@ -15,12 +15,16 @@ const PaginationButtons = ({
   setProducts,
   setPageLoaded,
 }: PaginationType) => {
-  const totalPages = Math.ceil(number / 4);
+  const totalPages = Math.ceil(number / 12);
 
   const pageHandler = async (e: ChangeEvent<unknown>, value: number) => {
-    gsap.to(".card", { opacity: 0, y: -10, stagger: 0, duration: 0.1 });
+    gsap
+      .timeline({
+        onComplete: window.scrollTo({ top: 0, behavior: "smooth" }) as any,
+      })
+      .to(".card", { opacity: 0, y: -10, stagger: 0, duration: 0.1 });
 
-    const newPage = await fetch(`/api/products/?view=${value * 4}`);
+    const newPage = await fetch(`/api/products/?view=${value * 12}`);
     const updatedPage = await newPage.json();
     setPageLoaded(false);
 

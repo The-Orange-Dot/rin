@@ -137,7 +137,7 @@ const MobileProductsModal = ({
               /*eslint-disable*/
               <img
                 alt={product.name}
-                src={product.image}
+                src={product.thumbnail}
                 width={300}
                 height={300}
               />

@@ -9,11 +9,8 @@ export default async function handler(
   if (req.method === "GET") {
     const view: string | undefined = req.query.view as string | undefined;
 
-    const skip = view ? parseInt(view) - 4 : 0;
-    const take = view ? parseInt(view) : 4;
-
-    console.log("SKIP: ", skip);
-    console.log("TAKE: ", take);
+    const skip = view ? parseInt(view) - 12 : 0;
+    const take = view ? parseInt(view) : 12;
 
     const products = await prisma.product.findMany({
       orderBy: { createdAt: "desc" },

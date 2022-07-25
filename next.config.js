@@ -3,7 +3,11 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   images: {
-    domains: [],
+    domains: [
+      "romand.co.kr",
+      "kao-h.assetsadobe3.com",
+      "www.threecosmetics.com",
+    ],
   },
 };
 

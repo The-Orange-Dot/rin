@@ -15,7 +15,8 @@ model Product {
   likes       Int      @default(0)
   quantity    Int      @default(1)
   price       Float    @default(0.00)
-  image       String
+  thumbnail   String
+  images      String[]
   category    String   @default("misc")
   brand       String
   createdAt   DateTime @default(now()) @map("created_at")

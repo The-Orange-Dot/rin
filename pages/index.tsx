@@ -4,6 +4,7 @@ import Image from "next/image";
 import HeaderImage from "../components/HeaderImage";
 import { Box, Container } from "@mui/system";
 import { Typography } from "@mui/material";
+import { GetStaticProps, GetStaticPaths } from "next";
 
 const Home: NextPage = () => {
   return (

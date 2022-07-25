@@ -29,7 +29,7 @@ const ProductCards = ({ product, setSelectedProduct }: any) => {
       name: product.name,
       quantity: 1,
       price: product.price,
-      image: product.image,
+      image: product.thumbnail,
       stock: product.quantity,
       size: product.size,
       details: product.details,
@@ -43,7 +43,7 @@ const ProductCards = ({ product, setSelectedProduct }: any) => {
       });
       const updatedItem = {
         id: product.id,
-        image: product.image,
+        image: product.thumbnail,
         name: product.name,
         quantity: foundItem.quantity + 1,
         price: product.price,
@@ -118,7 +118,7 @@ const ProductCards = ({ product, setSelectedProduct }: any) => {
           <CardMedia
             component="img"
             alt={product.name}
-            image={product.image}
+            image={product.thumbnail}
             height={280}
             sx={
               isMobile

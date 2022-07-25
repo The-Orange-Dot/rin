@@ -50,7 +50,7 @@ export default async function handler(req, res) {
             unit_amount: dbProduct.price * 100,
             tax_behavior: "exclusive",
           },
-          images: [dbProduct.image],
+          images: [dbProduct.thumbnail],
         });
 
         const lineItem = {

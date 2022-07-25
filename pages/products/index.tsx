@@ -107,6 +107,12 @@ const Products = ({
     [products] // eslint-disable-line
   );
 
+  useEffect(() => {
+    if (!productModalOpen) {
+      setSelectedProduct({});
+    }
+  }, [productModalOpen]);
+
   //Sets brands and amount of products for brands filter display
   useEffect(() => {
     let hash: any = {};
@@ -241,7 +247,7 @@ export const getStaticProps: GetStaticProps = async () => {
         productsData: products,
         totalProducts: totalProducts,
       },
-      revalidate: 10,
+      revalidate: 20,
     };
   } catch {
     return { notFound: true };

@@ -50,7 +50,12 @@ const MobileCheckoutContent = ({ product }: any) => {
       <Box sx={{ width: "100%", display: "flex" }}>
         <Box sx={{ width: "25%", display: "flex", justifyContent: "center" }}>
           {/* eslint-disable */}
-          <img src={product.image} width={70} height={70} alt={product.name} />
+          <img
+            src={product.thumbnail}
+            width={70}
+            height={70}
+            alt={product.name}
+          />
           {/* eslint-enable */}
         </Box>
         <Box

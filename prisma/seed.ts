@@ -12,7 +12,7 @@ interface ProductData {
   quantity: number;
   price: number;
   rating: number;
-  image: string;
+  thumbnail: string;
   category: string;
   brand: string;
   ingredients: string[];
@@ -62,7 +62,7 @@ const seed = async () => {
       quantity: 10,
       price: 50.0,
       rating: 3.4,
-      image: "https://www.threecosmetics.com/img/goods/L/t1b219.jpg",
+      thumbnail: "https://www.threecosmetics.com/img/goods/L/t1b219.jpg",
       category: "skincare",
       brand: "THREE",
       ingredients: [
@@ -103,7 +103,7 @@ const seed = async () => {
       quantity: 43,
       price: 60.0,
       rating: 4.6,
-      image: "https://www.threecosmetics.com/img/goods/L/t1b264.jpg",
+      thumbnail: "https://www.threecosmetics.com/img/goods/L/t1b264.jpg",
       category: "skincare",
       brand: "THREE",
       ingredients: [
@@ -152,7 +152,7 @@ const seed = async () => {
       quantity: 9,
       price: 40.0,
       rating: 5,
-      image: "https://www.threecosmetics.com/img/goods/S/t1b104.jpg",
+      thumbnail: "https://www.threecosmetics.com/img/goods/S/t1b104.jpg",
       category: "skincare",
       brand: "THREE",
       ingredients: [
@@ -192,7 +192,7 @@ const seed = async () => {
       quantity: 2,
       price: 25.0,
       rating: 3.5,
-      image:
+      thumbnail:
         "https://romand.co.kr/web/product/big/202206/ceb0ed2f0e3d9595e96e154d4c127c94.jpg",
       category: "skincare",
       brand: "rom&nd",
@@ -210,7 +210,7 @@ const seed = async () => {
       quantity: 54,
       price: 50.0,
       rating: 2.3,
-      image:
+      thumbnail:
         "https://shiro-shiro.jp/client_info/SHIRO/itemimage/12555/12555.jpg",
       category: "skincare",
       brand: "SHIRO",
@@ -228,7 +228,7 @@ const seed = async () => {
       quantity: 0,
       price: 15.0,
       rating: 4.5,
-      image:
+      thumbnail:
         "https://kao-h.assetsadobe3.com/is/image/content/dam/sites/kanebo/www-kanebo-cosmetics-jp/lunasol/details/pointmake/p0601015/p0601015.jpg",
       category: "skincare",
       brand: "LUNASOL",
@@ -246,7 +246,7 @@ const seed = async () => {
       quantity: 19,
       price: 50.0,
       rating: 4.4,
-      image:
+      thumbnail:
         "https://kao-h.assetsadobe3.com/is/image/content/dam/sites/kanebo/www-kanebo-cosmetics-jp/lunasol/renew/details/skincare/s0101011/s0101011.png",
       category: "skincare",
       brand: "LUNASOL",
@@ -264,12 +264,30 @@ const seed = async () => {
       quantity: 0,
       price: 66.0,
       rating: 4.0,
-      image:
+      thumbnail:
         "https://kao-h.assetsadobe3.com/is/image/content/dam/sites/kanebo/www-kanebo-cosmetics-jp/lunasol/details/skincare/s0101008/s0101008.jpg?fmt=jpeg",
       category: "skincare",
       brand: "LUNASOL",
       ingredients: [],
       id: "7",
+    },
+    {
+      name: "Yoku Collection - Eye shadow",
+      size: "6.5g",
+      details: "Limited Tokyo Item",
+      description: [
+        "Kate Tokyo makeup",
+        "Checking to see how it looks in english to see what i can fit blah blah blah blu blu blu beep boop boop bop",
+      ],
+      quantity: 2,
+      price: 40,
+      rating: 4.0,
+      thumbnail:
+        "https://d31pc8y2j50o7q.cloudfront.net/kate_tokyo/yoku_series/kate_tokyo_ex-1_app_300.jpg",
+      category: "makeup",
+      brand: "Kate Tokyo",
+      ingredients: [],
+      id: "8",
     },
   ];
 
@@ -347,7 +365,7 @@ const seed = async () => {
   for (let i = 0; i < 100; i++) {
     const testReviews: ReviewData = {
       userId: Math.floor(Math.random() * 49).toString(),
-      productId: Math.floor(Math.random() * 8).toString(),
+      productId: Math.floor(Math.random() * 9).toString(),
       rating: Math.floor(Math.random() * 5) + 1,
       description: faker.lorem.lines(),
       helpful: Math.floor(Math.random() * 120),
