@@ -225,7 +225,7 @@ const Products = ({
           setProducts={setProducts}
           setPageLoaded={setPageLoaded}
         />
-        {isMobile ? (
+        {/* {isMobile ? (
           <MobileProductsModal
             productModalOpen={productModalOpen}
             setProductModalOpen={setProductModalOpen}
@@ -255,7 +255,7 @@ const Products = ({
             openDrawer={openDrawer}
             setOpenDrawer={setOpenDrawer}
           />
-        </Drawer>
+        </Drawer> */}
       </Container>
     </div>
   );
