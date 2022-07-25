@@ -7,6 +7,14 @@ export default async function handler(
   res: NextApiResponse
 ) {
   if (req.method === "GET") {
+    const view: string | undefined = req.query.view as string | undefined;
+
+    const skip = view ? parseInt(view) - 4 : 0;
+    const take = view ? parseInt(view) : 4;
+
+    console.log("SKIP: ", skip);
+    console.log("TAKE: ", take);
+
     const products = await prisma.product.findMany({
       orderBy: { createdAt: "desc" },
       include: {
@@ -24,9 +32,13 @@ export default async function handler(
           take: 3,
         },
       },
+      take: take,
+      skip: skip,
     });
 
-    res.status(200).json(products);
+    const totalProducts = await prisma.product.count();
+
+    res.status(200).json({ products: products, totalProducts: totalProducts });
   } else if (req.method === "PATCH") {
     const { items } = req.body;
 

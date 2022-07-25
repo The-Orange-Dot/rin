@@ -40,7 +40,7 @@ const ProductModal = ({
     setLoadMoreReviews(false);
     setReviewsData(selectedProduct?.reviews);
     setNumberOfreviews(3);
-    if (selectedProduct !== {}) {
+    if (Object.keys(selectedProduct).length > 0) {
       setProductModalOpen(true);
     } else {
       setProductModalOpen(false);

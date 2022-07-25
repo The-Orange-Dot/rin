@@ -24,19 +24,24 @@ import ShoppingCartButton from "../../components/Products/Mobile/ShoppingCartBut
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import MobileCheckout from "../../components/Products/Mobile/MobileCheckout";
+import Pagination from "../../components/Products/PaginationButtons";
+import GSAPTimeline from "gsap";
 
 const Products = ({
   productsData,
+  totalProducts,
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
   const [openDrawer, setOpenDrawer] = useState(false);
   const isMobile = useMediaQuery("(max-width: 900px)");
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState(productsData);
+  const [productCards, setProductCards] = useState([]);
   const [productModalOpen, setProductModalOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState({});
   const [filterDrawerOpened, setFilterDrawerOpened] = useState(false);
   const session = useSession();
   const [pageLoaded, setPageLoaded] = useState(false);
   const [brands, setBrands] = useState([]);
+
   const shoppingCart = useSelector(
     (state: RootState) => state.shoppingCart.value
   );
@@ -44,61 +49,68 @@ const Products = ({
   //Sets up initial state for animation
   //When session loads, pageLoaded set to true
   useEffect(() => {
-    if (document.querySelector(".card")) {
-      gsap.set(".card", { opacity: 0 });
-    }
-    if (document.querySelector(".filter")) {
-      gsap.set(".filter", { opacity: 0 });
-    }
-    if (session.status !== "loading") {
-      setPageLoaded(true);
-    }
+    const tl = gsap
+      .timeline({ paused: true })
+      .fromTo(".filter", { opacity: 0 }, { opacity: 1 }, 0)
+      .fromTo(".pagnation-buttons", { opacity: 0 }, { opacity: 1 }, 0);
 
+    if (session.status === "loading") {
+      if (document.querySelector(".card")) {
+        gsap.set(".card", { opacity: 0 });
+      }
+      if (document.querySelector(".filter")) {
+        gsap.set(".filter", { opacity: 0 });
+      }
+    } else {
+      setPageLoaded(true);
+      tl.play(0);
+    }
     setProductModalOpen(false);
   }, [session.status]);
 
   //Filter selectors animation once page is loaded
   useEffect(() => {
-    if (document.querySelector(".filter")) {
-      const tl = gsap
-        .timeline({ paused: true })
-        .fromTo(
-          ".card",
-          { opacity: 0, y: -10 },
-          { opacity: 1, stagger: 0.2, duration: 0.5, y: 0 }
-        )
-        .fromTo(".filter", { opacity: 0 }, { opacity: 1 }, 0);
-
-      if (pageLoaded) {
-        tl.play(0);
-      }
+    if (!pageLoaded) {
+      setTimeout(() => {
+        setPageLoaded(true);
+      }, 250);
+    } else {
+      gsap.fromTo(
+        ".card",
+        { y: -10, opacity: 0 },
+        {
+          opacity: 1,
+          stagger: 0.1,
+          duration: 0.5,
+          y: 0,
+          ease: "power3.out",
+        }
+      );
     }
   }, [pageLoaded]);
 
   //Maps all products data into cards
   useEffect(
     () => {
-      if (productsData) {
-        const productCards = productsData.map((product: ProductType) => {
-          return (
-            <ProductCards
-              product={product}
-              key={product.name}
-              setSelectedProduct={setSelectedProduct}
-            />
-          );
-        });
+      const productCards = products.map((product: ProductType) => {
+        return (
+          <ProductCards
+            product={product}
+            key={product.name}
+            setSelectedProduct={setSelectedProduct}
+          />
+        );
+      });
 
-        setProducts(productCards);
-      }
+      setProductCards(productCards);
     },
-    [productsData] // eslint-disable-line
+    [products] // eslint-disable-line
   );
 
   //Sets brands and amount of products for brands filter display
   useEffect(() => {
     let hash: any = {};
-    for (let product of productsData) {
+    for (let product of products) {
       if (hash[product.brand]) {
         hash[product.brand] += 1;
       } else {
@@ -106,7 +118,7 @@ const Products = ({
       }
     }
     setBrands(hash);
-  }, [productsData]);
+  }, [products]);
 
   useEffect(() => {
     if (shoppingCart.length <= 0) {
@@ -116,32 +128,29 @@ const Products = ({
 
   return (
     <div className={styles.main}>
-      {pageLoaded ? (
-        <Box
-          className="filter"
-          sx={{
-            width: "80%",
-            display: "flex",
-            justifyContent: "center",
-            height: "40px",
-            minHeight: "40px",
-            opacity: 0,
-          }}
-        >
-          {isMobile ? (
-            <Button
-              variant="outlined"
-              color="primary"
-              fullWidth
-              onClick={() => setFilterDrawerOpened(true)}
-            >
-              Filter <FilterListIcon color="primary" />
-            </Button>
-          ) : (
-            <ProductsNavBar />
-          )}
-        </Box>
-      ) : null}
+      <Box
+        className="filter"
+        sx={{
+          width: "80%",
+          display: "flex",
+          justifyContent: "center",
+          height: "40px",
+          minHeight: "40px",
+        }}
+      >
+        {isMobile ? (
+          <Button
+            variant="outlined"
+            color="primary"
+            fullWidth
+            onClick={() => setFilterDrawerOpened(true)}
+          >
+            Filter <FilterListIcon color="primary" />
+          </Button>
+        ) : (
+          <ProductsNavBar />
+        )}
+      </Box>
 
       <Container
         sx={
@@ -152,12 +161,14 @@ const Products = ({
                 alignItems: "center",
                 mt: 2,
                 minHeight: "100vh",
+                flexDirection: "column",
               }
             : {
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
                 mt: 5,
+                flexDirection: "column",
               }
         }
       >
@@ -170,8 +181,13 @@ const Products = ({
             maxWidth: 2000,
           }}
         >
-          {products}
+          {productCards}
         </Grid>
+        <Pagination
+          number={totalProducts}
+          setProducts={setProducts}
+          setPageLoaded={setPageLoaded}
+        />
         {isMobile ? (
           <MobileProductsModal
             productModalOpen={productModalOpen}
@@ -212,10 +228,20 @@ export const getStaticProps: GetStaticProps = async () => {
   try {
     const res = await fetch(`${server}/api/products`);
     const productsData = await res.json();
+
+    if (!res.ok) {
+      throw new Error(`Failed to fetch products, status of ${res.status}`);
+    }
+
+    const { products } = productsData;
+    const { totalProducts } = productsData;
+
     return {
       props: {
-        productsData,
+        productsData: products,
+        totalProducts: totalProducts,
       },
+      revalidate: 10,
     };
   } catch {
     return { notFound: true };
