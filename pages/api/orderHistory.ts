@@ -28,8 +28,7 @@ export default async function handler(
       country: user.address.country,
     };
 
-    console.log(data);
-
+    //@ts-ignore
     await prisma.orderHistory.create({ data: data });
 
     res.status(201).json({ created: "Order history created" });

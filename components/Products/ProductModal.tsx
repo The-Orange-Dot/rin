@@ -156,7 +156,7 @@ const ProductModal = ({
           },
         }}
       >
-        <Image src={image} layout="fill" objectFit="contain" title={image} />
+        <Image src={image} layout="fill" objectFit="contain" alt={image} />
       </Box>
     );
   });
