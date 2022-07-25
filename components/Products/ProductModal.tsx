@@ -232,7 +232,7 @@ const ProductModal = ({
                 mt: 1,
               }}
             >
-              {imagesArray}
+              {selectedProduct ? imagesArray : null}
             </Box>
             <Box
               sx={{
