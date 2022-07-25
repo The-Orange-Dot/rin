@@ -3,6 +3,23 @@ import { faker } from "@faker-js/faker";
 
 const client = new PrismaClient();
 
+interface ProductData {
+  name: string;
+  details: string;
+  size: string;
+  description: string[];
+  quantity: number;
+  price: number;
+  images: string[];
+  image: string;
+  rating: number;
+  thumbnail: string;
+  category: string;
+  brand: string;
+  ingredients: string[];
+  id: string;
+}
+
 interface UserData {
   username: string;
   password: string;
@@ -32,7 +49,7 @@ const seed = async () => {
   await client.user.deleteMany({});
   await client.product.deleteMany({});
 
-  const products = [
+  const products: ProductData[] = [
     {
       name: "Balancing Cleansing Oil R (Refill)",
       size: "180ml (6.0oz)",
@@ -49,6 +66,8 @@ const seed = async () => {
       thumbnail: "https://www.threecosmetics.com/img/goods/L/t1b219.jpg",
       images: ["https://www.threecosmetics.com/img/goods/L/t1b219.jpg"],
       category: "skincare",
+
+      image: "string",
       brand: "THREE",
       ingredients: [
         "Tri(caprylic/capric acid) glyceryl",
@@ -91,6 +110,8 @@ const seed = async () => {
       thumbnail: "https://www.threecosmetics.com/img/goods/L/t1b264.jpg",
       images: ["https://www.threecosmetics.com/img/goods/L/t1b264.jpg"],
       category: "skincare",
+
+      image: "string",
       brand: "THREE",
       ingredients: [
         "(Caprylic/capric) coconut alkyl",
@@ -141,6 +162,8 @@ const seed = async () => {
       thumbnail: "https://www.threecosmetics.com/img/goods/S/t1b104.jpg",
       images: ["https://www.threecosmetics.com/img/goods/S/t1b104.jpg"],
       category: "skincare",
+
+      image: "string",
       brand: "THREE",
       ingredients: [
         "Tri (caprylic/capric) glyceryl",
@@ -185,6 +208,8 @@ const seed = async () => {
         "https://romand.co.kr/web/product/big/202206/ceb0ed2f0e3d9595e96e154d4c127c94.jpg",
       ],
       category: "skincare",
+
+      image: "string",
       brand: "rom&nd",
       ingredients: [],
       id: "3",
@@ -206,6 +231,8 @@ const seed = async () => {
         "https://shiro-shiro.jp/client_info/SHIRO/itemimage/12555/12555.jpg",
       ],
       category: "skincare",
+
+      image: "string",
       brand: "SHIRO",
       ingredients: [],
       id: "4",
@@ -227,6 +254,8 @@ const seed = async () => {
         "https://kao-h.assetsadobe3.com/is/image/content/dam/sites/kanebo/www-kanebo-cosmetics-jp/lunasol/details/pointmake/p0601015/p0601015.jpg",
       ],
       category: "skincare",
+
+      image: "string",
       brand: "LUNASOL",
       ingredients: [],
       id: "5",
@@ -248,6 +277,8 @@ const seed = async () => {
         "https://kao-h.assetsadobe3.com/is/image/content/dam/sites/kanebo/www-kanebo-cosmetics-jp/lunasol/renew/details/skincare/s0101011/s0101011.png",
       ],
       category: "skincare",
+
+      image: "string",
       brand: "LUNASOL",
       ingredients: [],
       id: "6",
@@ -269,6 +300,8 @@ const seed = async () => {
         "https://kao-h.assetsadobe3.com/is/image/content/dam/sites/kanebo/www-kanebo-cosmetics-jp/lunasol/details/skincare/s0101008/s0101008.jpg?fmt=jpeg",
       ],
       category: "skincare",
+
+      image: "string",
       brand: "LUNASOL",
       ingredients: [],
       id: "7",
@@ -292,6 +325,8 @@ const seed = async () => {
       thumbnail:
         "https://d31pc8y2j50o7q.cloudfront.net/kate_tokyo/yoku_series/kate_tokyo_ex-1_app_300.jpg",
       category: "makeup",
+
+      image: "string",
       brand: "Kate Tokyo",
       ingredients: [],
       id: "8",
