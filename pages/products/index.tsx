@@ -91,7 +91,7 @@ const Products = ({
   //Maps all products data into cards
   useEffect(
     () => {
-      const productCards = products.map((product: ProductType) => {
+      const productCards = products?.map((product: ProductType) => {
         return (
           <ProductCards
             product={product}

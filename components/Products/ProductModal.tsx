@@ -53,7 +53,7 @@ const ProductModal = ({
   //Maps through product description to render
   useEffect(() => {
     if (product?.description?.length > 0) {
-      const productDescriptionArray = product.description.map(
+      const productDescriptionArray = product?.description?.map(
         (text: string) => {
           return (
             <Typography
