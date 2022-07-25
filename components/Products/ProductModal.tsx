@@ -139,6 +139,7 @@ const ProductModal = ({
   const imagesArray = product?.images?.map((image, i) => {
     return (
       <Box
+        key={image}
         onClick={() => {
           changeImageHandler(i);
         }}
