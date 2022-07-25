@@ -4,12 +4,6 @@ import { ShoppingBagOutlined } from "@mui/icons-material";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 
-interface Item {
-  name: string;
-  quantity: number;
-  price: number;
-}
-
 const ShoppingCartButton = ({ setOpenDrawer }: any) => {
   const [itemsInBag, setItemsInBag] = useState(0);
   const shoppingCart = useSelector(

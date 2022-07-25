@@ -10,7 +10,7 @@ interface Item {
   stock: number;
   details: string;
   size: string;
-  image: string;
+  thumbnail: string;
 }
 
 interface ShoppingCart {

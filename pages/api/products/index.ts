@@ -7,7 +7,7 @@ export default async function handler(
   res: NextApiResponse
 ) {
   if (req.method === "GET") {
-    const view: string | undefined = req.query.view as string | undefined;
+    const view = req.query.view as string | undefined;
 
     const skip = view ? parseInt(view) - 12 : 0;
     const take = view ? parseInt(view) : 12;

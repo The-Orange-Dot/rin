@@ -42,7 +42,8 @@ export type Item = {
   stock: number;
   details: string;
   size: string;
-  image: string;
+  images: string[];
+  thumbnail: string;
 };
 
 export type ShoppingCart = {
