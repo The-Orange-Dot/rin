@@ -36,7 +36,6 @@ const ProductModal = ({
     selectedProduct?.reviews
   );
   const [imageNum, setImageNum] = useState(0);
-  const [imagesArray, setImagesArray] = useState<JSX.Element[] | []>([]);
 
   //Sets description from selected product
   useEffect(() => {
@@ -46,10 +45,8 @@ const ProductModal = ({
     setNumberOfreviews(3);
     if (Object.keys(selectedProduct).length > 0) {
       setProductModalOpen(true);
-      mappingImages(selectedProduct?.images);
     } else {
       setProductModalOpen(false);
-      mappingImages([]);
       setImageNum(0);
     }
   }, [selectedProduct]); //eslint-disable-line
@@ -140,37 +137,6 @@ const ProductModal = ({
     }
   };
 
-  const mappingImages = (images: string[]) => {
-    const imagesArray = images?.map((image, i) => {
-      return (
-        <Box
-          key={image}
-          onClick={() => {
-            changeImageHandler(i);
-          }}
-          sx={{
-            position: "relative",
-            width: 50,
-            height: 50,
-            p: 1,
-            ml: 0.5,
-            mr: 0.5,
-            "&:hover": {
-              border: "1px solid black",
-              opacity: 0.5,
-            },
-          }}
-        >
-          <Image src={image} layout="fill" objectFit="contain" alt={image} />
-        </Box>
-      );
-    });
-
-    if (imagesArray) {
-      setImagesArray(imagesArray);
-    }
-  };
-
   return (
     <Modal
       open={productModalOpen}
@@ -233,17 +199,6 @@ const ProductModal = ({
               ) : null}
             </Box>
 
-            <Box
-              sx={{
-                width: "100%",
-                height: "50px",
-                display: "flex",
-                justifyContent: "center",
-                mt: 1,
-              }}
-            >
-              {selectedProduct ? imagesArray : null}
-            </Box>
             <Box
               sx={{
                 width: "100%",
