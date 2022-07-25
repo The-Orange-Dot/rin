@@ -1,5 +1,4 @@
 import { PrismaClient } from "@prisma/client";
-import products from "../pages/products";
 import { faker } from "@faker-js/faker";
 
 const client = new PrismaClient();
@@ -316,6 +315,7 @@ const seed = async () => {
   ];
 
   products.map(
+    //@ts-ignore
     async (product) => await client.product.create({ data: product })
   );
 
