@@ -37,7 +37,7 @@ const MobileProductsModal = ({
     setProduct(selectedProduct);
     setNumberOfreviews(3);
     setReviewsData(selectedProduct?.reviews);
-    if (Object.keys(selectedProduct).length > 0) {
+    if (selectedProduct.name !== "") {
       setProductModalOpen(true);
     } else {
       setProductModalOpen(false);

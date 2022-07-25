@@ -124,7 +124,23 @@ const Products = ({
 
   useEffect(() => {
     if (!productModalOpen) {
-      setSelectedProduct({});
+      setSelectedProduct({
+        name: "",
+        details: "",
+        size: "",
+        description: [],
+        quantity: 0,
+        price: 0,
+        rating: 0,
+        images: [],
+        thumbnail: "",
+        category: "",
+        brand: "",
+        ingredients: [],
+        id: "",
+        review: [],
+        _count: { reviews: 0 },
+      });
     }
   }, [productModalOpen]);
 

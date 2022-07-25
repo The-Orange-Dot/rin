@@ -43,13 +43,11 @@ const ProductModal = ({
     setLoadMoreReviews(false);
     setReviewsData(selectedProduct?.reviews);
     setNumberOfreviews(3);
-    if (Object.keys(selectedProduct).length > 0) {
+    if (selectedProduct.name !== "") {
       setProductModalOpen(true);
     } else {
       setProductModalOpen(false);
       setImageNum(0);
-
-      console.log(selectedProduct);
     }
   }, [selectedProduct]); //eslint-disable-line
 
@@ -139,6 +137,17 @@ const ProductModal = ({
     }
   };
 
+  const imagesArray = selectedProduct.images.map((image: string) => {
+    return (
+      <Box
+        sx={{ position: "relative", width: 50, height: 50, m: 1 }}
+        key={image}
+      >
+        <Image src={image} alt={image} layout="fill" objectFit="contain" />
+      </Box>
+    );
+  });
+
   return (
     <Modal
       open={productModalOpen}
@@ -185,7 +194,7 @@ const ProductModal = ({
                 position: "relative",
               }}
             >
-              {productModalOpen ? (
+              {productModalOpen && selectedProduct.images.length ? (
                 <Image
                   src={product.images[imageNum]}
                   alt={product.name}
@@ -199,6 +208,12 @@ const ProductModal = ({
                   id="product-image"
                 />
               ) : null}
+            </Box>
+
+            <Box
+              sx={{ width: "100%", display: "flex", justifyContent: "center" }}
+            >
+              {imagesArray}
             </Box>
 
             <Box
