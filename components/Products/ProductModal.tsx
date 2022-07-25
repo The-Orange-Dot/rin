@@ -48,6 +48,8 @@ const ProductModal = ({
     } else {
       setProductModalOpen(false);
       setImageNum(0);
+
+      console.log(selectedProduct);
     }
   }, [selectedProduct]); //eslint-disable-line
 

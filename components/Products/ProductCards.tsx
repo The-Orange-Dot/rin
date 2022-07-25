@@ -23,6 +23,7 @@ const ProductCards = ({ product, setSelectedProduct }: any) => {
   const shoppingCart = useSelector((state: any) => state.shoppingCart.value);
   const dispatch = useDispatch();
 
+  console.log(product);
   const addItemToCartHandler = () => {
     const item = {
       id: product.id,

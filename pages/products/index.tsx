@@ -35,7 +35,23 @@ const Products = ({
   const [products, setProducts] = useState(productsData);
   const [productCards, setProductCards] = useState([]);
   const [productModalOpen, setProductModalOpen] = useState(false);
-  const [selectedProduct, setSelectedProduct] = useState({});
+  const [selectedProduct, setSelectedProduct] = useState<ProductType>({
+    name: "",
+    details: "",
+    size: "",
+    description: [],
+    quantity: 0,
+    price: 0,
+    rating: 0,
+    images: [],
+    thumbnail: "",
+    category: "",
+    brand: "",
+    ingredients: [],
+    id: "",
+    review: [],
+    _count: { reviews: 0 },
+  });
   const [filterDrawerOpened, setFilterDrawerOpened] = useState(false);
   const session = useSession();
   const [pageLoaded, setPageLoaded] = useState(false);
@@ -91,7 +107,7 @@ const Products = ({
   //Maps all products data into cards
   useEffect(
     () => {
-      const productCards = productsData?.map((product: ProductType) => {
+      const productCards = products?.map((product: ProductType) => {
         return (
           <ProductCards
             product={product}
@@ -100,9 +116,10 @@ const Products = ({
           />
         );
       });
+
       setProductCards(productCards);
     },
-    [productsData] // eslint-disable-line
+    [products] // eslint-disable-line
   );
 
   useEffect(() => {
@@ -114,7 +131,7 @@ const Products = ({
   //Sets brands and amount of products for brands filter display
   useEffect(() => {
     let hash: any = {};
-    for (let product of productsData) {
+    for (let product of products) {
       if (hash[product.brand]) {
         hash[product.brand] += 1;
       } else {
@@ -122,7 +139,7 @@ const Products = ({
       }
     }
     setBrands(hash);
-  }, [productsData]);
+  }, [products]);
 
   useEffect(() => {
     if (shoppingCart.length <= 0) {
