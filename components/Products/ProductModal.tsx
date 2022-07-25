@@ -50,6 +50,7 @@ const ProductModal = ({
     } else {
       setProductModalOpen(false);
       mappingImages([]);
+      setImageNum(0);
     }
   }, [selectedProduct]); //eslint-disable-line
 
@@ -140,7 +141,7 @@ const ProductModal = ({
   };
 
   const mappingImages = (images: string[]) => {
-    const imagesArray = images.map((image, i) => {
+    const imagesArray = images?.map((image, i) => {
       return (
         <Box
           key={image}
@@ -167,8 +168,6 @@ const ProductModal = ({
 
     if (imagesArray) {
       setImagesArray(imagesArray);
-    } else {
-      setImagesArray([]);
     }
   };
 
