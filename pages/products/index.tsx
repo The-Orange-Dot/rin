@@ -25,7 +25,6 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import MobileCheckout from "../../components/Products/Mobile/MobileCheckout";
 import Pagination from "../../components/Products/PaginationButtons";
-import GSAPTimeline from "gsap";
 
 const Products = ({
   productsData,
