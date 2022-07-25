@@ -36,7 +36,7 @@ const ProductModal = ({
     selectedProduct?.reviews
   );
   const [imageNum, setImageNum] = useState(0);
-  const [imagesArray, setImagesArray] = useState([]);
+  const [imagesArray, setImagesArray] = useState<JSX.Element[] | []>([]);
 
   //Sets description from selected product
   useEffect(() => {
@@ -165,7 +165,11 @@ const ProductModal = ({
       );
     });
 
-    setImagesArray(imagesArray);
+    if (imagesArray) {
+      setImagesArray(imagesArray);
+    } else {
+      setImagesArray([]);
+    }
   };
 
   return (
