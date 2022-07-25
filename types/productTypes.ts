@@ -24,6 +24,7 @@ export type ProductType = {
   quantity: number;
   price: number;
   rating: number;
+  images: string[];
   thumbnail: string;
   category: string;
   brand: string;

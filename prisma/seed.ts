@@ -11,6 +11,7 @@ interface ProductData {
   description: string[];
   quantity: number;
   price: number;
+  images: string[];
   rating: number;
   thumbnail: string;
   category: string;
@@ -63,6 +64,7 @@ const seed = async () => {
       price: 50.0,
       rating: 3.4,
       thumbnail: "https://www.threecosmetics.com/img/goods/L/t1b219.jpg",
+      images: ["https://www.threecosmetics.com/img/goods/L/t1b219.jpg"],
       category: "skincare",
       brand: "THREE",
       ingredients: [
@@ -104,6 +106,7 @@ const seed = async () => {
       price: 60.0,
       rating: 4.6,
       thumbnail: "https://www.threecosmetics.com/img/goods/L/t1b264.jpg",
+      images: ["https://www.threecosmetics.com/img/goods/L/t1b264.jpg"],
       category: "skincare",
       brand: "THREE",
       ingredients: [
@@ -153,6 +156,7 @@ const seed = async () => {
       price: 40.0,
       rating: 5,
       thumbnail: "https://www.threecosmetics.com/img/goods/S/t1b104.jpg",
+      images: ["https://www.threecosmetics.com/img/goods/S/t1b104.jpg"],
       category: "skincare",
       brand: "THREE",
       ingredients: [
@@ -194,6 +198,9 @@ const seed = async () => {
       rating: 3.5,
       thumbnail:
         "https://romand.co.kr/web/product/big/202206/ceb0ed2f0e3d9595e96e154d4c127c94.jpg",
+      images: [
+        "https://romand.co.kr/web/product/big/202206/ceb0ed2f0e3d9595e96e154d4c127c94.jpg",
+      ],
       category: "skincare",
       brand: "rom&nd",
       ingredients: [],
@@ -212,6 +219,9 @@ const seed = async () => {
       rating: 2.3,
       thumbnail:
         "https://shiro-shiro.jp/client_info/SHIRO/itemimage/12555/12555.jpg",
+      images: [
+        "https://shiro-shiro.jp/client_info/SHIRO/itemimage/12555/12555.jpg",
+      ],
       category: "skincare",
       brand: "SHIRO",
       ingredients: [],
@@ -230,6 +240,9 @@ const seed = async () => {
       rating: 4.5,
       thumbnail:
         "https://kao-h.assetsadobe3.com/is/image/content/dam/sites/kanebo/www-kanebo-cosmetics-jp/lunasol/details/pointmake/p0601015/p0601015.jpg",
+      images: [
+        "https://kao-h.assetsadobe3.com/is/image/content/dam/sites/kanebo/www-kanebo-cosmetics-jp/lunasol/details/pointmake/p0601015/p0601015.jpg",
+      ],
       category: "skincare",
       brand: "LUNASOL",
       ingredients: [],
@@ -248,6 +261,9 @@ const seed = async () => {
       rating: 4.4,
       thumbnail:
         "https://kao-h.assetsadobe3.com/is/image/content/dam/sites/kanebo/www-kanebo-cosmetics-jp/lunasol/renew/details/skincare/s0101011/s0101011.png",
+      images: [
+        "https://kao-h.assetsadobe3.com/is/image/content/dam/sites/kanebo/www-kanebo-cosmetics-jp/lunasol/renew/details/skincare/s0101011/s0101011.png",
+      ],
       category: "skincare",
       brand: "LUNASOL",
       ingredients: [],
@@ -266,6 +282,9 @@ const seed = async () => {
       rating: 4.0,
       thumbnail:
         "https://kao-h.assetsadobe3.com/is/image/content/dam/sites/kanebo/www-kanebo-cosmetics-jp/lunasol/details/skincare/s0101008/s0101008.jpg?fmt=jpeg",
+      images: [
+        "https://kao-h.assetsadobe3.com/is/image/content/dam/sites/kanebo/www-kanebo-cosmetics-jp/lunasol/details/skincare/s0101008/s0101008.jpg?fmt=jpeg",
+      ],
       category: "skincare",
       brand: "LUNASOL",
       ingredients: [],
@@ -280,6 +299,11 @@ const seed = async () => {
         "Checking to see how it looks in english to see what i can fit blah blah blah blu blu blu beep boop boop bop",
       ],
       quantity: 2,
+      images: [
+        "https://d31pc8y2j50o7q.cloudfront.net/kate_tokyo/yoku_series/kate_tokyo_ex-1_app_600.jpg",
+        "https://d31pc8y2j50o7q.cloudfront.net/kate_tokyo/yoku_series/kate_tokyo_ex-1_app_case.jpg",
+        "https://d31pc8y2j50o7q.cloudfront.net/kate_tokyo/yoku_series/kate_tokyo_ex-1_app_case_open.jpg",
+      ],
       price: 40,
       rating: 4.0,
       thumbnail:

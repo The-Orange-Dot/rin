@@ -18,6 +18,7 @@ import IngredientsAccordion from "./IngredientsAccordion";
 import ProductReviews from "./ProductReviews";
 import CheckoutButton from "./CheckoutButton";
 import Image from "next/image";
+import gsap from "gsap";
 
 const ProductModal = ({
   productModalOpen,
@@ -34,6 +35,7 @@ const ProductModal = ({
   const [reviewsData, setReviewsData] = useState<any[]>(
     selectedProduct?.reviews
   );
+  const [imageNum, setImageNum] = useState(0);
 
   //Sets description from selected product
   useEffect(() => {
@@ -114,6 +116,50 @@ const ProductModal = ({
   const reviews = reviewsData?.map((review: ProductReviewType) => {
     return <ProductReviews review={review} key={review.createdAt} />;
   });
+
+  const changeImageHandler = (i: number) => {
+    if (i !== imageNum) {
+      gsap
+        .timeline()
+        .to("#product-image", {
+          opacity: 0,
+          duration: 0.2,
+          //@ts-ignore
+          onComplete: setImageNum,
+          onCompleteParams: [i],
+        })
+        .to("#product-image", {
+          opacity: 1,
+          duration: 0.2,
+          delay: 0.2,
+        });
+    }
+  };
+
+  const imagesArray = product?.images?.map((image, i) => {
+    return (
+      <Box
+        onClick={() => {
+          changeImageHandler(i);
+        }}
+        sx={{
+          position: "relative",
+          width: 50,
+          height: 50,
+          p: 1,
+          ml: 0.5,
+          mr: 0.5,
+          "&:hover": {
+            border: "1px solid black",
+            opacity: 0.5,
+          },
+        }}
+      >
+        <Image src={image} layout="fill" objectFit="contain" title={image} />
+      </Box>
+    );
+  });
+
   return (
     <Modal
       open={productModalOpen}
@@ -162,7 +208,7 @@ const ProductModal = ({
             >
               {productModalOpen ? (
                 <Image
-                  src={product.thumbnail}
+                  src={product.images[imageNum]}
                   alt={product.name}
                   layout="fill"
                   objectFit="contain"
@@ -171,10 +217,22 @@ const ProductModal = ({
                   placeholder="blur"
                   blurDataURL={product.thumbnail}
                   quality="100"
+                  id="product-image"
                 />
               ) : null}
             </Box>
 
+            <Box
+              sx={{
+                width: "100%",
+                height: "50px",
+                display: "flex",
+                justifyContent: "center",
+                mt: 1,
+              }}
+            >
+              {imagesArray}
+            </Box>
             <Box
               sx={{
                 width: "100%",

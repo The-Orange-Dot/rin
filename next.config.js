@@ -7,6 +7,7 @@ const nextConfig = {
       "romand.co.kr",
       "kao-h.assetsadobe3.com",
       "www.threecosmetics.com",
+      "d31pc8y2j50o7q.cloudfront.net",
     ],
   },
 };
