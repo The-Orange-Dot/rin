@@ -3,22 +3,6 @@ import { faker } from "@faker-js/faker";
 
 const client = new PrismaClient();
 
-interface ProductData {
-  name: string;
-  details: string;
-  size: string;
-  description: string[];
-  quantity: number;
-  price: number;
-  images: string[];
-  rating: number;
-  thumbnail: string;
-  category: string;
-  brand: string;
-  ingredients: string[];
-  id: string;
-}
-
 interface UserData {
   username: string;
   password: string;
@@ -48,7 +32,7 @@ const seed = async () => {
   await client.user.deleteMany({});
   await client.product.deleteMany({});
 
-  const products: ProductData[] = [
+  const products = [
     {
       name: "Balancing Cleansing Oil R (Refill)",
       size: "180ml (6.0oz)",
