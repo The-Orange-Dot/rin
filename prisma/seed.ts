@@ -49,7 +49,7 @@ const seed = async () => {
   await client.user.deleteMany({});
   await client.product.deleteMany({});
 
-  const products: ProductData[] = [
+  const products = [
     {
       name: "Balancing Cleansing Oil R (Refill)",
       size: "180ml (6.0oz)",
