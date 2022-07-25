@@ -91,17 +91,16 @@ const Products = ({
   //Maps all products data into cards
   useEffect(
     () => {
-      const productCards = products?.map((product: ProductType) => {
-        return (
-          <ProductCards
-            product={product}
-            key={product.name}
-            setSelectedProduct={setSelectedProduct}
-          />
-        );
-      });
-
-      setProductCards(productCards);
+      // const productCards = productsData?.map((product: ProductType) => {
+      //   return (
+      //     <ProductCards
+      //       product={product}
+      //       key={product.name}
+      //       setSelectedProduct={setSelectedProduct}
+      //     />
+      //   );
+      // });
+      // setProductCards(productCards);
     },
     [products] // eslint-disable-line
   );
