@@ -315,7 +315,6 @@ const seed = async () => {
   ];
 
   products.map(
-    //@ts-ignore
     async (product) => await client.product.create({ data: product })
   );
 

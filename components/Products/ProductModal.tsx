@@ -137,11 +137,20 @@ const ProductModal = ({
     }
   };
 
-  const imagesArray = selectedProduct.images.map((image: string) => {
+  const imagesArray = selectedProduct.images.map((image: string, i: number) => {
     return (
       <Box
-        sx={{ position: "relative", width: 50, height: 50, m: 1 }}
+        sx={{
+          position: "relative",
+          width: 50,
+          height: 50,
+          m: 1,
+          "&:hover": { opacity: 0.5, border: "1px solid black" },
+        }}
         key={image}
+        onClick={() => {
+          setImageNum(i);
+        }}
       >
         <Image src={image} alt={image} layout="fill" objectFit="contain" />
       </Box>
