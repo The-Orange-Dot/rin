@@ -102,7 +102,7 @@ const Products = ({
       });
       setProductCards(productCards);
     },
-    [products] // eslint-disable-line
+    [productsData] // eslint-disable-line
   );
 
   useEffect(() => {
@@ -114,7 +114,7 @@ const Products = ({
   //Sets brands and amount of products for brands filter display
   useEffect(() => {
     let hash: any = {};
-    for (let product of products) {
+    for (let product of productsData) {
       if (hash[product.brand]) {
         hash[product.brand] += 1;
       } else {
@@ -122,7 +122,7 @@ const Products = ({
       }
     }
     setBrands(hash);
-  }, [products]);
+  }, [productsData]);
 
   useEffect(() => {
     if (shoppingCart.length <= 0) {
