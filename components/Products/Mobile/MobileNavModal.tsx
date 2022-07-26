@@ -36,7 +36,7 @@ const MobileNavModal = ({ mobileNavModalOpen, setMobileNavModalOpen }: any) => {
           openLoginForm
             ? {
                 width: "100%",
-                height: "38vh",
+                height: 280,
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "space-between",
