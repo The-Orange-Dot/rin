@@ -62,7 +62,10 @@ const Navbar = () => {
         isMobile ? styles.mobileNavbarContainer : styles.navbarContainer
       }
       style={
-        router.pathname.includes("/products") ? { background: "white" } : {}
+        router.pathname.includes("/products") ||
+        router.pathname.includes("/profile")
+          ? { background: "white" }
+          : {}
       }
       id={"container"}
     >
