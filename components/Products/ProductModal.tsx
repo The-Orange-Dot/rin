@@ -174,6 +174,9 @@ const ProductModal = ({
           height={50}
           objectFit="contain"
           quality={25}
+          loading="lazy"
+          blurDataURL={image}
+          placeholder="blur"
         />
       </Box>
     );

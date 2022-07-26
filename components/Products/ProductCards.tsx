@@ -16,6 +16,7 @@ import { useRouter } from "next/router";
 import { ProductReviewType, ProductType } from "../../types/productTypes";
 import { addItem } from "../../redux/reducers/shoppingCartReducer";
 import { useSelector, useDispatch } from "react-redux";
+import Image from "next/image";
 
 interface ProductCardType {
   product: ProductType;
@@ -85,6 +86,8 @@ const ProductCards = ({ product, setSelectedProduct }: ProductCardType) => {
 
   const averageRating = summedRating / ratingArray.length;
 
+  console.log(product);
+
   return (
     <Grid item xs={3.8} md={3.5}>
       <Box
@@ -121,16 +124,19 @@ const ProductCards = ({ product, setSelectedProduct }: ProductCardType) => {
           className="card"
         >
           <CardMedia
-            component="img"
-            alt={product.name}
-            image={product.thumbnail}
-            height={280}
             sx={
               isMobile
-                ? { objectFit: "contain", cursor: "pointer" }
+                ? {
+                    objectFit: "contain",
+                    cursor: "pointer",
+                    maxHeight: 180,
+                    minHeight: 180,
+                    width: 180,
+                  }
                 : {
                     maxHeight: 280,
                     minHeight: 280,
+                    width: 280,
                     objectFit: "contain",
                     cursor: "pointer",
                   }
@@ -138,7 +144,22 @@ const ProductCards = ({ product, setSelectedProduct }: ProductCardType) => {
             onClick={async () => {
               routerHandler();
             }}
-          />
+          >
+            <div
+              style={{ position: "relative", width: "100%", height: "100%" }}
+            >
+              <Image
+                src={product.thumbnail}
+                layout="fill"
+                objectFit="contain"
+                alt={product.name}
+                loading="lazy"
+                blurDataURL={product.thumbnail}
+                placeholder="blur"
+                quality={50}
+              />
+            </div>
+          </CardMedia>
           <CardContent
             sx={
               isMobile
