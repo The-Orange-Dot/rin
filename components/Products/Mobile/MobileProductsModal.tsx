@@ -74,7 +74,17 @@ const MobileProductsModal = ({
     });
   }, []); //eslint-disable-line
 
-  const closeModalHandler = async (url: string) => {
+  const closeModalHandler = (url: string) => {
+    gsap.timeline().to("#mobile-product-modal", {
+      opacity: 0,
+      duration: 0.2,
+      //@ts-ignore
+      onComplete: backButtonOverride,
+      onCompleteParams: [url],
+    });
+  };
+
+  const backButtonOverride = async (url: string) => {
     setProductModalOpen(false);
 
     if (url?.includes("modal_open=true")) {
@@ -167,6 +177,7 @@ const MobileProductsModal = ({
       open={productModalOpen}
       sx={{ display: "flex", justifyContent: "center" }}
       hideBackdrop
+      id="mobile-product-modal"
     >
       <Fade in={productModalOpen} timeout={500}>
         <Paper

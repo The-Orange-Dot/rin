@@ -75,7 +75,7 @@ const ProductCards = ({ product, setSelectedProduct }: ProductCardType) => {
     setSelectedProduct(product);
   };
 
-  const ratingArray = product?.reviews.map((review: ProductReviewType) => {
+  const ratingArray = product?.reviews?.map((review: ProductReviewType) => {
     return review.rating;
   });
 
