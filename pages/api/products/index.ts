@@ -20,7 +20,6 @@ export default async function handler(
         name: true,
         size: true,
         details: true,
-        likes: true,
         quantity: true,
         price: true,
         thumbnail: true,
@@ -45,8 +44,6 @@ export default async function handler(
       take: take,
       skip: skip,
     });
-
-    console.log(products);
 
     const totalProducts = await prisma.product.count();
 

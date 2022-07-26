@@ -11,7 +11,6 @@ interface ProductData {
   quantity: number;
   price: number;
   images: string[];
-  image: string;
   rating: number;
   thumbnail: string;
   category: string;
@@ -67,7 +66,6 @@ const seed = async () => {
       images: ["https://www.threecosmetics.com/img/goods/L/t1b219.jpg"],
       category: "skincare",
 
-      image: "string",
       brand: "THREE",
       ingredients: [
         "Tri(caprylic/capric acid) glyceryl",
@@ -111,7 +109,6 @@ const seed = async () => {
       images: ["https://www.threecosmetics.com/img/goods/L/t1b264.jpg"],
       category: "skincare",
 
-      image: "string",
       brand: "THREE",
       ingredients: [
         "(Caprylic/capric) coconut alkyl",
@@ -163,7 +160,6 @@ const seed = async () => {
       images: ["https://www.threecosmetics.com/img/goods/S/t1b104.jpg"],
       category: "skincare",
 
-      image: "string",
       brand: "THREE",
       ingredients: [
         "Tri (caprylic/capric) glyceryl",
@@ -209,7 +205,6 @@ const seed = async () => {
       ],
       category: "skincare",
 
-      image: "string",
       brand: "rom&nd",
       ingredients: [],
       id: "3",
@@ -232,7 +227,6 @@ const seed = async () => {
       ],
       category: "skincare",
 
-      image: "string",
       brand: "SHIRO",
       ingredients: [],
       id: "4",
@@ -255,7 +249,6 @@ const seed = async () => {
       ],
       category: "skincare",
 
-      image: "string",
       brand: "LUNASOL",
       ingredients: [],
       id: "5",
@@ -278,7 +271,6 @@ const seed = async () => {
       ],
       category: "skincare",
 
-      image: "string",
       brand: "LUNASOL",
       ingredients: [],
       id: "6",
@@ -301,7 +293,6 @@ const seed = async () => {
       ],
       category: "skincare",
 
-      image: "string",
       brand: "LUNASOL",
       ingredients: [],
       id: "7",
@@ -326,7 +317,6 @@ const seed = async () => {
         "https://d31pc8y2j50o7q.cloudfront.net/kate_tokyo/yoku_series/kate_tokyo_ex-1_app_300.jpg",
       category: "makeup",
 
-      image: "string",
       brand: "Kate Tokyo",
       ingredients: [],
       id: "8",
