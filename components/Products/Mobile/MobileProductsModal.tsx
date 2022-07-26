@@ -46,7 +46,7 @@ const MobileProductsModal = ({
 
   useEffect(() => {
     if (product?.description?.length > 0) {
-      const productDescriptionArray = product?.description.map(
+      const productDescriptionArray = product?.description?.map(
         (text: string) => {
           return (
             <Typography key={text.length} variant="caption" sx={{ mb: 1 }}>
@@ -57,7 +57,7 @@ const MobileProductsModal = ({
       );
       setDescription(productDescriptionArray);
     }
-  }, [product.description]);
+  }, [product?.description]);
 
   useEffect(() => {
     router.beforePopState(({ url }) => {

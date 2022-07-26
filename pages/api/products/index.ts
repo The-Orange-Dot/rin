@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import crypto from "node:crypto";
 import { prisma } from "../../../prisma/db";
+import { ProductType } from "../../../types/productTypes";
 
 export default async function handler(
   req: NextApiRequest,
@@ -14,7 +15,21 @@ export default async function handler(
 
     const products = await prisma.product.findMany({
       orderBy: { createdAt: "desc" },
-      include: {
+      select: {
+        id: true,
+        name: true,
+        size: true,
+        details: true,
+        likes: true,
+        quantity: true,
+        price: true,
+        thumbnail: true,
+        images: true,
+        category: true,
+        brand: true,
+        description: true,
+        rating: true,
+        ingredients: true,
         _count: { select: { reviews: true } },
         reviews: {
           orderBy: { helpful: "desc" },
@@ -23,8 +38,6 @@ export default async function handler(
             description: true,
             helpful: true,
             rating: true,
-            createdAt: true,
-            updatedAt: true,
           },
           take: 3,
         },
@@ -33,9 +46,14 @@ export default async function handler(
       skip: skip,
     });
 
+    console.log(products);
+
     const totalProducts = await prisma.product.count();
 
-    res.status(200).json({ products: products, totalProducts: totalProducts });
+    res.status(200).json({
+      products: products,
+      totalProducts: totalProducts,
+    });
   } else if (req.method === "PATCH") {
     const { items } = req.body;
 

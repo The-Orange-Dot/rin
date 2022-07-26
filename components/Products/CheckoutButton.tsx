@@ -8,42 +8,53 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { Dispatch, SetStateAction, useState } from "react";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import { addItem } from "../../redux/reducers/shoppingCartReducer";
 import { useSelector, useDispatch } from "react-redux";
+import { ProductType } from "../../types/productTypes";
 
-const CheckoutButton = ({ quantity, setQuantity, product }: any) => {
+interface CheckoutType {
+  quantity: number;
+  setQuantity: Dispatch<SetStateAction<number>>;
+  selectedProduct: ProductType;
+}
+
+const CheckoutButton = ({
+  quantity,
+  setQuantity,
+  selectedProduct,
+}: CheckoutType) => {
   const dispatch = useDispatch();
   const shoppingCart = useSelector((state: any) => state.shoppingCart.value);
 
   const addItemToCartHandler = async () => {
     const item = {
-      id: product.id,
-      image: product.thumbnail,
-      name: product.name,
+      id: selectedProduct.id,
+      image: selectedProduct.thumbnail,
+      name: selectedProduct.name,
       quantity: quantity,
-      price: product.price,
-      stock: product.quantity,
-      size: product.size,
-      details: product.details,
+      price: selectedProduct.price,
+      stock: selectedProduct.quantity,
+      size: selectedProduct.size,
+      details: selectedProduct.details,
     };
 
     let foundItem = await shoppingCart.find((item: any) => {
-      return item.id === product.id;
+      return item.id === selectedProduct.id;
     });
     if (foundItem) {
       const updatedCart = await shoppingCart.filter((item: any) => {
-        return item.id !== product.id;
+        return item.id !== selectedProduct.id;
       });
       const updatedItem = {
-        id: product.id,
-        image: product.thumbnail,
-        name: product.name,
+        id: selectedProduct.id,
+        image: selectedProduct.thumbnail,
+        name: selectedProduct.name,
         quantity: foundItem.quantity + quantity,
-        price: product.price,
-        stock: product.quantity,
+        price: selectedProduct.price,
+        stock: selectedProduct.quantity,
       };
 
       dispatch(addItem([...updatedCart, updatedItem]));
@@ -54,20 +65,20 @@ const CheckoutButton = ({ quantity, setQuantity, product }: any) => {
 
   const quantityHandler = (action: string) => {
     const cartItem = shoppingCart.find((item: any) => {
-      return (product.name = item.name);
+      return (selectedProduct.name = item.name);
     });
 
     let changeQuantity = quantity;
     let cartQuantity = cartItem?.quantity ? cartItem.quantity : 0;
 
     if (action === "+") {
-      if (quantity + cartQuantity < product.quantity) {
+      if (quantity + cartQuantity < selectedProduct.quantity) {
         changeQuantity = changeQuantity + 1;
       } else {
-        changeQuantity = product.quantity - cartQuantity;
+        changeQuantity = selectedProduct.quantity - cartQuantity;
       }
     } else {
-      if (product.quantity > 1) {
+      if (selectedProduct.quantity > 1) {
         changeQuantity = changeQuantity - 1;
       } else {
         changeQuantity = 1;
@@ -127,7 +138,7 @@ const CheckoutButton = ({ quantity, setQuantity, product }: any) => {
         </Box>
         <Box sx={{ width: "75%" }}>
           <Button
-            disabled={product.quantity <= 0}
+            disabled={selectedProduct.quantity <= 0}
             fullWidth
             variant="contained"
             sx={{ height: 55, display: "flex" }}
@@ -136,7 +147,7 @@ const CheckoutButton = ({ quantity, setQuantity, product }: any) => {
               addItemToCartHandler();
             }}
           >
-            {product.quantity <= 0 ? (
+            {selectedProduct.quantity <= 0 ? (
               <Typography variant="body2">Sold out</Typography>
             ) : (
               <>
@@ -149,7 +160,7 @@ const CheckoutButton = ({ quantity, setQuantity, product }: any) => {
                 >
                   ---
                 </Typography>
-                <Typography>${product.price * quantity}.00</Typography>
+                <Typography>${selectedProduct.price * quantity}.00</Typography>
               </>
             )}
           </Button>

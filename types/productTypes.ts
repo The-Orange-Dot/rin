@@ -12,11 +12,12 @@ export type ProductReviewType = {
   userReview: UserReviewType;
 };
 
-type Count = {
+export type CountType = {
   reviews: number;
 };
 
 export type ProductType = {
+  id: string;
   name: string;
   details: string;
   size: string;
@@ -29,9 +30,8 @@ export type ProductType = {
   category: string;
   brand: string;
   ingredients: string[];
-  id: string;
-  review: ProductReviewType[];
-  _count: Count;
+  reviews: ProductReviewType[];
+  _count: CountType;
 };
 
 export type Item = {

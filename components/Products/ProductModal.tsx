@@ -11,7 +11,7 @@ import {
   CircularProgress,
 } from "@mui/material";
 
-import React, { useEffect, useState } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { ProductType, ProductReviewType } from "../../types/productTypes";
 import { useRouter } from "next/router";
 import IngredientsAccordion from "./IngredientsAccordion";
@@ -20,28 +20,32 @@ import CheckoutButton from "./CheckoutButton";
 import Image from "next/image";
 import gsap from "gsap";
 
+interface PoductModalType {
+  productModalOpen: boolean;
+  setProductModalOpen: Dispatch<SetStateAction<boolean>>;
+  selectedProduct: ProductType;
+}
+
 const ProductModal = ({
   productModalOpen,
   setProductModalOpen,
   selectedProduct,
-}: any) => {
-  const [product, setProduct] = useState<ProductType>(selectedProduct);
+}: PoductModalType) => {
+  const [product, setProduct] = useState({});
   const [description, setDescription] = useState<any[]>([]);
   const [quantity, setQuantity] = useState<number>(1);
   const router = useRouter();
   const [numberOfReviews, setNumberOfreviews] = useState<number>(3);
   const [loadMoreReviews, setLoadMoreReviews] = useState(false);
   const [options, setOptions] = useState("");
-  const [reviewsData, setReviewsData] = useState<any[]>(
-    selectedProduct?.reviews
-  );
+  const [reviewsData, setReviewsData] = useState<ProductReviewType[]>([]);
   const [imageNum, setImageNum] = useState(0);
 
   //Sets description from selected product
   useEffect(() => {
     setProduct(selectedProduct);
     setLoadMoreReviews(false);
-    setReviewsData(selectedProduct?.reviews);
+    setReviewsData(selectedProduct.reviews);
     setNumberOfreviews(3);
     if (selectedProduct.name !== "") {
       setProductModalOpen(true);
@@ -53,8 +57,8 @@ const ProductModal = ({
 
   //Maps through product description to render
   useEffect(() => {
-    if (product?.description?.length > 0) {
-      const productDescriptionArray = product?.description?.map(
+    if (selectedProduct?.description?.length > 0) {
+      const productDescriptionArray = selectedProduct?.description?.map(
         (text: string) => {
           return (
             <Typography
@@ -69,7 +73,7 @@ const ProductModal = ({
       );
       setDescription(productDescriptionArray);
     }
-  }, [product.description]);
+  }, [selectedProduct]);
 
   //Disables back button if modal is open
   useEffect(() => {
@@ -205,14 +209,14 @@ const ProductModal = ({
             >
               {productModalOpen && selectedProduct.images.length ? (
                 <Image
-                  src={product.images[imageNum]}
-                  alt={product.name}
+                  src={selectedProduct.images[imageNum]}
+                  alt={selectedProduct.name}
                   layout="fill"
                   objectFit="contain"
                   unoptimized={true}
                   loading="lazy"
                   placeholder="blur"
-                  blurDataURL={product.thumbnail}
+                  blurDataURL={selectedProduct.thumbnail}
                   quality="100"
                   id="product-image"
                 />
@@ -232,7 +236,7 @@ const ProductModal = ({
               }}
             >
               <CheckoutButton
-                product={product}
+                selectedProduct={selectedProduct}
                 quantity={quantity}
                 setQuantity={setQuantity}
               />
@@ -263,18 +267,22 @@ const ProductModal = ({
                 sx={{ fontWidth: 200, mb: 1 }}
                 color="primary"
               >
-                {product.name}
+                {selectedProduct.name}
               </Typography>
               <Typography variant="caption">by</Typography>
-              <Typography variant="overline">{product.brand}</Typography>
+              <Typography variant="overline">
+                {selectedProduct.brand}
+              </Typography>
               <Box>
                 <Typography
                   variant="body1"
                   color="secondary"
                   sx={{ fontWeight: 200, mb: 3 }}
                 >
-                  {product.size}
-                  {product.details ? ` - ${product.details}` : ""}
+                  {selectedProduct.size}
+                  {selectedProduct.details
+                    ? ` - ${selectedProduct.details}`
+                    : ""}
                 </Typography>
                 <Divider />
 

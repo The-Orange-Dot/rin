@@ -19,7 +19,7 @@ import FilterListIcon from "@mui/icons-material/FilterList";
 import MobileProductsModal from "../../components/Products/Mobile/MobileProductsModal";
 import gsap from "gsap";
 import { useSession } from "next-auth/react";
-import { ProductType } from "../../types/productTypes";
+import { ProductType, CountType } from "../../types/productTypes";
 import ShoppingCartButton from "../../components/Products/Mobile/ShoppingCartButton";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
@@ -49,7 +49,7 @@ const Products = ({
     brand: "",
     ingredients: [],
     id: "",
-    review: [],
+    reviews: [],
     _count: { reviews: 0 },
   });
   const [filterDrawerOpened, setFilterDrawerOpened] = useState(false);
@@ -138,7 +138,7 @@ const Products = ({
         brand: "",
         ingredients: [],
         id: "",
-        review: [],
+        reviews: [],
         _count: { reviews: 0 },
       });
     }
@@ -275,8 +275,8 @@ export const getStaticProps: GetStaticProps = async () => {
 
     return {
       props: {
-        productsData: products,
-        totalProducts: totalProducts,
+        productsData: products as ProductType,
+        totalProducts: totalProducts as CountType,
       },
       revalidate: 20,
     };

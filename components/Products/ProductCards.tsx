@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import {
   Typography,
   Container,
@@ -13,17 +13,21 @@ import {
 } from "@mui/material";
 import { useMediaQuery } from "@mui/material";
 import { useRouter } from "next/router";
-import { ProductReviewType } from "../../types/productTypes";
+import { ProductReviewType, ProductType } from "../../types/productTypes";
 import { addItem } from "../../redux/reducers/shoppingCartReducer";
 import { useSelector, useDispatch } from "react-redux";
 
-const ProductCards = ({ product, setSelectedProduct }: any) => {
+interface ProductCardType {
+  product: ProductType;
+  setSelectedProduct: Dispatch<SetStateAction<ProductType>>;
+}
+
+const ProductCards = ({ product, setSelectedProduct }: ProductCardType) => {
   const isMobile = useMediaQuery("(max-width: 900px)");
   const router = useRouter();
   const shoppingCart = useSelector((state: any) => state.shoppingCart.value);
   const dispatch = useDispatch();
 
-  console.log(product);
   const addItemToCartHandler = () => {
     const item = {
       id: product.id,
