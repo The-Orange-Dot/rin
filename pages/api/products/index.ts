@@ -69,7 +69,7 @@ export default async function handler(
     res.status(200).json({
       products: products,
       totalProducts: totalProducts,
-      brands: brands,
+      brands: JSON.stringify(brands),
     });
   } else if (req.method === "PATCH") {
     const { items } = req.body;
