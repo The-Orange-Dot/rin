@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import {
   Modal,
   Fade,
@@ -15,22 +15,29 @@ import MobileCheckoutButton from "./MobileCheckoutButton";
 import { ProductReviewType, ProductType } from "../../../types/productTypes";
 import MobileIngredientsAccordion from "./MobileIngredientsAccordian";
 import MobileProductReview from "./MobileProductReview";
+import Image from "next/image";
+import gsap from "gsap";
+
+interface PoductModalType {
+  productModalOpen: boolean;
+  setProductModalOpen: Dispatch<SetStateAction<boolean>>;
+  selectedProduct: ProductType;
+}
 
 const MobileProductsModal = ({
   productModalOpen,
   setProductModalOpen,
   selectedProduct,
-}: any) => {
+}: PoductModalType) => {
   const [product, setProduct] = useState<ProductType>(selectedProduct);
   const [quantity, setQuantity] = useState<number>(1);
   const [description, setDescription] = useState<any[]>([]);
   const [options, setOptions] = useState("");
   const router = useRouter();
   const [loadMoreReviews, setLoadMoreReviews] = useState(false);
-  const [reviewsData, setReviewsData] = useState<any[]>(
-    selectedProduct?.reviews
-  );
+  const [reviewsData, setReviewsData] = useState(selectedProduct?.reviews);
   const [numberOfReviews, setNumberOfreviews] = useState<number>(3);
+  const [imageNum, setImageNum] = useState(0);
 
   useEffect(() => {
     setLoadMoreReviews(false);
@@ -41,6 +48,7 @@ const MobileProductsModal = ({
       setProductModalOpen(true);
     } else {
       setProductModalOpen(false);
+      setImageNum(0);
     }
   }, [selectedProduct]); //eslint-disable-line
 
@@ -104,6 +112,56 @@ const MobileProductsModal = ({
     return <MobileProductReview review={review} key={review.createdAt} />;
   });
 
+  const changeImageHandler = (i: number) => {
+    if (i !== imageNum) {
+      gsap
+        .timeline()
+        .to("#product-image", {
+          opacity: 0,
+          duration: 0.2,
+          //@ts-ignore
+          onComplete: setImageNum,
+          onCompleteParams: [i],
+        })
+        .to("#product-image", {
+          opacity: 1,
+          duration: 0.2,
+          delay: 0.2,
+        });
+    }
+  };
+
+  const imagesArray = selectedProduct.images.map((image: string, i: number) => {
+    return (
+      <Box
+        sx={{
+          width: "60px",
+          height: "60px",
+          position: "relative",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          m: 0.5,
+          "&:hover": { opacity: 0.5, border: "1px solid black" },
+        }}
+        key={image}
+        onClick={() => {
+          changeImageHandler(i);
+        }}
+      >
+        <Image
+          src={image}
+          alt={image}
+          width={50}
+          height={50}
+          objectFit="contain"
+          quality={25}
+          unoptimized
+        />
+      </Box>
+    );
+  });
+
   return (
     <Modal
       open={productModalOpen}
@@ -137,12 +195,25 @@ const MobileProductsModal = ({
               /*eslint-disable*/
               <img
                 alt={product.name}
-                src={product.thumbnail}
+                src={product.images[imageNum]}
                 width={300}
                 height={300}
+                id="product-image"
               />
               /*eslint-enable*/
             }
+            <Box
+              sx={{ width: "100%", display: "flex", justifyContent: "center" }}
+            >
+              {imagesArray}
+            </Box>
+            <Typography
+              color="secondary"
+              variant="overline"
+              sx={{ fontSize: ".7rem", lineHeight: ".0rem", mt: 1 }}
+            >
+              {product.brand}
+            </Typography>
             <Typography variant="h6" sx={{ fontWeight: 600, mt: 1 }}>
               {product.name}
             </Typography>

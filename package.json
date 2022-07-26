@@ -21,6 +21,7 @@
     "@stripe/react-stripe-js": "^1.9.0",
     "@stripe/stripe-js": "^1.32.0",
     "faker": "^6.6.6",
+    "fuse.js": "^6.6.2",
     "gsap": "npm:@gsap/member@^3.10.4",
     "next": "^12.2.2",
     "next-auth": "^4.10.0",

@@ -168,6 +168,7 @@ const Products = ({
       <Box
         className="filter"
         sx={{
+          maxWidth: 800,
           width: "80%",
           display: "flex",
           justifyContent: "center",
@@ -175,18 +176,14 @@ const Products = ({
           minHeight: "40px",
         }}
       >
-        {isMobile ? (
-          <Button
-            variant="outlined"
-            color="primary"
-            fullWidth
-            onClick={() => setFilterDrawerOpened(true)}
-          >
-            Filter <FilterListIcon color="primary" />
-          </Button>
-        ) : (
-          <ProductsNavBar />
-        )}
+        <Button
+          variant="outlined"
+          color="primary"
+          fullWidth
+          onClick={() => setFilterDrawerOpened(true)}
+        >
+          Filter <FilterListIcon color="primary" />
+        </Button>
       </Box>
 
       <Container

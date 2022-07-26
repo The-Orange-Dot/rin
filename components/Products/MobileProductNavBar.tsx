@@ -4,14 +4,15 @@ import {
   Accordion,
   AccordionSummary,
   AccordionDetails,
-  AccordionActions,
   Typography,
   Paper,
   Divider,
   Button,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { useMediaQuery } from "@mui/material";
+import { useRouter } from "next/router";
 
 const MobileProductNavBar = ({
   filterDrawerOpened,
@@ -22,15 +23,17 @@ const MobileProductNavBar = ({
   const [categorySelected, setCategorySelected] = useState("");
   const [expandBrands, setExpandBrands] = useState(false);
   const [brandSelected, setBrandSelected] = useState("");
+  const isMobile = useMediaQuery("(max-width: 900px)");
+  const router = useRouter();
 
   const resetFiltersHandler = () => {
     setBrandSelected("");
     setCategorySelected("");
   };
 
-  const categories = ["BATH", "SKINCARE", "HAIRCARE", "LOTION"];
+  const categories = ["BATH", "SKINCARE", "HAIRCARE", "LOTION", "MAKE-UP"];
   const categorySelector = categories.map((category: string) => (
-    <Box key={category}>
+    <Box key={category} sx={{ cursor: "pointer" }}>
       <Typography
         sx={{ m: 1 }}
         onClick={() => {
@@ -46,7 +49,7 @@ const MobileProductNavBar = ({
 
   const brandSelector = Object.entries(brands).map(([key, value]) => {
     return (
-      <Box key={key}>
+      <Box key={key} sx={{ cursor: "pointer" }}>
         <Typography
           sx={{ m: 1 }}
           onClick={() => {
@@ -69,7 +72,8 @@ const MobileProductNavBar = ({
     >
       <Paper
         sx={{
-          width: "250px",
+          width: "30vw",
+          minWidth: "250px",
           height: "100%",
           display: "flex",
           justifyContent: "center",
@@ -108,11 +112,19 @@ const MobileProductNavBar = ({
             </AccordionSummary>
 
             <AccordionDetails
-              sx={{
-                textAlign: "center",
-                maxHeight: "200px",
-                overflowY: "scroll",
-              }}
+              sx={
+                isMobile
+                  ? {
+                      textAlign: "center",
+                      maxHeight: "200px",
+                      overflowY: "scroll",
+                    }
+                  : {
+                      textAlign: "center",
+                      maxHeight: "500px",
+                      overflowY: "scroll",
+                    }
+              }
             >
               {brandSelector}
             </AccordionDetails>

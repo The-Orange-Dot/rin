@@ -40,6 +40,7 @@ const ProductModal = ({
   const [options, setOptions] = useState("");
   const [reviewsData, setReviewsData] = useState<ProductReviewType[]>([]);
   const [imageNum, setImageNum] = useState(0);
+  const [autoAnimate, setAutoAnimate] = useState(true);
 
   //Sets description from selected product
   useEffect(() => {
@@ -146,17 +147,25 @@ const ProductModal = ({
       <Box
         sx={{
           position: "relative",
-          width: 50,
-          height: 50,
+          cursor: "pointer",
           m: 1,
+          width: 52,
+          height: 52,
           "&:hover": { opacity: 0.5, border: "1px solid black" },
         }}
         key={image}
         onClick={() => {
-          setImageNum(i);
+          changeImageHandler(i);
         }}
       >
-        <Image src={image} alt={image} layout="fill" objectFit="contain" />
+        <Image
+          src={image}
+          alt={image}
+          width={50}
+          height={50}
+          objectFit="contain"
+          quality={25}
+        />
       </Box>
     );
   });
@@ -232,7 +241,7 @@ const ProductModal = ({
             <Box
               sx={{
                 width: "100%",
-                height: "20vh",
+                height: "15vh",
               }}
             >
               <CheckoutButton

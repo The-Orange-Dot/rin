@@ -9,11 +9,21 @@ export default async function handler(
 ) {
   if (req.method === "GET") {
     const view = req.query.view as string | undefined;
+    const categoryFilter = req.query.category as string | undefined;
+    const brandfilter = req.query.brand as string | undefined;
 
     const skip = view ? parseInt(view) - 12 : 0;
     const take = view ? parseInt(view) : 12;
 
     const products = await prisma.product.findMany({
+      where: {
+        AND: [
+          {
+            category: { contains: categoryFilter, mode: "insensitive" },
+            brand: { contains: brandfilter, mode: "insensitive" },
+          },
+        ],
+      },
       orderBy: { createdAt: "desc" },
       select: {
         id: true,
@@ -75,5 +85,6 @@ export default async function handler(
     res
       .status(200)
       .json({ res: "Items have been updated", items: updatedItems });
+  } else if (req.method === "POST") {
   }
 }
