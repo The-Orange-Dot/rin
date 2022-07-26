@@ -264,7 +264,7 @@ export const getStaticProps: GetStaticProps = async () => {
       props: {
         productsData: products as ProductType,
         totalProducts: totalProducts as CountType,
-        brands: brands as { _count: number; brand: string },
+        brands: brands,
       },
       revalidate: 20,
     };
