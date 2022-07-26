@@ -110,7 +110,7 @@ const ProductReviews = ({ review }: ProductReviewsType) => {
           }}
         >
           <Typography variant="caption" color="secondary">
-            Posted: {DateFormatter(review.createdAt.toString())}
+            Posted: {DateFormatter(review.createdAt)}
           </Typography>
           <Box sx={{ display: "flex", alignItems: "center" }}>
             <SentimentVerySatisfiedIcon fontSize="small" />
