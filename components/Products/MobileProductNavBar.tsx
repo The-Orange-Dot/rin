@@ -92,7 +92,7 @@ const MobileProductNavBar = ({
     "LOTION",
     "MAKE-UP",
   ];
-  const categorySelector = categories.map((category: string) => (
+  const categorySelector = categories?.map((category: string) => (
     <Box
       key={category}
       sx={{ cursor: "pointer" }}
@@ -110,12 +110,12 @@ const MobileProductNavBar = ({
     </Box>
   ));
 
-  const brandSelector = brands.map((brand: any) => {
+  const brandSelector = brands?.map((brand: any) => {
     return (
       <Box
-        key={brand.brand}
+        key={brand?.brand}
         sx={{ cursor: "pointer" }}
-        onClick={() => setBrandSelected(brand.brand)}
+        onClick={() => setBrandSelected(brand?.brand)}
       >
         <Typography
           sx={{ m: 1 }}
@@ -123,7 +123,7 @@ const MobileProductNavBar = ({
             setExpandBrands(false);
           }}
         >
-          {`${brand.brand} (${brand._count})`}
+          {`${brand?.brand} (${brand?._count})`}
         </Typography>
         <Divider />
       </Box>
