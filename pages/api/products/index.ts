@@ -37,6 +37,7 @@ export default async function handler(
             description: true,
             helpful: true,
             rating: true,
+            createdAt: true,
           },
           take: 3,
         },

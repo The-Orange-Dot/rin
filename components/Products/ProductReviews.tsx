@@ -13,8 +13,13 @@ import {
 } from "@mui/material";
 import { DateFormatter } from "../DateFormatter";
 import SentimentVerySatisfiedIcon from "@mui/icons-material/SentimentVerySatisfied";
+import { ProductReviewType } from "../../types/productTypes";
 
-const ProductReviews = ({ review }: any) => {
+interface ProductReviewsType {
+  review: ProductReviewType;
+}
+
+const ProductReviews = ({ review }: ProductReviewsType) => {
   const [reviewTooLong, setReviewTooLong] = useState(false);
   const [description, setDescription] = useState(review?.description);
 

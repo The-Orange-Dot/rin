@@ -10,6 +10,8 @@ export type ProductReviewType = {
   rating: number;
   updatedAt: string;
   userReview: UserReviewType;
+  userId: string;
+  productId: string;
 };
 
 export type CountType = {
