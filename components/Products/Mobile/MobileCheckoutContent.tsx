@@ -8,6 +8,7 @@ import {
   editQuantity,
   removeItem,
 } from "../../../redux/reducers/shoppingCartReducer";
+import Image from "next/image";
 
 const MobileCheckoutContent = ({ product }: any) => {
   const shoppingCart = useSelector(
@@ -44,19 +45,27 @@ const MobileCheckoutContent = ({ product }: any) => {
     dispatch(removeItem(updatedCart));
   };
 
+  console.log(product);
+
   return (
     <Box key={product.name}>
       <Divider sx={{ mb: 1 }} />
       <Box sx={{ width: "100%", display: "flex" }}>
-        <Box sx={{ width: "25%", display: "flex", justifyContent: "center" }}>
-          {/* eslint-disable */}
-          <img
-            src={product.thumbnail}
+        <Box
+          sx={{
+            width: "25%",
+            display: "flex",
+            justifyContent: "center",
+            position: "relative",
+          }}
+        >
+          <Image
+            src={product.image}
             width={70}
             height={70}
+            quality={20}
             alt={product.name}
           />
-          {/* eslint-enable */}
         </Box>
         <Box
           sx={{

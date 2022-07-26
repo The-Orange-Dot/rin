@@ -84,8 +84,17 @@ const ProductModal = ({
     });
   }, []); //eslint-disable-line
 
+  const closeModalHandler = (url: string) => {
+    gsap.to("#mobile-product-modal", {
+      opacity: 0,
+      //@ts-ignore
+      onComplete: backButtonOverride,
+      onCompleteParams: [url],
+    });
+  };
+
   //Logic for closing modal and setting modal_open to false
-  const closeModalHandler = async (url: string) => {
+  const backButtonOverride = async (url: string) => {
     setProductModalOpen(false);
 
     if (productModalOpen) {
@@ -94,7 +103,7 @@ const ProductModal = ({
           pathname: "/products",
         },
         {},
-        { scroll: false, shallow: true }
+        { scroll: false }
       );
 
       setQuantity(1);

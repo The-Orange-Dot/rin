@@ -9,7 +9,6 @@ import { RootState } from "../../../redux/store";
 import styles from "../../../styles/payment.module.css";
 
 const MobilePaymentCartItems = ({ product }: any) => {
-  console.log(product);
   return (
     <Box
       key={product.name}

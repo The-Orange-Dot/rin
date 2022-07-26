@@ -87,7 +87,7 @@ const MobileProductsModal = ({
   const backButtonOverride = async (url: string) => {
     setProductModalOpen(false);
 
-    if (url?.includes("modal_open=true")) {
+    if (productModalOpen) {
       await router.replace(
         {
           pathname: "/products",
