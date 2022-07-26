@@ -198,11 +198,8 @@ const seed = async () => {
       quantity: 2,
       price: 25.0,
       rating: 3.5,
-      thumbnail:
-        "https://romand.co.kr/web/product/big/202206/ceb0ed2f0e3d9595e96e154d4c127c94.jpg",
-      images: [
-        "https://romand.co.kr/web/product/big/202206/ceb0ed2f0e3d9595e96e154d4c127c94.jpg",
-      ],
+      thumbnail: "https://m.media-amazon.com/images/I/61fAljjSzwS._SL1500_.jpg",
+      images: ["https://m.media-amazon.com/images/I/61fAljjSzwS._SL1500_.jpg"],
       category: "skincare",
 
       brand: "rom&nd",
@@ -298,7 +295,7 @@ const seed = async () => {
       id: "7",
     },
     {
-      name: "Yoku Collection - Eye shadow",
+      name: "Eye shadow - Yoku Collection - EX-1",
       size: "6.5g",
       details: "Limited Tokyo Item",
       description: [
@@ -315,10 +312,57 @@ const seed = async () => {
       rating: 4.0,
       thumbnail:
         "https://d31pc8y2j50o7q.cloudfront.net/kate_tokyo/yoku_series/kate_tokyo_ex-1_app_300.jpg",
-      category: "misc",
+      category: "make-up",
       brand: "Kate Tokyo",
       ingredients: [],
       id: "8",
+    },
+    {
+      name: "Eye shadow - Yoku Collection - EX-2",
+      size: "6.5g",
+      details: "Limited Tokyo Item",
+      description: [
+        "Kate Tokyo makeup",
+        "Checking to see how it looks in english to see what i can fit blah blah blah blu blu blu beep boop boop bop",
+      ],
+      quantity: 2,
+      price: 40.0,
+      images: [
+        "https://d31pc8y2j50o7q.cloudfront.net/kate_tokyo/yoku_series/kate_tokyo_ex-2_app_600.jpg",
+        "https://d31pc8y2j50o7q.cloudfront.net/kate_tokyo/yoku_series/kate_tokyo_ex-2_app_case.jpg",
+        "https://d31pc8y2j50o7q.cloudfront.net/kate_tokyo/yoku_series/kate_tokyo_ex-2_app_case_open.jpg",
+      ],
+      rating: 4.0,
+      thumbnail:
+        "https://d31pc8y2j50o7q.cloudfront.net/kate_tokyo/yoku_series/kate_tokyo_ex-2_app_300.jpg",
+      category: "make-up",
+      brand: "Kate Tokyo",
+      ingredients: [],
+      id: "9",
+    },
+    {
+      name: "Highlighter - Yoku Collection - EX-1",
+      size: "3.4g",
+      details: "Limited Tokyo Item",
+      description: [
+        "Kate Tokyo makeup",
+        "Checking to see how it looks in english to see what i can fit blah blah blah blu blu blu beep boop boop bop",
+      ],
+      quantity: 2,
+      price: 30.0,
+      images: [
+        "https://d31pc8y2j50o7q.cloudfront.net/kate_tokyo/yoku_series/kate_tokyo_ex-1_brush_600.jpg",
+        "https://d31pc8y2j50o7q.cloudfront.net/kate_tokyo/yoku_series/kate_tokyo_ex-1_brush_case.jpg",
+        "https://d31pc8y2j50o7q.cloudfront.net/kate_tokyo/yoku_series/kate_tokyo_ex-1_brush_case_open.jpg",
+        "https://d31pc8y2j50o7q.cloudfront.net/kate_tokyo/yoku_series/kate_tokyo_brush.jpg",
+      ],
+      rating: 4.0,
+      thumbnail:
+        "https://d31pc8y2j50o7q.cloudfront.net/kate_tokyo/yoku_series/kate_tokyo_ex-1_brush_300.jpg",
+      category: "make-up",
+      brand: "Kate Tokyo",
+      ingredients: [],
+      id: "10",
     },
   ];
 
@@ -393,10 +437,10 @@ const seed = async () => {
   });
 
   //Creates a lot of reviews
-  for (let i = 0; i < 100; i++) {
+  for (let i = 0; i < 150; i++) {
     const testReviews: ReviewData = {
       userId: Math.floor(Math.random() * 49).toString(),
-      productId: Math.floor(Math.random() * 9).toString(),
+      productId: Math.floor(Math.random() * 11).toString(),
       rating: Math.floor(Math.random() * 5) + 1,
       description: faker.lorem.lines(),
       helpful: Math.floor(Math.random() * 120),
