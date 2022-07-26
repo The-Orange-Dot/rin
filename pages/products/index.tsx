@@ -29,6 +29,7 @@ import Pagination from "../../components/Products/PaginationButtons";
 const Products = ({
   productsData,
   totalProducts,
+  brands,
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
   const [openDrawer, setOpenDrawer] = useState(false);
   const isMobile = useMediaQuery("(max-width: 900px)");
@@ -55,7 +56,6 @@ const Products = ({
   const [filterDrawerOpened, setFilterDrawerOpened] = useState(false);
   const session = useSession();
   const [pageLoaded, setPageLoaded] = useState(false);
-  const [brands, setBrands] = useState([]);
 
   const shoppingCart = useSelector(
     (state: RootState) => state.shoppingCart.value
@@ -144,19 +144,6 @@ const Products = ({
     }
   }, [productModalOpen]);
 
-  //Sets brands and amount of products for brands filter display
-  useEffect(() => {
-    let hash: any = {};
-    for (let product of products) {
-      if (hash[product.brand]) {
-        hash[product.brand] += 1;
-      } else {
-        hash[product.brand] = 1;
-      }
-    }
-    setBrands(hash);
-  }, [products]);
-
   useEffect(() => {
     if (shoppingCart.length <= 0) {
       setOpenDrawer(false);
@@ -239,6 +226,8 @@ const Products = ({
           setFilterDrawerOpened={setFilterDrawerOpened}
           filterDrawerOpened={filterDrawerOpened}
           brands={brands}
+          setProducts={setProducts}
+          setPageLoaded={setPageLoaded}
         />
         {isMobile && shoppingCart.length > 0 ? (
           <ShoppingCartButton setOpenDrawer={setOpenDrawer} />
@@ -269,11 +258,13 @@ export const getStaticProps: GetStaticProps = async () => {
 
     const { products } = productsData;
     const { totalProducts } = productsData;
+    const { brands } = productsData;
 
     return {
       props: {
         productsData: products as ProductType,
         totalProducts: totalProducts as CountType,
+        brands: brands as { _count: number; brand: string },
       },
       revalidate: 20,
     };

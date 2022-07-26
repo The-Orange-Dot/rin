@@ -4,41 +4,104 @@ import {
   Accordion,
   AccordionSummary,
   AccordionDetails,
+  AccordionActions,
   Typography,
   Paper,
   Divider,
   Button,
+  CircularProgress,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { SyntheticEvent, useEffect, useState } from "react";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useMediaQuery } from "@mui/material";
 import { useRouter } from "next/router";
+import gsap from "gsap";
 
 const MobileProductNavBar = ({
   filterDrawerOpened,
   setFilterDrawerOpened,
   brands,
+  setPageLoaded,
+  setProducts,
 }: any) => {
   const [expandCategory, setExpandCategory] = useState(false);
   const [categorySelected, setCategorySelected] = useState("");
   const [expandBrands, setExpandBrands] = useState(false);
   const [brandSelected, setBrandSelected] = useState("");
   const isMobile = useMediaQuery("(max-width: 900px)");
-  const router = useRouter();
+  const [filterLoading, setFilterLoading] = useState(false);
 
-  const resetFiltersHandler = () => {
-    setBrandSelected("");
-    setCategorySelected("");
+  const filterSearch = async () => {
+    setFilterLoading(true);
+    let query = "api/products?filter=true";
+
+    if (categorySelected && categorySelected !== "ALL") {
+      query = query.concat(`&category=${categorySelected.toLowerCase()}`);
+    }
+
+    if (brandSelected && brandSelected !== "ALL") {
+      query = query.concat(
+        `&brand=${brandSelected.replace(" ", "_").toLowerCase()}`
+      );
+    }
+    const res = await fetch(query);
+    const productsData = await res.json();
+    setFilterDrawerOpened(false);
+    setFilterLoading(false);
+
+    gsap
+      .timeline()
+      .to(".card", {
+        opacity: 0,
+        duration: 0.2,
+        onComplete: setProducts,
+        onCompleteParams: [productsData.products],
+      })
+      .to(".card", { onComplete: setPageLoaded, onCompleteParams: [false] });
+    setExpandCategory(false);
+    setExpandBrands(false);
   };
 
-  const categories = ["BATH", "SKINCARE", "HAIRCARE", "LOTION", "MAKE-UP"];
+  const resetFilterHandler = async () => {
+    if (categorySelected || brandSelected) {
+      const res = await fetch("/api/products");
+      const productsData = await res.json();
+      setFilterDrawerOpened(false);
+
+      gsap
+        .timeline()
+        .to(".card", {
+          opacity: 0,
+          duration: 0.2,
+          onComplete: setProducts,
+          onCompleteParams: [productsData.products],
+        })
+        .to(".card", { onComplete: setPageLoaded, onCompleteParams: [false] });
+      setBrandSelected("");
+      setCategorySelected("");
+      setExpandCategory(false);
+      setExpandBrands(false);
+    }
+  };
+
+  const categories = [
+    "ALL",
+    "BATH",
+    "SKINCARE",
+    "HAIRCARE",
+    "LOTION",
+    "MAKE-UP",
+  ];
   const categorySelector = categories.map((category: string) => (
-    <Box key={category} sx={{ cursor: "pointer" }}>
+    <Box
+      key={category}
+      sx={{ cursor: "pointer" }}
+      onClick={() => setCategorySelected(category)}
+    >
       <Typography
         sx={{ m: 1 }}
         onClick={() => {
           setExpandCategory(false);
-          setCategorySelected(category);
         }}
       >
         {category}
@@ -47,17 +110,20 @@ const MobileProductNavBar = ({
     </Box>
   ));
 
-  const brandSelector = Object.entries(brands).map(([key, value]) => {
+  const brandSelector = brands.map((brand: any) => {
     return (
-      <Box key={key} sx={{ cursor: "pointer" }}>
+      <Box
+        key={brand.brand}
+        sx={{ cursor: "pointer" }}
+        onClick={() => setBrandSelected(brand.brand)}
+      >
         <Typography
           sx={{ m: 1 }}
           onClick={() => {
             setExpandBrands(false);
-            setBrandSelected(key);
           }}
         >
-          {`${key} (${value})`}
+          {`${brand.brand} (${brand._count})`}
         </Typography>
         <Divider />
       </Box>
@@ -126,14 +192,43 @@ const MobileProductNavBar = ({
                     }
               }
             >
+              <Box
+                sx={{ cursor: "pointer" }}
+                onClick={() => setBrandSelected("ALL")}
+              >
+                <Typography
+                  sx={{ m: 1 }}
+                  onClick={() => {
+                    setExpandBrands(false);
+                  }}
+                >
+                  ALL
+                </Typography>
+                <Divider />
+              </Box>
               {brandSelector}
             </AccordionDetails>
           </Accordion>
           <Button
+            disabled={filterLoading}
+            variant="contained"
             fullWidth
             sx={{ mt: 3 }}
             onClick={() => {
-              resetFiltersHandler();
+              filterSearch();
+            }}
+          >
+            {filterLoading ? (
+              <CircularProgress color="inherit" size={25} />
+            ) : (
+              "Set Filter"
+            )}
+          </Button>
+          <Button
+            fullWidth
+            sx={{ mt: 3 }}
+            onClick={() => {
+              resetFilterHandler();
             }}
           >
             Reset Filters

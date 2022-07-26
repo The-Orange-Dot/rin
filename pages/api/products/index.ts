@@ -9,8 +9,8 @@ export default async function handler(
 ) {
   if (req.method === "GET") {
     const view = req.query.view as string | undefined;
-    const categoryFilter = req.query.category as string | undefined;
-    const brandfilter = req.query.brand as string | undefined;
+    const category = req.query.category as string | undefined;
+    const brand = req.query.brand as string | undefined;
 
     const skip = view ? parseInt(view) - 12 : 0;
     const take = view ? parseInt(view) : 12;
@@ -19,8 +19,11 @@ export default async function handler(
       where: {
         AND: [
           {
-            category: { contains: categoryFilter, mode: "insensitive" },
-            brand: { contains: brandfilter, mode: "insensitive" },
+            category: {
+              contains: category ? category : undefined,
+              mode: "insensitive",
+            },
+            brand: { contains: brand, mode: "insensitive" },
           },
         ],
       },
@@ -56,11 +59,17 @@ export default async function handler(
       skip: skip,
     });
 
+    const brands = await prisma.product.groupBy({
+      by: ["brand"],
+      _count: true,
+    });
+
     const totalProducts = await prisma.product.count();
 
     res.status(200).json({
       products: products,
       totalProducts: totalProducts,
+      brands: brands,
     });
   } else if (req.method === "PATCH") {
     const { items } = req.body;
