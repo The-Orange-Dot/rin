@@ -4,10 +4,13 @@ import React, { useEffect } from "react";
 import styles from "../styles/profile.module.css";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
+import { Box } from "@mui/system";
 
 const Profile = () => {
   const session = useSession();
   const router = useRouter();
+
+  console.log(session);
 
   const signOutHandler = () => {
     signOut({ redirect: false });
@@ -28,6 +31,21 @@ const Profile = () => {
   } else if (session.status === "authenticated") {
     return (
       <div className={styles.main}>
+        <Box
+          sx={{
+            width: "100%",
+            height: "100vh",
+            display: "flex",
+            justifyContent: "center",
+            pt: 20,
+          }}
+        >
+          <Box sx={{ border: "1px solid black", height: "60%", width: "20vw" }}>
+            {" "}
+          </Box>
+          <Box></Box>
+        </Box>
+
         <Button onClick={() => signOutHandler()}>Sign Out</Button>
       </div>
     );

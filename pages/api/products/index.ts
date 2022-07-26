@@ -13,7 +13,10 @@ export default async function handler(
     const brand = req.query.brand as string | undefined;
 
     const skip = view ? parseInt(view) - 12 : 0;
-    const take = view ? parseInt(view) : 12;
+
+    console.log(skip);
+    console.log(category);
+    console.log(brand);
 
     const products = await prisma.product.findMany({
       where: {
@@ -55,7 +58,7 @@ export default async function handler(
           take: 3,
         },
       },
-      take: take,
+      take: 12,
       skip: skip,
     });
 
@@ -64,7 +67,19 @@ export default async function handler(
       _count: true,
     });
 
-    const totalProducts = await prisma.product.count();
+    const totalProducts = await prisma.product.count({
+      where: {
+        AND: [
+          {
+            category: {
+              contains: category ? category : undefined,
+              mode: "insensitive",
+            },
+            brand: { contains: brand, mode: "insensitive" },
+          },
+        ],
+      },
+    });
 
     res.status(200).json({
       products: products,

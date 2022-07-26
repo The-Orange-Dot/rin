@@ -4,18 +4,23 @@ import {
   Accordion,
   AccordionSummary,
   AccordionDetails,
-  AccordionActions,
   Typography,
   Paper,
   Divider,
   Button,
   CircularProgress,
 } from "@mui/material";
-import React, { SyntheticEvent, useEffect, useState } from "react";
+import React, { useState } from "react";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useMediaQuery } from "@mui/material";
-import { useRouter } from "next/router";
 import gsap from "gsap";
+import {
+  filterCategory,
+  filterBrand,
+  setPages,
+} from "../../redux/reducers/productsFilterReducer";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "../../redux/store";
 
 const MobileProductNavBar = ({
   filterDrawerOpened,
@@ -23,13 +28,19 @@ const MobileProductNavBar = ({
   brands,
   setPageLoaded,
   setProducts,
+  setPaginationNum,
 }: any) => {
   const [expandCategory, setExpandCategory] = useState(false);
-  const [categorySelected, setCategorySelected] = useState("");
   const [expandBrands, setExpandBrands] = useState(false);
-  const [brandSelected, setBrandSelected] = useState("");
   const isMobile = useMediaQuery("(max-width: 900px)");
   const [filterLoading, setFilterLoading] = useState(false);
+  const brandSelected = useSelector(
+    (state: RootState) => state.productFilter.value.brand
+  );
+  const categorySelected = useSelector(
+    (state: RootState) => state.productFilter.value.category
+  );
+  const dispatch = useDispatch();
 
   const filterSearch = async () => {
     setFilterLoading(true);
@@ -60,6 +71,7 @@ const MobileProductNavBar = ({
       .to(".card", { onComplete: setPageLoaded, onCompleteParams: [false] });
     setExpandCategory(false);
     setExpandBrands(false);
+    dispatch(setPages(productsData.totalProducts));
   };
 
   const resetFilterHandler = async () => {
@@ -77,10 +89,11 @@ const MobileProductNavBar = ({
           onCompleteParams: [productsData.products],
         })
         .to(".card", { onComplete: setPageLoaded, onCompleteParams: [false] });
-      setBrandSelected("");
-      setCategorySelected("");
+      dispatch(filterBrand(""));
+      dispatch(filterCategory(""));
       setExpandCategory(false);
       setExpandBrands(false);
+      setPaginationNum(productsData.totalProducts);
     }
   };
 
@@ -96,7 +109,7 @@ const MobileProductNavBar = ({
     <Box
       key={category}
       sx={{ cursor: "pointer" }}
-      onClick={() => setCategorySelected(category)}
+      onClick={() => dispatch(filterCategory(category))}
     >
       <Typography
         sx={{ m: 1 }}
@@ -115,7 +128,7 @@ const MobileProductNavBar = ({
       <Box
         key={brand?.brand}
         sx={{ cursor: "pointer" }}
-        onClick={() => setBrandSelected(brand?.brand)}
+        onClick={() => dispatch(filterBrand(brand.brand))}
       >
         <Typography
           sx={{ m: 1 }}
@@ -194,7 +207,7 @@ const MobileProductNavBar = ({
             >
               <Box
                 sx={{ cursor: "pointer" }}
-                onClick={() => setBrandSelected("ALL")}
+                onClick={() => dispatch(filterBrand("ALL"))}
               >
                 <Typography
                   sx={{ m: 1 }}

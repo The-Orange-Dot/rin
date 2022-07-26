@@ -86,8 +86,6 @@ const ProductCards = ({ product, setSelectedProduct }: ProductCardType) => {
 
   const averageRating = summedRating / ratingArray.length;
 
-  console.log(product);
-
   return (
     <Grid item xs={3.8} md={3.5}>
       <Box
@@ -320,17 +318,3 @@ const ProductCards = ({ product, setSelectedProduct }: ProductCardType) => {
 };
 
 export default ProductCards;
-
-// {
-// 	"Version": "2008-10-17",
-// 	"Statement": [
-// 		{
-// 			"Effect": "Allow",
-// 			"Principal": {
-// 				"AWS": "arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity E33OV31YMDACSP"
-// 			},
-// 			"Action": "s3:GetObject",
-// 			"Resource": "arn:aws:s3:::cf-simple-s3-origin-rin-cloudfront-s3-994834096994/*"
-// 		}
-// 	]
-// }

@@ -2,6 +2,7 @@ import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import shoppingCartReducer from "./reducers/shoppingCartReducer";
 import storage from "redux-persist/lib/storage";
 import guestAddresReducer from "./reducers/guestAddresReducer";
+import productsFilterReducer from "./reducers/productsFilterReducer";
 
 import {
   persistReducer,
@@ -18,12 +19,13 @@ const persistConfig = {
   version: 1,
   storage,
   whitelist: ["shoppingCart", "guestShipping"],
-  blacklist: [],
+  blacklist: ["productFilter"],
 };
 
 const rootReducer = combineReducers({
   shoppingCart: shoppingCartReducer,
   guestShipping: guestAddresReducer,
+  productFilter: productsFilterReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

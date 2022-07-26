@@ -1,21 +1,31 @@
-import React, { ChangeEvent, useState, Dispatch, SetStateAction } from "react";
+import React, {
+  ChangeEvent,
+  useState,
+  Dispatch,
+  SetStateAction,
+  useEffect,
+} from "react";
 import PropTypes from "prop-types";
 import { Pagination } from "@mui/material";
 import { ProductType } from "../../types/productTypes";
 import gsap from "gsap";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "../../redux/store";
+import { setPages } from "../../redux/reducers/productsFilterReducer";
 
 interface PaginationType {
-  number: number;
   setProducts: Dispatch<SetStateAction<ProductType>>;
   setPageLoaded: Dispatch<SetStateAction<boolean>>;
 }
 
-const PaginationButtons = ({
-  number,
-  setProducts,
-  setPageLoaded,
-}: PaginationType) => {
-  const totalPages = Math.ceil(number / 12);
+const PaginationButtons = ({ setProducts, setPageLoaded }: PaginationType) => {
+  const filters = useSelector((state: RootState) => state.productFilter.value);
+  const [totalPages, setTotalPages] = useState(filters.totalProducts);
+
+  useEffect(() => {
+    const totalPages = Math.ceil(filters.totalProducts / 12);
+    setTotalPages(totalPages);
+  }, [filters.totalProducts]);
 
   const pageHandler = async (e: ChangeEvent<unknown>, value: number) => {
     gsap
@@ -24,7 +34,18 @@ const PaginationButtons = ({
       })
       .to(".card", { opacity: 0, y: -10, stagger: 0, duration: 0.1 });
 
-    const newPage = await fetch(`/api/products/?view=${value * 12}`);
+    let query = `/api/products/?view=${value * 12}`;
+
+    if (filters.category && filters.category !== "ALL") {
+      query = query.concat(`&category=${filters.category.toLowerCase()}`);
+    }
+    if (filters.brand && filters.brand !== "ALL") {
+      query = query.concat(
+        `&brand=${filters.brand.replace(" ", "_").toLowerCase()}`
+      );
+    }
+
+    const newPage = await fetch(query);
     const updatedPage = await newPage.json();
     setPageLoaded(false);
 

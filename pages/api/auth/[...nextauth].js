@@ -53,14 +53,19 @@ export default NextAuth({
       //PUT ANY INFO TO BE SENT TO THE FRONT HERE!!
       //MUST AT LEAST HAVE NAME EMAIL AND IMAGE
 
+      console.log(token);
+
       session.user = {
         name: token.user.firstName,
         lastName: token.user.lastName,
         email: token.user.email,
         image: token.user.image,
+        phone: token.user.homePhone,
+        mobile: token.user.mobilePhone,
         username: token.user.username,
         id: token.user.id,
-        address: token.user.address,
+        address1: token.user.address1,
+        address2: token.user.address2,
         zipcode: token.user.zipcode,
         city: token.user.city,
         state: token.user.state,

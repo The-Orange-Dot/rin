@@ -25,7 +25,8 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import MobileCheckout from "../../components/Products/Mobile/MobileCheckout";
 import Pagination from "../../components/Products/PaginationButtons";
-
+import { useDispatch } from "react-redux";
+import { setPages } from "../../redux/reducers/productsFilterReducer";
 const Products = ({
   productsData,
   totalProducts,
@@ -56,6 +57,8 @@ const Products = ({
   const [filterDrawerOpened, setFilterDrawerOpened] = useState(false);
   const session = useSession();
   const [pageLoaded, setPageLoaded] = useState(false);
+  const [paginationNum, setPaginationNum] = useState(totalProducts);
+  const dispatch = useDispatch();
 
   const shoppingCart = useSelector(
     (state: RootState) => state.shoppingCart.value
@@ -64,6 +67,8 @@ const Products = ({
   //Sets up initial state for animation
   //When session loads, pageLoaded set to true
   useEffect(() => {
+    dispatch(setPages(totalProducts));
+
     const tl = gsap
       .timeline({ paused: true })
       .fromTo(".filter", { opacity: 0 }, { opacity: 1 }, 0)
@@ -81,7 +86,7 @@ const Products = ({
       tl.play(0);
     }
     setProductModalOpen(false);
-  }, [session.status]);
+  }, [session.status]); //eslint-disable-line
 
   //Filter selectors animation once page is loaded
   useEffect(() => {
@@ -204,11 +209,7 @@ const Products = ({
         >
           {productCards}
         </Grid>
-        <Pagination
-          number={totalProducts}
-          setProducts={setProducts}
-          setPageLoaded={setPageLoaded}
-        />
+        <Pagination setProducts={setProducts} setPageLoaded={setPageLoaded} />
         {isMobile ? (
           <MobileProductsModal
             productModalOpen={productModalOpen}
@@ -228,6 +229,7 @@ const Products = ({
           brands={brands}
           setProducts={setProducts}
           setPageLoaded={setPageLoaded}
+          setPaginationNum={setPaginationNum}
         />
         {isMobile && shoppingCart.length > 0 ? (
           <ShoppingCartButton setOpenDrawer={setOpenDrawer} />
