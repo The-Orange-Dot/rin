@@ -85,7 +85,7 @@ const ProductModal = ({
   }, []); //eslint-disable-line
 
   const closeModalHandler = (url: string) => {
-    gsap.to("#mobile-product-modal", {
+    gsap.to("#product-modal", {
       opacity: 0,
       //@ts-ignore
       onComplete: backButtonOverride,
@@ -192,6 +192,7 @@ const ProductModal = ({
         zIndex: 0,
       }}
       hideBackdrop
+      id="product-modal"
     >
       <Fade in={productModalOpen}>
         <Paper
