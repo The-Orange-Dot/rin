@@ -14,6 +14,7 @@ export default async function handler(
 ) {
   if (req.method === "GET") {
     const userId = req.query.userId as string;
+    console.log(req.query);
 
     const userData = await prisma.user.findFirst({
       where: { id: userId },
@@ -34,13 +35,13 @@ export default async function handler(
         image: true,
       },
     });
-    console.log(userData);
 
     if (
       !userData?.address1 &&
       !userData?.city &&
       !userData?.state &&
-      !userData?.zipcode
+      !userData?.zipcode &&
+      !req.query.profile_fetch
     ) {
       res.status(500).json({ message: "No address" });
     }

@@ -61,9 +61,7 @@ const Payment = ({
 
     let shippingData = storedShipping;
 
-    console.log(shippingData);
-
-    const customerId = user?.id ? user.id : undefined;
+    const customerId = user.userData.id ? user.userData.id : undefined;
 
     // Create Order as soon as the page loads
     fetch("/api/create_payment", {

@@ -85,6 +85,7 @@ export default async function handler(req, res) {
       currency: "usd",
       ip_address: detectedIp,
       line_items: lineItemObject,
+      payment: { settings: { payment_method_types: ["card"] } },
       customer: customerId,
       shipping_details: {
         name: fullName,
@@ -105,6 +106,7 @@ export default async function handler(req, res) {
       currency: "usd",
       ip_address: detectedIp,
       line_items: lineItemObject,
+      payment: { settings: { payment_method_types: ["card"] } },
       shipping_details: {
         name: shipping.name,
         address: {

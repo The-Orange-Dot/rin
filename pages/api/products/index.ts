@@ -14,10 +14,6 @@ export default async function handler(
 
     const skip = view ? parseInt(view) - 12 : 0;
 
-    console.log(skip);
-    console.log(category);
-    console.log(brand);
-
     const products = await prisma.product.findMany({
       where: {
         AND: [

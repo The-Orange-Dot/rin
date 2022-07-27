@@ -73,7 +73,6 @@ const Profile = ({
   });
 
   useEffect(() => {
-    console.log(pageSelected);
     if (pageSelected === "My details") {
       setPage(<UserProfile user={user.userData as UserDataType} />);
     } else if (pageSelected === "My reviews") {
@@ -144,7 +143,9 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
 
   const customer = await stripe.customers.retrieve(userData.id);
 
-  const dbRes = await fetch(`${server}/api/users/${userData.id}`);
+  const dbRes = await fetch(
+    `${server}/api/users/${userData.id}?profile_fetch=true`
+  );
 
   const user = await dbRes.json();
 

@@ -73,7 +73,7 @@ const UserProfile = ({ user }: any) => {
             >
               <Typography>Shipping Details</Typography>
               <Typography variant="overline">
-                First Name/Surname: {user?.name}
+                First Name/Surname: {user?.firstName}
               </Typography>
               <Typography variant="overline">
                 Last Name/Family Name: {user?.lastName}
@@ -106,7 +106,7 @@ const UserProfile = ({ user }: any) => {
             >
               <Typography>Billing Details</Typography>
               <Typography variant="overline">
-                First Name/Surname: {user?.name}
+                First Name/Surname: {user?.firstName}
               </Typography>
               <Typography variant="overline">
                 Last Name/Family Name: {user?.lastName}

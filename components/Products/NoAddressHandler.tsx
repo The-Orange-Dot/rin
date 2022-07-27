@@ -171,8 +171,20 @@ const NoAddressForm = ({ setNoAddressForm, noAddressForm, user }: any) => {
         p: 5,
       }}
     >
-      <Box sx={{ height: "5%", display: "flex", alignItems: "center" }}>
-        <Typography>User shipping info</Typography>
+      <Box
+        sx={{
+          height: "5%",
+          display: "flex",
+          alignItems: "center",
+          flexDirection: "column",
+          justifyContent: "center",
+          textAlign: "center",
+        }}
+      >
+        <Typography variant="h5">User Shipping Info</Typography>
+        <Typography color="secondary" sx={{ fontSize: ".8rem" }}>
+          Seems like you haven&apos;t set your shipping address yet
+        </Typography>
       </Box>
       <form
         style={{
