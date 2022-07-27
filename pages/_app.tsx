@@ -40,7 +40,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
               ) : (
                 <>
                   <Navbar />
-                  <Component {...pageProps} />
+                  <Component {...pageProps} session={session} />
                   <Footer />
                 </>
               )}

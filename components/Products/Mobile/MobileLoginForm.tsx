@@ -14,7 +14,7 @@ import { signIn, SignInResponse } from "next-auth/react";
 import { VisibilityOff } from "@mui/icons-material";
 import { Visibility } from "@mui/icons-material";
 
-const MobileLoginForm = ({ setMobileNavModalOpen }: any) => {
+const MobileLoginForm = ({ setMobileNavModalOpen, setOpenLoginForm }: any) => {
   const [usernameInput, setUsernameInput] = useState("");
   const [passwordInput, setPasswordInput] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -36,6 +36,7 @@ const MobileLoginForm = ({ setMobileNavModalOpen }: any) => {
       if (res.ok) {
         setSignInLoading(false);
         setMobileNavModalOpen(false);
+        setOpenLoginForm(false);
       } else {
         setSignInLoading(false);
       }

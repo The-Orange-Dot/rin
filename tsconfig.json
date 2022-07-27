@@ -20,7 +20,8 @@
     "**/*.ts",
     "**/*.tsx",
     "pages/api/auth/signIn.js",
-    "pages/api/checkout_sessions.js"
+    "pages/api/checkout_sessions.js",
+    "pages/api/auth/[...nextauth].js"
   ],
   "exclude": ["node_modules"]
 }

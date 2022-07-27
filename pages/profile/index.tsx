@@ -1,26 +1,28 @@
 import { Button, Typography } from "@mui/material";
 import { signOut } from "next-auth/react";
 import React, { useEffect, useState } from "react";
-import styles from "../styles/profile.module.css";
-import { useSession } from "next-auth/react";
+import styles from "../../styles/profile.module.css";
+import { useSession, getSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { Box } from "@mui/system";
-import UserProfile from "../components/Profile/UserProfile";
+import UserProfile from "../../components/Profile/UserProfile";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
-import { ProfileSelectorType, UserDataType } from "../types/profileTypes";
+import { ProfileSelectorType, UserDataType } from "../../types/profileTypes";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import RedeemIcon from "@mui/icons-material/Redeem";
 import EditIcon from "@mui/icons-material/Edit";
 import SettingsIcon from "@mui/icons-material/Settings";
-import MyReviews from "../components/Profile/MyReviews";
+import MyReviews from "../../components/Profile/MyReviews";
+import { server } from "../../config";
 
-const Profile = () => {
-  const session = useSession();
+const Profile = ({
+  session,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+  const user = session?.user;
   const router = useRouter();
   const [pageSelected, setPageSelected] = useState("My details");
-  const [user, setUser] = useState(session.data?.user);
   const [page, setPage] = useState(<UserProfile user={user as UserDataType} />);
 
   const signOutHandler = () => {
@@ -79,63 +81,65 @@ const Profile = () => {
     }
   }, [pageSelected]); //eslint-disable-line
 
-  useEffect(() => {
-    if (session.status === "unauthenticated") {
-      router.push("/");
-    } else if (session.status === "authenticated") {
-      setUser(session.data.user);
-    }
-  }, [session.status]); //eslint-disable-line
-
-  if (session.status === "loading") {
-    return (
-      <div className={styles.mainStatusScreen}>
-        <Typography>Fetching your info</Typography>
-      </div>
-    );
-  } else if (session.status === "authenticated" && user) {
-    return (
-      <div className={styles.main}>
+  return (
+    <div className={styles.main}>
+      <Box
+        sx={{
+          minWidth: 270,
+          width: "20%",
+          height: "80vh",
+          display: "flex",
+          flexDirection: "column",
+          ml: 10,
+        }}
+      >
+        <Typography variant="overline" sx={{ fontSize: "1.5rem" }}>
+          My Account
+        </Typography>
         <Box
           sx={{
-            minWidth: 270,
-            width: "20%",
-            height: "80vh",
+            height: "70%",
+            width: 250,
             display: "flex",
+            justifyContent: "center",
             flexDirection: "column",
-            ml: 10,
+            mr: 2,
           }}
         >
-          <Typography variant="overline" sx={{ fontSize: "1.5rem" }}>
-            My Account
-          </Typography>
-          <Box
-            sx={{
-              height: "70%",
-              width: 250,
-              display: "flex",
-              justifyContent: "center",
-              flexDirection: "column",
-              mr: 2,
-            }}
-          >
-            {selectors}
-            <Button sx={{ mt: 2, height: 60 }} onClick={() => signOutHandler()}>
-              Sign Out
-            </Button>
-          </Box>
+          {selectors}
+          <Button sx={{ mt: 2, height: 60 }} onClick={() => signOutHandler()}>
+            Sign Out
+          </Button>
         </Box>
-        <Box sx={{ minWidth: 1000, width: "70%", mt: 5 }}>{page}</Box>
-      </div>
-    );
-  } else {
-    return (
-      <div className={styles.mainStatusScreen}>
-        <Typography>Redirecting you back to home</Typography>
-        <Typography>Please log in</Typography>
-      </div>
-    );
+      </Box>
+
+      <Box sx={{ minWidth: 1000, width: "70%", mt: 5 }}>{page}</Box>
+    </div>
+  );
+};
+
+import { authOptions } from "../api/auth/[...nextauth]";
+import { unstable_getServerSession } from "next-auth/next";
+import { GetServerSideProps, InferGetServerSidePropsType } from "next";
+export const getServerSideProps: GetServerSideProps = async (context: any) => {
+  const session = await unstable_getServerSession(
+    context.req,
+    context.res,
+    authOptions
+  );
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
   }
+
+  return {
+    props: { session },
+  };
 };
 
 export default Profile;

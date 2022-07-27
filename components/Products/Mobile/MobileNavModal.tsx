@@ -56,7 +56,10 @@ const MobileNavModal = ({ mobileNavModalOpen, setMobileNavModalOpen }: any) => {
         }
       >
         {openLoginForm ? (
-          <MobileLoginForm setMobileNavModalOpen={setMobileNavModalOpen} />
+          <MobileLoginForm
+            setMobileNavModalOpen={setMobileNavModalOpen}
+            setOpenLoginForm={setOpenLoginForm}
+          />
         ) : (
           <>
             <Typography

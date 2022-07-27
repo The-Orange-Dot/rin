@@ -1,10 +1,11 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { PrismaClient } from "@prisma/client";
+import type { NextAuthOptions } from "next-auth";
 
 const prisma = new PrismaClient();
 
-export default NextAuth({
+export const authOptions: NextAuthOptions = {
   // Configure one or more authentication providers
   secret: process.env.AUTH_SECRET,
   providers: [
@@ -19,12 +20,12 @@ export default NextAuth({
         const user = await prisma.user.findFirst({
           where: {
             username: {
-              equals: credentials.username.toLowerCase(),
+              equals: credentials?.username.toLowerCase(),
               mode: "insensitive",
             },
           },
         });
-        if (user.password === credentials.password) {
+        if (user?.password === credentials?.password) {
           return user;
         }
 
@@ -49,11 +50,9 @@ export default NextAuth({
 
       return token;
     },
-    async session({ session, token }) {
+    async session({ session, token }: any) {
       //PUT ANY INFO TO BE SENT TO THE FRONT HERE!!
       //MUST AT LEAST HAVE NAME EMAIL AND IMAGE
-
-      console.log(token);
 
       session.user = {
         name: token.user.firstName,
@@ -70,9 +69,12 @@ export default NextAuth({
         city: token.user.city,
         state: token.user.state,
         country: token.user.country,
+        createdAt: token.user.createdAt,
       };
 
       return session;
     },
   },
-});
+};
+
+export default NextAuth(authOptions);

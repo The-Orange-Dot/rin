@@ -13,8 +13,6 @@ const UserProfile = ({ user }: UserProfileType) => {
 
   console.log(user);
 
-  useEffect(() => {}, [session.status]);
-
   const fullName = `${user?.name
     .slice(0, 1)
     .toLocaleUpperCase()}${user?.name.slice(1)} ${user?.lastName
@@ -24,13 +22,20 @@ const UserProfile = ({ user }: UserProfileType) => {
   return (
     <Box sx={{ display: "flex", minHeight: "100vh" }}>
       <Box sx={{ width: "100%", height: 180, backgroundColor: "#dfdfdf" }}>
-        <Box sx={{ display: "flex", alignItems: "center", height: "100%" }}>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            height: "100%",
+            position: "relative",
+          }}
+        >
           <Box
             sx={{
               width: 150,
               height: 150,
               position: "relative",
-              mt: 17,
+              mt: 30,
               ml: 5,
             }}
           >
@@ -42,7 +47,7 @@ const UserProfile = ({ user }: UserProfileType) => {
               style={{ borderRadius: "50rem" }}
             />
           </Box>
-          <Box sx={{ ml: 2, mt: 17 }}>
+          <Box sx={{ ml: 2, mt: 30 }}>
             <Typography sx={{ fontWeight: "bold", fontSize: "1.2rem" }}>
               {fullName}
             </Typography>
@@ -57,14 +62,14 @@ const UserProfile = ({ user }: UserProfileType) => {
         </Box>
         <Box
           sx={{
-            mt: 5,
+            m: 5,
             width: "100%",
             height: "50vh",
             display: "flex",
             justifyContent: "space-around",
           }}
         >
-          <Box sx={{ width: 580, mr: 2, p: 3 }}>
+          <Box sx={{ width: 580, mr: 2, mt: 15, p: 3 }}>
             <Typography>My Info</Typography>
             <Box
               sx={{
@@ -132,7 +137,7 @@ const UserProfile = ({ user }: UserProfileType) => {
               </Typography>
             </Box>
           </Box>
-          <Box sx={{ width: 400, height: "50vh" }}>
+          <Box sx={{ width: 400, height: "50vh", mt: 17 }}>
             <Typography>my coupons</Typography>
           </Box>
         </Box>
