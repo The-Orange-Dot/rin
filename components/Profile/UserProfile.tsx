@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import { useSession } from "next-auth/react";
 import { Box, Paper, Typography } from "@mui/material";
 import { UserDataType } from "../../types/profileTypes";
 
@@ -9,10 +8,6 @@ interface UserProfileType {
 }
 
 const UserProfile = ({ user }: UserProfileType) => {
-  const session = useSession();
-
-  console.log(user);
-
   const fullName = `${user?.name
     .slice(0, 1)
     .toLocaleUpperCase()}${user?.name.slice(1)} ${user?.lastName

@@ -8,6 +8,7 @@ import {
   removeItem,
 } from "../../redux/reducers/shoppingCartReducer";
 import { RootState } from "../../redux/store";
+import Image from "next/image";
 
 const ItemInCheckoutDrawer = ({ product }: any) => {
   const dispatch = useDispatch();
@@ -47,15 +48,21 @@ const ItemInCheckoutDrawer = ({ product }: any) => {
 
   return (
     <Box key={product.name}>
-      <Box sx={{ display: "flex", mb: 2 }}>
-        {/* eslint-disable */}
-        <img
-          src={product.thumbnail}
-          width={70}
-          height={70}
-          alt={product.name}
-        />
-        {/* eslint-enable */}
+      <Box
+        sx={{
+          display: "flex",
+          mb: 2,
+        }}
+      >
+        <Box sx={{ position: "relative", width: 70, height: 70 }}>
+          <Image
+            src={product.image}
+            layout="fill"
+            objectFit="contain"
+            alt={product.name}
+            quality={15}
+          />
+        </Box>
         <Box sx={{ display: "flex", flexDirection: "column", ml: 1 }}>
           <Typography>{product.name}</Typography>
           <Typography>Quantity: {product.quantity}</Typography>

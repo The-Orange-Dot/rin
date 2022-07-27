@@ -122,6 +122,10 @@ import { authOptions } from "../api/auth/[...nextauth]";
 import { unstable_getServerSession } from "next-auth/next";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 export const getServerSideProps: GetServerSideProps = async (context: any) => {
+  const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY, {
+    apiVersion: "2020-08-27; orders_beta=v4",
+  });
+
   const session = await unstable_getServerSession(
     context.req,
     context.res,
@@ -136,9 +140,14 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
       },
     };
   }
+  const user = session.user as UserDataType;
+
+  const customer = await stripe.customers.retrieve(user.id);
+
+  console.log(customer);
 
   return {
-    props: { session },
+    props: { session: session },
   };
 };
 

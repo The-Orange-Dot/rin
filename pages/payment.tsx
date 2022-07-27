@@ -25,7 +25,9 @@ type UserDataType = {
   state: string;
 };
 
-const Payment = () => {
+const Payment = ({
+  user,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const isMobile = useMediaQuery("(max-width: 900px)");
   const session = useSession();
   const [shippingDetails, setShippingDetails] = useState({});
@@ -58,21 +60,11 @@ const Payment = () => {
 
     // @ts-ignore
 
-    const user: UserDataType = session.data?.user;
+    let shippingData = storedShipping;
 
-    const shippingData =
-      session.status === "authenticated"
-        ? {
-            name: `${user?.name} ${user?.lastName}`,
-            address: {
-              line1: user?.address,
-              city: user?.city,
-              state: user?.state,
-              postal_code: user?.zipcode,
-              country: user?.country,
-            },
-          }
-        : storedShipping;
+    console.log(shippingData);
+
+    const customerId = user?.id ? user.id : undefined;
 
     // Create Order as soon as the page loads
     fetch("/api/create_payment", {
@@ -82,6 +74,7 @@ const Payment = () => {
         items: shoppingCart,
         ids: cardItemsId,
         shipping: shippingData,
+        customerId: customerId,
       }),
     })
       .then((res) => res.json())
@@ -447,6 +440,34 @@ const Payment = () => {
       )}
     </Box>
   );
+};
+
+import { authOptions } from "./api/auth/[...nextauth]";
+import { unstable_getServerSession } from "next-auth/next";
+import { GetServerSideProps, InferGetServerSidePropsType } from "next";
+export const getServerSideProps: GetServerSideProps = async (context: any) => {
+  const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY, {
+    apiVersion: "2020-08-27; orders_beta=v4",
+  });
+
+  const session = await unstable_getServerSession(
+    context.req,
+    context.res,
+    authOptions
+  );
+
+  if (!session) {
+    return {
+      props: { session: session },
+    };
+  }
+  const user = session.user as UserDataType;
+
+  console.log(session);
+
+  return {
+    props: { user: session.user },
+  };
 };
 
 export default Payment;

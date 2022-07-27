@@ -13,7 +13,7 @@ interface Address {
 }
 
 interface User {
-  value: { name: string; address: Address };
+  value: { name: string; address: Address; phone: string };
   saveAddress: boolean;
   email: "";
 }
@@ -29,6 +29,7 @@ const initialState: User = {
       postal_code: "",
       country: "US",
     },
+    phone: "",
   },
   saveAddress: false,
   email: "",

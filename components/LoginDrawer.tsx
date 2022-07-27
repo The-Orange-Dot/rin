@@ -38,7 +38,7 @@ const LoginDrawer = ({ setOpenLoginDrawer }: any) => {
     await signIn("credentials", {
       redirect: false,
       username: usernameInput,
-      password: "password",
+      password: passwordInput,
     }).then((res: SignInResponse | undefined) => {
       if (res === undefined) {
         console.log("Error: Next-auth response is undefined");
@@ -78,7 +78,7 @@ const LoginDrawer = ({ setOpenLoginDrawer }: any) => {
       square
     >
       {createAccount ? (
-        <CreateAccountForm />
+        <CreateAccountForm setOpenLoginDrawer={setOpenLoginDrawer} />
       ) : (
         <>
           <Typography variant="overline" sx={{ fontSize: "1rem" }}>

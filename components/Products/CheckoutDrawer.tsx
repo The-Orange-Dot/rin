@@ -4,8 +4,10 @@ import { RootState } from "../../redux/store";
 import ItemInCheckoutDrawer from "./ItemInCheckoutDrawer";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
-import { useSession } from "next-auth/react";
+import { useSession, getSession } from "next-auth/react";
 import GuestAddressInput from "./GuestAddressInput";
+import NoAddressForm from "./NoAddressHandler";
+import { UserDataType } from "../../types/profileTypes";
 
 const CheckoutDrawer = () => {
   const router = useRouter();
@@ -14,10 +16,11 @@ const CheckoutDrawer = () => {
   );
   const session = useSession();
   const [guestShippingForm, setGuestShippingForm] = useState(false);
-
+  const [noAddressForm, setNoAddressForm] = useState(false);
   const subtotal = shoppingCart.reduce((total: number, item: any) => {
     return (total += item.price * item.quantity);
   }, 0);
+  const user = session?.data?.user as UserDataType;
 
   const shipping = 0;
 
@@ -29,7 +32,13 @@ const CheckoutDrawer = () => {
 
   const checkoutRouterHandler = () => {
     if (session.status === "authenticated") {
-      router.push("/payment");
+      fetch(`/api/users/${user.id}`).then((res) => {
+        if (res.ok) {
+          router.push("/payment");
+        } else {
+          setNoAddressForm(true);
+        }
+      });
     } else {
       setGuestShippingForm(true);
     }
@@ -62,6 +71,12 @@ const CheckoutDrawer = () => {
         <GuestAddressInput
           guestShippingForm={guestShippingForm}
           setGuestShippingForm={setGuestShippingForm}
+        />
+      ) : noAddressForm ? (
+        <NoAddressForm
+          noAddressForm={noAddressForm}
+          setNoAddressForm={setNoAddressForm}
+          user={user}
         />
       ) : (
         <>
