@@ -26,7 +26,7 @@ const Profile = ({
   const [page, setPage] = useState(<UserProfile user={user.userData} />);
 
   const signOutHandler = () => {
-    signOut({ redirect: false });
+    signOut({ callbackUrl: `${server}/products` });
   };
 
   const buttons = [

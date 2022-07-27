@@ -49,7 +49,7 @@ model User {
   orderHistory OrderHistory[]
   createdAt     DateTime @default(now()) @map("created_at")
   updatedAt     DateTime @updatedAt @map("updated_at")
-
+  buyHistory  UserOrderHistory[]
 }
 
 model OrderHistory {
@@ -69,6 +69,22 @@ model OrderHistory {
   subscriber Boolean @default(false)
 }
 
+model UserOrderHistory {
+  id            String  @id @default(cuid()) @unique
+  userId        String
+  user          User @relation(fields: [userId], references: [id] , onDelete: Cascade)
+  createdAt     DateTime @default(now()) @map("created_at")
+  name          String
+  quantity      Int
+  price         Float
+  size          String
+  image         String
+  brand         String
+  reviewId      String?
+  review        Review?  @relation(fields: [reviewId], references: [id], onDelete: SetNull)
+  reviewWritten Boolean @default(false)
+}
+
 model Review {
   id            String  @id @default(cuid()) @unique
   userReview    User @relation(fields: [userId], references: [id])
@@ -81,6 +97,7 @@ model Review {
   description   String
   helpful       Int @default(0)
   report        Int @default(0)
+  buyHistory    UserOrderHistory[]
 }
 
 model Comment {

@@ -33,7 +33,14 @@ export default async function handler(
         homePhone: true,
         mobilePhone: true,
         image: true,
+        buyHistory: {
+          orderBy: { createdAt: "desc" },
+        },
       },
+    });
+
+    const queuedReviews = await prisma.userOrderHistory.count({
+      where: { reviewWritten: false },
     });
 
     if (
