@@ -18,12 +18,12 @@ import MyReviews from "../../components/Profile/MyReviews";
 import { server } from "../../config";
 
 const Profile = ({
-  session,
+  user,
+  customerData,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-  const user = session?.user;
   const router = useRouter();
   const [pageSelected, setPageSelected] = useState("My details");
-  const [page, setPage] = useState(<UserProfile user={user as UserDataType} />);
+  const [page, setPage] = useState(<UserProfile user={user.userData} />);
 
   const signOutHandler = () => {
     signOut({ redirect: false });
@@ -75,9 +75,9 @@ const Profile = ({
   useEffect(() => {
     console.log(pageSelected);
     if (pageSelected === "My details") {
-      setPage(<UserProfile user={user as UserDataType} />);
+      setPage(<UserProfile user={user.userData as UserDataType} />);
     } else if (pageSelected === "My reviews") {
-      setPage(<MyReviews user={user as UserDataType} />);
+      setPage(<MyReviews user={user.userData as UserDataType} />);
     }
   }, [pageSelected]); //eslint-disable-line
 
@@ -140,14 +140,16 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
       },
     };
   }
-  const user = session.user as UserDataType;
+  const userData = session.user as UserDataType;
 
-  const customer = await stripe.customers.retrieve(user.id);
+  const customer = await stripe.customers.retrieve(userData.id);
 
-  console.log(customer);
+  const dbRes = await fetch(`${server}/api/users/${userData.id}`);
+
+  const user = await dbRes.json();
 
   return {
-    props: { session: session },
+    props: { user, customer },
   };
 };
 

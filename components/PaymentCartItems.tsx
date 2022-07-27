@@ -6,6 +6,7 @@ import {
   removeItem,
 } from "../redux/reducers/shoppingCartReducer";
 import { RootState } from "../redux/store";
+import Image from "next/image";
 
 const PaymentCartItems = ({ product }: any) => {
   return (
@@ -38,13 +39,16 @@ const PaymentCartItems = ({ product }: any) => {
             alignItems: "center",
           }}
         >
-          {/* eslint-disable */}
-          <img
-            src={product.thumbnail}
-            width={100}
-            height={100}
-            alt={product.name}
-          />
+          <Box sx={{ width: 100, height: 100, position: "relative" }}>
+            {/* eslint-disable */}
+            <Image
+              src={product?.image}
+              layout="fill"
+              objectFit="contain"
+              quality={20}
+              alt={product?.name}
+            />
+          </Box>
           {/* eslint-enable */}
         </Box>
         <Box

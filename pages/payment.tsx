@@ -30,7 +30,6 @@ const Payment = ({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const isMobile = useMediaQuery("(max-width: 900px)");
   const session = useSession();
-  const [shippingDetails, setShippingDetails] = useState({});
   const [total, setTotal] = useState(0);
   const [clientSecret, setClientSecret] = useState("");
   const [mobileDrawer, setMobileDrawer] = useState(false);
@@ -81,7 +80,6 @@ const Payment = ({
       .then((data) => {
         setStripeLoaded(true);
         setClientSecret(data.clientSecret);
-        setShippingDetails(data.shipping);
         setTotal(data.total);
       });
   }, [session.status]); //eslint-disable-line
@@ -445,6 +443,7 @@ const Payment = ({
 import { authOptions } from "./api/auth/[...nextauth]";
 import { unstable_getServerSession } from "next-auth/next";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
+import { server } from "../config";
 export const getServerSideProps: GetServerSideProps = async (context: any) => {
   const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY, {
     apiVersion: "2020-08-27; orders_beta=v4",
@@ -463,10 +462,12 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
   }
   const user = session.user as UserDataType;
 
-  console.log(session);
+  const dbRes = await fetch(`${server}/api/users/${user.id}`);
+
+  const userData = await dbRes.json();
 
   return {
-    props: { user: session.user },
+    props: { user: userData },
   };
 };
 

@@ -15,7 +15,25 @@ export default async function handler(
   if (req.method === "GET") {
     const userId = req.query.userId as string;
 
-    const userData = await prisma.user.findFirst({ where: { id: userId } });
+    const userData = await prisma.user.findFirst({
+      where: { id: userId },
+      select: {
+        username: true,
+        id: true,
+        firstName: true,
+        lastName: true,
+        address1: true,
+        address2: true,
+        city: true,
+        country: true,
+        state: true,
+        zipcode: true,
+        email: true,
+        homePhone: true,
+        mobilePhone: true,
+        image: true,
+      },
+    });
     console.log(userData);
 
     if (

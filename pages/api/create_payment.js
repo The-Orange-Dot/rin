@@ -14,8 +14,6 @@ export default async function handler(req, res) {
 
   let userData = {};
 
-  console.log(customerId);
-
   const dbProducts = await prisma.product.findMany({
     where: {
       id: { in: ids },
@@ -124,7 +122,7 @@ export default async function handler(req, res) {
 
   const order = await stripe.orders.create(userData);
 
-  console.log("ORDER DETAIL: ", order);
+  // console.log("ORDER DETAIL: ", order);
 
   res.status(200).json({
     clientSecret: order.client_secret,

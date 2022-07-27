@@ -3,16 +3,14 @@ import Image from "next/image";
 import { Box, Paper, Typography } from "@mui/material";
 import { UserDataType } from "../../types/profileTypes";
 
-interface UserProfileType {
-  user: UserDataType;
-}
-
-const UserProfile = ({ user }: UserProfileType) => {
-  const fullName = `${user?.name
+const UserProfile = ({ user }: any) => {
+  const fullName = `${user?.firstName
     .slice(0, 1)
-    .toLocaleUpperCase()}${user?.name.slice(1)} ${user?.lastName
+    .toLocaleUpperCase()}${user?.firstName.slice(1)} ${user?.lastName
     .slice(0, 1)
     .toLocaleUpperCase()}${user?.lastName.slice(1)} `;
+
+  console.log(user);
 
   return (
     <Box sx={{ display: "flex", minHeight: "100vh" }}>
