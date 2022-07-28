@@ -35,7 +35,7 @@ export default async function handler(
         image: true,
         buyHistory: {
           orderBy: { createdAt: "desc" },
-          include: { review: true },
+          select: { review: true },
         },
       },
     });
