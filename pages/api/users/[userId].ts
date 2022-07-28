@@ -33,6 +33,7 @@ export default async function handler(
         homePhone: true,
         mobilePhone: true,
         image: true,
+        //@ts-ignore
         buyHistory: {
           orderBy: { createdAt: "desc" },
           select: { review: true },
