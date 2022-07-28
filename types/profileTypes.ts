@@ -47,4 +47,5 @@ export type ProductHistoryType = {
   size: string;
   userId: string;
   review: ProductReviewType;
+  firstBuy: boolean;
 };

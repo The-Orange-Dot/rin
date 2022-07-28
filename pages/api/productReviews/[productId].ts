@@ -33,5 +33,39 @@ export default async function handler(
     } else {
       res.status(400).json("Error: Coultn't find product");
     }
+  } else if (req.method === "POST") {
+    const productId = req.query.productId as string;
+    const { product } = req.body;
+    const { review } = req.body;
+    const { user } = req.body;
+
+    const reviewData = {
+      userId: user.id,
+      productId: productId,
+      rating: review.rating,
+      description: review.review,
+      orderId: product.id,
+    };
+
+    const createdReview = await prisma.review.create({ data: reviewData });
+
+    const updatedHistory = await prisma.userOrderHistory.update({
+      where: { id: product.id },
+      data: { reviewWritten: true },
+      include: { review: true },
+    });
+
+    await prisma.userOrderHistory.updateMany({
+      where: { AND: [{ productId: productId }, { userId: user.id }] },
+      data: { reviewWritten: true },
+    });
+
+    console.log(updatedHistory);
+    // console.log(product);
+    // console.log(review);
+
+    // await prisma.review.delete({ where: { id: "cl64vzak900685b9id2ahxs6q" } });
+
+    res.status(200).json({ updatedHistory: updatedHistory });
   }
 }

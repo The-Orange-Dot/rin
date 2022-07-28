@@ -33,17 +33,88 @@ export default async function handler(
     if (username !== "guest") {
       Promise.all(
         products.map(async (product: any) => {
-          const productData = {
-            userId: registeredUserData.id,
-            quantity: product.quantity,
-            price: product.price,
-            size: product.size,
-            image: product.image,
-            brand: product.brand,
-            name: product.name,
-          };
-          //@ts-ignore
-          await prisma.userOrderHistory.create({ data: productData });
+          try {
+            const productHistory = await prisma.userOrderHistory.findMany({
+              where: {
+                AND: [
+                  { userId: { contains: registeredUserData.id } },
+                  { productId: product.id },
+                ],
+              },
+            });
+
+            const boughtBefore = productHistory.find((product) => {
+              return product.firstBuy;
+            });
+
+            const reviewDone = productHistory.find((product) => {
+              return product.reviewWritten;
+            });
+
+            if (boughtBefore) {
+              if (reviewDone) {
+                const productData = {
+                  userId: registeredUserData.id,
+                  quantity: product.quantity,
+                  price: product.price,
+                  size: product.size,
+                  productId: product.id,
+                  image: product.image,
+                  brand: product.brand,
+                  reviewWritten: true,
+                  name: product.name,
+                };
+
+                //@ts-ignore
+                await prisma.userOrderHistory.create({ data: productData });
+              } else {
+                const productData = {
+                  userId: registeredUserData.id,
+                  quantity: product.quantity,
+                  price: product.price,
+                  size: product.size,
+                  productId: product.id,
+                  image: product.image,
+                  brand: product.brand,
+                  reviewWritten: false,
+                  name: product.name,
+                };
+
+                //@ts-ignore
+                await prisma.userOrderHistory.create({ data: productData });
+              }
+            } else {
+              const productData = {
+                userId: registeredUserData.id,
+                quantity: product.quantity,
+                price: product.price,
+                size: product.size,
+                productId: product.id,
+                image: product.image,
+                brand: product.brand,
+                name: product.name,
+                reviewWritten: false,
+                firstBuy: true,
+              };
+              //@ts-ignore
+              await prisma.userOrderHistory.create({ data: productData });
+            }
+          } catch {
+            const productData = {
+              userId: registeredUserData.id,
+              quantity: product.quantity,
+              price: product.price,
+              size: product.size,
+              productId: product.id,
+              image: product.image,
+              brand: product.brand,
+              name: product.name,
+              reviewWritten: false,
+              firstBuy: true,
+            };
+            //@ts-ignore
+            await prisma.userOrderHistory.create({ data: productData });
+          }
         })
       );
     }

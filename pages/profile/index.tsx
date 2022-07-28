@@ -17,15 +17,17 @@ import OrderHistory from "../../components/Profile/OrderHistory";
 import SettingsIcon from "@mui/icons-material/Settings";
 import MyReviews from "../../components/Profile/MyReviews";
 import { server } from "../../config";
+import { ProductHistoryType } from "../../types/profileTypes";
 
 const Profile = ({
   user,
   customerData,
+  productReviews,
+  queuedReviews,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const router = useRouter();
   const [pageSelected, setPageSelected] = useState("My details");
   const [page, setPage] = useState(<UserProfile user={user.userData} />);
-
   const signOutHandler = () => {
     signOut({ callbackUrl: `${server}/products` });
   };
@@ -76,7 +78,13 @@ const Profile = ({
     if (pageSelected === "My details") {
       setPage(<UserProfile user={user.userData as UserDataType} />);
     } else if (pageSelected === "My reviews") {
-      setPage(<MyReviews user={user.userData as UserDataType} />);
+      setPage(
+        <MyReviews
+          user={user.userData as UserDataType}
+          productReviews={productReviews}
+          queuedReviews={queuedReviews}
+        />
+      );
     } else if (pageSelected === "Order History") {
       setPage(<OrderHistory user={user.userData as UserDataType} />);
     }
@@ -151,8 +159,18 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
 
   const user = await dbRes.json();
 
+  const products = user.userData.buyHistory;
+
+  const productReviews = products.filter((product: ProductHistoryType) => {
+    return product.reviewWritten === true && product.firstBuy;
+  });
+
+  const queuedReviews = products.filter((product: ProductHistoryType) => {
+    return product.reviewWritten === false && product.firstBuy;
+  });
+
   return {
-    props: { user, customer },
+    props: { user, customer, productReviews, queuedReviews },
   };
 };
 

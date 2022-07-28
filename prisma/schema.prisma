@@ -44,7 +44,7 @@ model User {
   email      String @unique
   homePhone  String? @map("home_phone")
   mobilePhone String? @map("mobile_phone")
-  reviews    Review[]
+  reviews    Review[] 
   comments   Comment[]
   orderHistory OrderHistory[]
   createdAt     DateTime @default(now()) @map("created_at")
@@ -80,24 +80,26 @@ model UserOrderHistory {
   size          String
   image         String
   brand         String
-  reviewId      String?
-  review        Review?  @relation(fields: [reviewId], references: [id], onDelete: SetNull)
-  reviewWritten Boolean @default(false)
+  productId     String
+  review        Review? 
+  reviewWritten Boolean? @default(false)
+  firstBuy      Boolean @default(false)
 }
 
 model Review {
   id            String  @id @default(cuid()) @unique
-  userReview    User @relation(fields: [userId], references: [id])
-  userId        String
-  productReview Product @relation(fields: [productId], references: [id])
-  productId     String
+  userReview    User? @relation(fields: [userId], references: [id] )
+  userId        String?
+  productReview Product? @relation(fields: [productId], references: [id])
+  productId     String?
   createdAt     DateTime @default(now()) @map("created_at")
   updatedAt     DateTime @updatedAt @map("updated_at")
   rating        Int 
   description   String
   helpful       Int @default(0)
   report        Int @default(0)
-  buyHistory    UserOrderHistory[]
+  orderId       String? @unique
+  buyHistory    UserOrderHistory?  @relation(fields: [orderId], references: [id])
 }
 
 model Comment {

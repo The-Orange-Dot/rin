@@ -40,7 +40,8 @@ const ProductModal = ({
   const [options, setOptions] = useState("");
   const [reviewsData, setReviewsData] = useState<ProductReviewType[]>([]);
   const [imageNum, setImageNum] = useState(0);
-  const [autoAnimate, setAutoAnimate] = useState(true);
+
+  console.log(selectedProduct);
 
   //Sets description from selected product
   useEffect(() => {
@@ -340,7 +341,9 @@ const ProductModal = ({
                 <Divider />
 
                 <Box>
-                  <Typography>{reviews?.length} Reviews</Typography>
+                  <Typography>
+                    {selectedProduct?._count?.reviews} Reviews
+                  </Typography>
                   <Box>
                     <Typography>Voted most helpful review</Typography>
                     {reviews}
