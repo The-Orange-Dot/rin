@@ -15,7 +15,7 @@ const MyReviews = ({ user }: any) => {
     return product.reviewWritten === true;
   });
 
-  console.log(products);
+  console.log(user);
 
   const productReviewCards = productReviews.map(
     (product: ProductHistoryType) => {

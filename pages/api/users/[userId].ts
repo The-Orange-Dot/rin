@@ -14,7 +14,6 @@ export default async function handler(
 ) {
   if (req.method === "GET") {
     const userId = req.query.userId as string;
-    console.log(req.query);
 
     const userData = await prisma.user.findFirst({
       where: { id: userId },
@@ -33,10 +32,9 @@ export default async function handler(
         homePhone: true,
         mobilePhone: true,
         image: true,
-        //@ts-ignore
         buyHistory: {
           orderBy: { createdAt: "desc" },
-          select: { review: true },
+          include: { review: true },
         },
       },
     });
