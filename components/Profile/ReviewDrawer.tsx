@@ -131,7 +131,7 @@ const ReviewDrawer = ({
               <Box sx={{ display: "flex", mb: 1 }}>
                 <Typography>Overall Rating: </Typography>
                 <Rating
-                  sx={{ ml: 2 }}
+                  sx={{ ml: 2, color: "#3f312b" }}
                   value={ratingInput}
                   onChange={(e: any) =>
                     setRatingInput(parseInt(e.target.value))
@@ -179,7 +179,7 @@ const ReviewDrawer = ({
                 <Typography>
                   1. I would suggest this product to a friend:{" "}
                 </Typography>
-                <Rating />
+                <Rating sx={{ color: "#3f312b" }} />
               </Box>
 
               <Box
@@ -193,7 +193,7 @@ const ReviewDrawer = ({
                 <Typography>
                   2. I would likely purchase this product again:{" "}
                 </Typography>
-                <Rating />
+                <Rating sx={{ color: "#3f312b" }} />
               </Box>
 
               <Box
@@ -207,7 +207,7 @@ const ReviewDrawer = ({
                 <Typography>
                   3. I would like to try other products this brand makes:{" "}
                 </Typography>
-                <Rating />
+                <Rating sx={{ color: "#3f312b" }} />
               </Box>
             </Box>
           </Box>

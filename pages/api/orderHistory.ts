@@ -38,6 +38,7 @@ export default async function handler(
               where: {
                 AND: [
                   { userId: { contains: registeredUserData.id } },
+                  //@ts-ignore
                   { productId: product.id },
                 ],
               },
