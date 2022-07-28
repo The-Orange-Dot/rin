@@ -56,6 +56,7 @@ export default async function handler(
     });
 
     await prisma.userOrderHistory.updateMany({
+      //@ts-ignore
       where: { AND: [{ productId: productId }, { userId: user.id }] },
       data: { reviewWritten: true },
     });
