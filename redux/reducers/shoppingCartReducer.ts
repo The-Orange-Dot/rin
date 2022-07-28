@@ -11,6 +11,7 @@ interface Item {
   details: string;
   size: string;
   thumbnail: string;
+  brand: string;
 }
 
 interface ShoppingCart {

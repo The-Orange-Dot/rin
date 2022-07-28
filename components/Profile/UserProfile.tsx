@@ -10,8 +10,6 @@ const UserProfile = ({ user }: any) => {
     .slice(0, 1)
     .toLocaleUpperCase()}${user?.lastName.slice(1)} `;
 
-  console.log(user);
-
   return (
     <Box sx={{ display: "flex", pb: 30, width: "100%" }}>
       <Box

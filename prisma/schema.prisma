@@ -55,7 +55,7 @@ model User {
 model OrderHistory {
   id            String  @id @default(cuid()) @unique
   username      String?
-  userOrderHistory User? @relation(fields: [username], references: [username], onDelete: SetNull) 
+  user User? @relation(fields: [username], references: [username], onDelete: SetNull) 
   createdAt     DateTime @default(now()) @map("created_at")
   products      Json
   registeredUser Boolean 

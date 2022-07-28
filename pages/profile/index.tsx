@@ -13,6 +13,7 @@ import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import RedeemIcon from "@mui/icons-material/Redeem";
 import EditIcon from "@mui/icons-material/Edit";
+import OrderHistory from "../../components/Profile/OrderHistory";
 import SettingsIcon from "@mui/icons-material/Settings";
 import MyReviews from "../../components/Profile/MyReviews";
 import { server } from "../../config";
@@ -71,12 +72,13 @@ const Profile = ({
       </Box>
     );
   });
-
   useEffect(() => {
     if (pageSelected === "My details") {
       setPage(<UserProfile user={user.userData as UserDataType} />);
     } else if (pageSelected === "My reviews") {
       setPage(<MyReviews user={user.userData as UserDataType} />);
+    } else if (pageSelected === "Order History") {
+      setPage(<OrderHistory user={user.userData as UserDataType} />);
     }
   }, [pageSelected]); //eslint-disable-line
 

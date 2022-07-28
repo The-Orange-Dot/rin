@@ -21,3 +21,30 @@ export type UserDataType = {
   username: string;
   zipcode: string;
 };
+
+export type ProductReviewType = {
+  createdAt: string;
+  description: string;
+  helpful: number;
+  id: string;
+  productId: string;
+  rating: number;
+  report: number;
+  updatedAt: string;
+  userId: string;
+};
+
+export type ProductHistoryType = {
+  brand: string;
+  createdAt: string;
+  id: string;
+  image: string;
+  name: string;
+  price: number;
+  quantity: number;
+  reviewId: string | null;
+  reviewWritten: boolean;
+  size: string;
+  userId: string;
+  review: ProductReviewType;
+};

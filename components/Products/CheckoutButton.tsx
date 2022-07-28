@@ -35,6 +35,7 @@ const CheckoutButton = ({
       image: selectedProduct.thumbnail,
       name: selectedProduct.name,
       quantity: quantity,
+      brand: selectedProduct.brand,
       price: selectedProduct.price,
       stock: selectedProduct.quantity,
       size: selectedProduct.size,

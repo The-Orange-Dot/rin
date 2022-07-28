@@ -20,6 +20,7 @@ const CheckoutDrawer = () => {
   const subtotal = shoppingCart.reduce((total: number, item: any) => {
     return (total += item.price * item.quantity);
   }, 0);
+
   const user = session?.data?.user as UserDataType;
 
   const shipping = 0;

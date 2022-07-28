@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { SetStateAction, useEffect, useState } from "react";
 import styles from "../styles/payment.module.css";
 import { loadStripe } from "@stripe/stripe-js";
 import CheckoutForm from "../components/Products/CheckoutForm";
@@ -11,35 +11,33 @@ import { useSession } from "next-auth/react";
 import { useMediaQuery } from "@mui/material";
 import MobilePaymentCartItems from "../components/Products/Mobile/MobilePaymentCartItems";
 
-type UserDataType = {
-  address: string;
-  city: string;
-  country: string;
-  email: string;
-  id: string;
-  image: string;
-  lastName: string;
+type Address = {
   name: string;
-  username: string;
-  zipcode: string;
-  state: string;
+  address: {
+    line1: string;
+    line2: string | "";
+    city: string;
+    state: string;
+    postal_code: string;
+  };
 };
 
 const Payment = ({
   user,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-  const isMobile = useMediaQuery("(max-width: 900px)");
-  const session = useSession();
-  const [total, setTotal] = useState(0);
-  const [clientSecret, setClientSecret] = useState("");
-  const [mobileDrawer, setMobileDrawer] = useState(false);
-  const [stripeLoaded, setStripeLoaded] = useState(false);
   const shoppingCart = useSelector(
     (state: RootState) => state.shoppingCart.value
   );
   const storedShipping = useSelector(
     (state: RootState) => state.guestShipping.value
   );
+  const isMobile = useMediaQuery("(max-width: 900px)");
+  const session = useSession();
+  const [total, setTotal] = useState(0);
+  const [clientSecret, setClientSecret] = useState("");
+  const [mobileDrawer, setMobileDrawer] = useState(false);
+  const [stripeLoaded, setStripeLoaded] = useState(false);
+
   const storedEmail = useSelector(
     (state: RootState) => state.guestShipping.email
   );
@@ -53,13 +51,26 @@ const Payment = ({
     }
   );
 
+  console.log(user);
+
+  const shippingData = user.userData.id
+    ? {
+        name: user.userData.firstName,
+        address: {
+          line1: user.userData.address1,
+          line2: user.userData.address2,
+          city: user.userData.city,
+          state: user.userData.state,
+          postal_code: user.userData.zipcode,
+        },
+      }
+    : storedShipping;
+
   useEffect(() => {
     // The items the customer wants to buy
     const cardItemsId = shoppingCart.map((item) => item.id);
 
     // @ts-ignore
-
-    let shippingData = storedShipping;
 
     const customerId = user.userData.id ? user.userData.id : undefined;
 
@@ -175,23 +186,23 @@ const Payment = ({
                 Shipping Address
               </Typography>
               <Typography variant="overline">
-                Name: {storedShipping.name}
+                Name: {shippingData.name}
               </Typography>
               <Typography variant="overline">Email: {storedEmail}</Typography>
               <Typography variant="overline">
-                Address: {storedShipping.address.line1}
+                Address: {shippingData.address.line1}
               </Typography>
               <Typography variant="overline">
-                Apt / Room #: {storedShipping.address.line2}
+                Apt / Room #: {shippingData.address.line2}
               </Typography>
               <Typography variant="overline">
-                City: {storedShipping.address.city}
+                City: {shippingData.address.city}
               </Typography>
               <Typography variant="overline">
-                State: {storedShipping.address.state}
+                State: {shippingData.address.state}
               </Typography>
               <Typography variant="overline">
-                Zipcode: {storedShipping.address.postal_code}
+                Zipcode: {shippingData.address.postal_code}
               </Typography>
             </Box>
           </Box>
@@ -374,25 +385,25 @@ const Payment = ({
                 </Typography>
                 <Box sx={{ display: "flex", flexDirection: "column" }}>
                   <Typography variant="overline">
-                    Name: {storedShipping.name}
+                    Name: {shippingData.name}
                   </Typography>
                   <Typography variant="overline">
                     Email: {storedEmail}
                   </Typography>
                   <Typography variant="overline">
-                    Address: {storedShipping.address.line1}
+                    Address: {shippingData.address.line1}
                   </Typography>
                   <Typography variant="overline">
-                    Apt / Room #: {storedShipping.address.line2}
+                    Apt / Room #: {shippingData.address.line2}
                   </Typography>
                   <Typography variant="overline">
-                    City: {storedShipping.address.city}
+                    City: {shippingData.address.city}
                   </Typography>
                   <Typography variant="overline">
-                    State: {storedShipping.address.state}
+                    State: {shippingData.address.state}
                   </Typography>
                   <Typography variant="overline">
-                    Zipcode: {storedShipping.address.postal_code}
+                    Zipcode: {shippingData.address.postal_code}
                   </Typography>
                 </Box>
               </Box>
@@ -406,31 +417,6 @@ const Payment = ({
                 )}
               </Box>
             </Box>
-            <Box
-              sx={{
-                width: "100%",
-                display: "flex",
-                justifyContent: "center",
-              }}
-            >
-              <Typography
-                variant="overline"
-                sx={{ fontSize: ".7rem", lineHeight: 0.5, mt: 5 }}
-              >
-                Powered by
-              </Typography>
-            </Box>
-            <Box
-              sx={{
-                width: "100%",
-                display: "flex",
-                justifyContent: "center",
-              }}
-            >
-              {/* eslint-disable */}
-              <img src="/stripe_logo_small.png" alt="Stripe Logo" width={100} />
-              {/* eslint-enable */}
-            </Box>
           </Paper>
         </Box>
       )}
@@ -442,6 +428,19 @@ import { authOptions } from "./api/auth/[...nextauth]";
 import { unstable_getServerSession } from "next-auth/next";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import { server } from "../config";
+type UserDataType = {
+  address: string;
+  city: string;
+  country: string;
+  email: string;
+  id: string;
+  image: string;
+  lastName: string;
+  name: string;
+  username: string;
+  zipcode: string;
+  state: string;
+};
 export const getServerSideProps: GetServerSideProps = async (context: any) => {
   const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY, {
     apiVersion: "2020-08-27; orders_beta=v4",
@@ -463,6 +462,8 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
   const dbRes = await fetch(`${server}/api/users/${user.id}`);
 
   const userData = await dbRes.json();
+
+  console.log(userData);
 
   return {
     props: { user: userData },

@@ -34,6 +34,7 @@ const ProductCards = ({ product, setSelectedProduct }: ProductCardType) => {
       id: product.id,
       name: product.name,
       quantity: 1,
+      brand: product.brand,
       price: product.price,
       image: product.thumbnail,
       stock: product.quantity,
@@ -54,6 +55,7 @@ const ProductCards = ({ product, setSelectedProduct }: ProductCardType) => {
         quantity: foundItem.quantity + 1,
         price: product.price,
         size: product.size,
+        brand: product.brand,
         stock: product.quantity,
       };
       if (updatedItem.quantity < product.quantity) {
