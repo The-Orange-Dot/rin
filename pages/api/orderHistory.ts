@@ -45,10 +45,12 @@ export default async function handler(
             });
 
             const boughtBefore = productHistory.find((product) => {
+              //@ts-ignore
               return product.firstBuy;
             });
 
             const reviewDone = productHistory.find((product) => {
+              //@ts-ignore
               return product.reviewWritten;
             });
 
