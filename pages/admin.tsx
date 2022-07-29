@@ -2,7 +2,7 @@ import React from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 
-const admin = () => {
+const Admin = () => {
   const router = useRouter();
   const { status } = useSession({
     required: true,
@@ -10,7 +10,7 @@ const admin = () => {
       router.push("/");
     },
   });
-  return <div>admin</div>;
+  return <div>Admin</div>;
 };
 
 import { authOptions } from "./api/auth/[...nextauth]";
@@ -40,4 +40,4 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
   };
 };
 
-export default admin;
+export default Admin;
