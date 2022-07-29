@@ -12,11 +12,9 @@ import {
 } from "@mui/material";
 import { server } from "../../config";
 import ProductCards from "../../components/Products/ProductCards";
-import ProductModal from "../../components/Products/ProductModal";
 import { useMediaQuery } from "@mui/material";
 import MobileProductNavBar from "../../components/Products/MobileProductNavBar";
 import FilterListIcon from "@mui/icons-material/FilterList";
-import MobileProductsModal from "../../components/Products/Mobile/MobileProductsModal";
 import gsap from "gsap";
 import { useSession } from "next-auth/react";
 import { ProductType, CountType } from "../../types/productTypes";
@@ -27,6 +25,22 @@ import MobileCheckout from "../../components/Products/Mobile/MobileCheckout";
 import Pagination from "../../components/Products/PaginationButtons";
 import { useDispatch } from "react-redux";
 import { setPages } from "../../redux/reducers/productsFilterReducer";
+import dynamic from "next/dynamic";
+
+const ProductModal = dynamic(
+  () => import("../../components/Products/ProductModal"),
+  {
+    ssr: false,
+  }
+);
+
+const MobileProductsModal = dynamic(
+  () => import("../../components/Products/Mobile/MobileProductsModal"),
+  {
+    ssr: false,
+  }
+);
+
 const Products = ({
   productsData,
   totalProducts,

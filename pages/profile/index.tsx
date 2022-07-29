@@ -13,12 +13,20 @@ import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import RedeemIcon from "@mui/icons-material/Redeem";
 import EditIcon from "@mui/icons-material/Edit";
-import OrderHistory from "../../components/Profile/OrderHistory";
-import SettingsIcon from "@mui/icons-material/Settings";
-import MyReviews from "../../components/Profile/MyReviews";
 import { server } from "../../config";
 import { ProductHistoryType } from "../../types/profileTypes";
 import { useMediaQuery } from "@mui/material";
+import dynamic from "next/dynamic";
+
+const OrderHistory = dynamic(
+  () => import("../../components/Profile/OrderHistory"),
+  {
+    ssr: false,
+  }
+);
+const MyReviews = dynamic(() => import("../../components/Profile/MyReviews"), {
+  ssr: false,
+});
 
 const Profile = ({
   user,
@@ -30,7 +38,6 @@ const Profile = ({
   const signOutHandler = () => {
     signOut({ callbackUrl: `${server}/products` });
   };
-
   const [productReviews, setProductReviews] = useState([]);
   const [queuedReviews, setQueuedReviews] = useState([]);
 
