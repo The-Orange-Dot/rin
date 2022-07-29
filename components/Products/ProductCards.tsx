@@ -153,10 +153,10 @@ const ProductCards = ({ product, setSelectedProduct }: ProductCardType) => {
                 layout="fill"
                 objectFit="contain"
                 alt={product.name}
-                loading="lazy"
                 blurDataURL={product.thumbnail}
                 placeholder="blur"
                 quality={50}
+                priority
               />
             </div>
           </CardMedia>

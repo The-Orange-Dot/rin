@@ -30,6 +30,7 @@ const OrderHistory = ({ user }: any) => {
             alt={product.name}
             layout="fill"
             objectFit="contain"
+            priority
           />
         </Box>
         <Box
