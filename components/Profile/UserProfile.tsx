@@ -45,6 +45,8 @@ const UserProfile = ({ user }: any) => {
               layout="fill"
               objectFit="fill"
               style={{ borderRadius: "50rem" }}
+              quality={25}
+              priority
             />
           </Box>
           <Box sx={{ ml: 2, mt: 30 }}>
