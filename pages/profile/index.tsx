@@ -34,7 +34,7 @@ const Profile = () => {
   const [pageSelected, setPageSelected] = useState("My details");
   const [page, setPage] = useState(<Box />);
   const signOutHandler = () => {
-    signOut({ callbackUrl: `${server}/products` });
+    signOut({ callbackUrl: `/products` });
   };
   const [productReviews, setProductReviews] = useState([]);
   const [queuedReviews, setQueuedReviews] = useState([]);
@@ -52,7 +52,7 @@ const Profile = () => {
       const userSession = session?.user as UserDataType;
 
       const dbRes = await fetch(
-        `${server}/api/users/${userSession?.id}?profile_fetch=true`
+        `/api/users/${userSession?.id}?profile_fetch=true`
       );
 
       const user = await dbRes.json();
