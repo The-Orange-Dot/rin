@@ -8,7 +8,7 @@ import { useMediaQuery } from "@mui/material";
 import MobileProductNavBar from "../../components/Products/MobileProductNavBar";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import gsap from "gsap";
-import { useSession } from "next-auth/react";
+import { useSession, getSession } from "next-auth/react";
 import { ProductType, CountType } from "../../types/productTypes";
 import ShoppingCartButton from "../../components/Products/Mobile/ShoppingCartButton";
 import { useSelector } from "react-redux";

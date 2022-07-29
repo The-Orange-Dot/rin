@@ -27,7 +27,9 @@ const MyReviews = dynamic(() => import("../../components/Profile/MyReviews"), {
   ssr: false,
 });
 
-const Profile = ({ user }: any) => {
+const Profile = ({
+  user,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const router = useRouter();
   const isMobile = useMediaQuery("(max-width: 900px)");
   const [pageSelected, setPageSelected] = useState("My details");
@@ -167,7 +169,10 @@ const Profile = ({ user }: any) => {
   );
 };
 
-export const getServerSideProps = async (context: any) => {
+import { authOptions } from "../api/auth/[...nextauth]";
+import { unstable_getServerSession } from "next-auth/next";
+import { GetServerSideProps, InferGetServerSidePropsType } from "next";
+export const getServerSideProps: GetServerSideProps = async (context: any) => {
   const isServerReq = (req: any) => !req.url.startsWith("/_next");
 
   // const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY, {
@@ -176,7 +181,7 @@ export const getServerSideProps = async (context: any) => {
 
   const session = await getSession(context);
 
-  console.log(session);
+  console.log(context);
 
   if (!session) {
     return {
