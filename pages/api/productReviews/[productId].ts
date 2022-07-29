@@ -23,6 +23,7 @@ export default async function handler(
             rating: true,
             createdAt: true,
             updatedAt: true,
+            id: true,
           },
         },
       },
