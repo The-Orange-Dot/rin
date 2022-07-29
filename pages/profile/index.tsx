@@ -16,6 +16,7 @@ import { server } from "../../config";
 import { ProductHistoryType } from "../../types/profileTypes";
 import { useMediaQuery } from "@mui/material";
 import dynamic from "next/dynamic";
+import gsap from "gsap";
 
 const OrderHistory = dynamic(
   () => import("../../components/Profile/OrderHistory"),
@@ -27,9 +28,7 @@ const MyReviews = dynamic(() => import("../../components/Profile/MyReviews"), {
   ssr: false,
 });
 
-const Profile = ({}: InferGetServerSidePropsType<
-  typeof getServerSideProps
->) => {
+const Profile = () => {
   const router = useRouter();
   const isMobile = useMediaQuery("(max-width: 900px)");
   const [pageSelected, setPageSelected] = useState("My details");
@@ -117,6 +116,8 @@ const Profile = ({}: InferGetServerSidePropsType<
   });
   useEffect(() => {
     if (user) {
+      gsap.to("#page-container", { opacity: 1 });
+
       if (pageSelected === "My details") {
         setPage(<UserProfile user={user} />);
       } else if (pageSelected === "My reviews") {
@@ -172,42 +173,45 @@ const Profile = ({}: InferGetServerSidePropsType<
             </Box>
           </Box>
 
-          <Box sx={{ minWidth: 1000, width: "70%", mt: 5 }}>{page}</Box>
+          <Box
+            sx={{ minWidth: 1000, width: "70%", mt: 5, opacity: 0 }}
+            id="page-container"
+          >
+            {page}
+          </Box>
         </>
       )}
     </div>
   );
 };
 
-import { authOptions } from "../api/auth/[...nextauth]";
-import { unstable_getServerSession } from "next-auth/next";
-import { GetServerSideProps, InferGetServerSidePropsType } from "next";
-export const getServerSideProps: GetServerSideProps = async (context: any) => {
-  const isServerReq = (req: any) => !req.url.startsWith("/_next");
+// import { authOptions } from "../api/auth/[...nextauth]";
+// import { unstable_getServerSession } from "next-auth/next";
+// import { GetServerSideProps, InferGetServerSidePropsType } from "next";
+// export const getServerSideProps: GetServerSideProps = async (context: any) => {
+//   const isServerReq = (req: any) => !req.url.startsWith("/_next");
 
-  // const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY, {
-  //   apiVersion: "2020-08-27; orders_beta=v4",
-  // });
+//   // const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY, {
+//   //   apiVersion: "2020-08-27; orders_beta=v4",
+//   // });
 
-  const session = await getSession(context);
+//   const session = await getSession(context);
 
-  console.log(context);
+//   if (!session) {
+//     return {
+//       redirect: {
+//         destination: "/",
+//         permanent: false,
+//       },
+//     };
+//   }
+//   // const userData = session.user as UserDataType;
 
-  if (!session) {
-    return {
-      redirect: {
-        destination: "/",
-        permanent: false,
-      },
-    };
-  }
-  const userData = session.user as UserDataType;
+//   // const customer = await stripe.customers.retrieve(userData.id);
 
-  // const customer = await stripe.customers.retrieve(userData.id);
-
-  return {
-    props: {},
-  };
-};
+//   return {
+//     props: {},
+//   };
+// };
 
 export default Profile;
