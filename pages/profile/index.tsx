@@ -115,9 +115,9 @@ const Profile = () => {
     );
   });
   useEffect(() => {
-    if (user) {
-      gsap.to("#page-container", { opacity: 1 });
+    gsap.to("#page-container", { opacity: 1 });
 
+    if (user) {
       if (pageSelected === "My details") {
         setPage(<UserProfile user={user} />);
       } else if (pageSelected === "My reviews") {
