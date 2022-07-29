@@ -31,7 +31,7 @@ const MyReviews = dynamic(() => import("../../components/Profile/MyReviews"), {
 const Profile = () => {
   const router = useRouter();
   const isMobile = useMediaQuery("(max-width: 900px)");
-  const [pageSelected, setPageSelected] = useState("My details");
+  const [pageSelected, setPageSelected] = useState("");
   const [page, setPage] = useState(<Box />);
   const signOutHandler = () => {
     signOut({ callbackUrl: `/products` });
@@ -41,7 +41,6 @@ const Profile = () => {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    gsap.to("#page-container", { opacity: 1 });
     productsFetch();
   }, []); //eslint-disable-line
 
@@ -70,6 +69,7 @@ const Profile = () => {
       setQueuedReviews(queuedReviews);
       setProductReviews(productReviews);
       setUser(user.userData);
+      setPageSelected("My details");
     }
   };
 

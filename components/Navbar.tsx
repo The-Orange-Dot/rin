@@ -41,9 +41,10 @@ const Navbar = () => {
   }, [shoppingCart]);
 
   useEffect(() => {
+    gsap.timeline().to("#container", { opacity: 1, delay: 0.5 });
+
     if (session.status !== "loading") {
       setPageLoaded(true);
-      gsap.timeline().to("#container", { opacity: 1, delay: 0.5 });
     }
   }, [session]);
 
