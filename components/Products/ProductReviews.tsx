@@ -10,6 +10,7 @@ import {
   Grid,
   styled,
   Rating,
+  Tooltip,
 } from "@mui/material";
 import { DateFormatter } from "../DateFormatter";
 import SentimentVerySatisfiedIcon from "@mui/icons-material/SentimentVerySatisfied";
@@ -63,26 +64,25 @@ const ProductReviews = ({ review }: ProductReviewsType) => {
       ? `${review?.userReview?.username?.slice(0, 10)}...`
       : review?.userReview?.username;
 
-  const likesHandler = async () => {
-    await updateReviewLikes(true);
+  const likesHandler = () => {
+    updateReviewLikes(true);
+    setHelpful(helpful + 1);
+
     dispatch(addLike(review.id));
   };
 
-  const removeLikeHandler = async () => {
-    await updateReviewLikes(false);
+  const removeLikeHandler = () => {
+    updateReviewLikes(false);
     dispatch(removeLike(review.id));
+    setHelpful(helpful - 1);
   };
 
   const updateReviewLikes = async (helpful: boolean) => {
-    const res = await fetch(`/api/review_helpful/${review?.id}`, {
+    await fetch(`/api/review_helpful/${review?.id}`, {
       method: "PATCH",
       body: JSON.stringify({ helpful }),
       headers: { "Content-Type": "application/json" },
     });
-
-    const helpfulUpdated = await res.json();
-
-    setHelpful(helpfulUpdated.res);
   };
 
   return (
@@ -112,12 +112,18 @@ const ProductReviews = ({ review }: ProductReviewsType) => {
               style={{ borderRadius: "20rem" }}
             />
             {/*eslint-enable*/}
-            <Typography
-              variant="overline"
-              sx={{ mb: 0, ml: 1, fontWeight: 600, lineHeight: 1.5 }}
+            <Tooltip
+              title={review?.userReview?.username}
+              sx={{ fontSize: "1rem" }}
+              enterDelay={500}
             >
-              {username}
-            </Typography>
+              <Typography
+                variant="overline"
+                sx={{ mb: 0, ml: 1, fontWeight: 600, lineHeight: 1.5 }}
+              >
+                {username}
+              </Typography>
+            </Tooltip>
             <Rating
               size="small"
               readOnly={true}

@@ -11,11 +11,11 @@ export default async function handler(
 
     const updateHelpful = helpful ? { increment: 1 } : { decrement: 1 };
 
-    const updatedHelpful = await prisma.review.update({
+    await prisma.review.update({
       where: { id: id },
       data: { helpful: updateHelpful },
     });
 
-    res.status(200).json({ res: updatedHelpful.helpful });
+    res.status(200).json({ res: "Updated like" });
   }
 }
