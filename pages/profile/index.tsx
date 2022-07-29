@@ -1,4 +1,4 @@
-import { Button, Typography, Box } from "@mui/material";
+import { Button, Typography, Box, CircularProgress } from "@mui/material";
 import { signOut } from "next-auth/react";
 import React, { useEffect, useState } from "react";
 import styles from "../../styles/profile.module.css";
@@ -33,16 +33,20 @@ const Profile = () => {
   const isMobile = useMediaQuery("(max-width: 900px)");
   const [pageSelected, setPageSelected] = useState("");
   const [page, setPage] = useState(<Box />);
-  const signOutHandler = () => {
-    signOut({ callbackUrl: `/products` });
-  };
   const [productReviews, setProductReviews] = useState([]);
   const [queuedReviews, setQueuedReviews] = useState([]);
   const [user, setUser] = useState(null);
+  const [signoutLoader, setSignoutLoader] = useState(false);
 
   useEffect(() => {
     productsFetch();
+    setSignoutLoader(false);
   }, []); //eslint-disable-line
+
+  const signOutHandler = async () => {
+    setSignoutLoader(true);
+    await signOut({ callbackUrl: `/products` });
+  };
 
   const productsFetch = async () => {
     const session = await getSession();
@@ -168,10 +172,15 @@ const Profile = () => {
             >
               {selectors}
               <Button
+                disabled={signoutLoader}
                 sx={{ mt: 2, height: 60 }}
                 onClick={() => signOutHandler()}
               >
-                Sign Out
+                {signoutLoader ? (
+                  <CircularProgress color="inherit" size={25} />
+                ) : (
+                  "Sign Out"
+                )}
               </Button>
             </Box>
           </Box>

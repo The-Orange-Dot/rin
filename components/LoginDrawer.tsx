@@ -12,7 +12,7 @@ import {
   CircularProgress,
 } from "@mui/material";
 import { signIn, SignInResponse } from "next-auth/react";
-import React, { useEffect, useState } from "react";
+import React, { SyntheticEvent, useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { VisibilityOff, Visibility } from "@mui/icons-material";
 import gsap from "gsap";
@@ -32,7 +32,8 @@ const LoginDrawer = ({ setOpenLoginDrawer }: any) => {
     .to("#login-error", { opacity: 1, duration: 0.2 })
     .to("#login-error", { opacity: 0, delay: 3, duration: 0.2 });
 
-  const signInHandler = async () => {
+  const signInHandler = async (e: SyntheticEvent) => {
+    e.preventDefault();
     setSignInLoading(true);
 
     await signIn("credentials", {
@@ -80,7 +81,7 @@ const LoginDrawer = ({ setOpenLoginDrawer }: any) => {
       {createAccount ? (
         <CreateAccountForm setOpenLoginDrawer={setOpenLoginDrawer} />
       ) : (
-        <>
+        <form onSubmit={(e: SyntheticEvent) => signInHandler(e)}>
           <Typography variant="overline" sx={{ fontSize: "1rem" }}>
             Sign In
           </Typography>
@@ -159,7 +160,7 @@ const LoginDrawer = ({ setOpenLoginDrawer }: any) => {
               disableElevation
               sx={{ borderRadius: 0, height: 50, mb: 2 }}
               variant="contained"
-              onClick={() => signInHandler()}
+              type="submit"
             >
               {signInLoading ? (
                 <CircularProgress color="inherit" size={25} />
@@ -180,7 +181,7 @@ const LoginDrawer = ({ setOpenLoginDrawer }: any) => {
             </Typography>
           </Box>
           <Divider />
-        </>
+        </form>
       )}
     </Paper>
   );
