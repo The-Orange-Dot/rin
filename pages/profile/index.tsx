@@ -68,7 +68,12 @@ const Profile = ({
   };
 
   const animation = () => {
-    gsap.to("#page-container", { opacity: 1, duration: 0.5, y: 30 });
+    gsap.to("#page-container", {
+      opacity: 1,
+      duration: 0.5,
+      y: 15,
+      ease: "power1.out",
+    });
   };
 
   const buttons = [
@@ -171,7 +176,7 @@ const Profile = ({
           </Box>
 
           <Box
-            sx={{ minWidth: 1000, width: "70%", opacity: 0 }}
+            sx={{ minWidth: 1000, width: "70%", opacity: 0, mt: 3 }}
             id="page-container"
           >
             {page}

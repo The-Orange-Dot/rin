@@ -43,18 +43,9 @@ const Navbar = () => {
   useEffect(() => {
     if (session.status !== "loading") {
       setPageLoaded(true);
+      gsap.timeline().to("#container", { opacity: 1, delay: 0.5 });
     }
-  }, [session.status]);
-
-  useEffect(() => {
-    gsap.set("#container", { opacity: 0 });
-    const tl = gsap
-      .timeline({ paused: true })
-      .fromTo("#container", { opacity: 0 }, { opacity: 1 });
-    if (pageLoaded) {
-      tl.play(0);
-    }
-  }, [pageLoaded]);
+  }, [session]);
 
   return (
     <div
@@ -64,8 +55,8 @@ const Navbar = () => {
       style={
         router.pathname.includes("/products") ||
         router.pathname.includes("/profile")
-          ? { background: "white" }
-          : {}
+          ? { background: "white", opacity: 0 }
+          : { opacity: 0 }
       }
       id={"container"}
     >
