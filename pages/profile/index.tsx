@@ -41,6 +41,7 @@ const Profile = () => {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
+    gsap.to("#page-container", { opacity: 1 });
     productsFetch();
   }, []); //eslint-disable-line
 
@@ -115,8 +116,6 @@ const Profile = () => {
     );
   });
   useEffect(() => {
-    gsap.to("#page-container", { opacity: 1 });
-
     if (user) {
       if (pageSelected === "My details") {
         setPage(<UserProfile user={user} />);
@@ -133,6 +132,10 @@ const Profile = () => {
       }
     }
   }, [pageSelected, user]); //eslint-disable-line
+
+  useEffect(() => {
+    gsap.fromTo("#page-container", { opacity: 0 }, { opacity: 1 });
+  }, [pageSelected]);
 
   return (
     <div className={styles.main}>
