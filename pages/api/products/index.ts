@@ -50,6 +50,7 @@ export default async function handler(
             helpful: true,
             rating: true,
             createdAt: true,
+            id: true,
           },
           take: 3,
         },

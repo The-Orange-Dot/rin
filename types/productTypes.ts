@@ -12,6 +12,7 @@ export type ProductReviewType = {
   userReview: UserReviewType;
   userId: string;
   productId: string;
+  id: string;
 };
 
 export type CountType = {

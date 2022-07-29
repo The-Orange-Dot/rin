@@ -13,15 +13,25 @@ import {
 } from "@mui/material";
 import { DateFormatter } from "../DateFormatter";
 import SentimentVerySatisfiedIcon from "@mui/icons-material/SentimentVerySatisfied";
+import EmojiEmotionsIcon from "@mui/icons-material/EmojiEmotions";
 import { ProductReviewType } from "../../types/productTypes";
+import { addLike, removeLike } from "../../redux/reducers/reviewHelpfulReducer";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
 
 interface ProductReviewsType {
   review: ProductReviewType;
 }
 
 const ProductReviews = ({ review }: ProductReviewsType) => {
+  const dispatch = useDispatch();
   const [reviewTooLong, setReviewTooLong] = useState(false);
   const [description, setDescription] = useState(review?.description);
+  const likesArray = useSelector(
+    (state: RootState) => state.reviewHelpful.value
+  );
+  const [liked, setLiked] = useState(false);
+  const [helpful, setHelpful] = useState(review.helpful);
 
   useEffect(() => {
     if (review?.description?.length > 250) {
@@ -37,6 +47,11 @@ const ProductReviews = ({ review }: ProductReviewsType) => {
     }
   }, [reviewTooLong]); //eslint-disable-line
 
+  useEffect(() => {
+    const liked = likesArray.includes(review?.id);
+    setLiked(liked);
+  }, [likesArray]); //eslint-disable-line
+
   const expandReviewHandler = () => {
     if (review?.description?.length > 250) {
       setReviewTooLong(!reviewTooLong);
@@ -47,6 +62,28 @@ const ProductReviews = ({ review }: ProductReviewsType) => {
     review?.userReview?.username?.length > 10
       ? `${review?.userReview?.username?.slice(0, 10)}...`
       : review?.userReview?.username;
+
+  const likesHandler = async () => {
+    await updateReviewLikes(true);
+    dispatch(addLike(review.id));
+  };
+
+  const removeLikeHandler = async () => {
+    await updateReviewLikes(false);
+    dispatch(removeLike(review.id));
+  };
+
+  const updateReviewLikes = async (helpful: boolean) => {
+    const res = await fetch(`/api/review_helpful/${review?.id}`, {
+      method: "PATCH",
+      body: JSON.stringify({ helpful }),
+      headers: { "Content-Type": "application/json" },
+    });
+
+    const helpfulUpdated = await res.json();
+
+    setHelpful(helpfulUpdated.res);
+  };
 
   return (
     <>
@@ -112,10 +149,19 @@ const ProductReviews = ({ review }: ProductReviewsType) => {
           <Typography variant="caption" color="secondary">
             Posted: {DateFormatter(review.createdAt)}
           </Typography>
-          <Box sx={{ display: "flex", alignItems: "center" }}>
-            <SentimentVerySatisfiedIcon fontSize="small" />
+          <Box
+            sx={{ display: "flex", alignItems: "center", cursor: "pointer" }}
+            onClick={() => {
+              liked ? removeLikeHandler() : likesHandler();
+            }}
+          >
+            {liked ? (
+              <EmojiEmotionsIcon fontSize="small" />
+            ) : (
+              <SentimentVerySatisfiedIcon fontSize="small" />
+            )}
             <Typography variant="caption" color="secondary">
-              {review.helpful} found this helpful
+              {helpful} found this helpful
             </Typography>
           </Box>
         </Box>
