@@ -41,6 +41,10 @@ const Profile = ({
   }, []); //eslint-disable-line
 
   const productsFetch = async () => {
+    gsap.set("#page-container", {
+      opacity: 0,
+      y: 0,
+    });
     const dbRes = await fetch(
       `${server}/api/users/${userData.id}?profile_fetch=true`
     );
@@ -64,10 +68,6 @@ const Profile = ({
     setQueuedReviews(queuedReviews);
     setProductReviews(productReviews);
     setUser(user.userData);
-    animation();
-  };
-
-  const animation = () => {
     gsap.to("#page-container", {
       opacity: 1,
       duration: 0.5,
@@ -175,10 +175,7 @@ const Profile = ({
             </Box>
           </Box>
 
-          <Box
-            sx={{ minWidth: 1000, width: "70%", opacity: 0, mt: 3 }}
-            id="page-container"
-          >
+          <Box sx={{ minWidth: 1000, width: "70%", mt: 3 }} id="page-container">
             {page}
           </Box>
         </>
