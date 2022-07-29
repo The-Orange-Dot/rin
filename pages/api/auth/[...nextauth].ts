@@ -25,6 +25,7 @@ export const authOptions: NextAuthOptions = {
             },
           },
         });
+        //==>put bcrypt comparison here!<==
         if (user?.password === credentials?.password) {
           return user;
         }
@@ -54,7 +55,7 @@ export const authOptions: NextAuthOptions = {
       //PUT ANY INFO TO BE SENT TO THE FRONT HERE!!
       //MUST AT LEAST HAVE NAME EMAIL AND IMAGE
 
-      session.user = {
+      session = {
         name: token.user.firstName,
         lastName: token.user.lastName,
         email: token.user.email,
@@ -71,6 +72,8 @@ export const authOptions: NextAuthOptions = {
         country: token.user.country,
         createdAt: token.user.createdAt,
       };
+
+      session.status = token.user.status;
 
       return session;
     },

@@ -26,7 +26,7 @@ const Navbar = () => {
   const isMobile = useMediaQuery("(max-width: 900px)");
   const query = useRouter();
   const [pageLoaded, setPageLoaded] = useState(false);
-  const session = useSession();
+  const { data: session, status } = useSession();
   const router = useRouter();
   const shoppingCart = useSelector((state: any) => state.shoppingCart.value);
   const [itemsInCart, setItemsInCart] = useState(0);
@@ -43,10 +43,10 @@ const Navbar = () => {
   useEffect(() => {
     gsap.timeline().to("#container", { opacity: 1, delay: 0.5 });
 
-    if (session.status !== "loading") {
+    if (status !== "loading") {
       setPageLoaded(true);
     }
-  }, [session]);
+  }, [status]);
 
   return (
     <div
@@ -86,6 +86,20 @@ const Navbar = () => {
         />
       ) : (
         <div className={styles.navbar_selector}>
+          {session && session.status === "admin" ? (
+            <Link href="/admin">
+              <Typography
+                className={
+                  textColor === "white"
+                    ? styles.selector_text_white
+                    : styles.selector_text
+                }
+                variant="overline"
+              >
+                ADMIN
+              </Typography>
+            </Link>
+          ) : null}
           <Link href="/">
             <Typography
               className={
@@ -123,7 +137,8 @@ const Navbar = () => {
               Products
             </Typography>
           </Link>
-          {session.status === "authenticated" ? (
+
+          {status === "authenticated" ? (
             <Link href="/profile">
               <Typography
                 className={
@@ -164,6 +179,7 @@ const Navbar = () => {
           </Box>
         </div>
       )}
+
       <MobileNavModal
         setMobileNavModalOpen={setMobileNavModalOpen}
         mobileNavModalOpen={mobileNavModalOpen}
@@ -178,7 +194,6 @@ const Navbar = () => {
       >
         <CheckoutDrawer />
       </Drawer>
-
       <Drawer
         open={openLoginDrawer}
         anchor="right"

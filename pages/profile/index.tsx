@@ -37,11 +37,17 @@ const Profile = () => {
   const [queuedReviews, setQueuedReviews] = useState([]);
   const [user, setUser] = useState(null);
   const [signoutLoader, setSignoutLoader] = useState(false);
+  const { data: session, status } = useSession({
+    required: true,
+    onUnauthenticated() {
+      router.push("/");
+    },
+  });
 
   useEffect(() => {
     productsFetch();
     setSignoutLoader(false);
-  }, []); //eslint-disable-line
+  }, [session]); //eslint-disable-line
 
   const signOutHandler = async () => {
     setSignoutLoader(true);
@@ -49,14 +55,8 @@ const Profile = () => {
   };
 
   const productsFetch = async () => {
-    const session = await getSession();
-
     if (session) {
-      const userSession = session?.user as UserDataType;
-
-      const dbRes = await fetch(
-        `/api/users/${userSession?.id}?profile_fetch=true`
-      );
+      const dbRes = await fetch(`/api/users/${session?.id}?profile_fetch=true`);
 
       const user = await dbRes.json();
 

@@ -31,7 +31,7 @@ model User {
   id         String  @id @default(cuid()) @unique
   username   String  @unique
   password   String
-  subscriber Boolean @default(false)
+  status     String  @default("user")
   image      String  @default("/default_profile_image.jpeg")
   firstName  String  @map("first_name")
   lastName   String  @map("last_name")
