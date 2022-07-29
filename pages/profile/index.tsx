@@ -19,35 +19,57 @@ import MyReviews from "../../components/Profile/MyReviews";
 import { server } from "../../config";
 import { ProductHistoryType } from "../../types/profileTypes";
 import { useMediaQuery } from "@mui/material";
+import gsap from "gsap";
 
 const Profile = ({
-  user,
+  userData,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const router = useRouter();
   const isMobile = useMediaQuery("(max-width: 900px)");
   const [pageSelected, setPageSelected] = useState("My details");
-  const [page, setPage] = useState(<UserProfile user={user.userData} />);
+  const [page, setPage] = useState(<Box />);
   const signOutHandler = () => {
     signOut({ callbackUrl: `${server}/products` });
   };
 
   const [productReviews, setProductReviews] = useState([]);
   const [queuedReviews, setQueuedReviews] = useState([]);
+  const [user, setUser] = useState();
 
   useEffect(() => {
+    productsFetch();
+  }, []); //eslint-disable-line
+
+  const productsFetch = async () => {
+    const dbRes = await fetch(
+      `${server}/api/users/${userData.id}?profile_fetch=true`
+    );
+
+    const user = await dbRes.json();
+
     const products = user.userData.buyHistory;
 
-    const productReviews = products.filter((product: ProductHistoryType) => {
-      return product.reviewWritten === true && product.firstBuy;
-    });
+    const productReviews = await products.filter(
+      (product: ProductHistoryType) => {
+        return product.reviewWritten === true && product.firstBuy;
+      }
+    );
 
-    const queuedReviews = products.filter((product: ProductHistoryType) => {
-      return product.reviewWritten === false && product.firstBuy;
-    });
+    const queuedReviews = await products.filter(
+      (product: ProductHistoryType) => {
+        return product.reviewWritten === false && product.firstBuy;
+      }
+    );
 
     setQueuedReviews(queuedReviews);
     setProductReviews(productReviews);
-  }, []); //eslint-disable-line
+    setUser(user.userData);
+    animation();
+  };
+
+  const animation = () => {
+    gsap.to("#page-container", { opacity: 1, duration: 0.5, y: 30 });
+  };
 
   const buttons = [
     { icon: AccountCircleIcon, text: "My details" },
@@ -92,20 +114,22 @@ const Profile = ({
     );
   });
   useEffect(() => {
-    if (pageSelected === "My details") {
-      setPage(<UserProfile user={user.userData as UserDataType} />);
-    } else if (pageSelected === "My reviews") {
-      setPage(
-        <MyReviews
-          user={user.userData as UserDataType}
-          productReviews={productReviews}
-          queuedReviews={queuedReviews}
-        />
-      );
-    } else if (pageSelected === "Order History") {
-      setPage(<OrderHistory user={user.userData as UserDataType} />);
+    if (user) {
+      if (pageSelected === "My details") {
+        setPage(<UserProfile user={user} />);
+      } else if (pageSelected === "My reviews") {
+        setPage(
+          <MyReviews
+            user={user}
+            productReviews={productReviews}
+            queuedReviews={queuedReviews}
+          />
+        );
+      } else if (pageSelected === "Order History") {
+        setPage(<OrderHistory user={user} />);
+      }
     }
-  }, [pageSelected]); //eslint-disable-line
+  }, [pageSelected, user]); //eslint-disable-line
 
   return (
     <div className={styles.main}>
@@ -146,7 +170,12 @@ const Profile = ({
             </Box>
           </Box>
 
-          <Box sx={{ minWidth: 1000, width: "70%", mt: 5 }}>{page}</Box>
+          <Box
+            sx={{ minWidth: 1000, width: "70%", opacity: 0 }}
+            id="page-container"
+          >
+            {page}
+          </Box>
         </>
       )}
     </div>
@@ -179,14 +208,14 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
 
   // const customer = await stripe.customers.retrieve(userData.id);
 
-  const dbRes = await fetch(
-    `${server}/api/users/${userData.id}?profile_fetch=true`
-  );
+  // const dbRes = await fetch(
+  //   `${server}/api/users/${userData.id}?profile_fetch=true`
+  // );
 
-  const user = await dbRes.json();
+  // const user = await dbRes.json();
 
   return {
-    props: { user },
+    props: { userData },
   };
 };
 
