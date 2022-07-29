@@ -27,42 +27,50 @@ const MyReviews = dynamic(() => import("../../components/Profile/MyReviews"), {
   ssr: false,
 });
 
-const Profile = ({
-  user,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+const Profile = ({}: InferGetServerSidePropsType<
+  typeof getServerSideProps
+>) => {
   const router = useRouter();
   const isMobile = useMediaQuery("(max-width: 900px)");
   const [pageSelected, setPageSelected] = useState("My details");
-  const [page, setPage] = useState(<UserProfile user={user.userData} />);
+  const [page, setPage] = useState(<Box />);
   const signOutHandler = () => {
     signOut({ callbackUrl: `${server}/products` });
   };
   const [productReviews, setProductReviews] = useState([]);
   const [queuedReviews, setQueuedReviews] = useState([]);
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
     productsFetch();
   }, []); //eslint-disable-line
 
   const productsFetch = async () => {
-    const dbRes = await fetch(
-      `${server}/api/users/${user.userData.id}?profile_fetch=true`
-    );
+    const session = await getSession();
 
-    const userData = await dbRes.json();
+    if (session) {
+      const userSession = session?.user as UserDataType;
 
-    const products = userData.userData.buyHistory;
+      const dbRes = await fetch(
+        `${server}/api/users/${userSession?.id}?profile_fetch=true`
+      );
 
-    const productReviews = products.filter((product: ProductHistoryType) => {
-      return product.reviewWritten === true && product.firstBuy;
-    });
+      const user = await dbRes.json();
 
-    const queuedReviews = products.filter((product: ProductHistoryType) => {
-      return product.reviewWritten === false && product.firstBuy;
-    });
+      const products = user.userData.buyHistory;
 
-    setQueuedReviews(queuedReviews);
-    setProductReviews(productReviews);
+      const productReviews = products.filter((product: ProductHistoryType) => {
+        return product.reviewWritten === true && product.firstBuy;
+      });
+
+      const queuedReviews = products.filter((product: ProductHistoryType) => {
+        return product.reviewWritten === false && product.firstBuy;
+      });
+
+      setQueuedReviews(queuedReviews);
+      setProductReviews(productReviews);
+      setUser(user.userData);
+    }
   };
 
   const buttons = [
@@ -108,20 +116,22 @@ const Profile = ({
     );
   });
   useEffect(() => {
-    if (pageSelected === "My details") {
-      setPage(<UserProfile user={user.userData as UserDataType} />);
-    } else if (pageSelected === "My reviews") {
-      setPage(
-        <MyReviews
-          user={user.userData as UserDataType}
-          productReviews={productReviews}
-          queuedReviews={queuedReviews}
-        />
-      );
-    } else if (pageSelected === "Order History") {
-      setPage(<OrderHistory user={user.userData as UserDataType} />);
+    if (user) {
+      if (pageSelected === "My details") {
+        setPage(<UserProfile user={user} />);
+      } else if (pageSelected === "My reviews") {
+        setPage(
+          <MyReviews
+            user={user}
+            productReviews={productReviews}
+            queuedReviews={queuedReviews}
+          />
+        );
+      } else if (pageSelected === "Order History") {
+        setPage(<OrderHistory user={user} />);
+      }
     }
-  }, [pageSelected]); //eslint-disable-line
+  }, [pageSelected, user]); //eslint-disable-line
 
   return (
     <div className={styles.main}>
@@ -195,14 +205,8 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
 
   // const customer = await stripe.customers.retrieve(userData.id);
 
-  const dbRes = await fetch(
-    `${server}/api/users/${userData.id}?profile_fetch=true`
-  );
-
-  const user = await dbRes.json();
-
   return {
-    props: { user },
+    props: {},
   };
 };
 
