@@ -22,8 +22,6 @@ import { useMediaQuery } from "@mui/material";
 
 const Profile = ({
   user,
-  productReviews,
-  queuedReviews,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const router = useRouter();
   const isMobile = useMediaQuery("(max-width: 900px)");
@@ -32,6 +30,24 @@ const Profile = ({
   const signOutHandler = () => {
     signOut({ callbackUrl: `${server}/products` });
   };
+
+  const [productReviews, setProductReviews] = useState([]);
+  const [queuedReviews, setQueuedReviews] = useState([]);
+
+  useEffect(() => {
+    const products = user.userData.buyHistory;
+
+    const productReviews = products.filter((product: ProductHistoryType) => {
+      return product.reviewWritten === true && product.firstBuy;
+    });
+
+    const queuedReviews = products.filter((product: ProductHistoryType) => {
+      return product.reviewWritten === false && product.firstBuy;
+    });
+
+    setQueuedReviews(queuedReviews);
+    setProductReviews(productReviews);
+  }, []); //eslint-disable-line
 
   const buttons = [
     { icon: AccountCircleIcon, text: "My details" },
@@ -169,18 +185,8 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
 
   const user = await dbRes.json();
 
-  const products = user.userData.buyHistory;
-
-  const productReviews = products.filter((product: ProductHistoryType) => {
-    return product.reviewWritten === true && product.firstBuy;
-  });
-
-  const queuedReviews = products.filter((product: ProductHistoryType) => {
-    return product.reviewWritten === false && product.firstBuy;
-  });
-
   return {
-    props: { user, productReviews, queuedReviews },
+    props: { user },
   };
 };
 
