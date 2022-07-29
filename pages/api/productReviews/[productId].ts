@@ -61,10 +61,6 @@ export default async function handler(
       data: { reviewWritten: true },
     });
 
-    console.log(updatedHistory);
-    // console.log(product);
-    // console.log(review);
-
     // await prisma.review.delete({ where: { id: "cl64vzak900685b9id2ahxs6q" } });
 
     res.status(200).json({ updatedHistory: updatedHistory });

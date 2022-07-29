@@ -18,14 +18,15 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import MyReviews from "../../components/Profile/MyReviews";
 import { server } from "../../config";
 import { ProductHistoryType } from "../../types/profileTypes";
+import { useMediaQuery } from "@mui/material";
 
 const Profile = ({
   user,
-  customerData,
   productReviews,
   queuedReviews,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const router = useRouter();
+  const isMobile = useMediaQuery("(max-width: 900px)");
   const [pageSelected, setPageSelected] = useState("My details");
   const [page, setPage] = useState(<UserProfile user={user.userData} />);
   const signOutHandler = () => {
@@ -92,37 +93,46 @@ const Profile = ({
 
   return (
     <div className={styles.main}>
-      <Box
-        sx={{
-          minWidth: 270,
-          width: "20%",
-          height: "80vh",
-          display: "flex",
-          flexDirection: "column",
-          ml: 10,
-        }}
-      >
-        <Typography variant="overline" sx={{ fontSize: "1.5rem" }}>
-          My Account
-        </Typography>
-        <Box
-          sx={{
-            height: "70%",
-            width: 250,
-            display: "flex",
-            justifyContent: "center",
-            flexDirection: "column",
-            mr: 2,
-          }}
-        >
-          {selectors}
-          <Button sx={{ mt: 2, height: 60 }} onClick={() => signOutHandler()}>
-            Sign Out
-          </Button>
-        </Box>
-      </Box>
+      {isMobile ? (
+        <Box></Box>
+      ) : (
+        <>
+          <Box
+            sx={{
+              minWidth: 270,
+              width: "20%",
+              height: "80vh",
+              display: "flex",
+              flexDirection: "column",
+              ml: 10,
+            }}
+          >
+            <Typography variant="overline" sx={{ fontSize: "1.5rem" }}>
+              My Account
+            </Typography>
+            <Box
+              sx={{
+                height: "70%",
+                width: 250,
+                display: "flex",
+                justifyContent: "center",
+                flexDirection: "column",
+                mr: 2,
+              }}
+            >
+              {selectors}
+              <Button
+                sx={{ mt: 2, height: 60 }}
+                onClick={() => signOutHandler()}
+              >
+                Sign Out
+              </Button>
+            </Box>
+          </Box>
 
-      <Box sx={{ minWidth: 1000, width: "70%", mt: 5 }}>{page}</Box>
+          <Box sx={{ minWidth: 1000, width: "70%", mt: 5 }}>{page}</Box>
+        </>
+      )}
     </div>
   );
 };
@@ -151,7 +161,7 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
   }
   const userData = session.user as UserDataType;
 
-  const customer = await stripe.customers.retrieve(userData.id);
+  // const customer = await stripe.customers.retrieve(userData.id);
 
   const dbRes = await fetch(
     `${server}/api/users/${userData.id}?profile_fetch=true`
@@ -170,7 +180,7 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
   });
 
   return {
-    props: { user, customer, productReviews, queuedReviews },
+    props: { user, productReviews, queuedReviews },
   };
 };
 

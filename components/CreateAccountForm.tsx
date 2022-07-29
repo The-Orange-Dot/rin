@@ -73,7 +73,6 @@ const CreateAccountForm = ({ setOpenLoginDrawer }: any) => {
     }).then((res) => {
       if (res.ok) {
         res.json().then(async (data) => {
-          console.log(data);
           await signIn("credentials", {
             redirect: false,
             username: data.loginDetails.username,

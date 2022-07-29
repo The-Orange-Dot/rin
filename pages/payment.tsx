@@ -51,8 +51,6 @@ const Payment = ({
     }
   );
 
-  console.log(user);
-
   const shippingData = user.userData.id
     ? {
         name: user.userData.firstName,
@@ -462,8 +460,6 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
   const dbRes = await fetch(`${server}/api/users/${user.id}`);
 
   const userData = await dbRes.json();
-
-  console.log(userData);
 
   return {
     props: { user: userData },

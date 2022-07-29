@@ -41,8 +41,6 @@ const ProductModal = ({
   const [reviewsData, setReviewsData] = useState<ProductReviewType[]>([]);
   const [imageNum, setImageNum] = useState(0);
 
-  console.log(selectedProduct);
-
   //Sets description from selected product
   useEffect(() => {
     setProduct(selectedProduct);

@@ -45,8 +45,6 @@ const MobileCheckoutContent = ({ product }: any) => {
     dispatch(removeItem(updatedCart));
   };
 
-  console.log(product);
-
   return (
     <Box key={product.name}>
       <Divider sx={{ mb: 1 }} />

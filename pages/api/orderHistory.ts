@@ -28,8 +28,6 @@ export default async function handler(
     // //@ts-ignore
     // await prisma.orderHistory.create({ data: data });
 
-    console.log(products);
-
     if (username !== "guest") {
       Promise.all(
         products.map(async (product: any) => {

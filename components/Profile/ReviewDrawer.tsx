@@ -53,8 +53,6 @@ const ReviewDrawer = ({
       }
     );
 
-    console.log(data.updatedHistory);
-
     setQueuedReviewsState(filteredProduct);
     setProductReviewsState([data.updatedHistory, ...productReviewsState]);
     setOpenReviewDrawer(false);
