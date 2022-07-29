@@ -1,15 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styles from "../../styles/products.module.css";
-import ProductsNavBar from "../../components/ProductsNavBar";
 import { GetStaticProps, InferGetStaticPropsType } from "next";
-import {
-  Button,
-  Container,
-  Grid,
-  Box,
-  Typography,
-  Drawer,
-} from "@mui/material";
+import { Button, Container, Grid, Box, Drawer } from "@mui/material";
 import { server } from "../../config";
 import ProductCards from "../../components/Products/ProductCards";
 import { useMediaQuery } from "@mui/material";

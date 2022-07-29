@@ -1,10 +1,9 @@
-import { Button, Typography } from "@mui/material";
+import { Button, Typography, Box } from "@mui/material";
 import { signOut } from "next-auth/react";
 import React, { useEffect, useState } from "react";
 import styles from "../../styles/profile.module.css";
 import { useSession, getSession } from "next-auth/react";
 import { useRouter } from "next/router";
-import { Box } from "@mui/system";
 import UserProfile from "../../components/Profile/UserProfile";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
@@ -28,9 +27,7 @@ const MyReviews = dynamic(() => import("../../components/Profile/MyReviews"), {
   ssr: false,
 });
 
-const Profile = ({
-  user,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+const Profile = ({ user }: any) => {
   const router = useRouter();
   const isMobile = useMediaQuery("(max-width: 900px)");
   const [pageSelected, setPageSelected] = useState("My details");
@@ -170,19 +167,16 @@ const Profile = ({
   );
 };
 
-import { authOptions } from "../api/auth/[...nextauth]";
-import { unstable_getServerSession } from "next-auth/next";
-import { GetServerSideProps, InferGetServerSidePropsType } from "next";
-export const getServerSideProps: GetServerSideProps = async (context: any) => {
-  const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY, {
-    apiVersion: "2020-08-27; orders_beta=v4",
-  });
+export const getServerSideProps = async (context: any) => {
+  const isServerReq = (req: any) => !req.url.startsWith("/_next");
 
-  const session = await unstable_getServerSession(
-    context.req,
-    context.res,
-    authOptions
-  );
+  // const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY, {
+  //   apiVersion: "2020-08-27; orders_beta=v4",
+  // });
+
+  const session = await getSession(context);
+
+  console.log(session);
 
   if (!session) {
     return {
