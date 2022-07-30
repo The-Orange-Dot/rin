@@ -1,6 +1,6 @@
 import { Button, Typography, Box, CircularProgress } from "@mui/material";
 import { signOut } from "next-auth/react";
-import React, { SetStateAction, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "../../styles/profile.module.css";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
@@ -36,20 +36,17 @@ const Profile = () => {
   const isMobile = useMediaQuery("(max-width: 900px)");
   const [pageSelected, setPageSelected] = useState("");
   const [page, setPage] = useState(<Box />);
-  const [productReviews, setProductReviews] = useState<
-    SetStateAction<ProductHistoryType[]>
-  >([]);
-  const [queuedReviews, setQueuedReviews] = useState<
-    SetStateAction<ProductHistoryType[]>
-  >([]);
+  const [productReviews, setProductReviews] = useState([]);
+  const [queuedReviews, setQueuedReviews] = useState([]);
 
   const [signoutLoader, setSignoutLoader] = useState(false);
-  const { data: session } = useSession({
+  const { data: session, status } = useSession({
     required: true,
     onUnauthenticated() {
       router.push("/");
     },
   });
+  const [user, setUser] = useState(session);
 
   useEffect(() => {
     productsFetch();
@@ -63,19 +60,24 @@ const Profile = () => {
 
   const productsFetch = async () => {
     if (session) {
-      const products = session.buyHistory as ProductHistoryType[];
+      const dbRes = await fetch(`/api/users/${session?.id}?profile_fetch=true`);
 
-      const productReviews = products.filter((product) => {
+      const user = await dbRes.json();
+
+      const products = user.userData.buyHistory;
+
+      const productReviews = products.filter((product: ProductHistoryType) => {
         return product.reviewWritten === true && product.firstBuy;
       });
 
-      const queuedReviews = products.filter((product) => {
+      const queuedReviews = products.filter((product: ProductHistoryType) => {
         return product.reviewWritten === false && product.firstBuy;
       });
 
       setQueuedReviews(queuedReviews);
       setProductReviews(productReviews);
       setPageSelected("my details");
+      setUser(user.userData);
     }
   };
 
@@ -124,21 +126,21 @@ const Profile = () => {
 
   useEffect(() => {
     if (pageSelected === "my details") {
-      setPage(<UserProfile user={session} />);
+      setPage(<UserProfile user={user} />);
     } else if (pageSelected === "my reviews") {
       setPage(
         <MyReviews
-          user={session}
+          user={user}
           productReviews={productReviews}
           queuedReviews={queuedReviews}
         />
       );
     } else if (pageSelected === "order history") {
-      setPage(<OrderHistory user={session} />);
+      setPage(<OrderHistory user={user} />);
     } else if (pageSelected === "my coupons") {
-      setPage(<MyCoupons user={session} />);
+      setPage(<MyCoupons user={user} />);
     }
-  }, [pageSelected, session]); //eslint-disable-line
+  }, [pageSelected, user]); //eslint-disable-line
 
   useEffect(() => {
     gsap.fromTo("#page-container", { opacity: 0 }, { opacity: 1 });

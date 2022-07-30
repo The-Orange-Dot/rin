@@ -4,9 +4,9 @@ import { Box, Paper, Typography } from "@mui/material";
 import { UserDataType } from "../../types/profileTypes";
 
 const UserProfile = ({ user }: any) => {
-  const fullName = `${user?.name
+  const fullName = `${user?.firstName
     .slice(0, 1)
-    .toLocaleUpperCase()}${user?.name.slice(1)} ${user?.lastName
+    .toLocaleUpperCase()}${user?.firstName.slice(1)} ${user?.lastName
     .slice(0, 1)
     .toLocaleUpperCase()}${user?.lastName.slice(1)} `;
 

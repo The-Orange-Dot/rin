@@ -1,7 +1,12 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import crypto from "node:crypto";
+import Stripe from "stripe";
 import { prisma } from "../../prisma/db";
 import { ProductType, OrderHistoryType } from "../../types/productTypes";
+
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY, {
+  apiVersion: "2020-08-27; orders_beta=v4",
+});
 
 export default async function handler(
   req: NextApiRequest,

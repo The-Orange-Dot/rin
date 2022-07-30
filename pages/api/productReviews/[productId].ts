@@ -1,6 +1,10 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { prisma } from "../../../prisma/db";
 
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY, {
+  apiVersion: "2020-08-27; orders_beta=v4",
+});
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
@@ -48,6 +52,10 @@ export default async function handler(
       orderId: product.id,
     };
 
+    const firstTimeReview = await user.buyHistory.find((buy: any) => {
+      return buy.reviewWritten === true;
+    });
+
     const createdReview = await prisma.review.create({ data: reviewData });
 
     const updatedHistory = await prisma.userOrderHistory.update({
@@ -62,7 +70,28 @@ export default async function handler(
       data: { reviewWritten: true },
     });
 
-    // await prisma.review.delete({ where: { id: "cl64vzak900685b9id2ahxs6q" } });
+    if (createdReview) {
+      const coupon = !firstTimeReview
+        ? await stripe.promotionCodes.create({
+            coupon: "cEAJYRIi",
+            code: "FIRST10OFF",
+            customer: user.id,
+            active: true,
+            max_redemptions: 1,
+          })
+        : await stripe.promotionCodes.create({
+            coupon: "gMd2EUMQ",
+            customer: user.id,
+            active: true,
+            max_redemptions: 1,
+          });
+
+      console.log(coupon);
+    }
+
+    // await prisma.review.delete({ where: { id: "cl67g4s6v1559uw9imnfpepyy" } });
+    // await prisma.review.delete({ where: { id: "cl67gin1g1889uw9iqcs5stes" } });
+    // await prisma.review.delete({ where: { id: "cl67gvoxn2134uw9i0mmoqo7u" } });
 
     res.status(200).json({ updatedHistory: updatedHistory });
   }
