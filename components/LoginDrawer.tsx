@@ -12,11 +12,9 @@ import {
   CircularProgress,
 } from "@mui/material";
 import { signIn, SignInResponse } from "next-auth/react";
-import React, { SyntheticEvent, useEffect, useState } from "react";
-import { useSession } from "next-auth/react";
+import React, { SyntheticEvent, useState } from "react";
 import { VisibilityOff, Visibility } from "@mui/icons-material";
 import gsap from "gsap";
-import { style, width } from "@mui/system";
 import CreateAccountForm from "./CreateAccountForm";
 
 const LoginDrawer = ({ setOpenLoginDrawer }: any) => {
@@ -25,7 +23,6 @@ const LoginDrawer = ({ setOpenLoginDrawer }: any) => {
   const [showPassword, setShowPassword] = useState(false);
   const [signInLoading, setSignInLoading] = useState(false);
   const [createAccount, setCreateAccount] = useState(false);
-  const session = useSession();
 
   const tl = gsap
     .timeline({ paused: true })

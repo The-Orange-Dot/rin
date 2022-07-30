@@ -22,13 +22,13 @@ import gsap from "gsap";
 const Footer: NextComponentType = () => {
   const isMobile = useMediaQuery("(max-width: 900px)");
   const [pageLoaded, setPageLoaded] = useState(false);
-  const session = useSession();
+  const { status } = useSession();
 
   useEffect(() => {
-    if (session.status !== "loading") {
+    if (status !== "loading") {
       setPageLoaded(true);
     }
-  }, [session.status]);
+  }, [status]);
 
   useEffect(() => {
     if (document.querySelector(".footer")) {

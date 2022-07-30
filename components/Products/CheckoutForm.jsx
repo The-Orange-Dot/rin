@@ -11,14 +11,13 @@ import { useRouter } from "next/router";
 
 export default function CheckoutForm() {
   const router = useRouter();
-  const session = useSession();
+  const { data: session, status } = useSession();
   const stripe = useStripe();
   const elements = useElements();
   const [message, setMessage] = React.useState(null);
   const [isLoading, setIsLoading] = React.useState(false);
   const storedEmail = useSelector((state) => state.guestShipping.email);
-  const email =
-    session.status === "authenticated" ? session.data.user.email : storedEmail;
+  const email = status === "authenticated" ? session.email : storedEmail;
 
   React.useEffect(() => {
     if (!stripe) {

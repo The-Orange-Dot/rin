@@ -4,9 +4,9 @@ import { Box, Paper, Typography } from "@mui/material";
 import { UserDataType } from "../../types/profileTypes";
 
 const UserProfile = ({ user }: any) => {
-  const fullName = `${user?.firstName
+  const fullName = `${user?.name
     .slice(0, 1)
-    .toLocaleUpperCase()}${user?.firstName.slice(1)} ${user?.lastName
+    .toLocaleUpperCase()}${user?.name.slice(1)} ${user?.lastName
     .slice(0, 1)
     .toLocaleUpperCase()}${user?.lastName.slice(1)} `;
 
@@ -113,7 +113,7 @@ const UserProfile = ({ user }: any) => {
                 >
                   <Typography>Shipping Details</Typography>
                   <Typography variant="overline">
-                    First Name/Surname: {user?.firstName}
+                    First Name/Surname: {user?.name}
                   </Typography>
                   <Typography variant="overline">
                     Last Name/Family Name: {user?.lastName}
@@ -161,7 +161,7 @@ const UserProfile = ({ user }: any) => {
                 >
                   <Typography>Billing Details</Typography>
                   <Typography variant="overline">
-                    First Name/Surname: {user?.firstName}
+                    First Name/Surname: {user?.name}
                   </Typography>
                   <Typography variant="overline">
                     Last Name/Family Name: {user?.lastName}

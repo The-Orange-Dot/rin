@@ -71,6 +71,8 @@ const ReviewDrawer = ({
             alt={selectedProduct.name}
             layout="fill"
             objectFit="contain"
+            quality={50}
+            priority
           />
         </Box>
         <Typography>{selectedProduct.brand}</Typography>

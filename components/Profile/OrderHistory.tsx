@@ -31,6 +31,7 @@ const OrderHistory = ({ user }: any) => {
             layout="fill"
             objectFit="contain"
             priority
+            quality={5}
           />
         </Box>
         <Box

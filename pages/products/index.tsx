@@ -61,7 +61,7 @@ const Products = ({
     _count: { reviews: 0 },
   });
   const [filterDrawerOpened, setFilterDrawerOpened] = useState(false);
-  const session = useSession();
+  const { data: session, status } = useSession();
   const [pageLoaded, setPageLoaded] = useState(false);
   const [paginationNum, setPaginationNum] = useState(totalProducts);
   const dispatch = useDispatch();
@@ -80,7 +80,7 @@ const Products = ({
       .fromTo(".filter", { opacity: 0 }, { opacity: 1 }, 0)
       .fromTo(".pagnation-buttons", { opacity: 0 }, { opacity: 1 }, 0);
 
-    if (session.status === "loading") {
+    if (status === "loading") {
       if (document.querySelector(".card")) {
         gsap.set(".card", { opacity: 0 });
       }
@@ -92,7 +92,7 @@ const Products = ({
       tl.play(0);
     }
     setProductModalOpen(false);
-  }, [session.status]); //eslint-disable-line
+  }, [status]); //eslint-disable-line
 
   //Filter selectors animation once page is loaded
   useEffect(() => {

@@ -53,7 +53,7 @@ const MyReviews = ({ user, productReviews, queuedReviews }: any) => {
                 layout="fill"
                 objectFit="contain"
                 alt={product.name}
-                quality={20}
+                quality={10}
                 priority
               />
             </Box>
@@ -122,7 +122,7 @@ const MyReviews = ({ user, productReviews, queuedReviews }: any) => {
                 layout="fill"
                 objectFit="contain"
                 alt={product?.name}
-                quality={20}
+                quality={10}
                 priority
               />
             </Box>

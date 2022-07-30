@@ -14,14 +14,12 @@ const CheckoutDrawer = () => {
   const shoppingCart = useSelector(
     (state: RootState) => state.shoppingCart.value
   );
-  const session = useSession();
+  const { data: session, status } = useSession();
   const [guestShippingForm, setGuestShippingForm] = useState(false);
   const [noAddressForm, setNoAddressForm] = useState(false);
   const subtotal = shoppingCart.reduce((total: number, item: any) => {
     return (total += item.price * item.quantity);
   }, 0);
-
-  const user = session?.data?.user as UserDataType;
 
   const shipping = 0;
 
@@ -32,8 +30,8 @@ const CheckoutDrawer = () => {
   });
 
   const checkoutRouterHandler = () => {
-    if (session.status === "authenticated") {
-      fetch(`/api/users/${user.id}`).then((res) => {
+    if (session) {
+      fetch(`/api/users/${session.id}`).then((res) => {
         if (res.ok) {
           router.push("/payment");
         } else {
@@ -77,7 +75,7 @@ const CheckoutDrawer = () => {
         <NoAddressForm
           noAddressForm={noAddressForm}
           setNoAddressForm={setNoAddressForm}
-          user={user}
+          user={session}
         />
       ) : (
         <>

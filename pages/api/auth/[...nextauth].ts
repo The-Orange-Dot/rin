@@ -24,7 +24,14 @@ export const authOptions: NextAuthOptions = {
               mode: "insensitive",
             },
           },
+          include: {
+            buyHistory: {
+              orderBy: { createdAt: "desc" },
+              include: { review: true },
+            },
+          },
         });
+        console.log(user);
         //==>put bcrypt comparison here!<==
         if (user?.password === credentials?.password) {
           return user;
@@ -71,6 +78,7 @@ export const authOptions: NextAuthOptions = {
         state: token.user.state,
         country: token.user.country,
         createdAt: token.user.createdAt,
+        buyHistory: token.user.buyHistory,
       };
 
       session.status = token.user.status;

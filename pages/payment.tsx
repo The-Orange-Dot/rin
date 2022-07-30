@@ -32,7 +32,7 @@ const Payment = ({
     (state: RootState) => state.guestShipping.value
   );
   const isMobile = useMediaQuery("(max-width: 900px)");
-  const session = useSession();
+  const { data: session, status } = useSession();
   const [total, setTotal] = useState(0);
   const [clientSecret, setClientSecret] = useState("");
   const [mobileDrawer, setMobileDrawer] = useState(false);
@@ -53,7 +53,7 @@ const Payment = ({
 
   const shippingData = user.userData.id
     ? {
-        name: user.userData.firstName,
+        name: `${user.userData.firstName} ${user.userData.lastName}`,
         address: {
           line1: user.userData.address1,
           line2: user.userData.address2,
@@ -89,7 +89,7 @@ const Payment = ({
         setClientSecret(data.clientSecret);
         setTotal(data.total);
       });
-  }, [session.status]); //eslint-disable-line
+  }, [status]); //eslint-disable-line
 
   const appearance = {
     theme: "stripe",
@@ -439,6 +439,7 @@ type UserDataType = {
   zipcode: string;
   state: string;
 };
+
 export const getServerSideProps: GetServerSideProps = async (context: any) => {
   const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY, {
     apiVersion: "2020-08-27; orders_beta=v4",
@@ -455,9 +456,8 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
       props: { session: session },
     };
   }
-  const user = session.user as UserDataType;
 
-  const dbRes = await fetch(`${server}/api/users/${user.id}`);
+  const dbRes = await fetch(`${server}/api/users/${session.id}`);
 
   const userData = await dbRes.json();
 

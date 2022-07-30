@@ -25,7 +25,6 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
   // });
 
   const session = await getSession(context);
-
   if (!session) {
     return {
       redirect: {

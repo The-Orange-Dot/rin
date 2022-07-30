@@ -1,18 +1,17 @@
 import { Button, Typography, Box, CircularProgress } from "@mui/material";
 import { signOut } from "next-auth/react";
-import React, { useEffect, useState } from "react";
+import React, { SetStateAction, useEffect, useState } from "react";
 import styles from "../../styles/profile.module.css";
-import { useSession, getSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import UserProfile from "../../components/Profile/UserProfile";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
-import { ProfileSelectorType, UserDataType } from "../../types/profileTypes";
+import { ProfileSelectorType } from "../../types/profileTypes";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import RedeemIcon from "@mui/icons-material/Redeem";
 import EditIcon from "@mui/icons-material/Edit";
-import { server } from "../../config";
 import { ProductHistoryType } from "../../types/profileTypes";
 import { useMediaQuery } from "@mui/material";
 import dynamic from "next/dynamic";
@@ -28,16 +27,24 @@ const MyReviews = dynamic(() => import("../../components/Profile/MyReviews"), {
   ssr: false,
 });
 
+const MyCoupons = dynamic(() => import("../../components/Profile/MyCoupons"), {
+  ssr: false,
+});
+
 const Profile = () => {
   const router = useRouter();
   const isMobile = useMediaQuery("(max-width: 900px)");
   const [pageSelected, setPageSelected] = useState("");
   const [page, setPage] = useState(<Box />);
-  const [productReviews, setProductReviews] = useState([]);
-  const [queuedReviews, setQueuedReviews] = useState([]);
-  const [user, setUser] = useState(null);
+  const [productReviews, setProductReviews] = useState<
+    SetStateAction<ProductHistoryType[]>
+  >([]);
+  const [queuedReviews, setQueuedReviews] = useState<
+    SetStateAction<ProductHistoryType[]>
+  >([]);
+
   const [signoutLoader, setSignoutLoader] = useState(false);
-  const { data: session, status } = useSession({
+  const { data: session } = useSession({
     required: true,
     onUnauthenticated() {
       router.push("/");
@@ -56,34 +63,29 @@ const Profile = () => {
 
   const productsFetch = async () => {
     if (session) {
-      const dbRes = await fetch(`/api/users/${session?.id}?profile_fetch=true`);
+      const products = session.buyHistory as ProductHistoryType[];
 
-      const user = await dbRes.json();
-
-      const products = user.userData.buyHistory;
-
-      const productReviews = products.filter((product: ProductHistoryType) => {
+      const productReviews = products.filter((product) => {
         return product.reviewWritten === true && product.firstBuy;
       });
 
-      const queuedReviews = products.filter((product: ProductHistoryType) => {
+      const queuedReviews = products.filter((product) => {
         return product.reviewWritten === false && product.firstBuy;
       });
 
       setQueuedReviews(queuedReviews);
       setProductReviews(productReviews);
-      setUser(user.userData);
-      setPageSelected("My details");
+      setPageSelected("my details");
     }
   };
 
   const buttons = [
-    { icon: AccountCircleIcon, text: "My details" },
-    { icon: EditIcon, text: "My reviews" },
-    { icon: RedeemIcon, text: "My Coupons" },
-    { icon: BookmarkBorderIcon, text: "My wishlist" },
-    { icon: LocalShippingIcon, text: "Tracking" },
-    { icon: ShoppingCartIcon, text: "Order History" },
+    { icon: AccountCircleIcon, text: "my details" },
+    { icon: EditIcon, text: "my reviews" },
+    { icon: RedeemIcon, text: "my coupons" },
+    { icon: BookmarkBorderIcon, text: "my wishlist" },
+    { icon: LocalShippingIcon, text: "tracking" },
+    { icon: ShoppingCartIcon, text: "order history" },
   ];
 
   const selectors = buttons.map((button: ProfileSelectorType) => {
@@ -119,27 +121,28 @@ const Profile = () => {
       </Box>
     );
   });
+
   useEffect(() => {
-    if (user) {
-      if (pageSelected === "My details") {
-        setPage(<UserProfile user={user} />);
-      } else if (pageSelected === "My reviews") {
-        setPage(
-          <MyReviews
-            user={user}
-            productReviews={productReviews}
-            queuedReviews={queuedReviews}
-          />
-        );
-      } else if (pageSelected === "Order History") {
-        setPage(<OrderHistory user={user} />);
-      }
+    if (pageSelected === "my details") {
+      setPage(<UserProfile user={session} />);
+    } else if (pageSelected === "my reviews") {
+      setPage(
+        <MyReviews
+          user={session}
+          productReviews={productReviews}
+          queuedReviews={queuedReviews}
+        />
+      );
+    } else if (pageSelected === "order history") {
+      setPage(<OrderHistory user={session} />);
+    } else if (pageSelected === "my coupons") {
+      setPage(<MyCoupons user={session} />);
     }
-  }, [pageSelected, user]); //eslint-disable-line
+  }, [pageSelected, session]); //eslint-disable-line
 
   useEffect(() => {
     gsap.fromTo("#page-container", { opacity: 0 }, { opacity: 1 });
-  }, [pageSelected]);
+  }, [pageSelected, session]);
 
   return (
     <div className={styles.main}>
