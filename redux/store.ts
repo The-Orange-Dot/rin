@@ -4,6 +4,7 @@ import storage from "redux-persist/lib/storage";
 import guestAddresReducer from "./reducers/guestAddresReducer";
 import productsFilterReducer from "./reducers/productsFilterReducer";
 import reviewHelpfulReducer from "./reducers/reviewHelpfulReducer";
+import couponSelectedReducer from "./reducers/couponSelectedReducer";
 
 import {
   persistReducer,
@@ -20,7 +21,7 @@ const persistConfig = {
   version: 1,
   storage,
   whitelist: ["shoppingCart", "reviewHelpful", "guestShipping"],
-  blacklist: ["productFilter"],
+  blacklist: ["productFilter", "couponSelected"],
 };
 
 const rootReducer = combineReducers({
@@ -28,6 +29,7 @@ const rootReducer = combineReducers({
   guestShipping: guestAddresReducer,
   productFilter: productsFilterReducer,
   reviewHelpful: reviewHelpfulReducer,
+  couponSelected: couponSelectedReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;
