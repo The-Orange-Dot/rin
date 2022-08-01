@@ -5,10 +5,10 @@ import { UserDataType } from "../../types/profileTypes";
 
 const UserProfile = ({ user, isMobile }: any) => {
   const fullName = `${user?.firstName
-    .slice(0, 1)
-    .toLocaleUpperCase()}${user?.firstName.slice(1)} ${user?.lastName
-    .slice(0, 1)
-    .toLocaleUpperCase()}${user?.lastName.slice(1)} `;
+    ?.slice(0, 1)
+    .toLocaleUpperCase()}${user?.firstName?.slice(1)} ${user?.lastName
+    ?.slice(0, 1)
+    .toLocaleUpperCase()}${user?.lastName?.slice(1)} `;
 
   return isMobile ? (
     <Box

@@ -20,6 +20,7 @@ const ReviewDrawer = ({
   setQueuedReviews,
   productReviews,
   setProductReviews,
+  productsFetch,
 }: any) => {
   const [reviewInput, setReviewInput] = useState("");
   const [ratingInput, setRatingInput] = useState(0);
@@ -52,7 +53,7 @@ const ReviewDrawer = ({
         return product.id !== selectedProduct.id;
       }
     );
-
+    await productsFetch();
     setQueuedReviews(filteredProduct);
     setProductReviews([data.updatedHistory, ...productReviews]);
     setOpenReviewDrawer(false);

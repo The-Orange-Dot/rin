@@ -7,7 +7,7 @@ import DoneIcon from "@mui/icons-material/Done";
 import CloseIcon from "@mui/icons-material/Close";
 import { ProductHistoryType } from "../../types/profileTypes";
 
-const OrderHistory = ({ user }: any) => {
+const OrderHistory = ({ user, isMobile }: any) => {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
@@ -20,14 +20,24 @@ const OrderHistory = ({ user }: any) => {
     return (
       <Box
         key={product.id}
-        sx={{
-          display: "flex",
-          width: "80%",
-          justifyContent: "space-between",
-          mb: 1,
-          p: 2,
-          "&:hover": { border: "1px solid black", opacity: 0.7 },
-        }}
+        sx={
+          isMobile
+            ? {
+                display: "flex",
+                width: "100%",
+                justifyContent: "space-between",
+                mb: 1,
+                p: 1,
+              }
+            : {
+                display: "flex",
+                width: "80%",
+                justifyContent: "space-between",
+                mb: 1,
+                p: 2,
+                "&:hover": { border: "1px solid black", opacity: 0.7 },
+              }
+        }
       >
         <Box sx={{ width: 100, height: 100, position: "relative", flex: 0.5 }}>
           <Image
@@ -83,7 +93,7 @@ const OrderHistory = ({ user }: any) => {
             variant="overline"
             sx={{ display: "flex", alignItems: "center", lineHeight: "1rem" }}
           >
-            Review Written:{" "}
+            {isMobile ? "Review:" : "Review Written:"}
             {product.reviewWritten ? <DoneIcon /> : <CloseIcon />}
           </Typography>
         </Box>

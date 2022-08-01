@@ -18,12 +18,11 @@ import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import RedeemIcon from "@mui/icons-material/Redeem";
 import EditIcon from "@mui/icons-material/Edit";
-import { ProductHistoryType } from "../../types/profileTypes";
 import { useMediaQuery } from "@mui/material";
 import dynamic from "next/dynamic";
 import gsap from "gsap";
 import ProfileSelectorDrawer from "../../components/Profile/Mobile/ProfileSelectorDrawer";
-import MenuIcon from "@mui/icons-material/Menu";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 
 const OrderHistory = dynamic(
   () => import("../../components/Profile/OrderHistory"),
@@ -54,30 +53,64 @@ const Profile = () => {
     },
   });
   const [user, setUser] = useState(session);
+  const [dataLoaded, setDataLoaded] = useState(false);
 
   useEffect(() => {
-    productsFetch();
-    setSignoutLoader(false);
-    console.log("test");
-  }, [session]); //eslint-disable-line
+    if (session) {
+      productsFetch().then(() => {
+        setDataLoaded(true);
+        setSignoutLoader(false);
+      });
+    }
+  }, [status, session]); //eslint-disable-line
+
+  useEffect(() => {
+    if (user) {
+      profileInit();
+    }
+  }, [dataLoaded]); //eslint-disable-line
+
+  const productsFetch = async () => {
+    if (session) {
+      const dbRes = await fetch(`/api/users/${session?.id}?profile_fetch=true`);
+      const user = await dbRes.json();
+      setProducts(user.userData.buyHistory);
+      setUser(user.userData);
+    }
+  };
+
+  useEffect(() => {
+    if (user) {
+      if (pageSelected === "my details") {
+        setPage(<UserProfile user={user} isMobile={isMobile} />);
+      } else if (pageSelected === "my reviews") {
+        setPage(
+          <MyReviews
+            user={user}
+            products={products}
+            productsFetch={productsFetch}
+          />
+        );
+      } else if (pageSelected === "order history") {
+        setPage(<OrderHistory user={user} isMobile={isMobile} />);
+      } else if (pageSelected === "my coupons") {
+        setPage(<MyCoupons user={user} />);
+      }
+    }
+  }, [pageSelected]); //eslint-disable-line
+
+  useEffect(() => {
+    gsap.fromTo("#page-container", { opacity: 0 }, { opacity: 1 });
+  }, [pageSelected, session]);
 
   const signOutHandler = async () => {
     setSignoutLoader(true);
     await signOut({ callbackUrl: `/products` });
   };
 
-  const productsFetch = async () => {
-    if (session) {
-      const dbRes = await fetch(`/api/users/${session?.id}?profile_fetch=true`);
-
-      const user = await dbRes.json();
-      setProducts(user.userData.buyHistory);
-
-      setPageSelected("my details");
-
-      setUser(user.userData);
-      gsap.to("#selector-container", { opacity: 1 });
-    }
+  const profileInit = () => {
+    setPageSelected("my details");
+    gsap.to("#selector-container", { opacity: 1 });
   };
 
   const buttons = [
@@ -123,22 +156,6 @@ const Profile = () => {
     );
   });
 
-  useEffect(() => {
-    if (pageSelected === "my details") {
-      setPage(<UserProfile user={user} isMobile={isMobile} />);
-    } else if (pageSelected === "my reviews") {
-      setPage(<MyReviews user={user} products={products} />);
-    } else if (pageSelected === "order history") {
-      setPage(<OrderHistory user={user} />);
-    } else if (pageSelected === "my coupons") {
-      setPage(<MyCoupons user={user} />);
-    }
-  }, [pageSelected, user]); //eslint-disable-line
-
-  useEffect(() => {
-    gsap.fromTo("#page-container", { opacity: 0 }, { opacity: 1 });
-  }, [pageSelected, session]);
-
   return (
     <div className={styles.main}>
       {isMobile ? (
@@ -162,6 +179,7 @@ const Profile = () => {
               mb: 5,
             }}
           >
+            <ArrowDropDownIcon />
             <Typography
               variant="overline"
               sx={{ fontSize: "1rem" }}

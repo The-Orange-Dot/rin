@@ -35,7 +35,6 @@ const MyCoupons = ({ user }: any) => {
     }
     const res = await fetch("/api/coupons");
     const promotionalCodes = await res.json();
-    console.log(promotionalCodes);
     setCodes(promotionalCodes.codes);
     setUsedCodes(promotionalCodes.usedCodes);
   };

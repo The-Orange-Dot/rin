@@ -8,7 +8,7 @@ import ReviewDrawer from "./ReviewDrawer";
 import { useMediaQuery } from "@mui/material";
 import { useSession } from "next-auth/react";
 
-const MyReviews = ({ user, products }: any) => {
+const MyReviews = ({ user, products, productsFetch }: any) => {
   const isMobile = useMediaQuery("(max-width: 900px)");
   const { data: session } = useSession();
   const [selectedProduct, setSelectedProduct] = useState<
@@ -316,6 +316,7 @@ const MyReviews = ({ user, products }: any) => {
           setQueuedReviews={setQueuedReviews}
           productReviews={productReviews}
           setProductReviews={setProductReviews}
+          productsFetch={productsFetch}
         />
       </Drawer>
     </Box>

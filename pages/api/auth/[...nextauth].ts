@@ -63,7 +63,7 @@ export const authOptions: NextAuthOptions = {
       //MUST AT LEAST HAVE NAME EMAIL AND IMAGE
 
       session = {
-        name: token.user.firstName,
+        firstName: token.user.firstName,
         lastName: token.user.lastName,
         email: token.user.email,
         image: token.user.image,
