@@ -21,6 +21,7 @@ import GuestAddressInput from "./GuestAddressInput";
 import NoAddressForm from "./NoAddressHandler";
 import CouponCheckoutSelector from "./CouponCheckoutSelector";
 import { PromotionCodeType } from "../../types/couponTypes";
+import { Dollars } from "../MoneyFormatter";
 
 const StyledTypography = styled((props: TypographyProps) => (
   <MuiTypography {...props} variant="overline" />
@@ -55,13 +56,7 @@ const CheckoutDrawer = () => {
       beforeDiscount * (couponSelected?.coupon?.percent_off / 100) * 100
     ) / 100;
 
-  const formatter = new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-    minimumFractionDigits: 2,
-  });
-
-  const total = formatter.format(beforeDiscount - couponSaved);
+  const total = beforeDiscount - couponSaved;
 
   const shoppingCartCheckout = shoppingCart.map((product: any) => {
     return <ItemInCheckoutDrawer product={product} key={product.name} />;
@@ -213,22 +208,17 @@ const CheckoutDrawer = () => {
               flexDirection: "column",
             }}
           >
-            <StyledTypography>
-              Subtotal: {formatter.format(subtotal)}
-            </StyledTypography>
+            <StyledTypography>Subtotal: {Dollars(subtotal)}</StyledTypography>
             <StyledTypography>Shipping: ${shipping}</StyledTypography>
             <StyledTypography>
               Tax: --- (Calculated at checkout)
             </StyledTypography>
             <StyledTypography>
               Promotion/Coupon: {couponSelected?.coupon?.percent_off}% off{" "}
-              {couponSaved === 0
-                ? ""
-                : `(You
-              saved ${formatter.format(couponSaved)})`}
+              {couponSaved === 0 ? "" : `(You'll save ${Dollars(couponSaved)})`}
             </StyledTypography>
             <StyledTypography sx={{ fontWeight: 600, fontSize: ".9rem" }}>
-              Estimated Total: {total}
+              Estimated Total: {Dollars(total)}
             </StyledTypography>
             <StyledTypography color="secondary" sx={{ fontSize: ".6rem" }}>
               Your final total will be calculated at checkout.
