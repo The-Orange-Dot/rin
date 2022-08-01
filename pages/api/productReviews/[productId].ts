@@ -1,3 +1,4 @@
+import { truncateSync } from "fs";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { prisma } from "../../../prisma/db";
 
@@ -56,43 +57,77 @@ export default async function handler(
       return buy.reviewWritten === true;
     });
 
-    const createdReview = await prisma.review.create({ data: reviewData });
+    if (!firstTimeReview) {
+      await prisma.userOrderHistory.updateMany({
+        //@ts-ignore
+        where: {
+          AND: [
+            { productId: productId },
+            { userId: user.id },
+            { firstBuy: { equals: false } },
+          ],
+        },
+        data: { reviewWritten: true, firstBuy: false },
+      });
 
-    const updatedHistory = await prisma.userOrderHistory.update({
-      where: { id: product.id },
-      data: { reviewWritten: true },
-      include: { review: true },
-    });
+      const createdReview = await prisma.review.create({ data: reviewData });
 
-    await prisma.userOrderHistory.updateMany({
-      //@ts-ignore
-      where: { AND: [{ productId: productId }, { userId: user.id }] },
-      data: { reviewWritten: true },
-    });
+      const updatedHistory = await prisma.userOrderHistory.update({
+        where: { id: product.id },
+        data: { reviewWritten: true },
+        include: { review: true },
+      });
 
-    if (createdReview) {
-      const coupon = !firstTimeReview
-        ? await stripe.promotionCodes.create({
-            coupon: "cEAJYRIi",
-            code: "FIRST10OFF",
-            customer: user.id,
-            active: true,
-            max_redemptions: 1,
-          })
-        : await stripe.promotionCodes.create({
-            coupon: "gMd2EUMQ",
-            customer: user.id,
-            active: true,
-            max_redemptions: 1,
-          });
+      // if (createdReview) {
+      //   const coupon = !firstTimeReview
+      //     ? await stripe.promotionCodes.create({
+      //         coupon: "cEAJYRIi",
+      //         code: "FIRST10OFF",
+      //         customer: user.id,
+      //         active: true,
+      //         max_redemptions: 1,
+      //       })
+      //     : await stripe.promotionCodes.create({
+      //         coupon: "gMd2EUMQ",
+      //         customer: user.id,
+      //         active: true,
+      //         max_redemptions: 1,
+      //       });
+      // }
 
-      console.log(coupon);
+      res.status(200).json({ updatedHistory: updatedHistory });
+    } else {
+      const createdReview = await prisma.review.create({ data: reviewData });
+
+      const updatedHistory = await prisma.userOrderHistory.update({
+        where: { id: product.id },
+        data: { reviewWritten: true, firstBuy: true },
+        include: { review: true },
+      });
+
+      // if (createdReview) {
+      //   const coupon = !firstTimeReview
+      //     ? await stripe.promotionCodes.create({
+      //         coupon: "cEAJYRIi",
+      //         code: "FIRST10OFF",
+      //         customer: user.id,
+      //         active: true,
+      //         max_redemptions: 1,
+      //       })
+      //     : await stripe.promotionCodes.create({
+      //         coupon: "gMd2EUMQ",
+      //         customer: user.id,
+      //         active: true,
+      //         max_redemptions: 1,
+      //       });
+      // }
+
+      res.status(200).json({ updatedHistory: updatedHistory });
     }
 
-    // await prisma.review.delete({ where: { id: "cl67g4s6v1559uw9imnfpepyy" } });
-    // await prisma.review.delete({ where: { id: "cl67gin1g1889uw9iqcs5stes" } });
-    // await prisma.review.delete({ where: { id: "cl67gvoxn2134uw9i0mmoqo7u" } });
-
-    res.status(200).json({ updatedHistory: updatedHistory });
+    // await prisma.review.delete({ where: { id: "cl67gi4721868uw9i0lspo8ts" } });
+    // await prisma.review.delete({ where: { id: "cl67gzi7u2232uw9ihoh0hel3" } });
+    // await prisma.review.delete({ where: { id: "cl6aooyrt0490d99i52nm6inm" } });
+    // await prisma.review.delete({ where: { id: "cl6ap775o0689d99iztbxrrxu" } });
   }
 }

@@ -62,7 +62,9 @@ const MobileCheckout = ({ setOpenDrawer, openDrawer }: any) => {
 
   const shipping = 0;
 
-  const beforeDiscount = Math.ceil(subtotal * 1.086 * 100) / 100 + shipping;
+  const tax = 1;
+
+  const beforeDiscount = Math.ceil(subtotal * tax * 100) / 100 + shipping;
 
   const couponSaved =
     Math.ceil(
@@ -198,7 +200,7 @@ const MobileCheckout = ({ setOpenDrawer, openDrawer }: any) => {
                 variant="overline"
                 sx={{ fontWeight: 600, lineHeight: 1.5, fontSize: "1rem" }}
               >
-                Estimated Total: {Dollars(total)}
+                Estimated Total: {Dollars(total)} + tax
               </Typography>
             </Box>
             <Box>

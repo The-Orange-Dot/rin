@@ -49,7 +49,9 @@ const CheckoutDrawer = () => {
 
   const shipping = 0;
 
-  const beforeDiscount = Math.ceil(subtotal * 1.086 * 100) / 100 + shipping;
+  const tax = 1;
+
+  const beforeDiscount = Math.ceil(subtotal * tax * 100) / 100 + shipping;
 
   const couponSaved =
     Math.ceil(
@@ -218,7 +220,7 @@ const CheckoutDrawer = () => {
               {couponSaved === 0 ? "" : `(You'll save ${Dollars(couponSaved)})`}
             </StyledTypography>
             <StyledTypography sx={{ fontWeight: 600, fontSize: ".9rem" }}>
-              Estimated Total: {Dollars(total)}
+              Estimated Total: {Dollars(total)} + tax
             </StyledTypography>
             <StyledTypography color="secondary" sx={{ fontSize: ".6rem" }}>
               Your final total will be calculated at checkout.

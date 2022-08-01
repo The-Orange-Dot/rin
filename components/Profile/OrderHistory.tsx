@@ -1,5 +1,5 @@
 import { Box } from "@mui/system";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { Typography } from "@mui/material";
 import { DateFormatter } from "../DateFormatter";
@@ -8,7 +8,12 @@ import CloseIcon from "@mui/icons-material/Close";
 import { ProductHistoryType } from "../../types/profileTypes";
 
 const OrderHistory = ({ user }: any) => {
-  const products = user.buyHistory;
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    const products = user.buyHistory;
+    setProducts(products);
+  }, [user]);
 
   const productHistory = products.map((product: ProductHistoryType) => {
     const date = DateFormatter(product.createdAt);

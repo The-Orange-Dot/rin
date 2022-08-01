@@ -1,4 +1,10 @@
-import { Button, Typography, Box, CircularProgress } from "@mui/material";
+import {
+  Button,
+  Typography,
+  Box,
+  CircularProgress,
+  Drawer,
+} from "@mui/material";
 import { signOut } from "next-auth/react";
 import React, { useEffect, useState } from "react";
 import styles from "../../styles/profile.module.css";
@@ -16,6 +22,8 @@ import { ProductHistoryType } from "../../types/profileTypes";
 import { useMediaQuery } from "@mui/material";
 import dynamic from "next/dynamic";
 import gsap from "gsap";
+import ProfileSelectorDrawer from "../../components/Profile/Mobile/ProfileSelectorDrawer";
+import MenuIcon from "@mui/icons-material/Menu";
 
 const OrderHistory = dynamic(
   () => import("../../components/Profile/OrderHistory"),
@@ -36,9 +44,8 @@ const Profile = () => {
   const isMobile = useMediaQuery("(max-width: 900px)");
   const [pageSelected, setPageSelected] = useState("");
   const [page, setPage] = useState(<Box />);
-  const [productReviews, setProductReviews] = useState([]);
-  const [queuedReviews, setQueuedReviews] = useState([]);
-
+  const [mobileSelectorOpen, setMobileSelectorOpen] = useState(false);
+  const [products, setProducts] = useState([]);
   const [signoutLoader, setSignoutLoader] = useState(false);
   const { data: session, status } = useSession({
     required: true,
@@ -51,6 +58,7 @@ const Profile = () => {
   useEffect(() => {
     productsFetch();
     setSignoutLoader(false);
+    console.log("test");
   }, [session]); //eslint-disable-line
 
   const signOutHandler = async () => {
@@ -63,20 +71,10 @@ const Profile = () => {
       const dbRes = await fetch(`/api/users/${session?.id}?profile_fetch=true`);
 
       const user = await dbRes.json();
-
-      const products = user.userData.buyHistory;
-
-      const productReviews = products.filter((product: ProductHistoryType) => {
-        return product.reviewWritten === true && product.firstBuy;
-      });
-
-      const queuedReviews = products.filter((product: ProductHistoryType) => {
-        return product.reviewWritten === false && product.firstBuy;
-      });
+      setProducts(user.userData.buyHistory);
 
       setPageSelected("my details");
-      setQueuedReviews(queuedReviews);
-      setProductReviews(productReviews);
+
       setUser(user.userData);
       gsap.to("#selector-container", { opacity: 1 });
     }
@@ -127,15 +125,9 @@ const Profile = () => {
 
   useEffect(() => {
     if (pageSelected === "my details") {
-      setPage(<UserProfile user={user} />);
+      setPage(<UserProfile user={user} isMobile={isMobile} />);
     } else if (pageSelected === "my reviews") {
-      setPage(
-        <MyReviews
-          user={user}
-          productReviews={productReviews}
-          queuedReviews={queuedReviews}
-        />
-      );
+      setPage(<MyReviews user={user} products={products} />);
     } else if (pageSelected === "order history") {
       setPage(<OrderHistory user={user} />);
     } else if (pageSelected === "my coupons") {
@@ -150,7 +142,53 @@ const Profile = () => {
   return (
     <div className={styles.main}>
       {isMobile ? (
-        <Box></Box>
+        <Box
+          sx={{
+            width: "100%",
+            height: "100%",
+            display: "flex",
+            alignItems: "center",
+            flexDirection: "column",
+          }}
+        >
+          <Box
+            sx={{
+              border: "1px solid black",
+              width: "60%",
+              height: "5vh",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              mb: 5,
+            }}
+          >
+            <Typography
+              variant="overline"
+              sx={{ fontSize: "1rem" }}
+              onClick={() => {
+                setMobileSelectorOpen(true);
+              }}
+            >
+              {pageSelected}
+            </Typography>
+          </Box>
+
+          {page}
+
+          <Drawer
+            open={mobileSelectorOpen}
+            onClose={() => {
+              setMobileSelectorOpen(false);
+            }}
+            anchor="top"
+          >
+            <ProfileSelectorDrawer
+              buttons={buttons}
+              setPageSelected={setPageSelected}
+              setMobileSelectorOpen={setMobileSelectorOpen}
+            />
+          </Drawer>
+        </Box>
       ) : (
         <>
           <Box

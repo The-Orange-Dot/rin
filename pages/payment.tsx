@@ -10,17 +10,7 @@ import PaymentCartItems from "../components/PaymentCartItems";
 import { useSession } from "next-auth/react";
 import { useMediaQuery } from "@mui/material";
 import MobilePaymentCartItems from "../components/Products/Mobile/MobilePaymentCartItems";
-
-type Address = {
-  name: string;
-  address: {
-    line1: string;
-    line2: string | "";
-    city: string;
-    state: string;
-    postal_code: string;
-  };
-};
+import { Dollars } from "../components/MoneyFormatter";
 
 const Payment = ({
   user,
@@ -30,6 +20,9 @@ const Payment = ({
   );
   const storedShipping = useSelector(
     (state: RootState) => state.guestShipping.value
+  );
+  const couponSelected = useSelector(
+    (state: RootState) => state.couponSelected.value
   );
   const isMobile = useMediaQuery("(max-width: 900px)");
   const { data: session, status } = useSession();
@@ -81,6 +74,7 @@ const Payment = ({
         ids: cardItemsId,
         shipping: shippingData,
         customerId: customerId,
+        coupon: couponSelected,
       }),
     })
       .then((res) => res.json())
@@ -305,7 +299,7 @@ const Payment = ({
                     variant="overline"
                     sx={{ fontSize: "2rem", lineHeight: "3rem" }}
                   >
-                    {`$${(total / 100).toFixed(2)}`}
+                    {Dollars(total / 100)}
                   </Typography>
                   <Typography
                     variant="overline"

@@ -11,6 +11,7 @@ export default async function handler(req, res) {
   const { ids } = req.body;
   const { shipping } = req.body;
   const { customerId } = req.body;
+  const { coupon } = req.body;
 
   let userData = {};
 
@@ -87,6 +88,7 @@ export default async function handler(req, res) {
       line_items: lineItemObject,
       payment: { settings: { payment_method_types: ["card"] } },
       customer: customerId,
+      automatic_tax: { enabled: true },
       shipping_details: {
         name: fullName,
         address: {
@@ -98,8 +100,12 @@ export default async function handler(req, res) {
           country: user.country,
         },
       },
-      discounts: null, //Change this for coupons in the future
+      discounts: [],
     };
+
+    if (coupon.active !== false) {
+      userData.discounts.push({ promotion_code: coupon.id });
+    }
   } else {
     //If the user is a GUEST, this data will pass to stripe
     userData = {

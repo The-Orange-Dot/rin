@@ -15,6 +15,7 @@ export default async function handler(
   if (req.method === "POST") {
     const { products } = req.body;
     const { user } = req.body;
+    const { coupon } = req.body;
     const registeredUser: boolean = req.body.registeredUser;
     const { registeredUserData } = req.body;
     const username = registeredUser ? registeredUserData.username : "guest";
@@ -33,32 +34,40 @@ export default async function handler(
     // //@ts-ignore
     // await prisma.orderHistory.create({ data: data });
 
-    if (username !== "guest") {
+    if (registeredUser) {
       Promise.all(
         products.map(async (product: any) => {
+          const date = new Date(Date.now());
+
+          if (coupon.id !== "") {
+            await stripe.promotionCodes.update(coupon.id, {
+              active: false,
+              metadata: { used_date: date.toString() },
+            });
+          }
+
+          const productHistory = await prisma.userOrderHistory.findMany({
+            where: {
+              AND: [
+                { userId: { contains: registeredUserData.id } },
+                //@ts-ignore
+                { productId: product.id },
+              ],
+            },
+          });
+
+          const boughtBefore = productHistory.some(
+            (product) => product.firstBuy === true
+          );
+
+          const reviewDone = productHistory.some(
+            (product) => product.reviewWritten
+          );
           try {
-            const productHistory = await prisma.userOrderHistory.findMany({
-              where: {
-                AND: [
-                  { userId: { contains: registeredUserData.id } },
-                  //@ts-ignore
-                  { productId: product.id },
-                ],
-              },
-            });
-
-            const boughtBefore = productHistory.find((product) => {
-              //@ts-ignore
-              return product.firstBuy;
-            });
-
-            const reviewDone = productHistory.find((product) => {
-              //@ts-ignore
-              return product.reviewWritten;
-            });
-
             if (boughtBefore) {
               if (reviewDone) {
+                console.log("Bought before + Review written");
+
                 const productData = {
                   userId: registeredUserData.id,
                   quantity: product.quantity,
@@ -67,6 +76,7 @@ export default async function handler(
                   productId: product.id,
                   image: product.image,
                   brand: product.brand,
+                  firstBuy: false,
                   reviewWritten: true,
                   name: product.name,
                 };
@@ -74,6 +84,7 @@ export default async function handler(
                 //@ts-ignore
                 await prisma.userOrderHistory.create({ data: productData });
               } else {
+                console.log("Bought before + Review not written");
                 const productData = {
                   userId: registeredUserData.id,
                   quantity: product.quantity,
@@ -83,6 +94,7 @@ export default async function handler(
                   image: product.image,
                   brand: product.brand,
                   reviewWritten: false,
+                  firstBuy: false,
                   name: product.name,
                 };
 
@@ -90,6 +102,7 @@ export default async function handler(
                 await prisma.userOrderHistory.create({ data: productData });
               }
             } else {
+              console.log("Never bought before + Review not written");
               const productData = {
                 userId: registeredUserData.id,
                 quantity: product.quantity,
@@ -123,8 +136,8 @@ export default async function handler(
           }
         })
       );
-    }
 
-    res.status(201).json({ created: "Order history created" });
+      res.status(201).json({ created: "Order history created" });
+    }
   }
 }

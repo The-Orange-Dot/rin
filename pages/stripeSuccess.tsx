@@ -9,7 +9,7 @@ import { useSession } from "next-auth/react";
 import { removeShipping } from "../redux/reducers/guestAddresReducer";
 
 const StripeSuccess = () => {
-  const session = useSession();
+  const { data: session, status } = useSession();
   const dispatch = useDispatch();
   const router = useRouter();
   const shoppingCart = useSelector(
@@ -22,6 +22,10 @@ const StripeSuccess = () => {
     (state: RootState) => state.guestShipping.value
   );
 
+  const couponSelected = useSelector(
+    (state: RootState) => state.couponSelected.value
+  );
+
   useEffect(() => {
     if (shoppingCart.length <= 0) {
       router.push("/products");
@@ -29,7 +33,7 @@ const StripeSuccess = () => {
   }, [shoppingCart]); //eslint-disable-line
 
   useEffect(() => {
-    if (shoppingCart.length > 0 && session.status !== "loading") {
+    if (shoppingCart.length > 0 && status !== "loading") {
       fetch("/api/products", {
         method: "PATCH",
         body: JSON.stringify({ items: shoppingCart }),
@@ -37,7 +41,7 @@ const StripeSuccess = () => {
       }).then((res) => {
         if (res.ok) {
           res.json().then(async (data) => {
-            const registeredUser = session.status === "authenticated";
+            const registeredUser = status === "authenticated" ? true : false;
 
             await fetch("/api/orderHistory", {
               method: "POST",
@@ -45,37 +49,42 @@ const StripeSuccess = () => {
                 products: shoppingCart,
                 user: userAddress,
                 registeredUser: registeredUser,
-                registeredUserData: session.data?.user,
+                registeredUserData: session,
+                coupon: couponSelected,
               }),
               headers: { "Content-Type": "application/json" },
+            }).then((res) => {
+              console.log("RES: ", res);
+              if (res.ok) {
+                res.json().then((data) => {
+                  console.log(data);
+                  if (!saveAddress) {
+                    dispatch(
+                      removeShipping({
+                        name: "",
+                        address: {
+                          line1: "",
+                          line2: "",
+                          city: "",
+                          state: "",
+                          postal_code: "",
+                          country: "US",
+                        },
+                      })
+                    );
+                  }
+
+                  setTimeout(() => {
+                    dispatch(removeItem([]));
+                  }, 2000);
+                });
+              }
             });
-
-            if (!saveAddress) {
-              dispatch(
-                removeShipping({
-                  name: "",
-                  address: {
-                    line1: "",
-                    line2: "",
-                    city: "",
-                    state: "",
-                    postal_code: "",
-                    country: "US",
-                  },
-                })
-              );
-            }
-
-            setTimeout(() => {
-              dispatch(removeItem([]));
-            }, 2000);
-
-            console.log(data.res, data.items);
           });
         }
       });
     }
-  }, [session.status]); //eslint-disable-line
+  }, [status]); //eslint-disable-line
 
   return (
     <Container

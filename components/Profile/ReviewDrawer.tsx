@@ -9,17 +9,17 @@ import {
 import React, { ChangeEvent, SyntheticEvent, useState } from "react";
 import Image from "next/image";
 import { DateFormatter } from "../DateFormatter";
-import { OrderHistoryType } from "../../types/productTypes";
 import { ProductHistoryType } from "../../types/profileTypes";
 
 const ReviewDrawer = ({
+  openReviewDrawer,
   setOpenReviewDrawer,
-  setQueuedReviewsState,
-  setProductReviewsState,
-  productReviewsState,
-  queuedReviewsState,
   user,
   selectedProduct,
+  queuedReviews,
+  setQueuedReviews,
+  productReviews,
+  setProductReviews,
 }: any) => {
   const [reviewInput, setReviewInput] = useState("");
   const [ratingInput, setRatingInput] = useState(0);
@@ -47,14 +47,14 @@ const ReviewDrawer = ({
 
     const data = await res.json();
 
-    const filteredProduct = queuedReviewsState.filter(
+    const filteredProduct = queuedReviews.filter(
       (product: ProductHistoryType) => {
         return product.id !== selectedProduct.id;
       }
     );
 
-    setQueuedReviewsState(filteredProduct);
-    setProductReviewsState([data.updatedHistory, ...productReviewsState]);
+    setQueuedReviews(filteredProduct);
+    setProductReviews([data.updatedHistory, ...productReviews]);
     setOpenReviewDrawer(false);
   };
 

@@ -5,18 +5,35 @@ import Image from "next/image";
 import { DateFormatter } from "../DateFormatter";
 import { Rating } from "@mui/material";
 import ReviewDrawer from "./ReviewDrawer";
+import { useMediaQuery } from "@mui/material";
+import { useSession } from "next-auth/react";
 
-const MyReviews = ({ user, productReviews, queuedReviews }: any) => {
-  const products = user.buyHistory;
-  const [productReviewsState, setProductReviewsState] =
-    useState(productReviews);
-  const [queuedReviewsState, setQueuedReviewsState] = useState(queuedReviews);
+const MyReviews = ({ user, products }: any) => {
+  const isMobile = useMediaQuery("(max-width: 900px)");
+  const { data: session } = useSession();
   const [selectedProduct, setSelectedProduct] = useState<
     SetStateAction<ProductHistoryType> | {}
   >({});
   const [openReviewDrawer, setOpenReviewDrawer] = useState(false);
+  const [productReviews, setProductReviews] = useState([]);
+  const [queuedReviews, setQueuedReviews] = useState([]);
 
-  const queuedReviewsCards = queuedReviewsState.map(
+  useEffect(() => {
+    if (session) {
+      const productReviews = products.filter((product: ProductHistoryType) => {
+        return product.reviewWritten === true && product.firstBuy;
+      });
+
+      const queuedReviews = products.filter((product: ProductHistoryType) => {
+        return product.reviewWritten === false && product.firstBuy === true;
+      });
+
+      setProductReviews(productReviews);
+      setQueuedReviews(queuedReviews);
+    }
+  }, [user, session]);
+
+  const queuedReviewsCards = queuedReviews.map(
     (product: ProductHistoryType, i: number) => {
       return (
         <Box key={product.id}>
@@ -87,10 +104,10 @@ const MyReviews = ({ user, productReviews, queuedReviews }: any) => {
     }
   );
 
-  const productReviewCards = productReviewsState.map(
+  const productReviewCards = productReviews.map(
     (product: ProductHistoryType) => {
-      const reviewDate = DateFormatter(product?.review?.createdAt);
-
+      // const reviewDate = DateFormatter(product?.review?.createdAt);
+      const reviewDate = "test";
       return (
         <Box
           key={product?.id}
@@ -181,7 +198,7 @@ const MyReviews = ({ user, productReviews, queuedReviews }: any) => {
               }}
             >
               <Typography>
-                {product?.review.helpful} People found this useful
+                {product?.review?.helpful} People found this useful
               </Typography>
             </Box>
           </Box>
@@ -196,16 +213,38 @@ const MyReviews = ({ user, productReviews, queuedReviews }: any) => {
   };
 
   return (
-    <Box sx={{ width: "100%", height: "75vh", display: "flex" }}>
+    <Box
+      sx={
+        isMobile
+          ? {
+              width: "100%",
+              height: "100vh",
+              display: "flex",
+              flexDirection: "column",
+            }
+          : { width: "100%", height: "75vh", display: "flex" }
+      }
+    >
       <Box
-        sx={{
-          width: "30%",
-          height: "100%",
-          display: "flex",
-          flexDirection: "column",
-          border: "1px solid #dfdfdf",
-          m: 0.5,
-        }}
+        sx={
+          isMobile
+            ? {
+                width: "100%",
+                height: "100%",
+                display: "flex",
+                flexDirection: "column",
+                border: "1px solid #dfdfdf",
+                m: 0.5,
+              }
+            : {
+                width: "30%",
+                height: "100%",
+                display: "flex",
+                flexDirection: "column",
+                border: "1px solid #dfdfdf",
+                m: 0.5,
+              }
+        }
       >
         <Box
           sx={{
@@ -224,17 +263,34 @@ const MyReviews = ({ user, productReviews, queuedReviews }: any) => {
             Review products for discounts on your next purchase!
           </Typography>
         </Box>
-
-        {queuedReviewsCards}
+        <Box
+          sx={
+            isMobile
+              ? { width: "100%", height: "25vh", overflowY: "scroll", pb: 1 }
+              : { width: "100%" }
+          }
+        >
+          {queuedReviewsCards}
+        </Box>
       </Box>
       <Box
-        sx={{
-          width: "70%",
-          height: "100%",
-          display: "flex",
-          flexDirection: "column",
-          m: 0.5,
-        }}
+        sx={
+          isMobile
+            ? {
+                width: "100%",
+                height: "100%",
+                display: "flex",
+                flexDirection: "column",
+                m: 0.5,
+              }
+            : {
+                width: "70%",
+                height: "100%",
+                display: "flex",
+                flexDirection: "column",
+                m: 0.5,
+              }
+        }
       >
         <Box sx={{ width: "100%", height: 75, backgroundColor: "#dfdfdf" }}>
           <Typography variant="overline" sx={{ fontWeight: "bold" }}>
@@ -255,10 +311,11 @@ const MyReviews = ({ user, productReviews, queuedReviews }: any) => {
           selectedProduct={selectedProduct}
           setOpenReviewDrawer={setOpenReviewDrawer}
           user={user}
-          setQueuedReviewsState={setQueuedReviewsState}
-          productReviewsState={productReviewsState}
-          setProductReviewsState={setProductReviewsState}
-          queuedReviewsState={queuedReviewsState}
+          openReviewDrawer={openReviewDrawer}
+          queuedReviews={queuedReviews}
+          setQueuedReviews={setQueuedReviews}
+          productReviews={productReviews}
+          setProductReviews={setProductReviews}
         />
       </Drawer>
     </Box>

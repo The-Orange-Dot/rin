@@ -23,8 +23,14 @@ export default async function handler(
     active: true,
   });
 
+  const usedPromotionCodes = await stripe.promotionCodes.list({
+    customer: session.id,
+    active: false,
+  });
+
   return res.status(200).json({
     message: "Success",
     codes: promotionCodes.data,
+    usedCodes: usedPromotionCodes.data,
   });
 }
