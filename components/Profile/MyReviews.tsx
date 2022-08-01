@@ -31,7 +31,7 @@ const MyReviews = ({ user, products }: any) => {
       setProductReviews(productReviews);
       setQueuedReviews(queuedReviews);
     }
-  }, [user, session]);
+  }, [user, session]); //eslint-disable-line
 
   const queuedReviewsCards = queuedReviews.map(
     (product: ProductHistoryType, i: number) => {

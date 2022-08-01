@@ -78,22 +78,22 @@ export default async function handler(
         include: { review: true },
       });
 
-      // if (createdReview) {
-      //   const coupon = !firstTimeReview
-      //     ? await stripe.promotionCodes.create({
-      //         coupon: "cEAJYRIi",
-      //         code: "FIRST10OFF",
-      //         customer: user.id,
-      //         active: true,
-      //         max_redemptions: 1,
-      //       })
-      //     : await stripe.promotionCodes.create({
-      //         coupon: "gMd2EUMQ",
-      //         customer: user.id,
-      //         active: true,
-      //         max_redemptions: 1,
-      //       });
-      // }
+      if (createdReview) {
+        const coupon = !firstTimeReview
+          ? await stripe.promotionCodes.create({
+              coupon: "cEAJYRIi",
+              code: "FIRST10OFF",
+              customer: user.id,
+              active: true,
+              max_redemptions: 1,
+            })
+          : await stripe.promotionCodes.create({
+              coupon: "gMd2EUMQ",
+              customer: user.id,
+              active: true,
+              max_redemptions: 1,
+            });
+      }
 
       res.status(200).json({ updatedHistory: updatedHistory });
     } else {
@@ -105,22 +105,22 @@ export default async function handler(
         include: { review: true },
       });
 
-      // if (createdReview) {
-      //   const coupon = !firstTimeReview
-      //     ? await stripe.promotionCodes.create({
-      //         coupon: "cEAJYRIi",
-      //         code: "FIRST10OFF",
-      //         customer: user.id,
-      //         active: true,
-      //         max_redemptions: 1,
-      //       })
-      //     : await stripe.promotionCodes.create({
-      //         coupon: "gMd2EUMQ",
-      //         customer: user.id,
-      //         active: true,
-      //         max_redemptions: 1,
-      //       });
-      // }
+      if (createdReview) {
+        const coupon = !firstTimeReview
+          ? await stripe.promotionCodes.create({
+              coupon: "cEAJYRIi",
+              code: "FIRST10OFF",
+              customer: user.id,
+              active: true,
+              max_redemptions: 1,
+            })
+          : await stripe.promotionCodes.create({
+              coupon: "gMd2EUMQ",
+              customer: user.id,
+              active: true,
+              max_redemptions: 1,
+            });
+      }
 
       res.status(200).json({ updatedHistory: updatedHistory });
     }
