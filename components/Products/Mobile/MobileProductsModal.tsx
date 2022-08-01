@@ -1,4 +1,10 @@
-import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+import React, {
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useState,
+  ReactElement,
+} from "react";
 import {
   Modal,
   Fade,
@@ -13,10 +19,11 @@ import styles from "../../../styles/products.module.css";
 import { useRouter } from "next/router";
 import MobileCheckoutButton from "./MobileCheckoutButton";
 import { ProductReviewType, ProductType } from "../../../types/productTypes";
-import MobileIngredientsAccordion from "./MobileIngredientsAccordian";
+import MobileIngredientsAccordion from "./MobileIngredientsAccordion";
 import MobileProductReview from "./MobileProductReview";
 import Image from "next/image";
 import gsap from "gsap";
+import MobileInstructionsAccordion from "./MobileInstructionsAccordion";
 
 interface PoductModalType {
   productModalOpen: boolean;
@@ -38,6 +45,7 @@ const MobileProductsModal = ({
   const [reviewsData, setReviewsData] = useState(selectedProduct?.reviews);
   const [numberOfReviews, setNumberOfreviews] = useState<number>(3);
   const [imageNum, setImageNum] = useState(0);
+  const [instructions, setInstructions] = useState<ReactElement[]>([]);
 
   useEffect(() => {
     setLoadMoreReviews(false);
@@ -57,15 +65,30 @@ const MobileProductsModal = ({
       const productDescriptionArray = product?.description?.map(
         (text: string) => {
           return (
-            <Typography key={text.length} variant="caption" sx={{ mb: 1 }}>
-              - {text}
+            <Typography key={text.length} variant="caption">
+              {text}
             </Typography>
           );
         }
       );
       setDescription(productDescriptionArray);
     }
-  }, [product?.description]);
+
+    if (selectedProduct?.instructions?.length > 0) {
+      const instructions = selectedProduct.instructions.map(
+        (instruction, i) => {
+          const index = i + 1;
+          return (
+            <Typography key={i}>
+              {index}. {instruction}
+            </Typography>
+          );
+        }
+      );
+
+      setInstructions(instructions);
+    }
+  }, [product?.description]); //eslint-disable-line
 
   useEffect(() => {
     router.beforePopState(({ url }) => {
@@ -245,6 +268,9 @@ const MobileProductsModal = ({
               </Typography>
               {description}
               <Divider sx={{ mt: 2 }} />
+
+              <MobileInstructionsAccordion product={product} />
+              <Divider />
 
               <MobileIngredientsAccordion product={product} />
               <Divider />

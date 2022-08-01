@@ -74,10 +74,11 @@ const Profile = () => {
         return product.reviewWritten === false && product.firstBuy;
       });
 
+      setPageSelected("my details");
       setQueuedReviews(queuedReviews);
       setProductReviews(productReviews);
-      setPageSelected("my details");
       setUser(user.userData);
+      gsap.to("#selector-container", { opacity: 1 });
     }
   };
 
@@ -173,7 +174,9 @@ const Profile = () => {
                 justifyContent: "center",
                 flexDirection: "column",
                 mr: 2,
+                opacity: 0,
               }}
+              id="selector-container"
             >
               {selectors}
               <Button

@@ -40,6 +40,7 @@ export default async function handler(
         brand: true,
         description: true,
         rating: true,
+        instructions: true,
         ingredients: true,
         _count: { select: { reviews: true } },
         reviews: {

@@ -23,8 +23,6 @@ export default async function handler(
     active: true,
   });
 
-  console.log(promotionCodes);
-
   return res.status(200).json({
     message: "Success",
     codes: promotionCodes.data,

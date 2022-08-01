@@ -35,6 +35,7 @@ export type ProductType = {
   ingredients: string[];
   reviews: ProductReviewType[];
   _count: CountType;
+  instructions: string[];
 };
 
 export type Item = {

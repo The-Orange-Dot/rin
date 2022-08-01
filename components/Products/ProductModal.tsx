@@ -11,12 +11,19 @@ import {
   CircularProgress,
 } from "@mui/material";
 
-import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+import React, {
+  Dispatch,
+  ReactElement,
+  SetStateAction,
+  useEffect,
+  useState,
+} from "react";
 import { ProductType, ProductReviewType } from "../../types/productTypes";
 import { useRouter } from "next/router";
 import IngredientsAccordion from "./IngredientsAccordion";
 import ProductReviews from "./ProductReviews";
 import CheckoutButton from "./CheckoutButton";
+import InstructionsAccordion from "./InstructionsAccordion";
 import Image from "next/image";
 import gsap from "gsap";
 
@@ -40,6 +47,7 @@ const ProductModal = ({
   const [options, setOptions] = useState("");
   const [reviewsData, setReviewsData] = useState<ProductReviewType[]>([]);
   const [imageNum, setImageNum] = useState(0);
+  const [instructions, setInstructions] = useState<ReactElement[]>([]);
 
   //Sets description from selected product
   useEffect(() => {
@@ -64,14 +72,29 @@ const ProductModal = ({
             <Typography
               key={text.length}
               variant="caption"
-              sx={{ mb: 2, textAlign: "start", fontSize: ".85rem" }}
+              sx={{ textAlign: "start", fontSize: ".85rem" }}
             >
-              - {text}
+              {text}
             </Typography>
           );
         }
       );
       setDescription(productDescriptionArray);
+    }
+
+    if (selectedProduct?.instructions?.length > 0) {
+      const instructions = selectedProduct.instructions.map(
+        (instruction, i) => {
+          const index = i + 1;
+          return (
+            <Typography key={i}>
+              {index}. {instruction}
+            </Typography>
+          );
+        }
+      );
+
+      setInstructions(instructions);
     }
   }, [selectedProduct]);
 
@@ -334,6 +357,8 @@ const ProductModal = ({
                 </Box>
                 <Divider sx={{ mt: 2 }} />
 
+                <InstructionsAccordion product={product} />
+                <Divider />
                 <IngredientsAccordion product={product} />
 
                 <Divider />
