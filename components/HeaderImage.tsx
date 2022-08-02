@@ -17,6 +17,7 @@ const HeaderImage = ({ isMobile }: any) => {
   const router = useRouter();
   const [loadingStore, setLoadingStore] = useState(false);
   const [imagesCounter, setImagesCounter] = useState(0);
+  const [imageLoaded, setImageLoaded] = useState(false);
 
   useEffect(() => {
     gsap.set("#title", { opacity: 0, y: -10 });
@@ -26,7 +27,7 @@ const HeaderImage = ({ isMobile }: any) => {
   }, []);
 
   useEffect(() => {
-    if (status !== "loading") {
+    if (imageLoaded) {
       setTimeout(() => {
         gsap
           .timeline()
@@ -36,7 +37,7 @@ const HeaderImage = ({ isMobile }: any) => {
           .to(".buttons", { opacity: 1 });
       }, 1000);
     }
-  }, [status, imagesCounter]);
+  }, [imageLoaded, imagesCounter]);
 
   const images = [
     {
@@ -70,6 +71,7 @@ const HeaderImage = ({ isMobile }: any) => {
         counter = 0;
       }
       setTimeout(() => {
+        setImageLoaded(false);
         gsap
           .timeline({
             onComplete: setImagesCounter,
@@ -81,7 +83,7 @@ const HeaderImage = ({ isMobile }: any) => {
       }, 10000);
       console.log("Change!");
     }
-  }, [imagesCounter]);
+  }, [imagesCounter]); //eslint-disable-line
 
   return (
     <Box
@@ -261,6 +263,7 @@ const HeaderImage = ({ isMobile }: any) => {
           id="image"
           quality={50}
           priority
+          onLoadingComplete={() => setImageLoaded(true)}
         />
       </Box>
       <Paper
