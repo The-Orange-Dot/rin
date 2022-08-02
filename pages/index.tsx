@@ -19,23 +19,56 @@ const Home: NextPage = () => {
 
   const instructionsElement = instructions.map((item, index) => {
     return (
-      <>
+      <Box
+        sx={
+          isMobile
+            ? { width: "80%", textAlign: "center", mb: 2 }
+            : index === instructions.length - 1
+            ? {
+                width: "10%",
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }
+            : {
+                width: "20%",
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }
+        }
+        key={index}
+      >
         <Box
           sx={
-            isMobile
-              ? { width: "80%", textAlign: "center", mb: 2 }
-              : { width: "20%" }
+            index === instructions.length - 1
+              ? { width: "100%", textAlign: "center" }
+              : { width: "50%", textAlign: "center" }
           }
-          key={index}
         >
           <Typography sx={{ color: "white" }}>{item}</Typography>
         </Box>
-        {index === instructions.length - 1 ? null : isMobile ? (
-          <ArrowDownwardIcon sx={{ color: "white", mb: 2 }} />
-        ) : (
-          <ArrowForwardIosIcon sx={{ color: "white" }} />
+        {index === instructions.length - 1 ? null : (
+          <Box sx={{ width: "50%", textAlign: "end" }}>
+            <ArrowForwardIosIcon sx={{ color: "white" }} />
+          </Box>
         )}
-      </>
+      </Box>
+    );
+  });
+
+  const mobileInstructions = instructions.map((item, index) => {
+    return (
+      <Box sx={{ width: "80%", textAlign: "center", mb: 2 }} key={index}>
+        <Box sx={{ width: "100%", textAlign: "center" }}>
+          <Typography sx={{ color: "white" }}>{item}</Typography>
+        </Box>
+        {index === instructions.length - 1 ? null : (
+          <Box sx={{ width: "50%", textAlign: "end" }}>
+            <ArrowDownwardIcon sx={{ color: "white", mb: 2, mt: 2 }} />
+          </Box>
+        )}
+      </Box>
     );
   });
 
@@ -96,7 +129,7 @@ const Home: NextPage = () => {
                 }
           }
         >
-          {instructionsElement}
+          {isMobile ? mobileInstructions : instructionsElement}
         </Box>
       </Box>
     </div>

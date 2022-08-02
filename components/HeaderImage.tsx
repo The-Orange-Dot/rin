@@ -186,9 +186,9 @@ const HeaderImage = ({ isMobile }: any) => {
             sx={
               (isMobile && imagesCounter === 0) ||
               (isMobile && imagesCounter === 2)
-                ? { fontWeight: 100, color: "#fff", mb: 2, ml: 2 }
+                ? { fontWeight: 200, color: "#fff", mb: 2, ml: 2 }
                 : {
-                    fontWeight: 100,
+                    fontWeight: 200,
                     color: "#312f2f",
                     mb: 2,
                     ml: 2,
