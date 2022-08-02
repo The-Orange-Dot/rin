@@ -6,9 +6,38 @@ import { Typography, Box, Container, Paper } from "@mui/material";
 import { GetStaticProps, GetStaticPaths } from "next";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { useMediaQuery } from "@mui/material";
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 
 const Home: NextPage = () => {
   const isMobile = useMediaQuery("(max-width: 900px)");
+
+  const instructions = [
+    "Discover exclusive Japanese brands of cosmetics and skincare products",
+    "Purchase and review products that arrive directly from Japan",
+    "Review the products and receive large discounts on your next purchase!",
+  ];
+
+  const instructionsElement = instructions.map((item, index) => {
+    return (
+      <>
+        <Box
+          sx={
+            isMobile
+              ? { width: "80%", textAlign: "center", mb: 2 }
+              : { width: "20%" }
+          }
+          key={index}
+        >
+          <Typography sx={{ color: "white" }}>{item}</Typography>
+        </Box>
+        {index === instructions.length - 1 ? null : isMobile ? (
+          <ArrowDownwardIcon sx={{ color: "white", mb: 2 }} />
+        ) : (
+          <ArrowForwardIosIcon sx={{ color: "white" }} />
+        )}
+      </>
+    );
+  });
 
   return (
     <div className={styles.main}>
@@ -27,51 +56,47 @@ const Home: NextPage = () => {
         <HeaderImage isMobile={isMobile} />
       </Box>
       <Box
-        sx={{
-          backgroundColor: "#312f2f",
-          width: "100%",
-          height: "25vh",
-
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
+        sx={
+          isMobile
+            ? {
+                backgroundColor: "#312f2f",
+                width: "100%",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+                pt: 5,
+                pb: 5,
+              }
+            : {
+                backgroundColor: "#312f2f",
+                width: "100%",
+                height: "25vh",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+              }
+        }
       >
-        <Typography sx={{ color: "white", mb: 3 }}>Easy as 1-2-3</Typography>
+        <Typography sx={{ color: "white", mb: 5 }}>Easy as 1-2-3</Typography>
         <Box
-          sx={{
-            display: "flex",
-            justifyContent: "space-evenly",
-            alignItems: "center",
-          }}
+          sx={
+            isMobile
+              ? {
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "space-evenly",
+                  alignItems: "center",
+                }
+              : {
+                  display: "flex",
+                  justifyContent: "space-evenly",
+                  alignItems: "center",
+                }
+          }
         >
-          <Box sx={{ width: "10%" }}>
-            <Typography sx={{ color: "white" }}>
-              Register an account with us
-            </Typography>
-          </Box>
-          <ArrowForwardIosIcon sx={{ color: "white", width: "5%" }} />
-          <Box sx={{ width: "10%" }}>
-            <Typography sx={{ color: "white" }}>
-              Discover exclusive Japanese brands of cosmetics and skincare
-              products
-            </Typography>
-          </Box>
-          <ArrowForwardIosIcon sx={{ color: "white", width: "5%" }} />
-          <Box sx={{ width: "10%" }}>
-            <Typography sx={{ color: "white" }}>
-              Purchase and review products that arrive directly from Japan
-            </Typography>
-          </Box>
-          <ArrowForwardIosIcon sx={{ color: "white", width: "5%" }} />
-
-          <Box sx={{ width: "10%" }}>
-            <Typography sx={{ color: "white" }}>
-              Review the products and receive large discounts on your next
-              purchase!
-            </Typography>
-          </Box>
+          {instructionsElement}
         </Box>
       </Box>
     </div>
