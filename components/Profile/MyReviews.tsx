@@ -7,6 +7,7 @@ import { Rating } from "@mui/material";
 import ReviewDrawer from "./ReviewDrawer";
 import { useMediaQuery } from "@mui/material";
 import { useSession } from "next-auth/react";
+import MobileReviewDrawer from "./Mobile/MobileReviewDrawer";
 
 const MyReviews = ({ user, products, productsFetch }: any) => {
   const isMobile = useMediaQuery("(max-width: 900px)");
@@ -307,17 +308,31 @@ const MyReviews = ({ user, products, productsFetch }: any) => {
         }}
         open={openReviewDrawer}
       >
-        <ReviewDrawer
-          selectedProduct={selectedProduct}
-          setOpenReviewDrawer={setOpenReviewDrawer}
-          user={user}
-          openReviewDrawer={openReviewDrawer}
-          queuedReviews={queuedReviews}
-          setQueuedReviews={setQueuedReviews}
-          productReviews={productReviews}
-          setProductReviews={setProductReviews}
-          productsFetch={productsFetch}
-        />
+        {isMobile ? (
+          <MobileReviewDrawer
+            selectedProduct={selectedProduct}
+            setOpenReviewDrawer={setOpenReviewDrawer}
+            user={user}
+            openReviewDrawer={openReviewDrawer}
+            queuedReviews={queuedReviews}
+            setQueuedReviews={setQueuedReviews}
+            productReviews={productReviews}
+            setProductReviews={setProductReviews}
+            productsFetch={productsFetch}
+          />
+        ) : (
+          <ReviewDrawer
+            selectedProduct={selectedProduct}
+            setOpenReviewDrawer={setOpenReviewDrawer}
+            user={user}
+            openReviewDrawer={openReviewDrawer}
+            queuedReviews={queuedReviews}
+            setQueuedReviews={setQueuedReviews}
+            productReviews={productReviews}
+            setProductReviews={setProductReviews}
+            productsFetch={productsFetch}
+          />
+        )}
       </Drawer>
     </Box>
   );
