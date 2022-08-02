@@ -53,7 +53,7 @@ const HeaderImage = ({ isMobile }: any) => {
         "Try products that can only be found in Japan, rate them and suggest them to others to enjoy.",
     },
     {
-      image: "/makeup.jpg",
+      image: "/makeup_2.jpg",
       title: "Be beautiful. Be fierce. Be you.",
       subtitle:
         "Browse through hundreds of products to find what you need to be the best you that you can be.",
@@ -90,9 +90,8 @@ const HeaderImage = ({ isMobile }: any) => {
       sx={
         isMobile
           ? {
-              mt: 10,
               width: "50%",
-              height: "70%",
+              height: "100%",
               overflow: "hidden",
               display: "flex",
               justifyContent: "center",
@@ -114,11 +113,11 @@ const HeaderImage = ({ isMobile }: any) => {
           isMobile
             ? {
                 position: "absolute",
-                mt: 15,
+                mt: 5,
                 top: 0,
                 left: "0%",
                 width: "100%",
-                height: "50%",
+                height: "70%",
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "space-between",
@@ -154,8 +153,7 @@ const HeaderImage = ({ isMobile }: any) => {
         >
           <Typography
             sx={
-              (isMobile && imagesCounter === 0) ||
-              (isMobile && imagesCounter === 2)
+              isMobile
                 ? { fontWeight: 600, color: "#fff", mb: 2 }
                 : {
                     fontWeight: 600,
@@ -184,8 +182,7 @@ const HeaderImage = ({ isMobile }: any) => {
         >
           <Typography
             sx={
-              (isMobile && imagesCounter === 0) ||
-              (isMobile && imagesCounter === 2)
+              isMobile
                 ? { fontWeight: 200, color: "#fff", mb: 2, ml: 2 }
                 : {
                     fontWeight: 200,
@@ -245,7 +242,7 @@ const HeaderImage = ({ isMobile }: any) => {
                 position: "relative",
                 width: "100%",
                 height: "100%",
-                opacity: 0.8,
+                opacity: 0.5,
               }
             : {
                 position: "relative",
@@ -267,14 +264,25 @@ const HeaderImage = ({ isMobile }: any) => {
       </Box>
       <Paper
         square
-        sx={{
-          position: "absolute",
-          right: "0%",
-          width: "100%",
-          height: "70%",
-          zIndex: -1,
-          backgroundColor: "#949495",
-        }}
+        sx={
+          isMobile
+            ? {
+                position: "absolute",
+                right: "0%",
+                width: "100%",
+                height: "100%",
+                zIndex: -1,
+                backgroundColor: "#949495",
+              }
+            : {
+                position: "absolute",
+                right: "0%",
+                width: "100%",
+                height: "90%",
+                zIndex: -1,
+                backgroundColor: "#949495",
+              }
+        }
       />
     </Box>
   );

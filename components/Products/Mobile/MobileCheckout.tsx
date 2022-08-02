@@ -1,4 +1,12 @@
-import { Paper, Box, Typography, Divider, Button, styled } from "@mui/material";
+import {
+  Paper,
+  Box,
+  Typography,
+  Divider,
+  Button,
+  styled,
+  Alert,
+} from "@mui/material";
 import React, { useState } from "react";
 import { RootState } from "../../../redux/store";
 import { useSelector } from "react-redux";
@@ -10,6 +18,7 @@ import CouponCheckoutSelector from "../CouponCheckoutSelector";
 import { PromotionCodeType } from "../../../types/couponTypes";
 import { Dollars } from "../../MoneyFormatter";
 import MuiTypography, { TypographyProps } from "@mui/material/Typography";
+import gsap from "gsap";
 
 const StyledTypography = styled((props: TypographyProps) => (
   <MuiTypography {...props} variant="overline" />
@@ -20,7 +29,7 @@ const StyledTypography = styled((props: TypographyProps) => (
 const MobileCheckout = ({ setOpenDrawer, openDrawer }: any) => {
   const [guestShippingForm, setGuestShippingForm] = useState(false);
   const router = useRouter();
-  const session = useSession();
+  const { data: session, status } = useSession();
   const [couponOpen, setCouponOpen] = useState(false);
   const [coupons, setCoupons] = useState([]);
   const couponSelected = useSelector(
@@ -30,8 +39,12 @@ const MobileCheckout = ({ setOpenDrawer, openDrawer }: any) => {
     (state: RootState) => state.shoppingCart.value
   );
 
+  const notLoggedInHandler = () => {
+    gsap.timeline().to("#alert", { x: 500 }).to("#alert", { x: 0, delay: 5 });
+  };
+
   const checkoutRouterHandler = () => {
-    if (session.status === "authenticated") {
+    if (status === "authenticated") {
       router.push("/payment");
     } else {
       setGuestShippingForm(true);
@@ -40,14 +53,16 @@ const MobileCheckout = ({ setOpenDrawer, openDrawer }: any) => {
 
   const couponHandler = async () => {
     setCouponOpen(!couponOpen);
-    if (!couponOpen) {
-      const res = await fetch("/api/coupons");
-      const coupons = await res.json();
-      if (coupons) {
-        const couponCards = coupons.codes.map((code: PromotionCodeType) => {
-          return <CouponCheckoutSelector code={code} key={code.id} />;
-        });
-        setCoupons(couponCards);
+    if (status === "authenticated") {
+      if (!couponOpen) {
+        const res = await fetch("/api/coupons");
+        const coupons = await res.json();
+        if (coupons) {
+          const couponCards = coupons.codes.map((code: PromotionCodeType) => {
+            return <CouponCheckoutSelector code={code} key={code.id} />;
+          });
+          setCoupons(couponCards);
+        }
       }
     }
   };
@@ -141,7 +156,9 @@ const MobileCheckout = ({ setOpenDrawer, openDrawer }: any) => {
               <Box sx={{ height: "10%" }}>
                 <Typography
                   onClick={() => {
-                    couponHandler();
+                    status === "authenticated"
+                      ? couponHandler()
+                      : notLoggedInHandler();
                   }}
                 >
                   + Apply promo code or coupon
@@ -150,11 +167,24 @@ const MobileCheckout = ({ setOpenDrawer, openDrawer }: any) => {
               <Box
                 sx={
                   couponOpen
-                    ? { height: "90%", transition: ".2s", overflowY: "scroll" }
+                    ? {
+                        height: "90%",
+                        transition: ".2s",
+                        overflowY: "scroll",
+                        textAlign: "center",
+                      }
                     : { height: 0, transition: ".2s" }
                 }
               >
-                {couponOpen ? coupons : null}
+                {couponOpen ? (
+                  coupons.length <= 0 ? (
+                    <Typography sx={{ mt: 5 }}>
+                      You currently dont have any coupons
+                    </Typography>
+                  ) : (
+                    coupons
+                  )
+                ) : null}
               </Box>
             </Box>
             <Divider />
@@ -177,6 +207,13 @@ const MobileCheckout = ({ setOpenDrawer, openDrawer }: any) => {
             </Box>
             <Divider />
           </Box>
+          <Alert
+            sx={{ position: "absolute", bottom: "50%", left: -500 }}
+            id="alert"
+            severity="error"
+          >
+            <Typography>Please log in to check your coupons</Typography>
+          </Alert>
 
           <Box
             sx={{
@@ -214,6 +251,7 @@ const MobileCheckout = ({ setOpenDrawer, openDrawer }: any) => {
                 that I have read the Privacy Policy.
               </StyledTypography>
             </Box>
+
             <Box sx={{ width: "100%", height: "35%" }}>
               <Button
                 variant="contained"
@@ -221,9 +259,7 @@ const MobileCheckout = ({ setOpenDrawer, openDrawer }: any) => {
                 sx={{ height: "100%" }}
                 onClick={() => checkoutRouterHandler()}
               >
-                {session.status === "authenticated"
-                  ? "Checkout"
-                  : "Continue as Guest"}
+                {status === "authenticated" ? "Checkout" : "Continue as Guest"}
               </Button>
             </Box>
           </Box>
