@@ -34,7 +34,7 @@ const HeaderImage = ({ isMobile }: any) => {
           .to("#title", { opacity: 1, y: 0 })
           .to("#subtitle", { opacity: 1, y: 0 })
           .to(".buttons", { opacity: 1 });
-      }, 500);
+      }, 1000);
     }
   }, [status, imagesCounter]);
 
@@ -85,15 +85,27 @@ const HeaderImage = ({ isMobile }: any) => {
 
   return (
     <Box
-      sx={{
-        mt: 10,
-        width: "50%",
-        height: "70%",
-        overflow: "hidden",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
+      sx={
+        isMobile
+          ? {
+              mt: 10,
+              width: "70%",
+              height: "70%",
+              overflow: "hidden",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }
+          : {
+              mt: 10,
+              width: "50%",
+              height: "70%",
+              overflow: "hidden",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }
+      }
     >
       <Box
         sx={
@@ -129,7 +141,7 @@ const HeaderImage = ({ isMobile }: any) => {
           sx={
             isMobile
               ? {
-                  minHeight: 220,
+                  minHeight: "55%",
                   display: "flex",
                   alignItems: "center",
                   ml: 1,
@@ -140,7 +152,7 @@ const HeaderImage = ({ isMobile }: any) => {
         >
           <Typography
             sx={
-              isMobile
+              (isMobile && imagesCounter === 0) || imagesCounter === 2
                 ? { fontWeight: 600, color: "#fff", mb: 2 }
                 : {
                     fontWeight: 600,
@@ -158,7 +170,7 @@ const HeaderImage = ({ isMobile }: any) => {
           sx={
             isMobile
               ? {
-                  minHeight: 150,
+                  minHeight: "40%",
                   display: "flex",
                   ml: 1,
                   width: "90%",
@@ -169,7 +181,7 @@ const HeaderImage = ({ isMobile }: any) => {
         >
           <Typography
             sx={
-              isMobile
+              (isMobile && imagesCounter === 0) || imagesCounter === 2
                 ? { fontWeight: 100, color: "#fff", mb: 2, ml: 2 }
                 : {
                     fontWeight: 100,
@@ -247,6 +259,7 @@ const HeaderImage = ({ isMobile }: any) => {
           layout="fill"
           objectFit="cover"
           id="image"
+          quality={50}
           priority
         />
       </Box>
