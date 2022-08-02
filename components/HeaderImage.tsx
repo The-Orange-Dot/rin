@@ -143,7 +143,7 @@ const HeaderImage = ({ isMobile }: any) => {
           sx={
             isMobile
               ? {
-                  minHeight: "55%",
+                  minHeight: "60%",
                   display: "flex",
                   alignItems: "center",
                   ml: 1,
@@ -173,7 +173,7 @@ const HeaderImage = ({ isMobile }: any) => {
           sx={
             isMobile
               ? {
-                  minHeight: "40%",
+                  minHeight: "35%",
                   display: "flex",
                   ml: 1,
                   width: "90%",
@@ -206,29 +206,17 @@ const HeaderImage = ({ isMobile }: any) => {
               ? {
                   width: "80%",
                   display: "flex",
-                  justifyContent: "space-between",
+                  justifyContent: "center",
                   mt: 5,
                 }
               : {
                   width: "90%",
                   display: "flex",
-                  justifyContent: "space-between",
+                  justifyContent: "center",
                   mt: 5,
                 }
           }
         >
-          <Button
-            sx={
-              isMobile
-                ? { width: 200, height: 50, mr: 1 }
-                : { width: 200, height: 50 }
-            }
-            variant="contained"
-            disableElevation
-            className="buttons"
-          >
-            Register Account
-          </Button>
           <Button
             sx={
               isMobile
@@ -244,18 +232,27 @@ const HeaderImage = ({ isMobile }: any) => {
             {loadingStore ? (
               <CircularProgress color="inherit" size={25} />
             ) : (
-              "See store"
+              "Go to store"
             )}
           </Button>
         </Box>
       </Box>
 
       <Box
-        sx={{
-          position: "relative",
-          width: "100%",
-          height: "100%",
-        }}
+        sx={
+          isMobile
+            ? {
+                position: "relative",
+                width: "100%",
+                height: "100%",
+                opacity: 0.8,
+              }
+            : {
+                position: "relative",
+                width: "100%",
+                height: "100%",
+              }
+        }
       >
         <Image
           src={images[imagesCounter].image}
