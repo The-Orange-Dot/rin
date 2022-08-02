@@ -125,7 +125,7 @@ const ProductModal = ({
           pathname: "/products",
         },
         {},
-        { scroll: false }
+        { scroll: false, shallow: true }
       );
 
       setQuantity(1);
@@ -207,7 +207,9 @@ const ProductModal = ({
   return (
     <Modal
       open={productModalOpen}
-      onClose={() => setProductModalOpen(false)}
+      onClose={() => {
+        setProductModalOpen(false);
+      }}
       sx={{
         display: "flex",
         justifyContent: "center",

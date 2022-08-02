@@ -10,10 +10,30 @@ import {
   Rating,
 } from "@mui/material";
 import { DateFormatter } from "../../DateFormatter";
+import SentimentVerySatisfiedIcon from "@mui/icons-material/SentimentVerySatisfied";
+import EmojiEmotionsIcon from "@mui/icons-material/EmojiEmotions";
+import {
+  addLike,
+  removeLike,
+} from "../../../redux/reducers/reviewHelpfulReducer";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../../redux/store";
 
 const MobileProductReview = ({ review }: any) => {
   const [reviewTooLong, setReviewTooLong] = useState(false);
   const [description, setDescription] = useState(review?.description);
+  const [helpful, setHelpful] = useState(review.helpful);
+  const [liked, setLiked] = useState(false);
+  const likesArray = useSelector(
+    (state: RootState) => state.reviewHelpful.value
+  );
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const liked = likesArray.includes(review?.id);
+    setLiked(liked);
+  }, [likesArray]); //eslint-disable-line
+
   useEffect(() => {
     if (review?.description?.length > 150) {
       setReviewTooLong(true);
@@ -32,6 +52,27 @@ const MobileProductReview = ({ review }: any) => {
     if (review?.description?.length > 150) {
       setReviewTooLong(!reviewTooLong);
     }
+  };
+
+  const likesHandler = () => {
+    updateReviewLikes(true);
+    setHelpful(helpful + 1);
+
+    dispatch(addLike(review.id));
+  };
+
+  const removeLikeHandler = () => {
+    updateReviewLikes(false);
+    dispatch(removeLike(review.id));
+    setHelpful(helpful - 1);
+  };
+
+  const updateReviewLikes = async (helpful: boolean) => {
+    await fetch(`/api/review_helpful/${review?.id}`, {
+      method: "PATCH",
+      body: JSON.stringify({ helpful }),
+      headers: { "Content-Type": "application/json" },
+    });
   };
 
   return (
@@ -79,9 +120,21 @@ const MobileProductReview = ({ review }: any) => {
           <Typography variant="caption" color="secondary">
             Posted: {DateFormatter(review.createdAt.toString())}
           </Typography>
-          <Typography variant="caption" color="secondary">
-            {review?.helpful} found this useful
-          </Typography>
+          <Box
+            sx={{ display: "flex", alignItems: "center", cursor: "pointer" }}
+            onClick={() => {
+              liked ? removeLikeHandler() : likesHandler();
+            }}
+          >
+            {liked ? (
+              <EmojiEmotionsIcon fontSize="small" />
+            ) : (
+              <SentimentVerySatisfiedIcon fontSize="small" />
+            )}
+            <Typography variant="caption" color="secondary">
+              {helpful} found this useful
+            </Typography>
+          </Box>
         </Box>
         <Divider sx={{ mt: 2 }} />
       </Box>

@@ -46,7 +46,7 @@ const MyCoupons = ({ user }: any) => {
     return (
       <Grid item key={code.id} xs={isMobile ? 6 : 4}>
         <Card className="coupon-cards" sx={{ opacity: 0 }}>
-          <CardActionArea>
+          <CardActionArea disabled>
             <CardMedia
               sx={
                 isMobile

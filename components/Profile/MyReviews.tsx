@@ -107,8 +107,7 @@ const MyReviews = ({ user, products, productsFetch }: any) => {
 
   const productReviewCards = productReviews.map(
     (product: ProductHistoryType) => {
-      // const reviewDate = DateFormatter(product?.review?.createdAt);
-      const reviewDate = "test";
+      const reviewDate = DateFormatter(product?.review?.createdAt);
       return (
         <Box
           key={product?.id}
@@ -117,9 +116,6 @@ const MyReviews = ({ user, products, productsFetch }: any) => {
             display: "flex",
             flexDirection: "column",
             p: 1,
-            "&:hover": {
-              border: "1px solid black",
-            },
           }}
         >
           <Box sx={{ display: "flex", width: "100%" }}>
