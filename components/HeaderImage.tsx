@@ -50,7 +50,7 @@ const HeaderImage = ({ isMobile }: any) => {
       image: "/face_wash.jpg",
       title: "Find new routines for your morning",
       subtitle:
-        "Try products that can only be found in Japan, rate them and suggest them to others to to enjoy.",
+        "Try products that can only be found in Japan, rate them and suggest them to others to enjoy.",
     },
     {
       image: "/makeup.jpg",
@@ -91,7 +91,7 @@ const HeaderImage = ({ isMobile }: any) => {
         isMobile
           ? {
               mt: 10,
-              width: "70%",
+              width: "50%",
               height: "70%",
               overflow: "hidden",
               display: "flex",
@@ -154,7 +154,8 @@ const HeaderImage = ({ isMobile }: any) => {
         >
           <Typography
             sx={
-              (isMobile && imagesCounter === 0) || imagesCounter === 2
+              (isMobile && imagesCounter === 0) ||
+              (isMobile && imagesCounter === 2)
                 ? { fontWeight: 600, color: "#fff", mb: 2 }
                 : {
                     fontWeight: 600,
@@ -183,7 +184,8 @@ const HeaderImage = ({ isMobile }: any) => {
         >
           <Typography
             sx={
-              (isMobile && imagesCounter === 0) || imagesCounter === 2
+              (isMobile && imagesCounter === 0) ||
+              (isMobile && imagesCounter === 2)
                 ? { fontWeight: 100, color: "#fff", mb: 2, ml: 2 }
                 : {
                     fontWeight: 100,
