@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import { Box, Paper, Typography } from "@mui/material";
-import { UserDataType } from "../../types/profileTypes";
+import { Box, Paper, Typography, Button, Drawer } from "@mui/material";
+import EditInfoDrawer from "./EditInfoDrawer";
 
 const UserProfile = ({ user, isMobile }: any) => {
+  const [editDrawerOpen, setEditDrawerOpen] = useState(false);
   const fullName = `${user?.firstName
     ?.slice(0, 1)
     .toLocaleUpperCase()}${user?.firstName?.slice(1)} ${user?.lastName
@@ -164,7 +165,6 @@ const UserProfile = ({ user, isMobile }: any) => {
           sx={{
             m: 5,
             width: "100%",
-            height: "100%",
             display: "flex",
             justifyContent: "space-between",
           }}
@@ -172,7 +172,6 @@ const UserProfile = ({ user, isMobile }: any) => {
           <Box
             sx={{
               width: "100%",
-              height: "100%",
               mr: 2,
               mt: 15,
               p: 3,
@@ -203,7 +202,6 @@ const UserProfile = ({ user, isMobile }: any) => {
               >
                 <Box
                   sx={{
-                    height: "100%",
                     width: "60%",
                     display: "flex",
                     flexDirection: "column",
@@ -242,7 +240,6 @@ const UserProfile = ({ user, isMobile }: any) => {
               <Box
                 sx={{
                   width: "100%",
-                  height: "100%",
                   display: "flex",
                   flexDirection: "column",
                   alignItems: "center",
@@ -251,7 +248,6 @@ const UserProfile = ({ user, isMobile }: any) => {
               >
                 <Box
                   sx={{
-                    height: "100%",
                     width: "60%",
                     display: "flex",
                     flexDirection: "column",
@@ -287,9 +283,27 @@ const UserProfile = ({ user, isMobile }: any) => {
                 </Box>
               </Box>
             </Box>
+            <Box sx={{ mt: 5 }}>
+              <Button
+                variant="contained"
+                sx={{ width: 200, height: 50 }}
+                onClick={() => setEditDrawerOpen(true)}
+              >
+                Edit info
+              </Button>
+            </Box>
           </Box>
         </Box>
       </Box>
+      <Drawer
+        onClose={() => {
+          setEditDrawerOpen(false);
+        }}
+        open={editDrawerOpen}
+        anchor="bottom"
+      >
+        <EditInfoDrawer />
+      </Drawer>
     </Box>
   );
 };

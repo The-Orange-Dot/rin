@@ -135,7 +135,7 @@ const Home: NextPage = () => {
       eng: "From the heart",
       bodyTitle: "Try products exclusive only to Japan",
       bodyText:
-        "Packed to the brim with the latest and most popular J-cosme, from skin care to make-up, products that are exclusive only to Japan are here at our store for you to be the first to experience.",
+        "Packed to the brim with the latest and most popular J-cosmetics, from skin care to make-up, products that are exclusive only to Japan are here at our store for you to be the first to experience.",
       image: "/makeup_items.jpg",
     },
     {
@@ -144,7 +144,7 @@ const Home: NextPage = () => {
       bodyTitle: "Tell others what you think.",
       bodyText:
         "We believe in the power of word-of-mouth and the community that it brings. Review products that you bought to share how you feel about them. You'll also receive coupons for large discounts to use or share with others.",
-      image: "/smartphone_girls.jpg",
+      image: "/cute_phone_2.jpg",
     },
   ];
 
