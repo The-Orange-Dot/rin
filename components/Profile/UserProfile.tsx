@@ -204,7 +204,7 @@ const UserProfile = ({ user, isMobile }: any) => {
                 <Box
                   sx={{
                     height: "100%",
-                    width: "50%",
+                    width: "60%",
                     display: "flex",
                     flexDirection: "column",
                   }}
@@ -252,7 +252,7 @@ const UserProfile = ({ user, isMobile }: any) => {
                 <Box
                   sx={{
                     height: "100%",
-                    width: "50%",
+                    width: "60%",
                     display: "flex",
                     flexDirection: "column",
                   }}
