@@ -1,19 +1,34 @@
 import React, { useState } from "react";
-import { Paper, Modal, Fade, Link, Typography, Drawer } from "@mui/material";
+import {
+  Paper,
+  Modal,
+  Fade,
+  Link,
+  Typography,
+  Drawer,
+  CircularProgress,
+} from "@mui/material";
 import Backdrop from "@mui/material/Backdrop";
 import styled from "@emotion/styled/types/base";
 import { useSession } from "next-auth/react";
 import MobileLoginForm from "./MobileLoginForm";
+import { signOut } from "next-auth/react";
 
 const MobileNavModal = ({ mobileNavModalOpen, setMobileNavModalOpen }: any) => {
   const [openLoginForm, setOpenLoginForm] = useState(false);
-  const session = useSession();
+  const { data: session, status } = useSession();
+  const [signoutLoader, setSignoutLoader] = useState(false);
 
   const closeDrawerHandler = () => {
     setMobileNavModalOpen(false);
     setTimeout(() => {
       setOpenLoginForm(false);
     }, 500);
+  };
+
+  const signOutHandler = async () => {
+    setSignoutLoader(true);
+    await signOut({ callbackUrl: `/` });
   };
 
   return (
@@ -43,6 +58,16 @@ const MobileNavModal = ({ mobileNavModalOpen, setMobileNavModalOpen }: any) => {
                 alignItems: "center",
                 pb: 2,
                 transition: ".3s",
+              }
+            : status === "authenticated"
+            ? {
+                width: "100%",
+                height: 250,
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "space-between",
+                alignItems: "center",
+                pb: 6,
               }
             : {
                 width: "100%",
@@ -97,7 +122,7 @@ const MobileNavModal = ({ mobileNavModalOpen, setMobileNavModalOpen }: any) => {
                 Products
               </Typography>
             </Link>
-            {session.status === "authenticated" ? (
+            {status === "authenticated" ? (
               <Link href="/profile">
                 <Typography sx={{ m: 0.5, fontWeight: 200 }} variant="body1">
                   Profile
@@ -114,6 +139,21 @@ const MobileNavModal = ({ mobileNavModalOpen, setMobileNavModalOpen }: any) => {
                 </Typography>
               </Link>
             )}
+            {status === "authenticated" ? (
+              <Link>
+                <Typography
+                  sx={{ m: 0.5, fontWeight: 200, mb: 3 }}
+                  variant="body1"
+                  onClick={() => signOutHandler()}
+                >
+                  {signoutLoader ? (
+                    <CircularProgress color="inherit" size={25} />
+                  ) : (
+                    "Log Out"
+                  )}
+                </Typography>
+              </Link>
+            ) : null}
           </>
         )}
       </Paper>

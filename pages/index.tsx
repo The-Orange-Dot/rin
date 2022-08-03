@@ -27,9 +27,13 @@ const Home: NextPage = () => {
       text: "Discover exclusive Japanese brands of cosmetics and skincare products",
       image: "/smartphone.png",
     },
-    { text: "Purchase and review products that arrive directly from Japan" },
+    {
+      text: "Purchase and try products that arrive directly from Japan",
+      image: "/face_mask.png",
+    },
     {
       text: "Review the products and receive large discounts on your next purchase!",
+      image: "/suggest.png",
     },
   ];
 
@@ -52,7 +56,6 @@ const Home: NextPage = () => {
   const instructionsElement = instructions.map((item, index) => {
     return (
       <Box
-        className="instructions"
         sx={
           isMobile
             ? { width: "80%", textAlign: "center", mb: 2 }
@@ -92,9 +95,19 @@ const Home: NextPage = () => {
 
   const mobileInstructions = instructions.map((item, index) => {
     return (
-      <Box sx={{ width: "80%", textAlign: "center", mb: 2 }} key={index}>
+      <Box
+        sx={{ width: "80%", textAlign: "center", mb: 2 }}
+        key={index}
+        className="trigger"
+      >
         {item.image ? (
-          <Image width={150} height={150} src={item.image} alt="test" />
+          <Image
+            width={150}
+            height={150}
+            objectFit="contain"
+            src={item.image}
+            alt="test"
+          />
         ) : null}
         <Box sx={{ width: "100%", textAlign: "center" }}>
           <Typography sx={{ color: "black" }}>{item.text}</Typography>
@@ -138,10 +151,16 @@ const Home: NextPage = () => {
   const cards = panels.map((panel, index) => {
     const even = index === 0 || index % 2 === 0;
 
-    console.log(even);
-
     return isMobile ? (
-      <>
+      <Box
+        sx={{
+          width: "100%",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+        key={index}
+      >
         <Box
           sx={{
             width: "100%",
@@ -244,7 +263,7 @@ const Home: NextPage = () => {
             {panel.bodyText}
           </Typography>
         </Box>
-      </>
+      </Box>
     ) : (
       <Box
         sx={
@@ -265,6 +284,7 @@ const Home: NextPage = () => {
                 mt: 10,
               }
         }
+        key={index}
       >
         <Paper
           square
@@ -418,10 +438,11 @@ const Home: NextPage = () => {
                 alignItems: "center",
               }
         }
-        className="trigger"
       >
         <Typography
-          sx={isMobile ? { color: "black", mb: 5 } : { color: "white", mb: 5 }}
+          sx={isMobile ? { color: "black", mb: 5 } : { color: "white" }}
+          className="trigger"
+          variant="h5"
         >
           Easy as 1-2-3
         </Typography>

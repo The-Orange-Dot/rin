@@ -252,14 +252,22 @@ const MobileCheckout = ({ setOpenDrawer, openDrawer }: any) => {
               </StyledTypography>
             </Box>
 
-            <Box sx={{ width: "100%", height: "35%" }}>
+            <Box sx={{ width: "100%", height: "35%", display: "flex" }}>
+              <Button
+                sx={{ flex: 1, m: 1 }}
+                variant="contained"
+                color="secondary"
+                onClick={() => setOpenDrawer()}
+              >
+                Back
+              </Button>
               <Button
                 variant="contained"
                 fullWidth
-                sx={{ height: "100%" }}
+                sx={{ flex: 1, m: 1 }}
                 onClick={() => checkoutRouterHandler()}
               >
-                {status === "authenticated" ? "Checkout" : "Continue as Guest"}
+                {status === "authenticated" ? "Checkout" : "Guest Checkout"}
               </Button>
             </Box>
           </Box>
