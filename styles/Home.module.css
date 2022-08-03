@@ -113,3 +113,9 @@
     flex-direction: column;
   }
 }
+
+.kanji {
+  font-family: "Montserrat", "Mplus 1p", "Hiragino Sans",
+    "Hiragino Kaku Gothic Pro", "游ゴシック", "游ゴシック体", YuGothic,
+    "Yu Gothic", "ＭＳ ゴシック", "MS Gothic", sans-serif;
+}

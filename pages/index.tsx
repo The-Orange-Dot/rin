@@ -38,7 +38,7 @@ const Home: NextPage = () => {
       let tl = gsap.timeline({
         scrollTrigger: {
           trigger: title,
-          start: "center 70%",
+          start: "center 90%",
           end: "+=100",
           scrub: 2,
           toggleActions: "play none none none",
@@ -108,6 +108,263 @@ const Home: NextPage = () => {
     );
   });
 
+  const panels = [
+    {
+      jpn: "東京",
+      eng: "Tokyo Born",
+      bodyTitle: "Founded and headquartered in Tokyo",
+      bodyText:
+        "Established in the center of Japan's fashion and modern culture. Our dedicated team keeps an eye out for the latest trends and try them before it hits our store for you to enjoy too.",
+      image: "/tokyo_tower.jpg",
+    },
+    {
+      jpn: "まごころ",
+      eng: "From the heart",
+      bodyTitle: "Try products exclusive only to Japan",
+      bodyText:
+        "Packed to the brim with the latest and most popular J-cosme, from skin care to make-up, products that are exclusive only to Japan are here at our store for you to be the first to experience.",
+      image: "/makeup_items.jpg",
+    },
+    {
+      jpn: " 口コミ",
+      eng: "Sharing is caring",
+      bodyTitle: "Tell others what you think.",
+      bodyText:
+        "We believe in the power of word-of-mouth and the community that it brings. Review products that you bought to share how you feel about them. You'll also receive coupons for large discounts to use or share with others.",
+      image: "/smartphone_girls.jpg",
+    },
+  ];
+
+  const cards = panels.map((panel, index) => {
+    const even = index === 0 || index % 2 === 0;
+
+    console.log(even);
+
+    return isMobile ? (
+      <>
+        <Box
+          sx={{
+            width: "100%",
+            height: "50vh",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "flex-end",
+            alignItems: "center",
+          }}
+        >
+          <Paper
+            square
+            sx={{
+              position: "relative",
+              width: "90%",
+              height: "70%",
+              borderRadius: ".5rem",
+            }}
+            className="trigger"
+          >
+            <Image
+              src={panel.image}
+              alt="packing"
+              layout="fill"
+              objectFit="cover"
+              priority
+              style={{ borderRadius: ".5rem" }}
+            />
+          </Paper>
+        </Box>
+        <Box
+          sx={{
+            width: "100%",
+            height: "15vh",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            position: "relative",
+          }}
+        >
+          <Typography
+            className={`${styles.kanji} trigger`}
+            sx={{
+              width: "100%",
+              position: "absolute",
+              fontSize: "4rem",
+              fontFamily: "Montserrat",
+
+              opacity: 0.1,
+              fontWeight: 700,
+              textAlign: "center",
+              top: "0",
+              color: "rgba(0,0,0,.1)",
+            }}
+          >
+            {panel.jpn}
+          </Typography>
+          <Typography
+            className="trigger"
+            sx={{
+              width: "100%",
+              position: "absolute",
+              fontSize: "2rem",
+              fontWeight: 700,
+              left: "0%",
+              right: "0%",
+              ml: "auto",
+              mr: "auto",
+              textAlign: "center",
+              top: "20%",
+            }}
+            color="primary"
+          >
+            {panel.eng}
+          </Typography>
+        </Box>
+
+        <Box
+          sx={{
+            width: "80%",
+            height: "15vh",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            position: "relative",
+            textAlign: "center",
+          }}
+        >
+          <Typography
+            variant="body1"
+            color="primary"
+            className="trigger"
+            sx={{ fontWeight: 600 }}
+          >
+            {panel.bodyTitle}
+          </Typography>
+          <Typography variant="body2" color="primary" className="trigger">
+            {panel.bodyText}
+          </Typography>
+        </Box>
+      </>
+    ) : (
+      <Box
+        sx={
+          even
+            ? {
+                width: "100%",
+                height: "50vh",
+                display: "flex",
+                m: 5,
+                mt: 10,
+                flexDirection: "row-reverse",
+              }
+            : {
+                width: "100%",
+                height: "50vh",
+                display: "flex",
+                m: 5,
+                mt: 10,
+              }
+        }
+      >
+        <Paper
+          square
+          sx={
+            even
+              ? {
+                  position: "relative",
+                  width: "45%",
+                  height: "100%",
+                  mr: 5,
+                  borderRadius: ".5rem",
+                }
+              : {
+                  position: "relative",
+                  width: "45%",
+                  height: "100%",
+                  ml: 5,
+                  borderRadius: ".5rem",
+                }
+          }
+          className="trigger"
+        >
+          <Image
+            src={panel.image}
+            alt="packing"
+            layout="fill"
+            objectFit="cover"
+            priority
+            style={{ borderRadius: ".5rem" }}
+          />
+        </Paper>
+        <Box sx={{ position: "relative", width: "50%", mr: 5, ml: 5 }}>
+          <Typography
+            className={`${styles.kanji} trigger`}
+            sx={{
+              width: "100%",
+              position: "absolute",
+              fontSize: "8rem",
+              fontFamily: "Montserrat",
+              opacity: 0.1,
+              fontWeight: 700,
+              left: "10%",
+              right: "0%",
+              ml: "auto",
+              mr: "auto",
+              textAlign: "center",
+              top: 0,
+              color: "rgba(0,0,0,.1)",
+            }}
+          >
+            {panel.jpn}
+          </Typography>
+          <Typography
+            className="trigger"
+            sx={{
+              width: "100%",
+              position: "absolute",
+              fontSize: "3rem",
+              fontWeight: 700,
+              left: "0%",
+              right: "0%",
+              ml: "auto",
+              mr: "auto",
+              textAlign: "center",
+              top: "11%",
+            }}
+            color="primary"
+          >
+            {panel.eng}
+          </Typography>
+          <Box
+            sx={{
+              width: "100%",
+              position: "absolute",
+              left: "0%",
+              right: "0%",
+              ml: "auto",
+              mr: "auto",
+              textAlign: "center",
+              top: "50%",
+            }}
+            color="primary"
+          >
+            <Typography
+              variant="h4"
+              color="primary"
+              className="trigger"
+              sx={{ fontWeight: 600 }}
+            >
+              {panel.bodyTitle}
+            </Typography>
+            <Typography variant="h5" color="primary" className="trigger">
+              {panel.bodyText}
+            </Typography>
+          </Box>
+        </Box>
+      </Box>
+    );
+  });
+
   return (
     <div className={styles.main}>
       <Box
@@ -163,7 +420,11 @@ const Home: NextPage = () => {
         }
         className="trigger"
       >
-        <Typography sx={{ color: "black", mb: 5 }}>Easy as 1-2-3</Typography>
+        <Typography
+          sx={isMobile ? { color: "black", mb: 5 } : { color: "white", mb: 5 }}
+        >
+          Easy as 1-2-3
+        </Typography>
         <Box
           sx={
             isMobile
@@ -184,192 +445,7 @@ const Home: NextPage = () => {
         </Box>
       </Box>
 
-      {isMobile ? (
-        <>
-          <Box
-            sx={{
-              width: "100%",
-              height: "50vh",
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
-              mt: 5,
-            }}
-          >
-            <Paper
-              square
-              sx={{
-                position: "relative",
-                width: "90%",
-                height: "100%",
-                borderRadius: ".5rem",
-              }}
-              className="trigger"
-            >
-              <Image
-                src="/packing.jpg"
-                alt="packing"
-                layout="fill"
-                objectFit="cover"
-                priority
-                style={{ borderRadius: ".5rem" }}
-              />
-            </Paper>
-          </Box>
-          <Box
-            sx={{
-              width: "100%",
-              height: "10vh",
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
-              position: "relative",
-            }}
-          >
-            <Typography
-              className={`${styles.heartKanji} trigger`}
-              sx={{
-                width: "100%",
-                position: "absolute",
-                fontFamily: "Montserrat",
-                fontSize: "4rem",
-                opacity: 0.1,
-                fontWeight: 700,
-                textAlign: "center",
-                top: "10%",
-                color: "rgba(0,0,0,.1)",
-              }}
-            >
-              まごころ
-            </Typography>
-            <Typography
-              className="trigger"
-              sx={{
-                width: "100%",
-                position: "absolute",
-                fontSize: "2rem",
-                fontWeight: 700,
-                left: "0%",
-                right: "0%",
-                ml: "auto",
-                mr: "auto",
-                textAlign: "center",
-                top: "30%",
-              }}
-              color="primary"
-            >
-              From the heart
-            </Typography>
-          </Box>
-
-          <Box
-            sx={{
-              width: "80%",
-              height: "15vh",
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
-              position: "relative",
-              textAlign: "center",
-            }}
-          >
-            <Typography variant="body1" color="primary" className="trigger">
-              Hand-packed and never dropshipped.
-            </Typography>
-            <Typography variant="body2" color="primary" className="trigger">
-              All products are sent directly from us, to you, with care.
-            </Typography>
-          </Box>
-        </>
-      ) : (
-        <Box
-          sx={{ width: "100%", height: "50vh", display: "flex", m: 5, mt: 10 }}
-        >
-          <Paper
-            square
-            sx={{
-              position: "relative",
-              width: "45%",
-              height: "100%",
-              ml: 5,
-              borderRadius: ".5rem",
-            }}
-            className="trigger"
-          >
-            <Image
-              src="/packing.jpg"
-              alt="packing"
-              layout="fill"
-              objectFit="cover"
-              priority
-              style={{ borderRadius: ".5rem" }}
-            />
-          </Paper>
-          <Box sx={{ position: "relative", width: "50%" }}>
-            <Typography
-              className={`${styles.heartKanji} trigger`}
-              sx={{
-                width: "100%",
-                position: "absolute",
-                fontFamily: "Montserrat",
-                fontSize: "8rem",
-                opacity: 0.1,
-                fontWeight: 700,
-                left: "10%",
-                right: "0%",
-                ml: "auto",
-                mr: "auto",
-                textAlign: "center",
-                top: 0,
-                color: "rgba(0,0,0,.1)",
-              }}
-            >
-              まごころ
-            </Typography>
-            <Typography
-              className="trigger"
-              sx={{
-                width: "100%",
-                position: "absolute",
-                fontSize: "3rem",
-                fontWeight: 700,
-                left: "0%",
-                right: "0%",
-                ml: "auto",
-                mr: "auto",
-                textAlign: "center",
-                top: "11%",
-              }}
-              color="primary"
-            >
-              From the heart
-            </Typography>
-            <Box
-              sx={{
-                width: "100%",
-                position: "absolute",
-                left: "0%",
-                right: "0%",
-                ml: "auto",
-                mr: "auto",
-                textAlign: "center",
-                top: "50%",
-              }}
-              color="primary"
-            >
-              <Typography variant="h4" color="primary" className="trigger">
-                Hand-packed and never dropshipped.
-              </Typography>
-              <Typography variant="h5" color="primary" className="trigger">
-                All products are sent directly from us, to you, with care.
-              </Typography>
-            </Box>
-          </Box>
-        </Box>
-      )}
+      {cards}
     </div>
   );
 };
