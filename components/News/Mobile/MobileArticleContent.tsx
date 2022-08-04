@@ -46,7 +46,7 @@ const MobileArticleContent = ({ post }: any) => {
               sx={{ mt: 5, backgroundColor: "#dfdfdf" }}
               multiline
               fullWidth
-              rows={10}
+              rows={20}
               defaultValue={post.body}
               onChange={(e) => setText(e.target.value)}
             />
