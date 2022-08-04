@@ -136,7 +136,7 @@ const Home: NextPage = () => {
       bodyTitle: "Try products exclusive only to Japan",
       bodyText:
         "Packed to the brim with the latest and most popular J-cosmetics, from skin care to make-up, products that are exclusive only to Japan are here at our store for you to be the first to experience.",
-      image: "/makeup_items.jpg",
+      image: "/cosmetics.jpg",
     },
     {
       jpn: " 口コミ",

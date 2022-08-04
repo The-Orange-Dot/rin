@@ -55,6 +55,8 @@ export default async function handler(
     const userId = req.query.userId as string;
     const body = req.body;
 
+    const fullName = `${body.firstName} ${body.lastName}`;
+
     const userUpdated = await prisma.user.update({
       where: {
         id: userId,
@@ -67,13 +69,14 @@ export default async function handler(
         zipcode: body.address.postal_code,
         country: "US",
         homePhone: body.phone,
+        mobilePhone: body.mobilePhone ? body.mobilePhone : null,
       },
     });
 
     await stripe.customers.update(userId, {
       address: body.address,
       shipping: {
-        name: body.name,
+        name: fullName,
         address: body.address,
       },
       phone: body.phone,

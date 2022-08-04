@@ -44,19 +44,19 @@ const HeaderImage = ({ isMobile }: any) => {
       image: "/kimono.jpg",
       title: "Discover the world of Japanese cosmetics",
       subtitle:
-        "Hundreds of J-cosmetics and skincare products, delivered straight from Japan right to your door.",
+        "Hundreds of J-beauty and skincare products, delivered straight from Japan right to your door.",
     },
     {
       image: "/cute_pink.jpg",
       title: "Try the latest cosmetics popular in Japan",
       subtitle:
-        "The latest trends in J-cosmetics ready for you to try. Don't just follow the trend. Be the trend.",
+        "The latest brands in J-beauty ready for you to try. Don't just follow the trend. Be the trend.",
     },
     {
-      image: "/makeup_2.jpg",
+      image: "/mature_model_2.jpg",
       title: "Be the first to experience exclusive products",
       subtitle:
-        "Exclusive J-cosmetics products made easily accessible for you in just a few simple clicks.",
+        "Exclusive cosmetics, only found in Japan, made easily accessible for you in just a few simple clicks.",
     },
   ];
   const routeHandler = () => {
@@ -252,6 +252,7 @@ const HeaderImage = ({ isMobile }: any) => {
                 position: "relative",
                 width: "100%",
                 height: "100%",
+                transform: "scale(1.25, 1.25)",
               }
         }
       >
@@ -261,6 +262,7 @@ const HeaderImage = ({ isMobile }: any) => {
           layout="fill"
           objectFit="cover"
           id="image"
+          objectPosition={isMobile ? "50% 50%" : "0 0"}
           quality={50}
           priority
           onLoadingComplete={() => setImageLoaded(true)}

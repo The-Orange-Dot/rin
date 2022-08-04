@@ -110,7 +110,7 @@ const UserProfile = ({ user, isMobile }: any) => {
       </Box>
     </Box>
   ) : (
-    <Box sx={{ display: "flex", pb: 30, width: "100%" }}>
+    <Box sx={{ display: "flex", pb: 30, width: "100%", height: "100vh" }}>
       <Box
         sx={{
           width: "100%",
@@ -283,7 +283,7 @@ const UserProfile = ({ user, isMobile }: any) => {
                 </Box>
               </Box>
             </Box>
-            <Box sx={{ mt: 5 }}>
+            <Box sx={{ mt: 10 }}>
               <Button
                 variant="contained"
                 sx={{ width: 200, height: 50 }}
@@ -302,7 +302,7 @@ const UserProfile = ({ user, isMobile }: any) => {
         open={editDrawerOpen}
         anchor="bottom"
       >
-        <EditInfoDrawer />
+        <EditInfoDrawer user={user} />
       </Drawer>
     </Box>
   );

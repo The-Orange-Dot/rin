@@ -122,7 +122,8 @@ const NoAddressForm = ({ setNoAddressForm, noAddressForm, user }: any) => {
     setIsLoading(true);
 
     const shipping = {
-      name: `${firstNameInput} ${lastNameInput}`,
+      firstName: firstNameInput,
+      lastName: lastNameInput,
       address: {
         line1: address1,
         line2: address2,
