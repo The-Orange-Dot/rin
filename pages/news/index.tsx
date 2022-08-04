@@ -1,12 +1,12 @@
 import { Box, Paper, Typography } from "@mui/material";
-import { GetStaticProps, InferGetStaticPropsType } from "next";
+import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
 import Image from "next/image";
 import React, { useState } from "react";
-import News from "../components/News";
-import { server } from "../config";
-import styles from "../styles/news.module.css";
-import { PostType } from "../types/newsTypes";
-import MobileNews from "../components/News/Mobile";
+import News from "../../components/News";
+import { server } from "../../config";
+import styles from "../../styles/news.module.css";
+import { PostType } from "../../types/newsTypes";
+import MobileNews from "../../components/News/Mobile";
 import { useMediaQuery } from "@mui/material";
 
 const About = ({ posts }: InferGetStaticPropsType<typeof getStaticProps>) => {
@@ -30,16 +30,28 @@ const About = ({ posts }: InferGetStaticPropsType<typeof getStaticProps>) => {
         >
           News
         </Typography>
-        {postElements}
+        <Box
+          sx={{
+            width: "100%",
+            display: "flex",
+            justifyContent: "center",
+            flexDirection: "column",
+            alignItems: "center",
+            mt: 5,
+          }}
+        >
+          {postElements}
+        </Box>
       </Box>
     </div>
   );
 };
 
 export const getStaticProps: GetStaticProps = async () => {
+  const res = await fetch(`${server}/api/news`);
+  const posts = await res.json();
+
   try {
-    const res = await fetch(`${server}/api/news`);
-    const posts = await res.json();
     return {
       props: { posts: posts },
     };
