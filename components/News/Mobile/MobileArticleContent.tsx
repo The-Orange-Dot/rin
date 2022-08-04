@@ -55,7 +55,7 @@ const MobileArticleContent = ({ post }: any) => {
               sx={{ width: "100%", display: "flex", flexDirection: "column" }}
             >
               <Typography variant="caption" color="secondary">
-                Use "/image/" then a link after for images
+                Use &quot;/image/&quot; then a link after for images
               </Typography>
               <Typography variant="caption" color="secondary">
                 ex. /image//cosmetics.jpg

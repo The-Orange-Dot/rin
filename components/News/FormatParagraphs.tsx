@@ -43,7 +43,13 @@ export const FormatParagraphs = (text: string) => {
                     }
               }
             >
-              <Box sx={{ position: "relative", width: "90%", height: "100%" }}>
+              <Box
+                sx={
+                  isMobile
+                    ? { position: "relative", width: "90%", height: "100%" }
+                    : { position: "relative", width: "50%", height: "100%" }
+                }
+              >
                 <Image
                   src={paragraph.replace("/image/", "")}
                   alt="Something"
