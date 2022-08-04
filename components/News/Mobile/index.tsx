@@ -57,7 +57,7 @@ const MobileNews = ({ post, index }: any) => {
         ease: "power4.out",
       });
     });
-  }, []);
+  }, []); //eslint-disable-line
 
   if (index === 0) {
     return (
@@ -120,7 +120,7 @@ const MobileNews = ({ post, index }: any) => {
                 }}
               >
                 {post.title}
-              </Typography>{" "}
+              </Typography>
             </Box>
             <Box
               sx={{
@@ -181,6 +181,7 @@ const MobileNews = ({ post, index }: any) => {
                     mx: 5,
                     py: 2,
                     transition: "0.3s",
+                    overflowX: "hidden",
                     "&:hover": {
                       backgroundColor: "#dfdfdf",
                       transition: "0.3s",
@@ -194,6 +195,7 @@ const MobileNews = ({ post, index }: any) => {
                     display: "flex",
                     justifyContent: "center",
                     flexDirection: "row",
+                    overflowX: "hidden",
                     mx: 5,
                     py: 2,
                     transition: "0.3s",

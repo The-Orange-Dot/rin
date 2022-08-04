@@ -54,6 +54,7 @@ const NewsPage = ({
             flexDirection: "column",
             alignItems: "center",
             mt: 5,
+            overflowX: "hidden",
           }}
         >
           {postElements}
