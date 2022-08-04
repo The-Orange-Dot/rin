@@ -44,6 +44,8 @@ const MobileArticle = ({ post }: any) => {
           layout="fill"
           objectFit="cover"
           priority
+          placeholder="blur"
+          blurDataURL={post.image}
         />
       </Box>
       <Box sx={{ width: "50%", height: 1, my: 5 }}>

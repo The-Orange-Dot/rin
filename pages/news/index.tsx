@@ -8,8 +8,11 @@ import styles from "../../styles/news.module.css";
 import { PostType } from "../../types/newsTypes";
 import MobileNews from "../../components/News/Mobile";
 import { useMediaQuery } from "@mui/material";
+import NewsFilter from "../../components/News/NewsFilter";
 
-const About = ({ posts }: InferGetStaticPropsType<typeof getStaticProps>) => {
+const NewsPage = ({
+  posts,
+}: InferGetStaticPropsType<typeof getStaticProps>) => {
   const isMobile = useMediaQuery("(max-width: 900px)");
   const [postsArray, setPostsArray] = useState(posts);
 
@@ -30,6 +33,9 @@ const About = ({ posts }: InferGetStaticPropsType<typeof getStaticProps>) => {
         >
           News
         </Typography>
+        <Box sx={{ width: "90%", height: "5vh" }}>
+          <NewsFilter />
+        </Box>
         <Box
           sx={{
             width: "100%",
@@ -60,4 +66,4 @@ export const getStaticProps: GetStaticProps = async () => {
   }
 };
 
-export default About;
+export default NewsPage;

@@ -43,6 +43,9 @@ const Article = ({ post }: any) => {
           alt={post.title}
           layout="fill"
           objectFit="cover"
+          priority
+          placeholder="blur"
+          blurDataURL={post.image}
         />
       </Box>
     </Box>
