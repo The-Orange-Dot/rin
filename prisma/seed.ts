@@ -16,6 +16,7 @@ interface ProductData {
   category: string;
   brand: string;
   ingredients: string[];
+  instructions: string[];
   id: string;
 }
 
@@ -65,7 +66,7 @@ const seed = async () => {
       thumbnail: "https://www.threecosmetics.com/img/goods/L/t1b219.jpg",
       images: ["https://www.threecosmetics.com/img/goods/L/t1b219.jpg"],
       category: "skincare",
-
+      instructions: [],
       brand: "THREE",
       ingredients: [
         "Tri(caprylic/capric acid) glyceryl",
@@ -108,7 +109,7 @@ const seed = async () => {
       thumbnail: "https://www.threecosmetics.com/img/goods/L/t1b264.jpg",
       images: ["https://www.threecosmetics.com/img/goods/L/t1b264.jpg"],
       category: "skincare",
-
+      instructions: [],
       brand: "THREE",
       ingredients: [
         "(Caprylic/capric) coconut alkyl",
@@ -159,7 +160,7 @@ const seed = async () => {
       thumbnail: "https://www.threecosmetics.com/img/goods/S/t1b104.jpg",
       images: ["https://www.threecosmetics.com/img/goods/S/t1b104.jpg"],
       category: "skincare",
-
+      instructions: [],
       brand: "THREE",
       ingredients: [
         "Tri (caprylic/capric) glyceryl",
@@ -201,7 +202,7 @@ const seed = async () => {
       thumbnail: "https://m.media-amazon.com/images/I/61fAljjSzwS._SL1500_.jpg",
       images: ["https://m.media-amazon.com/images/I/61fAljjSzwS._SL1500_.jpg"],
       category: "skincare",
-
+      instructions: [],
       brand: "rom&nd",
       ingredients: [],
       id: "3",
@@ -214,6 +215,7 @@ const seed = async () => {
         "This is a test description of a Korean Product rom&nd Whitening Sun Screen",
         "Checking to see how it looks in english to see what i can fit blah blah blah blu blu blu beep boop boop bop",
       ],
+      instructions: [],
       quantity: 54,
       price: 50.0,
       rating: 2.3,
@@ -236,6 +238,7 @@ const seed = async () => {
         "This is a test description of a Korean Product rom&nd Whitening Sun Screen",
         "Checking to see how it looks in english to see what i can fit blah blah blah blu blu blu beep boop boop bop",
       ],
+      instructions: [],
       quantity: 0,
       price: 15.0,
       rating: 4.5,
@@ -254,6 +257,7 @@ const seed = async () => {
       name: "Tender Hug Balm Oil Cleansing",
       size: "150mL (5.6oz)",
       details: "",
+      instructions: [],
       description: [
         "This is a test description of a Korean Product rom&nd Whitening Sun Screen",
         "Checking to see how it looks in english to see what i can fit blah blah blah blu blu blu beep boop boop bop",
@@ -282,6 +286,7 @@ const seed = async () => {
       ],
       quantity: 0,
       price: 66.0,
+      instructions: [],
       rating: 4.0,
       thumbnail:
         "https://kao-h.assetsadobe3.com/is/image/content/dam/sites/kanebo/www-kanebo-cosmetics-jp/lunasol/details/skincare/s0101008/s0101008.jpg?fmt=jpeg",
@@ -308,6 +313,13 @@ const seed = async () => {
         "All products from A to D are applicable as eyeshadows, blush, contour and eyebrows.  ",
       ],
       quantity: 2,
+      instructions: [
+        "Take A with your finger or the thick end of the tip and spread over the entire eyelid and the outer corner of the lower eyelid.",
+        'Take B with the thick end of the tip and apply in a "U" shape around the inner corner of the eye.',
+        "Take C with the thin end of the tip and apply in a line around the corner of the eye.",
+        "Take B on a finger and blend in a vertical oval on the cheek.",
+        "Take D on your finger and apply to the upper eyelid and high cheeks to glow up your skin.",
+      ],
       price: 40.0,
       images: [
         "https://d31pc8y2j50o7q.cloudfront.net/kate_tokyo/yoku_series/kate_tokyo_ex-1_app_600.jpg",
@@ -320,7 +332,33 @@ const seed = async () => {
         "https://d31pc8y2j50o7q.cloudfront.net/kate_tokyo/yoku_series/kate_tokyo_ex-1_app_300.jpg",
       category: "make-up",
       brand: "Kate Tokyo",
-      ingredients: [],
+      ingredients: [
+        "Phytosteryl",
+        " Dipentaerythryl pentaisostearate",
+        " Silica",
+        " Hydrogenated polyisobutene",
+        " Tetra(hydroxystearate/isostearate)dipentaerythryl",
+        " Zinc myristate",
+        " Sorbitan sesqui-isostearate",
+        " Carnauba wax",
+        " Al distearate",
+        " Tocopherol",
+        " Al Tocopherol",
+        " Chlorphenesin",
+        " Sodium dehydroacetate",
+        " (+/-)gunjo",
+        " Mica",
+        " Titanium dioxide",
+        " Iron oxide",
+        " Al hydroxide",
+        " Ba sulfate",
+        " Tin oxide",
+        " Borosilicate (Ca/Al)",
+        " Yellow 4",
+        " Blue 1",
+        " Red 202",
+        " Red 226",
+      ],
       id: "8",
     },
     {
@@ -344,6 +382,7 @@ const seed = async () => {
       category: "make-up",
       brand: "Kate Tokyo",
       ingredients: [],
+      instructions: [],
       id: "9",
     },
     {
@@ -368,6 +407,7 @@ const seed = async () => {
       category: "make-up",
       brand: "Kate Tokyo",
       ingredients: [],
+      instructions: [],
       id: "10",
     },
   ];

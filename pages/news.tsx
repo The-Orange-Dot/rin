@@ -23,9 +23,9 @@ const About = ({ posts }: InferGetStaticPropsType<typeof getStaticProps>) => {
           News
         </Typography>
         {isMobile ? (
-          <MobileNews postsArray={postsArray} />
+          <MobileNews postsArray={posts} />
         ) : (
-          <News postsArray={postsArray} />
+          <News postsArray={posts} />
         )}
       </Box>
     </div>
