@@ -1,9 +1,11 @@
-import { Typography, Box } from "@mui/material";
+import { Typography, Box, Modal } from "@mui/material";
 import Image from "next/image";
 import { useMediaQuery } from "@mui/material";
+import React, { useState } from "react";
 
 export const FormatParagraphs = (text: string) => {
   const isMobile = useMediaQuery("(max-width: 900px)");
+  const [openImage, setOpenImage] = useState(false);
 
   const paragraphs = text
     .split("\n")
@@ -47,8 +49,47 @@ export const FormatParagraphs = (text: string) => {
                   alt="Something"
                   layout="fill"
                   objectFit="cover"
+                  placeholder="blur"
+                  blurDataURL={paragraph.replace("/image/", "")}
+                  quality={30}
+                  onClick={() => {
+                    setOpenImage(true);
+                  }}
                 />
               </Box>
+              <Modal
+                open={openImage}
+                onClose={() => {
+                  setOpenImage(false);
+                }}
+              >
+                <Box
+                  sx={{
+                    width: "100%",
+                    height: "100%",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                  onClick={() => {
+                    setOpenImage(false);
+                  }}
+                >
+                  <Box
+                    sx={{ width: "100%", height: 350, position: "relative" }}
+                  >
+                    <Image
+                      src={paragraph.replace("/image/", "")}
+                      alt="Something"
+                      layout="fill"
+                      objectFit="scale-down"
+                      placeholder="blur"
+                      blurDataURL={paragraph.replace("/image/", "")}
+                      quality={100}
+                    />
+                  </Box>
+                </Box>
+              </Modal>
             </Box>
           );
         } else {
