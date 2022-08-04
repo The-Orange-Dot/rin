@@ -40,6 +40,7 @@ const MobileArticleContent = ({ post }: any) => {
             onSubmit={(e) => {
               submitHandler(e);
             }}
+            style={{ width: "95%", textAlign: "center" }}
           >
             <TextField
               sx={{ mt: 5, backgroundColor: "#dfdfdf" }}
@@ -49,6 +50,17 @@ const MobileArticleContent = ({ post }: any) => {
               defaultValue={post.body}
               onChange={(e) => setText(e.target.value)}
             />
+
+            <Box
+              sx={{ width: "100%", display: "flex", flexDirection: "column" }}
+            >
+              <Typography variant="caption" color="secondary">
+                Use "/image/" then a link after for images
+              </Typography>
+              <Typography variant="caption" color="secondary">
+                ex. /image//cosmetics.jpg
+              </Typography>
+            </Box>
             <Box
               sx={{
                 width: "100%",
