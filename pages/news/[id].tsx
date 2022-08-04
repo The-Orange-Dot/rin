@@ -5,11 +5,18 @@ import { GetStaticPaths, GetStaticProps } from "next";
 import { PostType } from "../../types/newsTypes";
 import { InferGetStaticPropsType } from "next";
 import { Box } from "@mui/material";
+import { useMediaQuery } from "@mui/material";
+import Article from "../../components/News/Article";
+import MobileArticle from "../../components/News/Mobile/MobileArticle";
 
 const Post = ({ post }: InferGetStaticPropsType<typeof getStaticProps>) => {
+  const isMobile = useMediaQuery("(max-width: 900px)");
+
   return (
     <div className={styles.main}>
-      <Box sx={{ mt: 20 }}>{post.title}</Box>
+      <Box sx={{ mt: 20 }}>
+        {isMobile ? <MobileArticle post={post} /> : <Article post={post} />}
+      </Box>
     </div>
   );
 };
@@ -25,7 +32,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   console.log("PATHS: ", paths);
   return {
     paths,
-    fallback: true,
+    fallback: false,
   };
 };
 
