@@ -107,12 +107,14 @@ const ProductModal = ({
   }, []); //eslint-disable-line
 
   const closeModalHandler = (url: string) => {
-    gsap.to("#product-modal", {
-      opacity: 0,
-      //@ts-ignore
-      onComplete: backButtonOverride,
-      onCompleteParams: [url],
-    });
+    if (document.querySelector("#product-modal")) {
+      gsap.to("#product-modal", {
+        opacity: 0,
+        //@ts-ignore
+        onComplete: backButtonOverride,
+        onCompleteParams: [url],
+      });
+    }
   };
 
   //Logic for closing modal and setting modal_open to false

@@ -26,14 +26,24 @@ const NewsPage = ({
 
   return (
     <div className={styles.main}>
-      <Box sx={{ width: "100%", mt: 10, textAlign: "center" }}>
+      <Box
+        sx={{
+          width: "100%",
+          mt: 10,
+          textAlign: "center",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
         <Typography
           variant="overline"
           sx={{ fontWeight: 100, lineHeight: 1, fontSize: "1rem" }}
         >
           News
         </Typography>
-        <Box sx={{ width: "90%", height: "5vh" }}>
+        <Box sx={{ width: "90%", mt: 1 }}>
           <NewsFilter />
         </Box>
         <Box
