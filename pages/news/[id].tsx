@@ -6,21 +6,63 @@ import { PostType } from "../../types/newsTypes";
 import { InferGetStaticPropsType } from "next";
 import { Box } from "@mui/material";
 import { useMediaQuery } from "@mui/material";
-import Article from "../../components/News/Article";
-import MobileArticle from "../../components/News/Mobile/MobileArticle";
+import ArticleHeader from "../../components/News/ArticleHeader";
+import MobileArticleHeader from "../../components/News/Mobile/MobileArticleHeader";
+import ArticleContent from "../../components/News/ArticleContent";
+import MobileArticleContent from "../../components/News/Mobile/MobileArticleContent";
 
 const Post = ({ post }: InferGetStaticPropsType<typeof getStaticProps>) => {
   const isMobile = useMediaQuery("(max-width: 900px)");
 
   const postHeader = isMobile ? (
-    <MobileArticle post={post} />
+    <MobileArticleHeader post={post} />
   ) : (
-    <Article post={post} />
+    <ArticleHeader post={post} />
+  );
+
+  const postContent = isMobile ? (
+    <MobileArticleContent post={post} />
+  ) : (
+    <ArticleContent post={post} />
   );
 
   return (
     <div className={styles.main}>
-      <Box sx={{ mt: 20 }}>{postHeader}</Box>
+      <Box
+        sx={{
+          width: "100%",
+          height: "100%",
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
+        <Box
+          sx={
+            isMobile
+              ? { mt: 15, width: "100%" }
+              : {
+                  mt: 20,
+                  width: "100%",
+                }
+          }
+        >
+          {postHeader}
+
+          {postContent}
+        </Box>
+      </Box>
+
+      <Box
+        sx={{
+          position: "absolute",
+          width: "100%",
+          height: "50vh",
+          left: 0,
+          top: "10%",
+          backgroundColor: "#dfdfdf",
+          zIndex: -1,
+        }}
+      />
     </div>
   );
 };

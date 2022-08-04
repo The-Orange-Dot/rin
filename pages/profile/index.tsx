@@ -74,8 +74,8 @@ const Profile = () => {
     if (session) {
       const dbRes = await fetch(`/api/users/${session?.id}?profile_fetch=true`);
       const user = await dbRes.json();
-      setProducts(user.userData.buyHistory);
-      setUser(user.userData);
+      setProducts(user?.userData?.buyHistory);
+      setUser(user?.userData);
     }
   };
 

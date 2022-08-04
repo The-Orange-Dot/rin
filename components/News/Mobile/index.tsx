@@ -162,6 +162,7 @@ const index = ({ post, index }: any) => {
                 objectFit="cover"
                 className="image"
                 quality={20}
+                priority
               />
             </Box>
             <Box

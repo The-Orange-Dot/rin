@@ -15,9 +15,9 @@ const About = ({ posts }: InferGetStaticPropsType<typeof getStaticProps>) => {
 
   const postElements = postsArray.map((post: PostType, index: number) => {
     return isMobile ? (
-      <MobileNews post={post} index={index} />
+      <MobileNews post={post} index={index} key={index} />
     ) : (
-      <News post={post} index={index} />
+      <News post={post} index={index} key={index} />
     );
   });
 

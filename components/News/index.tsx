@@ -90,6 +90,7 @@ const News = ({ post, index }: any) => {
                 layout="fill"
                 objectFit="cover"
                 alt={post.image}
+                priority
               />
             </Box>
           </Box>

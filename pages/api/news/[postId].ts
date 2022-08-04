@@ -15,5 +15,19 @@ export default async function handler(
     });
 
     res.status(200).json(post);
+  } else if (req.method === "PATCH") {
+    const postId = req.query.postId as string;
+    const { body } = req.body;
+
+    console.log(body);
+
+    const newPost = await prisma.post.update({
+      where: { id: parseInt(postId) },
+      data: {
+        body: body,
+      },
+    });
+
+    res.status(200).json({ newPost });
   }
 }
