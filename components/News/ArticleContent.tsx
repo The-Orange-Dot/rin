@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
 import React from "react";
 
-const ArticleContent = () => {
+const ArticleContent = ({ post }: any) => {
   return (
     <Box
       sx={{
