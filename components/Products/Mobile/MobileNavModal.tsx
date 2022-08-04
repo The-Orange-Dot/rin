@@ -62,7 +62,7 @@ const MobileNavModal = ({ mobileNavModalOpen, setMobileNavModalOpen }: any) => {
             : status === "authenticated"
             ? {
                 width: "100%",
-                height: 250,
+                height: 230,
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "space-between",
@@ -105,21 +105,21 @@ const MobileNavModal = ({ mobileNavModalOpen, setMobileNavModalOpen }: any) => {
                 Home
               </Typography>
             </Link>
-            <Link href="/about">
+            <Link href="/news">
               <Typography variant="body1" sx={{ m: 0.5, fontWeight: 200 }}>
-                About
+                News
               </Typography>
             </Link>
-            <Link
+            {/* <Link
             // href="/subscription"
             >
               <Typography variant="body1" sx={{ m: 0.5, fontWeight: 200 }}>
                 Subscription
               </Typography>
-            </Link>
+            </Link> */}
             <Link href="/products">
               <Typography variant="body1" sx={{ m: 0.5, fontWeight: 200 }}>
-                Products
+                Store
               </Typography>
             </Link>
             {status === "authenticated" ? (

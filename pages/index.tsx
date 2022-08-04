@@ -127,13 +127,13 @@ const Home: NextPage = () => {
       eng: "Tokyo Born",
       bodyTitle: "Founded and headquartered in Tokyo",
       bodyText:
-        "Established in the center of Japan's fashion and modern culture. Our dedicated team keeps an eye out for the latest trends and try them before it hits our store for you to enjoy too.",
+        "Established in the center of Japan's fashion and modern culture. Our dedicated team keeps an eye out for the latest and most popular trends before it hits our store for you to enjoy too.",
       image: "/tokyo_tower.jpg",
     },
     {
       jpn: "まごころ",
-      eng: "From the heart",
-      bodyTitle: "Try products exclusive only to Japan",
+      eng: "Bountifully Exclusive",
+      bodyTitle: "Ever-growing catalogue of exclusive products",
       bodyText:
         "Packed to the brim with the latest and most popular J-cosmetics, from skin care to make-up, products that are exclusive only to Japan are here at our store for you to be the first to experience.",
       image: "/cosmetics.jpg",
@@ -141,7 +141,7 @@ const Home: NextPage = () => {
     {
       jpn: " 口コミ",
       eng: "Sharing is caring",
-      bodyTitle: "Tell others what you think.",
+      bodyTitle: "Tell others what you think",
       bodyText:
         "We believe in the power of word-of-mouth and the community that it brings. Review products that you bought to share how you feel about them. You'll also receive coupons for large discounts to use or share with others.",
       image: "/cute_phone_2.jpg",
@@ -241,7 +241,7 @@ const Home: NextPage = () => {
 
         <Box
           sx={{
-            width: "80%",
+            width: "100%",
             height: "15vh",
             display: "flex",
             flexDirection: "column",
@@ -259,7 +259,12 @@ const Home: NextPage = () => {
           >
             {panel.bodyTitle}
           </Typography>
-          <Typography variant="body2" color="primary" className="trigger">
+          <Typography
+            variant="body2"
+            color="primary"
+            className="trigger"
+            sx={{ width: "90%" }}
+          >
             {panel.bodyText}
           </Typography>
         </Box>

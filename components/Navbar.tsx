@@ -112,7 +112,7 @@ const Navbar = () => {
               Home
             </Typography>
           </Link>
-          <Link href="/about">
+          <Link href="/news">
             <Typography
               className={
                 textColor === "white"
@@ -121,7 +121,7 @@ const Navbar = () => {
               }
               variant="overline"
             >
-              About
+              News
             </Typography>
           </Link>
 
@@ -134,7 +134,7 @@ const Navbar = () => {
               }
               variant="overline"
             >
-              Products
+              Store
             </Typography>
           </Link>
 
