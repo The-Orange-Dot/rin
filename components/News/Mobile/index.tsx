@@ -7,7 +7,7 @@ import Link from "next/link";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/dist/ScrollTrigger";
 
-const index = ({ post, index }: any) => {
+const MobileNews = ({ post, index }: any) => {
   gsap.registerPlugin(ScrollTrigger);
   const [imageLoaded, setImageLoaded] = useState(false);
   const date = DateFormatter(post.createdAt);
@@ -18,12 +18,7 @@ const index = ({ post, index }: any) => {
     gsap.set("#main-title", { opacity: 0, y: 20 });
     gsap.set("#main-subtitle", { opacity: 0, y: 20 });
     gsap.set("#main-date", { opacity: 0, y: 20 });
-
-    if (even) {
-      gsap.set(".trigger", { opacity: 0, x: 50 });
-    } else {
-      gsap.set(".trigger", { opacity: 0, x: -50 });
-    }
+    gsap.set(".trigger", { opacity: 0, x: 50 });
 
     if (imageLoaded) {
       gsap
@@ -60,7 +55,6 @@ const index = ({ post, index }: any) => {
         x: 0,
         duration: 1,
         ease: "power4.out",
-        startAt: { x: -50 },
       });
     });
   }, []);
@@ -271,4 +265,4 @@ const index = ({ post, index }: any) => {
   }
 };
 
-export default index;
+export default MobileNews;
