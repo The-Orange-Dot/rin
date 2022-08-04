@@ -25,11 +25,10 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const res = await fetch(`${server}/api/news`);
   const posts = await res.json();
 
-  const paths = posts.map((post: PostType) => ({
+  const paths = await posts.map((post: PostType) => ({
     params: { id: post.id.toString() },
   }));
 
-  console.log("PATHS: ", paths);
   return {
     paths,
     fallback: false,
@@ -37,11 +36,10 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }: any) => {
-  console.log("PARAMS: ", params);
-  const res = await fetch(`${server}/api/news/${params.id}`);
-  const post = await res.json();
-
   try {
+    const res = await fetch(`${server}/api/news/${params.id}`);
+    const post = await res.json();
+
     return {
       props: { post: post },
     };
