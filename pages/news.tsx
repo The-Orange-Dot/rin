@@ -13,6 +13,14 @@ const About = ({ posts }: InferGetStaticPropsType<typeof getStaticProps>) => {
   const isMobile = useMediaQuery("(max-width: 900px)");
   const [postsArray, setPostsArray] = useState(posts);
 
+  const postElements = postsArray.map((post: PostType, index: number) => {
+    return isMobile ? (
+      <MobileNews post={post} index={index} />
+    ) : (
+      <News post={post} index={index} />
+    );
+  });
+
   return (
     <div className={styles.main}>
       <Box sx={{ width: "100%", mt: 10, textAlign: "center" }}>
@@ -22,11 +30,7 @@ const About = ({ posts }: InferGetStaticPropsType<typeof getStaticProps>) => {
         >
           News
         </Typography>
-        {isMobile ? (
-          <MobileNews postsArray={posts} />
-        ) : (
-          <News postsArray={posts} />
-        )}
+        {postElements}
       </Box>
     </div>
   );
