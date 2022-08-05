@@ -76,7 +76,12 @@ const CreateNewsPost = () => {
           flexDirection: "column",
         }}
       >
-        <PostPreview />
+        <PostPreview
+          title={title}
+          subTitle={subTitle}
+          image={image}
+          body={body}
+        />
       </Box>
     </Box>
   );
