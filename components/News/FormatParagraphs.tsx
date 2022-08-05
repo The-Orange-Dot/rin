@@ -88,12 +88,12 @@ export const FormatParagraphs = (text: string) => {
                     sx={{ width: "100%", height: 350, position: "relative" }}
                   >
                     <Image
-                      src={paragraph.replace("/image/", "")}
+                      src={paragraph}
                       alt="Something"
                       layout="fill"
                       objectFit="scale-down"
                       placeholder="blur"
-                      blurDataURL={paragraph.replace("/image/", "")}
+                      blurDataURL={paragraph}
                       quality={100}
                     />
                   </Box>

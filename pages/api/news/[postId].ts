@@ -19,6 +19,8 @@ export default async function handler(
     const postId = req.query.postId as string;
     const { body } = req.body;
 
+    console.log(body);
+
     const newPost = await prisma.post.update({
       where: { id: parseInt(postId) },
       data: {

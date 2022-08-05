@@ -88,6 +88,7 @@ export const getStaticProps: GetStaticProps = async ({ params }: any) => {
 
     return {
       props: { post: post },
+      revalidate: 60,
     };
   } catch {
     return { notFound: true };
