@@ -2,11 +2,28 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import crypto from "node:crypto";
 import { prisma } from "../../../prisma/db";
 import { ProductType } from "../../../types/productTypes";
+import NextCors from "nextjs-cors";
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  await NextCors(req, res, {
+    // Options
+    methods: ["GET", "PATCH"],
+    origin: (origin: any, callback: any) => {
+      if (
+        process.env.BASE_URL === `http://${req.headers.host}` ||
+        process.env.BASE_URL === `https://${req.headers.host}`
+      ) {
+        callback(null, true);
+      } else {
+        res.status(401).json({ error: "You aren't authorized!" });
+      }
+    },
+    optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+  });
+
   if (req.method === "GET") {
     const view = req.query.view as string | undefined;
     const category = req.query.category as string | undefined;
@@ -107,6 +124,5 @@ export default async function handler(
     res
       .status(200)
       .json({ res: "Items have been updated", items: updatedItems });
-  } else if (req.method === "POST") {
   }
 }
