@@ -131,7 +131,7 @@ const Home: NextPage = () => {
       image: "/tokyo_tower.jpg",
     },
     {
-      jpn: "まごころ",
+      jpn: "最新コスメ",
       eng: "Bountifully Exclusive",
       bodyTitle: "Ever-growing catalogue of exclusive products",
       bodyText:
@@ -139,7 +139,7 @@ const Home: NextPage = () => {
       image: "/cosmetics.jpg",
     },
     {
-      jpn: " 口コミ",
+      jpn: "クチコミ",
       eng: "Sharing is caring",
       bodyTitle: "Tell others what you think",
       bodyText:
@@ -327,16 +327,16 @@ const Home: NextPage = () => {
             sx={{
               width: "100%",
               position: "absolute",
-              fontSize: "8rem",
-              fontFamily: "Montserrat",
+              fontSize: "7rem",
+              fontFamily: "游ゴシック体",
               opacity: 0.1,
               fontWeight: 700,
-              left: "10%",
+              left: "15%",
               right: "0%",
               ml: "auto",
               mr: "auto",
               textAlign: "center",
-              top: 0,
+              top: 50,
               color: "rgba(0,0,0,.1)",
             }}
           >

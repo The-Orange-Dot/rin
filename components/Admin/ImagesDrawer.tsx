@@ -30,7 +30,7 @@ const ImagesDrawer = ({
       const bucketImages = filesData.map((image, i) => {
         return (
           <Tooltip title={image.name} placement="top" key={i}>
-            <Grid item xs={1}>
+            <Grid item xs={1} sx={{ cursor: "pointer" }}>
               <Image
                 src={image.image}
                 alt={image.name}

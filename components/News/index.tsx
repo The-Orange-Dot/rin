@@ -41,7 +41,7 @@ const News = ({ post, index }: any) => {
           1.5
         );
     }
-  }, [imageLoaded]);
+  }, [imageLoaded]); //eslint-disable-line
 
   useEffect(() => {
     gsap.utils.toArray(".trigger").forEach((title: any) => {

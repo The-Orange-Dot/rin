@@ -23,5 +23,28 @@ export default async function handler(
     });
 
     res.status(200).json(posts);
+  } else if (req.method === "POST") {
+    const { title, subtitle, body, image, writer, category } = req.body;
+
+    try {
+      const createdPost = await prisma.post.create({
+        data: {
+          title: title,
+          subtitle: subtitle,
+          body: body,
+          image: image,
+          category: category,
+          writer: writer,
+        },
+      });
+
+      res.status(201).json({
+        message: "Post has been created successfully",
+        post: createdPost,
+      });
+    } catch (error) {
+      console.log(error);
+      res.status(400).json({ message: error });
+    }
   }
 }

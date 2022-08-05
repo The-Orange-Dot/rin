@@ -10,7 +10,10 @@ export const FormatParagraphs = (text: string) => {
   const paragraphs = text
     .split("\n")
     .map((paragraph: string, index: number) => {
-      const image = paragraph.includes("/image/");
+      const image =
+        paragraph.includes(".jpg") ||
+        paragraph.includes(".jpeg") ||
+        paragraph.includes(".png");
 
       if (index === 0) {
         return (
@@ -51,12 +54,12 @@ export const FormatParagraphs = (text: string) => {
                 }
               >
                 <Image
-                  src={paragraph.replace("/image/", "")}
+                  src={paragraph}
                   alt="Something"
                   layout="fill"
                   objectFit="cover"
                   placeholder="blur"
-                  blurDataURL={paragraph.replace("/image/", "")}
+                  blurDataURL={paragraph}
                   quality={30}
                   onClick={() => {
                     setOpenImage(true);

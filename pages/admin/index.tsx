@@ -27,14 +27,13 @@ const Admin = ({ imagesData }: any) => {
 
   useEffect(() => {
     if (selector === "posts") {
-      setPage(<CreateNewsPost />);
+      setPage(<CreateNewsPost setOpenImageDrawer={setOpenImageDrawer} />);
     }
   }, [selector]);
 
   return (
     <div className={styles.main}>
       {page}
-      <Button onClick={() => setOpenImageDrawer(true)}>ImageDrawer</Button>
       <Box sx={{ width: "50%" }}>
         <ImagesDrawer
           imagesData={imagesData}

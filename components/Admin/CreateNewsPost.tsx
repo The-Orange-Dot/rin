@@ -1,22 +1,65 @@
-import { Box, TextField, Button } from "@mui/material";
+import {
+  Box,
+  TextField,
+  Button,
+  MenuItem,
+  Select,
+  InputLabel,
+  FormControl,
+} from "@mui/material";
 import React, { useState, SyntheticEvent } from "react";
 import PostPreview from "./PostPreview";
+import { useSession } from "next-auth/react";
 
-const CreateNewsPost = () => {
+const CreateNewsPost = ({ setOpenImageDrawer }: any) => {
   const [title, setTitle] = useState("");
   const [image, setImage] = useState("");
-  const [subTitle, setSubTitle] = useState("");
+  const [subtitle, setSubtitle] = useState("");
   const [body, setBody] = useState("");
+  const { data: session } = useSession();
+  const [categorySelector, setCategorySelector] = useState("");
 
-  const submitHandler = async (e: SyntheticEvent) => {
-    e.preventDefault();
-    const res = await fetch(`/api/news`, {
-      method: "POST",
-      body: JSON.stringify({ body: body }),
-      headers: { "Content-Type": "application/json" },
-    });
-    const data = await res.json();
-    setBody(data.newPost.body);
+  const categories = [
+    { text: "Blog", value: "blog" },
+    { text: "Fashion", value: "fashion" },
+    { text: "News", value: "news" },
+    { text: "Food", value: "food" },
+  ];
+
+  const categoryItems = categories.map((category: any, i: number) => {
+    return (
+      <MenuItem value={category.value} key={i}>
+        {category.text}
+      </MenuItem>
+    );
+  });
+
+  const submitHandler = async () => {
+    if (session) {
+      const writer = `${session.firstName} ${session.lastName}`;
+
+      const articleData = {
+        title: title,
+        subtitle: subtitle,
+        body: body,
+        image: image,
+        category: categorySelector,
+        writer: writer,
+      };
+
+      const res = await fetch(`/api/news`, {
+        method: "POST",
+        body: JSON.stringify(articleData),
+        headers: { "Content-Type": "application/json" },
+      }).then((res) => {
+        if (res.ok) {
+          res.json().then((data) => {
+            console.log(data.message);
+            console.log(data.post);
+          });
+        }
+      });
+    }
   };
 
   return (
@@ -51,9 +94,24 @@ const CreateNewsPost = () => {
           size="small"
           label="Subtitle"
           onChange={(e) => {
-            setSubTitle(e.target.value);
+            setSubtitle(e.target.value);
           }}
         />
+        <FormControl>
+          <InputLabel htmlFor="category-selector" size="small">
+            Article Category
+          </InputLabel>
+          <Select
+            size="small"
+            sx={{ mb: 1 }}
+            labelId="category-selector"
+            label="Article Category"
+            onChange={(e: any) => setCategorySelector(e.target.value)}
+          >
+            {categoryItems}
+          </Select>
+        </FormControl>
+
         <TextField
           sx={{ width: "100%" }}
           multiline
@@ -65,7 +123,14 @@ const CreateNewsPost = () => {
           }}
         />
 
-        <Button>Submit</Button>
+        <Button
+          sx={{ mt: 5 }}
+          onClick={() => {
+            submitHandler();
+          }}
+        >
+          Submit
+        </Button>
       </Box>
       <Box
         sx={{
@@ -78,9 +143,10 @@ const CreateNewsPost = () => {
       >
         <PostPreview
           title={title}
-          subTitle={subTitle}
+          subtitle={subtitle}
           image={image}
           body={body}
+          setOpenImageDrawer={setOpenImageDrawer}
         />
       </Box>
     </Box>

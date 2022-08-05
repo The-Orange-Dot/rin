@@ -1,15 +1,25 @@
-import { Box, Divider, Typography } from "@mui/material";
+import { Box, Divider, Typography, Button } from "@mui/material";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { FormatParagraphs } from "../News/FormatParagraphs";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
-const PostPreview = ({ title, subTitle, image, body }: any) => {
+const PostPreview = ({
+  title,
+  subtitle,
+  image,
+  body,
+  setOpenImageDrawer,
+}: any) => {
   const [imagePreview, setImagePreview] = useState<any>();
 
   useEffect(() => {
     if (image) {
-      if (image.includes(".jpg") || image.includes(".jpeg")) {
+      if (
+        image.includes(".jpg") ||
+        image.includes(".jpeg") ||
+        image.includes(".png")
+      ) {
         setImagePreview(
           <Box sx={{ width: "60%", height: "25vh", position: "relative" }}>
             <Image src={image} alt={image} layout="fill" objectFit="cover" />
@@ -22,16 +32,14 @@ const PostPreview = ({ title, subTitle, image, body }: any) => {
   }, [image]);
 
   const preview = body.split("\n").map((text: string, index: number) => {
-    if (
-      (text.includes("/image/") && text.includes(".jpg")) ||
-      (text.includes("/image/") && text.includes(".jpeg"))
-    ) {
+    if (text.includes(".jpg") || text.includes(".jpeg")) {
       return (
         <Box sx={{ width: "100%", height: 200, position: "relative", m: 1 }}>
           <Image
-            src={text.replace("/image/", "")}
+            src={text}
             layout="fill"
             objectFit="contain"
+            alt="image_preview"
           />
         </Box>
       );
@@ -134,7 +142,7 @@ const PostPreview = ({ title, subTitle, image, body }: any) => {
                 justifyContent: "center",
               }}
             >
-              {subTitle}
+              {subtitle}
             </Typography>
           </Box>
           <Box
@@ -163,6 +171,9 @@ const PostPreview = ({ title, subTitle, image, body }: any) => {
           <Divider />
         </Box>
       </Box>
+      <Button onClick={() => setOpenImageDrawer(true)} sx={{ mt: 5 }}>
+        Open Image Drawer
+      </Button>
     </Box>
   );
 };
