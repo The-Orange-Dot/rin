@@ -283,7 +283,7 @@ const UserProfile = ({ user, isMobile }: any) => {
                 </Box>
               </Box>
             </Box>
-            <Box sx={{ mt: 10 }}>
+            <Box sx={{ mt: 5 }}>
               <Button
                 variant="contained"
                 sx={{ width: 200, height: 50 }}

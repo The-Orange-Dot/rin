@@ -208,7 +208,20 @@ const Profile = () => {
           </Drawer>
         </Box>
       ) : (
-        <>
+        <Box
+          sx={{
+            width: "100%",
+            height: "100%",
+            display: "flex",
+            justifyContent: "center",
+            position: "absolute",
+            maxWidth: "1500px",
+            left: 0,
+            right: 0,
+            ml: "auto",
+            mr: "auto",
+          }}
+        >
           <Box
             sx={{
               minWidth: 270,
@@ -216,6 +229,7 @@ const Profile = () => {
               height: "80vh",
               display: "flex",
               flexDirection: "column",
+              alignItems: "center",
               ml: 10,
             }}
           >
@@ -255,7 +269,7 @@ const Profile = () => {
           >
             {page}
           </Box>
-        </>
+        </Box>
       )}
     </div>
   );
