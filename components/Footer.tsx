@@ -99,6 +99,7 @@ const Footer: NextComponentType = () => {
                 flexWrap: "wrap",
                 minWidth: "20%",
                 flex: 1,
+                zIndex: 1,
               }
         }
         container
@@ -127,7 +128,16 @@ const Footer: NextComponentType = () => {
               variant="body2"
               sx={{ cursor: "pointer", "&:hover": { opacity: 0.5 } }}
             >
-              Products
+              Store
+            </Typography>
+          </Link>
+          <Link href="/news">
+            <Typography
+              color="primary"
+              variant="body2"
+              sx={{ cursor: "pointer", "&:hover": { opacity: 0.5 } }}
+            >
+              News
             </Typography>
           </Link>
         </Grid>
