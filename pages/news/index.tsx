@@ -35,6 +35,7 @@ const NewsPage = ({
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
+          maxWidth: "1500px",
         }}
       >
         <Typography
