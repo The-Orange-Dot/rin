@@ -1,4 +1,4 @@
-import { Typography, Box, Modal, Fade } from "@mui/material";
+import { Typography, Box, Modal } from "@mui/material";
 import Image from "next/image";
 import { useMediaQuery } from "@mui/material";
 import React, { useState } from "react";
@@ -72,38 +72,36 @@ export const FormatParagraphs = (text: string) => {
                   setOpenImage(false);
                 }}
               >
-                <Fade in={true}>
+                <Box
+                  sx={{
+                    width: "100%",
+                    height: "100%",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                  onClick={() => {
+                    setOpenImage(false);
+                  }}
+                >
                   <Box
-                    sx={{
-                      width: "100%",
-                      height: "100%",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
-                    onClick={() => {
-                      setOpenImage(false);
-                    }}
+                    sx={
+                      isMobile
+                        ? { width: "100%", height: 350, position: "relative" }
+                        : { width: "100%", height: 900, position: "relative" }
+                    }
                   >
-                    <Box
-                      sx={
-                        isMobile
-                          ? { width: "100%", height: 350, position: "relative" }
-                          : { width: "100%", height: 900, position: "relative" }
-                      }
-                    >
-                      <Image
-                        src={paragraph}
-                        alt="Something"
-                        layout="fill"
-                        objectFit="scale-down"
-                        placeholder="blur"
-                        blurDataURL={paragraph}
-                        quality={isMobile ? 75 : 100}
-                      />
-                    </Box>
+                    <Image
+                      src={paragraph}
+                      alt="Something"
+                      layout="fill"
+                      objectFit="scale-down"
+                      placeholder="blur"
+                      blurDataURL={paragraph}
+                      quality={isMobile ? 75 : 100}
+                    />
                   </Box>
-                </Fade>
+                </Box>
               </Modal>
             </Box>
           );

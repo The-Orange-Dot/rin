@@ -17,7 +17,7 @@ const CreateNewsPost = ({ setOpenImageDrawer }: any) => {
   const [subtitle, setSubtitle] = useState("");
   const [body, setBody] = useState("");
   const { data: session } = useSession();
-  const [categorySelector, setCategorySelector] = useState("");
+  const [categorySelector, setCategorySelector] = useState("blog");
 
   const categories = [
     { text: "Blog", value: "blog" },
@@ -26,9 +26,9 @@ const CreateNewsPost = ({ setOpenImageDrawer }: any) => {
     { text: "Food", value: "food" },
   ];
 
-  const categoryItems = categories.map((category: any, i: number) => {
+  const categoryItems = categories.map((category: any, index: number) => {
     return (
-      <MenuItem value={category.value} key={i}>
+      <MenuItem value={category.value} key={index}>
         {category.text}
       </MenuItem>
     );
@@ -106,6 +106,7 @@ const CreateNewsPost = ({ setOpenImageDrawer }: any) => {
             sx={{ mb: 1 }}
             labelId="category-selector"
             label="Article Category"
+            value={categorySelector}
             onChange={(e: any) => setCategorySelector(e.target.value)}
           >
             {categoryItems}

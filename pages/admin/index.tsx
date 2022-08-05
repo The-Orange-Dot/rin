@@ -2,8 +2,12 @@ import React, { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import styles from "../../styles/admin.module.css";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import dynamic from "next/dynamic";
+
+const ProductForms = dynamic(
+  () => import("../../components/Admin/ProductForms")
+);
 
 const CreateNewsPost = dynamic(
   () => import("../../components/Admin/CreateNewsPost")
@@ -14,7 +18,7 @@ const ImagesDrawer = dynamic(
 );
 
 const Admin = ({ imagesData }: any) => {
-  const [selector, setSelector] = useState("posts");
+  const [selector, setSelector] = useState("news");
   const [page, setPage] = useState<any>(<Box />);
   const [openImageDrawer, setOpenImageDrawer] = useState(false);
   const router = useRouter();
@@ -25,21 +29,71 @@ const Admin = ({ imagesData }: any) => {
     },
   });
 
+  const pagesArray = [
+    { text: "News Form", value: "news" },
+    { text: "Product Form", value: "store" },
+  ];
+
+  const pageSelector = pagesArray.map((page, index) => {
+    return (
+      <Box
+        key={index}
+        onClick={() => {
+          setSelector(page.value);
+        }}
+        sx={{
+          height: "100%",
+          width: 200,
+          justifyContent: "center",
+          display: "flex",
+          alignItems: "center",
+          "&:hover": { backgroundColor: "#dfdfdf", cursor: "pointer" },
+        }}
+      >
+        <Typography>{page.text}</Typography>
+      </Box>
+    );
+  });
+
   useEffect(() => {
-    if (selector === "posts") {
+    if (selector === "news") {
       setPage(<CreateNewsPost setOpenImageDrawer={setOpenImageDrawer} />);
+    } else if (selector === "store") {
+      setPage(<ProductForms />);
     }
   }, [selector]);
 
   return (
     <div className={styles.main}>
-      {page}
-      <Box sx={{ width: "50%" }}>
-        <ImagesDrawer
-          imagesData={imagesData}
-          setOpenImageDrawer={setOpenImageDrawer}
-          openImageDrawer={openImageDrawer}
-        />
+      <Box
+        sx={{
+          width: "100%",
+          height: "100%",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          maxWidth: "1500px",
+        }}
+      >
+        <Box
+          sx={{
+            width: "90%",
+            height: 40,
+            display: "flex",
+            justifyContent: "space-around",
+          }}
+        >
+          {pageSelector}
+        </Box>
+        {page}
+        <Box sx={{ width: "50%" }}>
+          <ImagesDrawer
+            imagesData={imagesData}
+            setOpenImageDrawer={setOpenImageDrawer}
+            openImageDrawer={openImageDrawer}
+          />
+        </Box>
       </Box>
     </div>
   );

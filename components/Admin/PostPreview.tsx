@@ -34,7 +34,10 @@ const PostPreview = ({
   const preview = body.split("\n").map((text: string, index: number) => {
     if (text.includes(".jpg") || text.includes(".jpeg")) {
       return (
-        <Box sx={{ width: "100%", height: 200, position: "relative", m: 1 }}>
+        <Box
+          sx={{ width: "100%", height: 200, position: "relative", m: 1 }}
+          key={index}
+        >
           <Image
             src={text}
             layout="fill"
