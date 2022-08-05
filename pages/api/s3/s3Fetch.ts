@@ -6,12 +6,12 @@ import { unstable_getServerSession } from "next-auth/next";
 import AWS from "aws-sdk";
 
 AWS.config.update({
-  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  accessKeyId: process.env.S3_UPLOAD_KEY,
+  secretAccessKey: process.env.S3_UPLOAD_SECRET,
 });
 
 const s3 = new AWS.S3();
-const BUCKET = process.env.AWS_BUCKET_NAME;
+const BUCKET = process.env.S3_UPLOAD_BUCKET;
 
 const params = {
   Bucket: BUCKET as string,

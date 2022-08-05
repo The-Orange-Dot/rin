@@ -17,15 +17,20 @@ const ImagesDrawer = ({
 
   const uploadFile = async (file: any) => {
     let { url } = await uploadToS3(file);
-    setFilesData([...filesData, url]);
+
+    const data = {
+      image: url,
+      name: url.slice(86),
+    };
+    setFilesData([...filesData, data]);
   };
 
   useEffect(() => {
     if (filesData.length) {
       const bucketImages = filesData.map((image, i) => {
         return (
-          <Grid item xs={1} key={i}>
-            <Tooltip title={image.name} placement="top">
+          <Tooltip title={image.name} placement="top" key={i}>
+            <Grid item xs={1}>
               <Image
                 src={image.image}
                 alt={image.name}
@@ -37,14 +42,14 @@ const ImagesDrawer = ({
                   navigator.clipboard.writeText(image.image);
                 }}
               />
-            </Tooltip>
-          </Grid>
+            </Grid>
+          </Tooltip>
         );
       });
 
       setImages(bucketImages);
     }
-  }, [filesData]);
+  }, [filesData, openImageDrawer]);
 
   return (
     <Drawer

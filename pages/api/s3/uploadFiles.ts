@@ -3,9 +3,9 @@ import AWS from "aws-sdk";
 import S3 from "aws-sdk/clients/s3";
 
 const s3 = new S3({
-  region: process.env.AWS_BUCKET_REGION,
-  accessKeyId: process.env.AWS_ACCESS_KEY,
-  secretAccessKey: process.env.AWS_SECRET_KEY,
+  region: process.env.S3_UPLOAD_REGION,
+  accessKeyId: process.env.S3_UPLOAD_KEY,
+  secretAccessKey: process.env.S3_UPLOAD_SECRET,
   signatureVersion: "v4",
 });
 
@@ -28,7 +28,7 @@ export default async function handler(
       let { name, type } = req.body;
 
       const fileParams = {
-        Bucket: process.env.AWS_BUCKET_NAME,
+        Bucket: process.env.S3_UPLOAD_BUCKET,
         ContentType: type,
         ACL: "public-read",
         Key: name,

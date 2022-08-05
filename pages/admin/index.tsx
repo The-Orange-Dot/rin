@@ -62,7 +62,6 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
   }
 
   const res = await fetch(`${server}/api/s3/s3Fetch`);
-
   const images = await res.json();
 
   return {

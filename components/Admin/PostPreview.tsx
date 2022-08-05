@@ -11,8 +11,8 @@ const PostPreview = ({ title, subTitle, image, body }: any) => {
     if (image) {
       if (image.includes(".jpg") || image.includes(".jpeg")) {
         setImagePreview(
-          <Box sx={{ width: "100%", height: "20vh", position: "relative" }}>
-            <Image src={image} alt={image} layout="fill" objectFit="contain" />
+          <Box sx={{ width: "60%", height: "25vh", position: "relative" }}>
+            <Image src={image} alt={image} layout="fill" objectFit="cover" />
           </Box>
         );
       }
@@ -53,7 +53,7 @@ const PostPreview = ({ title, subTitle, image, body }: any) => {
       <Box
         sx={{
           width: "100%",
-          height: "50vh",
+          height: "45vh",
           border: "4px solid black",
           borderRadius: "1rem",
           position: "relative",
@@ -137,7 +137,16 @@ const PostPreview = ({ title, subTitle, image, body }: any) => {
               {subTitle}
             </Typography>
           </Box>
-          <Box sx={{ width: "100%", minHeight: 195 }}>{imagePreview}</Box>
+          <Box
+            sx={{
+              width: "100%",
+              minHeight: 245,
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
+            {imagePreview}
+          </Box>
           <Box
             sx={{
               width: "90%",
