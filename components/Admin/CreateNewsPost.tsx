@@ -1,5 +1,6 @@
 import { Box, TextField, Button } from "@mui/material";
 import React, { useState, SyntheticEvent } from "react";
+import PostPreview from "./PostPreview";
 
 const CreateNewsPost = () => {
   const [title, setTitle] = useState("");
@@ -19,51 +20,64 @@ const CreateNewsPost = () => {
   };
 
   return (
-    <Box
-      sx={{
-        width: "100%",
-        height: "100%",
-        p: 5,
-        display: "flex",
-        flexDirection: "column",
-      }}
-    >
-      <TextField
-        sx={{ width: "50vw", mb: 1 }}
-        size="small"
-        label="Title"
-        onChange={(e) => {
-          setTitle(e.target.value);
+    <Box sx={{ width: "100%", height: "100%", display: "flex" }}>
+      <Box
+        sx={{
+          width: "50%",
+          height: "100%",
+          p: 5,
+          display: "flex",
+          flexDirection: "column",
         }}
-      />
-      <TextField
-        sx={{ width: "50vw", mb: 1 }}
-        size="small"
-        label="Article Image"
-        onChange={(e) => {
-          setImage(e.target.value);
-        }}
-      />
-      <TextField
-        sx={{ width: "50vw", mb: 1 }}
-        size="small"
-        label="Subtitle"
-        onChange={(e) => {
-          setSubTitle(e.target.value);
-        }}
-      />
-      <TextField
-        sx={{ width: "50vw" }}
-        multiline
-        rows={30}
-        size="small"
-        label="Body"
-        onChange={(e) => {
-          setBody(e.target.value);
-        }}
-      />
+      >
+        <TextField
+          sx={{ width: "100%", mb: 1 }}
+          size="small"
+          label="Title"
+          onChange={(e) => {
+            setTitle(e.target.value);
+          }}
+        />
+        <TextField
+          sx={{ width: "100%", mb: 1 }}
+          size="small"
+          label="Article Image"
+          onChange={(e) => {
+            setImage(e.target.value);
+          }}
+        />
+        <TextField
+          sx={{ width: "100%", mb: 1 }}
+          size="small"
+          label="Subtitle"
+          onChange={(e) => {
+            setSubTitle(e.target.value);
+          }}
+        />
+        <TextField
+          sx={{ width: "100%" }}
+          multiline
+          rows={30}
+          size="small"
+          label="Body"
+          onChange={(e) => {
+            setBody(e.target.value);
+          }}
+        />
 
-      <Button>Submit</Button>
+        <Button>Submit</Button>
+      </Box>
+      <Box
+        sx={{
+          width: "50%",
+          height: "100%",
+          p: 5,
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
+        <PostPreview />
+      </Box>
     </Box>
   );
 };

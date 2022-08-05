@@ -24,7 +24,7 @@ const ImagesDrawer = ({
     if (filesData.length) {
       const bucketImages = filesData.map((image, i) => {
         return (
-          <Grid item xs={1}>
+          <Grid item xs={1} key={i}>
             <Tooltip title={image.name} placement="top">
               <Image
                 src={image.image}

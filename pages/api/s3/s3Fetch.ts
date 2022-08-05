@@ -6,8 +6,8 @@ import { unstable_getServerSession } from "next-auth/next";
 import AWS from "aws-sdk";
 
 AWS.config.update({
-  accessKeyId: "AKIA6PIF3UNRLZQ3SSMT",
-  secretAccessKey: "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",
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
 });
 
 const s3 = new AWS.S3();
