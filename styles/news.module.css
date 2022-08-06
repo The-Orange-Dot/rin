@@ -8,3 +8,11 @@
   overflow-y: scroll;
   margin-bottom: 100px;
 }
+
+.selectorContainer::-webkit-scrollbar {
+  display: none;
+}
+
+.text {
+  user-select: none;
+}

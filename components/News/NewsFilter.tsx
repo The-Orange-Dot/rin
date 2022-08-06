@@ -1,6 +1,8 @@
 import { Box, Typography } from "@mui/material";
 import React from "react";
 import { useRouter } from "next/router";
+import { useMediaQuery } from "@mui/material";
+import styles from "../../styles/news.module.css";
 
 const NewsFilter = ({
   setPostsArray,
@@ -8,6 +10,7 @@ const NewsFilter = ({
   setFilterSelected,
 }: any) => {
   const router = useRouter();
+  const isMobile = useMediaQuery("(max-width: 900px)");
   const selectorArray = [
     { text: "Main", value: "" },
     {
@@ -26,7 +29,15 @@ const NewsFilter = ({
           setPostsArray(data);
           setFilterSelected(category);
           router.query.filter = category === "" ? "all" : category;
-          router.push(router);
+
+          router.push(
+            {
+              pathname: "/news",
+              query: { ...router.query },
+            },
+            undefined,
+            {}
+          );
         });
       }
     });
@@ -36,20 +47,31 @@ const NewsFilter = ({
     return (
       <Box
         key={index}
-        sx={{
-          width: 150,
-          height: 50,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          transition: ".2s",
-          "&:hover": {
-            textDecoration: "underline",
-            transition: ".2s",
-            cursor: "pointer",
-            ".text": { fontWeight: 600, transition: "0.2s" },
-          },
-        }}
+        sx={
+          isMobile
+            ? {
+                width: 200,
+                height: 50,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                px: 2,
+              }
+            : {
+                width: 150,
+                height: 50,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                transition: ".2s",
+                "&:hover": {
+                  textDecoration: "underline",
+                  transition: ".2s",
+                  cursor: "pointer",
+                  ".text": { fontWeight: 600, transition: "0.2s" },
+                },
+              }
+        }
         onClick={() => {
           filterHandler(selector.value);
         }}
@@ -75,11 +97,19 @@ const NewsFilter = ({
 
   return (
     <Box
-      sx={{
-        width: "100%",
-        display: "flex",
-        justifyContent: "center",
-      }}
+      className={styles.selectorContainer}
+      sx={
+        isMobile
+          ? {
+              display: "flex",
+              overflowX: "scroll",
+            }
+          : {
+              width: "100%",
+              display: "flex",
+              justifyContent: "center",
+            }
+      }
     >
       {selector}
     </Box>

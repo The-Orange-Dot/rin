@@ -20,10 +20,12 @@ const HeaderImage = ({ isMobile }: any) => {
   const [imageLoaded, setImageLoaded] = useState(false);
 
   useEffect(() => {
-    gsap.set("#title", { opacity: 0, y: -10 });
-    gsap.set("#subtitle", { opacity: 0, x: -10 });
-    gsap.set("#image", { opacity: 0, x: -10 });
-    gsap.set(".buttons", { opacity: 0 });
+    if (document.querySelector("#title")) {
+      gsap.set("#title", { opacity: 0, y: -10 });
+      gsap.set("#subtitle", { opacity: 0, x: -10 });
+      gsap.set("#image", { opacity: 0, x: -10 });
+      gsap.set(".buttons", { opacity: 0 });
+    }
   }, []);
 
   useEffect(() => {

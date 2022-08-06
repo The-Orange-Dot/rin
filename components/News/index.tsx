@@ -15,20 +15,26 @@ const News = ({ post, index, filterSelected }: any) => {
   const [animationComplete, setAnimationComplete] = useState(false);
 
   useEffect(() => {
-    setAnimationComplete(false);
-    gsap.set("#main-image", { opacity: 0, x: 30 });
-    gsap.set("#main-title", { opacity: 0, y: -20 });
-    gsap.set("#main-subtitle", { opacity: 0, y: -20 });
-    gsap.set("#main-date", { opacity: 0 });
-    if (even) {
+    if (document.querySelector("#main-image")) {
+      gsap.set("#main-image", {
+        opacity: 0,
+        x: 30,
+      });
+      gsap.set("#main-title", { opacity: 0, y: -20 });
+      gsap.set("#main-subtitle", { opacity: 0, y: -20 });
+      gsap.set("#main-date", { opacity: 0 });
+    }
+    if (even && document.querySelector(".trigger")) {
       gsap.set(".trigger", { opacity: 0, x: 50 });
-    } else {
+    } else if (document.querySelector(".trigger")) {
       gsap.set(".trigger", { opacity: 0, x: -50 });
     }
 
     if (imageLoaded) {
       gsap
         .timeline({
+          onStart: setAnimationComplete,
+          onStartParams: [false],
           onComplete: setAnimationComplete,
           onCompleteParams: [true],
         })
