@@ -71,7 +71,7 @@ const MobileNavModal = ({ mobileNavModalOpen, setMobileNavModalOpen }: any) => {
               }
             : {
                 width: "100%",
-                height: 230,
+                height: 200,
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "space-between",
