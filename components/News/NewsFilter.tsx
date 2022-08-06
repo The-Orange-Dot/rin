@@ -1,11 +1,13 @@
 import { Box, Typography } from "@mui/material";
-import React, { useState } from "react";
+import React from "react";
+import { useRouter } from "next/router";
 
 const NewsFilter = ({
   setPostsArray,
   filterSelected,
   setFilterSelected,
 }: any) => {
+  const router = useRouter();
   const selectorArray = [
     { text: "Main", value: "" },
     {
@@ -23,6 +25,8 @@ const NewsFilter = ({
         res.json().then((data) => {
           setPostsArray(data);
           setFilterSelected(category);
+          router.query.filter = category === "" ? "all" : category;
+          router.push(router);
         });
       }
     });
