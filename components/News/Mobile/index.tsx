@@ -10,30 +10,42 @@ import ScrollTrigger from "gsap/dist/ScrollTrigger";
 const MobileNews = ({ post, index, filterSelected }: any) => {
   gsap.registerPlugin(ScrollTrigger);
   const [imageLoaded, setImageLoaded] = useState(false);
+  const [animationComplete, setAnimationComplete] = useState(false);
   const date = DateFormatter(post.createdAt);
   const even = index % 2 === 0;
 
   useEffect(() => {
-    gsap.set("#main-image", { opacity: 0, x: 30 });
-    gsap.set("#main-title", { opacity: 0, y: 20 });
-    gsap.set("#main-subtitle", { opacity: 0, y: 20 });
-    gsap.set("#main-date", { opacity: 0, y: 20 });
-    gsap.set(".trigger", { opacity: 0, x: 50 });
+    if (document.querySelector("#main-image")) {
+      gsap.set("#main-image", { opacity: 0, x: 30 });
+      gsap.set("#main-title", { opacity: 0, y: 20 });
+      gsap.set("#main-subtitle", { opacity: 0, y: 20 });
+      gsap.set("#main-date", { opacity: 0, y: 20 });
+      gsap.set(".trigger", { opacity: 0, x: 50 });
+    }
 
     if (imageLoaded) {
       gsap
-        .timeline()
+        .timeline({
+          onStart: setAnimationComplete,
+          onStartParams: [false],
+          onComplete: setAnimationComplete,
+          onCompleteParams: [true],
+        })
         .to(
           "#main-title",
           { opacity: 1, y: 0, duration: 1, overwrite: true },
-          1
+          0.5
         )
         .to(
           "#main-subtitle",
           { opacity: 1, y: 0, duration: 1, overwrite: true },
-          1
+          0.5
         )
-        .to("#main-date", { opacity: 1, y: 0, duration: 1, overwrite: true }, 1)
+        .to(
+          "#main-date",
+          { opacity: 1, y: 0, duration: 1, overwrite: true },
+          0.5
+        )
         .to(
           "#main-image",
           {
@@ -43,10 +55,10 @@ const MobileNews = ({ post, index, filterSelected }: any) => {
             overwrite: true,
             ease: "power4.out",
           },
-          1.5
+          1
         );
     }
-  }, [imageLoaded]);
+  }, [imageLoaded, filterSelected]);
 
   useEffect(() => {
     gsap.utils.toArray(".trigger").forEach((title: any) => {

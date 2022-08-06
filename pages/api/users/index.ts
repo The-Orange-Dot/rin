@@ -3,6 +3,8 @@ import bcrypt from "bcrypt";
 import crypto from "node:crypto";
 import { prisma } from "../../../prisma/db";
 import { Prisma } from "@prisma/client";
+import { ValidateEmail } from "../../../components/EmailValidator";
+import { json } from "stream/consumers";
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY, {
   apiVersion: "2020-08-27; orders_beta=v4",
 });
@@ -16,12 +18,17 @@ export default async function handler(
     const { passwordConfirm } = req.body;
     const saltRounds = 10;
     const plainTextPassword = userData.password;
+    const validEmail = ValidateEmail(userData.email);
 
     if (userData.password !== passwordConfirm) {
-      console.log("Passwords dont match");
-      res
-        .status(500)
-        .json({ error: "Password and Password confirm does not match" });
+      console.log("Passwords don't match");
+      res.status(400).json({
+        message: "Password and Password confirm does not match",
+        type: "password",
+      });
+    } else if (!validEmail) {
+      console.log("Email not valid");
+      res.status(400).json({ message: "Email is not valid", type: "email" });
     } else {
       try {
         bcrypt.genSalt(saltRounds, (error, salt) => {
@@ -61,7 +68,7 @@ export default async function handler(
       } catch (error) {
         if (error instanceof Prisma.PrismaClientKnownRequestError) {
           if (error.code === "P2002") {
-            res.status(406).json({ error: error.meta?.target });
+            res.status(406).json({ message: error.meta?.target });
           }
         }
       }

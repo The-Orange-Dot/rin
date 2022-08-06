@@ -35,16 +35,17 @@ const CreateAccountForm = ({ setOpenLoginDrawer }: any) => {
   const [errorMessage, setErrorMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [notUniqueError, setNotUniqueError] = useState(false);
+  const [emailNotValid, setEmailNotValid] = useState(false);
 
   useEffect(() => {
-    setTimeout(() => {
-      setPasswordNotMatch(false);
-    }, 5000);
+    console.log("ERROR: ", errorMessage);
 
     setTimeout(() => {
+      setEmailNotValid(false);
+      setPasswordNotMatch(false);
       setNotUniqueError(false);
     }, 5000);
-  }, [passwordNotMatch, errorMessage]);
+  }, [passwordNotMatch, errorMessage, emailNotValid]);
 
   const submitHandler = async (e: SyntheticEvent) => {
     e.preventDefault();
@@ -81,16 +82,21 @@ const CreateAccountForm = ({ setOpenLoginDrawer }: any) => {
           setOpenLoginDrawer(false);
           setIsLoading(false);
         });
-      } else if (res.status === 500) {
-        res.json().then((data) => {
-          console.log(data.error);
-          setErrorMessage(data.error);
-          setPasswordNotMatch(true);
+      } else if (res.status === 400) {
+        res.json().then((error) => {
+          if (error.type === "email") {
+            console.log(error.message);
+            setEmailNotValid(true);
+          } else if (error.type === "password") {
+            console.log(error.message);
+            setPasswordNotMatch(true);
+          }
           setIsLoading(false);
+          setErrorMessage(error.message);
         });
       } else if (res.status === 406) {
-        res.json().then((data) => {
-          setErrorMessage(`${data.error} already taken`);
+        res.json().then((error) => {
+          setErrorMessage(`${error.message} already taken`);
           setNotUniqueError(true);
           setIsLoading(false);
         });
@@ -137,6 +143,7 @@ const CreateAccountForm = ({ setOpenLoginDrawer }: any) => {
             <InputLabel htmlFor="email">Email *</InputLabel>
             <Input
               required
+              error={emailNotValid}
               id="email"
               value={emailInput}
               inputProps={{ style: { paddingLeft: 10 } }}
@@ -270,7 +277,7 @@ const CreateAccountForm = ({ setOpenLoginDrawer }: any) => {
 
           <Box
             sx={
-              passwordNotMatch || notUniqueError
+              passwordNotMatch || notUniqueError || emailNotValid
                 ? {
                     width: "100%",
                     height: "5vh",
