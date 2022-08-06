@@ -6,10 +6,22 @@ const ContentSecurityPolicy = `
   child-src example.com;
   style-src 'self' example.com;
   font-src 'self';  
-  img-src 'self'
 `;
 
 const nextConfig = {
+  async headers() {
+    return [
+      {
+        source: "/:path*",
+        headers: [
+          {
+            key: "Content-Security-Policy",
+            value: ContentSecurityPolicy.replace(/\s{2,}/g, " ").trim(),
+          },
+        ],
+      },
+    ];
+  },
   reactStrictMode: true,
   swcMinify: true,
   images: {
@@ -23,14 +35,6 @@ const nextConfig = {
       `${process.env.S3_UPLOAD_BUCKET}.s3.amazonaws.com`,
       `${process.env.S3_UPLOAD_BUCKET}.s3.${process.env.S3_UPLOAD_REGION}.amazonaws.com`,
     ],
-  },
-  async headers() {
-    return [
-      {
-        key: "Content-Security-Policy",
-        value: ContentSecurityPolicy.replace(/\s{2,}/g, " ").trim(),
-      },
-    ];
   },
 };
 
