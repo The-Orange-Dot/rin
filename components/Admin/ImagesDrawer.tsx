@@ -205,8 +205,9 @@ const ImagesDrawer = ({
                   }}
                 >
                   <Typography>
-                    Please type <strong>"delete"</strong> to confirm deleting "
-                    {deleteSelector}"
+                    Please type <strong>&quot;delete&quot;</strong> to confirm
+                    deleting &quot;
+                    {deleteSelector}&quot;
                   </Typography>
                   <Input
                     autoFocus

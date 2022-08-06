@@ -15,9 +15,16 @@ const ArticleContent = ({ post }: any) => {
       method: "PATCH",
       body: JSON.stringify({ body: text }),
       headers: { "Content-Type": "application/json" },
+    }).then((res) => {
+      if (res.ok) {
+        res.json().then((data) => {
+          setBody(data.newPost.body);
+          setEditPressed(false);
+        });
+      } else {
+        console.log("Uh oh. Something happened");
+      }
     });
-    const data = await res.json();
-    setBody(data.newPost.body);
   };
 
   return (
