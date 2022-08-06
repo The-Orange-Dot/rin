@@ -1,11 +1,9 @@
 /** @type {import('next').NextConfig} */
 
 const ContentSecurityPolicy = `
-  default-src 'self';
-  script-src 'self';
-  child-src example.com;
-  style-src 'self' 'unsafe-inline';
-  font-src 'self';  
+    default-src 'self' 'unsafe-eval';
+    style-src 'self' 'unsafe-inline';
+    img-src 'self' https: data:;
 `;
 
 const securityHeaders = [

@@ -193,7 +193,7 @@ const ProductModal = ({
       >
         <Image
           src={image}
-          alt={image}
+          alt={i.toString()}
           width={50}
           height={50}
           objectFit="contain"

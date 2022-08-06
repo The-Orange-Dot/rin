@@ -84,7 +84,6 @@ const ImagesDrawer = ({
     }
   }, [filesData, openImageDrawer]);
 
-  console.log(filesData);
   return (
     <Drawer
       anchor="bottom"
