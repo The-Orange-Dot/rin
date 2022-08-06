@@ -2,6 +2,7 @@ import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { PrismaClient } from "@prisma/client";
 import type { NextAuthOptions } from "next-auth";
+import bcrypt from "bcrypt";
 
 const prisma = new PrismaClient();
 
@@ -31,9 +32,12 @@ export const authOptions: NextAuthOptions = {
             },
           },
         });
-        console.log(user);
         //==>put bcrypt comparison here!<==
-        if (user?.password === credentials?.password) {
+        if (
+          user &&
+          credentials &&
+          bcrypt.compareSync(credentials.password, user.password)
+        ) {
           return user;
         }
 

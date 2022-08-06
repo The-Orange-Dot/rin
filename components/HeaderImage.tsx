@@ -126,9 +126,9 @@ const HeaderImage = ({ isMobile }: any) => {
               }
             : {
                 position: "absolute",
-                left: "10%",
+                left: "5%",
                 minWidth: 100,
-                maxWidth: 550,
+                maxWidth: 630,
                 height: 200,
                 display: "flex",
                 flexDirection: "column",
@@ -159,7 +159,7 @@ const HeaderImage = ({ isMobile }: any) => {
                     fontWeight: 600,
                     color: "#312f2f",
                     mb: 2,
-                    fontSize: "2.8rem",
+                    fontSize: "3.2rem",
                   }
             }
             variant="h3"
@@ -178,7 +178,7 @@ const HeaderImage = ({ isMobile }: any) => {
                   width: "90%",
                   alignItems: "flex-start",
                 }
-              : {}
+              : { width: "90%" }
           }
         >
           <Typography

@@ -4,6 +4,7 @@ const ContentSecurityPolicy = `
     default-src 'self' 'unsafe-eval';
     style-src 'self' 'unsafe-inline';
     img-src 'self' https: data:;
+    connect-src https://${process.env.S3_UPLOAD_BUCKET}.s3.amazonaws.com https://${process.env.S3_UPLOAD_BUCKET}.s3.${process.env.S3_UPLOAD_REGION}.amazonaws.com http://localhost:3000 ws://localhost:3000/_next/webpack-hmr ws://rin-ten.vercel.app/_next/webpack-hmr; 
 `;
 
 const securityHeaders = [

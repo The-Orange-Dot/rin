@@ -1,4 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
+import bcrypt from "bcrypt";
 import crypto from "node:crypto";
 import { prisma } from "../../../prisma/db";
 import { Prisma } from "@prisma/client";
@@ -11,8 +12,10 @@ export default async function handler(
   res: NextApiResponse
 ) {
   if (req.method === "POST") {
-    const { userData } = req.body;
+    let { userData } = req.body;
     const { passwordConfirm } = req.body;
+    const saltRounds = 10;
+    const plainTextPassword = userData.password;
 
     if (userData.password !== passwordConfirm) {
       console.log("Passwords dont match");
@@ -21,34 +24,39 @@ export default async function handler(
         .json({ error: "Password and Password confirm does not match" });
     } else {
       try {
-        const userDetails = await prisma.user.create({ data: userData });
+        bcrypt.genSalt(saltRounds, (error, salt) => {
+          bcrypt.hash(plainTextPassword, salt, async (error, hash) => {
+            userData.password = hash;
+            const userDetails = await prisma.user.create({ data: userData });
 
-        const username = `${userDetails.firstName
-          .slice(0, 1)
-          .toUpperCase()}${userDetails.firstName.slice(
-          1
-        )} ${userDetails.lastName
-          .slice(0, 1)
-          .toUpperCase()}${userDetails.lastName.slice(1)}`;
+            const username = `${userDetails.firstName
+              .slice(0, 1)
+              .toUpperCase()}${userDetails.firstName.slice(
+              1
+            )} ${userDetails.lastName
+              .slice(0, 1)
+              .toUpperCase()}${userDetails.lastName.slice(1)}`;
 
-        const loginDetails = {
-          username: userData.username,
-          password: userData.password,
-        };
+            const loginDetails = {
+              username: userData.username,
+              password: userData.password,
+            };
 
-        const stripeCustomerObj = {
-          id: userDetails.id,
-          balance: 0,
-          name: username,
-          email: userDetails.email,
-          description: `Rin Username: ${userDetails.username}`,
-        };
+            const stripeCustomerObj = {
+              id: userDetails.id,
+              balance: 0,
+              name: username,
+              email: userDetails.email,
+              description: `Rin Username: ${userDetails.username}`,
+            };
 
-        const stripeRes = await stripe.customers.create(stripeCustomerObj);
+            const stripeRes = await stripe.customers.create(stripeCustomerObj);
 
-        res.status(201).json({
-          loginDetails: loginDetails,
-          res: "User created successfully",
+            res.status(201).json({
+              loginDetails: loginDetails,
+              res: "User created successfully",
+            });
+          });
         });
       } catch (error) {
         if (error instanceof Prisma.PrismaClientKnownRequestError) {

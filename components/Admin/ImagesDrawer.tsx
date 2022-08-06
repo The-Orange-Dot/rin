@@ -4,14 +4,17 @@ import {
   Drawer,
   Box,
   Grid,
+  Input,
   Button,
   LinearProgress,
+  Typography,
 } from "@mui/material";
 import React, { useEffect, useState, ElementType } from "react";
 import { FileUploader } from "react-drag-drop-files";
 import { useS3Upload } from "next-s3-upload";
 import FuseSearch from "./FuseSearch";
 import Image from "next/image";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const ImagesDrawer = ({
   imagesData,
@@ -20,14 +23,14 @@ const ImagesDrawer = ({
 }: any) => {
   const [selectImage, setSelectImage] = useState("");
   const [deleteSelector, setDeleteSelector] = useState("");
+  const [confirmDeleteDrawer, setConfirmDeleteDrawer] = useState(false);
   const [filesData, setFilesData] = useState<any[]>(imagesData.images);
   const [images, setImages] = useState<any[]>();
   const { uploadToS3, files } = useS3Upload();
+  const [confirmDeleteInput, setConfirmDeleteInput] = useState("");
   const fileTypes = ["JPG", "JPEG", "PNG"];
 
-  const uploadFile = async (event: any) => {
-    const file = event.target.files[0];
-
+  const uploadFile = async (file: any) => {
     let { url } = await uploadToS3(file);
 
     const data = {
@@ -39,6 +42,10 @@ const ImagesDrawer = ({
 
   const copyHandler = () => {
     navigator.clipboard.writeText(selectImage);
+  };
+
+  const deleteModal = () => {
+    setConfirmDeleteDrawer(true);
   };
 
   const deleteHandler = async () => {
@@ -55,6 +62,10 @@ const ImagesDrawer = ({
     });
 
     setFilesData(updatedImages);
+    setDeleteSelector("");
+    setSelectImage("");
+    setConfirmDeleteInput("");
+    setConfirmDeleteDrawer(false);
   };
 
   useEffect(() => {
@@ -163,10 +174,68 @@ const ImagesDrawer = ({
               variant="contained"
               color="error"
               disabled={deleteSelector === ""}
-              onClick={deleteHandler}
+              onClick={deleteModal}
             >
               Delete
             </Button>
+            <Drawer
+              anchor="bottom"
+              open={confirmDeleteDrawer}
+              onClose={() => {
+                setConfirmDeleteDrawer(false);
+              }}
+            >
+              <Paper
+                sx={{
+                  width: "100%",
+                  display: "flex",
+                  justifyContent: "center",
+                  height: "30vh",
+                  alignItems: "center",
+                }}
+              >
+                <Box
+                  sx={{
+                    height: "80%",
+                    width: "40%",
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "space-around",
+                    textAlign: "center",
+                  }}
+                >
+                  <Typography>
+                    Please type <strong>"delete"</strong> to confirm deleting "
+                    {deleteSelector}"
+                  </Typography>
+                  <Input
+                    autoFocus
+                    onChange={(e) => {
+                      setConfirmDeleteInput(e.target.value);
+                    }}
+                    inputProps={{
+                      style: { textAlign: "center" },
+                    }}
+                  />
+                  <Button
+                    variant="contained"
+                    color="error"
+                    sx={{ height: 50 }}
+                    disabled={confirmDeleteInput !== "delete"}
+                    onClick={deleteHandler}
+                  >
+                    <DeleteIcon /> Confirm Delete
+                  </Button>
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    onClick={() => setConfirmDeleteDrawer(false)}
+                  >
+                    Cancel
+                  </Button>
+                </Box>
+              </Paper>
+            </Drawer>
           </Box>
         </Box>
       </Paper>

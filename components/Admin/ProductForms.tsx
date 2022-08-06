@@ -29,7 +29,12 @@ const ProductForms = () => {
   };
 
   const commitHandler = async (param: GridCellEditCommitParams) => {
-    const data = { [`${param.field}`]: param.value };
+    const valueChecker =
+      param.value === "ingredients" || param.value === "images"
+        ? param.value.split(" , ")
+        : param.value;
+
+    const data = { [`${param.field}`]: valueChecker };
 
     const res = await fetch(`/api/products/${param.id}`, {
       method: "PATCH",
@@ -37,6 +42,8 @@ const ProductForms = () => {
       headers: { "Content-Type": "application/json" },
     });
     const updatedProduct = await res.json();
+
+    console.log(updatedProduct);
   };
 
   const columns: GridColDef[] = [
@@ -44,13 +51,13 @@ const ProductForms = () => {
     {
       field: "name",
       headerName: "Product Name",
-      width: 150,
+      width: 200,
       editable: true,
     },
     {
       field: "brand",
       headerName: "Brand",
-      width: 120,
+      width: 100,
       editable: true,
     },
     {
@@ -82,7 +89,7 @@ const ProductForms = () => {
     {
       field: "details",
       headerName: "Details",
-      width: 150,
+      width: 180,
       editable: true,
     },
     {
@@ -92,12 +99,7 @@ const ProductForms = () => {
       type: "number",
       editable: true,
     },
-    {
-      field: "rating",
-      headerName: "Rating",
-      width: 90,
-      editable: true,
-    },
+
     {
       field: "thumbnail",
       headerName: "Thumbnail",
@@ -109,18 +111,12 @@ const ProductForms = () => {
       headerName: "Images",
       width: 90,
       editable: true,
-      valueGetter: (params) => {
-        return params?.row?.images?.length;
-      },
     },
     {
       field: "ingredients",
       headerName: "Ingredients",
-      width: 90,
+      width: 400,
       editable: true,
-      valueGetter: (params) => {
-        return params?.row?.ingredients?.length;
-      },
     },
   ];
 
@@ -130,7 +126,8 @@ const ProductForms = () => {
         width: "90%",
         display: "flex",
         justifyContent: "center",
-        height: 700,
+        height: 800,
+        mt: 5,
       }}
     >
       <DataGrid
