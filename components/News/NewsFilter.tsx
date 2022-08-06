@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Button } from "@mui/material";
 import React from "react";
 import { useRouter } from "next/router";
 import { useMediaQuery } from "@mui/material";
@@ -76,21 +76,31 @@ const NewsFilter = ({
           filterHandler(selector.value);
         }}
       >
-        <Typography
-          className="text"
-          variant="overline"
-          sx={
-            filterSelected === selector.value
-              ? {
-                  textDecoration: "underline",
-                  fontWeight: 600,
-                  fontSize: "1rem",
-                }
-              : { fontSize: "1rem" }
-          }
+        <Button
+          disableRipple
+          disableFocusRipple
+          sx={{
+            "&:hover": {
+              backgroundColor: "#FFF",
+            },
+          }}
         >
-          {selector.text}
-        </Typography>
+          <Typography
+            className="text"
+            variant="overline"
+            sx={
+              filterSelected === selector.value
+                ? {
+                    textDecoration: "underline",
+                    fontWeight: 600,
+                    fontSize: "1rem",
+                  }
+                : { fontSize: "1rem" }
+            }
+          >
+            {selector.text}
+          </Typography>
+        </Button>
       </Box>
     );
   });
