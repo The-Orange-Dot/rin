@@ -4,7 +4,7 @@ const ContentSecurityPolicy = `
   default-src 'self';
   script-src 'self';
   child-src example.com;
-  style-src http://localhost:3000 https://rin-ten.vercel.app/;
+  style-src 'self' 'unsafe-inline';
   font-src 'self';  
 `;
 
