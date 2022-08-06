@@ -4,7 +4,7 @@ const ContentSecurityPolicy = `
     default-src 'self' 'unsafe-eval';
     style-src 'self' 'unsafe-inline';
     img-src 'self' https: data:;
-    connect-src https://${process.env.S3_UPLOAD_BUCKET}.s3.amazonaws.com https://${process.env.S3_UPLOAD_BUCKET}.s3.${process.env.S3_UPLOAD_REGION}.amazonaws.com http://localhost:3000 ws://localhost:3000/_next/webpack-hmr ws://rin-ten.vercel.app/_next/webpack-hmr https://rin-ten.vercel.app/_next/static/css/94b3dd3949a444d4.css https://rin-ten.vercel.app/api/auth/_log; 
+    connect-src https://${process.env.S3_UPLOAD_BUCKET}.s3.amazonaws.com https://${process.env.S3_UPLOAD_BUCKET}.s3.${process.env.S3_UPLOAD_REGION}.amazonaws.com http://localhost:3000 ws://localhost:3000/_next/webpack-hmr ws://rin-ten.vercel.app/_next/webpack-hmr https://rin-ten.vercel.app/_next/static/css/94b3dd3949a444d4.css https://rin-ten.vercel.app/api/auth/_log https://rin-ten.vercel.app/api/auth/session; 
 `;
 
 const securityHeaders = [
