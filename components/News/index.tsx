@@ -7,13 +7,15 @@ import Link from "next/link";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/dist/ScrollTrigger";
 
-const News = ({ post, index }: any) => {
+const News = ({ post, index, filterSelected }: any) => {
   gsap.registerPlugin(ScrollTrigger);
   const [imageLoaded, setImageLoaded] = useState(false);
   const date = DateFormatter(post.createdAt);
   const even = index % 2 === 0;
+  const [animationComplete, setAnimationComplete] = useState(false);
 
   useEffect(() => {
+    setAnimationComplete(false);
     gsap.set("#main-image", { opacity: 0, x: 30 });
     gsap.set("#main-title", { opacity: 0, y: -20 });
     gsap.set("#main-subtitle", { opacity: 0, y: -20 });
@@ -26,10 +28,17 @@ const News = ({ post, index }: any) => {
 
     if (imageLoaded) {
       gsap
-        .timeline()
-        .to("#main-title", { opacity: 1, y: 0, duration: 1 }, 0.7)
-        .to("#main-subtitle", { opacity: 1, y: 0 }, 1)
-        .to("#main-date", { opacity: 1 }, 1.3)
+        .timeline({
+          onComplete: setAnimationComplete,
+          onCompleteParams: [true],
+        })
+        .to(
+          "#main-title",
+          { opacity: 1, y: 0, duration: 1, overwrite: true },
+          0.7
+        )
+        .to("#main-subtitle", { opacity: 1, y: 0, overwrite: true }, 1)
+        .to("#main-date", { opacity: 1, overwrite: true }, 1.3)
         .to(
           "#main-image",
           {
@@ -37,11 +46,12 @@ const News = ({ post, index }: any) => {
             x: 0,
             duration: 2,
             ease: "power4.out",
+            overwrite: true,
           },
           1.5
         );
     }
-  }, [imageLoaded]); //eslint-disable-line
+  }, [imageLoaded, filterSelected]); //eslint-disable-line
 
   useEffect(() => {
     gsap.utils.toArray(".trigger").forEach((title: any) => {
@@ -87,12 +97,14 @@ const News = ({ post, index }: any) => {
               justifyContent: "center",
               alignItems: "center",
               transition: "0.3s",
-              "&:hover": {
-                backgroundColor: "#dfdfdf",
-                transition: "0.3s",
-                cursor: "pointer",
-                ".image": { opacity: 0.9, transition: "0.3s" },
-              },
+              "&:hover": animationComplete
+                ? {
+                    backgroundColor: "#dfdfdf",
+                    transition: "0.3s",
+                    cursor: "pointer",
+                    ".image": { opacity: 0.9, transition: "0.3s" },
+                  }
+                : {},
             }}
             key={index}
           >

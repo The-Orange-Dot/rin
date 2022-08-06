@@ -15,12 +15,23 @@ const NewsPage = ({
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
   const isMobile = useMediaQuery("(max-width: 900px)");
   const [postsArray, setPostsArray] = useState(posts);
+  const [filterSelected, setFilterSelected] = useState("");
 
   const postElements = postsArray.map((post: PostType, index: number) => {
     return isMobile ? (
-      <MobileNews post={post} index={index} key={index} />
+      <MobileNews
+        post={post}
+        index={index}
+        key={index}
+        filterSelected={filterSelected}
+      />
     ) : (
-      <News post={post} index={index} key={index} />
+      <News
+        post={post}
+        index={index}
+        key={index}
+        filterSelected={filterSelected}
+      />
     );
   });
 
@@ -45,7 +56,11 @@ const NewsPage = ({
           News
         </Typography>
         <Box sx={{ width: "90%", mt: 1 }}>
-          <NewsFilter />
+          <NewsFilter
+            setPostsArray={setPostsArray}
+            filterSelected={filterSelected}
+            setFilterSelected={setFilterSelected}
+          />
         </Box>
         <Box
           sx={{

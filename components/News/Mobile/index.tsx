@@ -7,7 +7,7 @@ import Link from "next/link";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/dist/ScrollTrigger";
 
-const MobileNews = ({ post, index }: any) => {
+const MobileNews = ({ post, index, filterSelected }: any) => {
   gsap.registerPlugin(ScrollTrigger);
   const [imageLoaded, setImageLoaded] = useState(false);
   const date = DateFormatter(post.createdAt);
@@ -23,15 +23,24 @@ const MobileNews = ({ post, index }: any) => {
     if (imageLoaded) {
       gsap
         .timeline()
-        .to("#main-title", { opacity: 1, y: 0, duration: 1 }, 1)
-        .to("#main-subtitle", { opacity: 1, y: 0, duration: 1 }, 1)
-        .to("#main-date", { opacity: 1, y: 0, duration: 1 }, 1)
+        .to(
+          "#main-title",
+          { opacity: 1, y: 0, duration: 1, overwrite: true },
+          1
+        )
+        .to(
+          "#main-subtitle",
+          { opacity: 1, y: 0, duration: 1, overwrite: true },
+          1
+        )
+        .to("#main-date", { opacity: 1, y: 0, duration: 1, overwrite: true }, 1)
         .to(
           "#main-image",
           {
             opacity: 1,
             x: 0,
             duration: 2,
+            overwrite: true,
             ease: "power4.out",
           },
           1.5
