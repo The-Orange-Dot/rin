@@ -1,0 +1,36 @@
+@import "mixins";
+@import "media-query-mixin";
+
+.selector_container::-webkit-scrollbar {
+  display: none;
+}
+
+.selector_container {
+  @include monitor {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  @include mobile {
+    display: flex;
+    overflow-x: scroll;
+  }
+}
+
+.filter {
+  @include monitor {
+    @include center-x($width: 150px);
+    transition: 0.2s;
+    &:hover {
+      text-decoration: underline;
+      transition: 0.2s;
+      cursor: pointer;
+    }
+  }
+
+  @include mobile {
+    @include center-x($width: 200px);
+    padding: 0 20px;
+  }
+}
