@@ -129,7 +129,6 @@ const ProductCards = ({ product, setSelectedProduct }: ProductCardType) => {
                 }}
                 color="primary"
                 variant={isMobile ? "body2" : "h6"}
-                lineHeight={isMobile ? "1.1rem" : "2rem"}
               >
                 {product.name}
               </Typography>

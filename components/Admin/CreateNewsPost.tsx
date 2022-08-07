@@ -7,7 +7,7 @@ import {
   InputLabel,
   FormControl,
 } from "@mui/material";
-import React, { useState, SyntheticEvent } from "react";
+import React, { useState, SyntheticEvent, useEffect } from "react";
 import PostPreview from "./PostPreview";
 import { useSession } from "next-auth/react";
 
@@ -18,6 +18,7 @@ const CreateNewsPost = ({ setOpenImageDrawer }: any) => {
   const [body, setBody] = useState("");
   const { data: session } = useSession();
   const [categorySelector, setCategorySelector] = useState("blog");
+  const [disableSubmit, setDisableSubmit] = useState(true);
 
   const categories = [
     { text: "Blog", value: "blog" },
@@ -33,6 +34,14 @@ const CreateNewsPost = ({ setOpenImageDrawer }: any) => {
       </MenuItem>
     );
   });
+
+  useEffect(() => {
+    if (!title || !image || !subtitle || !body) {
+      setDisableSubmit(true);
+    } else {
+      setDisableSubmit(false);
+    }
+  }, [title, image, subtitle, body]);
 
   const submitHandler = async () => {
     if (session) {
@@ -129,6 +138,7 @@ const CreateNewsPost = ({ setOpenImageDrawer }: any) => {
           onClick={() => {
             submitHandler();
           }}
+          disabled={disableSubmit}
         >
           Submit
         </Button>

@@ -1,5 +1,5 @@
 import React, { SetStateAction, useEffect, useState } from "react";
-import styles from "../styles/payment.module.css";
+import styles from "../styles/Payment.module.scss";
 import { loadStripe } from "@stripe/stripe-js";
 import CheckoutForm from "../components/Products/CheckoutForm";
 import { useSelector } from "react-redux";

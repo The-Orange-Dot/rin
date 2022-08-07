@@ -9,7 +9,7 @@ import {
   Container,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import styles from "../styles/footer.module.css";
+import styles from "../styles/Footer.module.scss";
 import EmailIcon from "@mui/icons-material/Email";
 import { useMediaQuery } from "@mui/material";
 import Link from "next/link";

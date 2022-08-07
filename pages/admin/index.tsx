@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
-import styles from "../../styles/admin.module.css";
+import styles from "../../styles/Admin.module.scss";
 import { Box, Typography } from "@mui/material";
 import dynamic from "next/dynamic";
 

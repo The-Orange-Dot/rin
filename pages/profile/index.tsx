@@ -7,7 +7,7 @@ import {
 } from "@mui/material";
 import { signOut } from "next-auth/react";
 import React, { useEffect, useState } from "react";
-import styles from "../../styles/profile.module.css";
+import styles from "../../styles/Profile.module.scss";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import UserProfile from "../../components/Profile/UserProfile";

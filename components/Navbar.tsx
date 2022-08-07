@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import MobileNavModal from "./Products/Mobile/MobileNavModal";
 import React, { useEffect, useState } from "react";
-import styles from "../styles/navbar.module.css";
+import styles from "../styles/Navbar.module.scss";
 import { useMediaQuery } from "@mui/material";
 import { useSession } from "next-auth/react";
 import gsap from "gsap";
