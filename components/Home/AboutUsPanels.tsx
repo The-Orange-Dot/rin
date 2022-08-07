@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import { panels, instructions } from "./Texts";
-import styles from "../../styles/home.module.scss";
+import styles from "../../styles/Home.module.scss";
 import { Typography, Box, Paper } from "@mui/material";
 import { useMediaQuery } from "@mui/material";
 import type { NextComponentType } from "next";

@@ -4,7 +4,7 @@ import Image from "next/image";
 import React, { useState } from "react";
 import News from "../../components/News";
 import { server } from "../../config";
-import styles from "../../styles/news/main.module.scss";
+import styles from "../../styles/news/Main.module.scss";
 import { PostType } from "../../types/newsTypes";
 import MobileNews from "../../components/News/Mobile";
 import { useMediaQuery } from "@mui/material";
