@@ -167,11 +167,9 @@ const MobileNews = ({ post, index, filterSelected }: any) => {
               <Box className={styles.post_subtitle_container}>
                 <Typography
                   variant="body2"
-                  sx={{
-                    fontWeight: 100,
-                    lineHeight: "1rem",
-                    fontSize: ".7rem",
-                  }}
+                  fontWeight={100}
+                  lineHeight="1rem"
+                  fontSize=".7rem"
                 >
                   {post.subtitle}
                 </Typography>
