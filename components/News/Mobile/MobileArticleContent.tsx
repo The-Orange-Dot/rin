@@ -2,6 +2,7 @@ import { Box, Button, TextField, Typography } from "@mui/material";
 import React, { SyntheticEvent, useState } from "react";
 import { useSession } from "next-auth/react";
 import { FormatParagraphs } from "../FormatParagraphs";
+import styles from "../../../styles/news/ArticlePage.module.scss";
 
 const MobileArticleContent = ({ post }: any) => {
   const { data: session, status } = useSession();
@@ -28,79 +29,55 @@ const MobileArticleContent = ({ post }: any) => {
   };
 
   return (
-    <Box
-      sx={{
-        width: "100%",
-        display: "flex",
-        justifyContent: "center",
-        flexDirection: "column",
-        alignItems: "center",
-      }}
-    >
-      <Box sx={{ width: "90%", display: "flex", flexDirection: "column" }}>
+    <Box className={styles.container}>
+      <Box className={styles.article_body_container}>
         {FormatParagraphs(body)}
       </Box>
 
       {session && status === "authenticated" ? (
         editPressed ? (
           <form
-            onSubmit={(e) => {
-              submitHandler(e);
-            }}
-            style={{ width: "95%", textAlign: "center" }}
+            onSubmit={(e) => submitHandler(e)}
+            className={styles.edit_form_container}
           >
             <TextField
-              sx={{ mt: 5, backgroundColor: "#dfdfdf" }}
+              className={styles.text_field}
               multiline
               fullWidth
               rows={20}
               defaultValue={body}
               onChange={(e) => setText(e.target.value)}
             />
-
-            <Box
-              sx={{ width: "100%", display: "flex", flexDirection: "column" }}
-            >
-              <Typography variant="caption" color="secondary">
-                Use &quot;/image/&quot; then a link after for images
-              </Typography>
-              <Typography variant="caption" color="secondary">
-                ex. /image//cosmetics.jpg
-              </Typography>
-            </Box>
-            <Box
-              sx={{
-                width: "100%",
-                height: 50,
-                display: "flex",
-                justifyContent: "space-evenly",
-                mt: 5,
-              }}
-            >
+            <Box className={styles.edit_buttons_container}>
               <Button
                 onClick={() => {
                   setEditPressed(false);
                 }}
                 color="secondary"
                 variant="contained"
-                sx={{ width: 150 }}
+                className={styles.button}
               >
                 Cancel
               </Button>
-              <Button type="submit" variant="contained" sx={{ width: 150 }}>
+              <Button
+                type="submit"
+                variant="contained"
+                className={styles.button}
+              >
                 Submit
               </Button>
             </Box>
           </form>
         ) : (
-          <Button
-            onClick={() => {
-              setEditPressed(true);
-            }}
-            sx={{ mt: 10 }}
-          >
-            Edit post
-          </Button>
+          <Box className={styles.edit_button}>
+            <Button
+              onClick={() => {
+                setEditPressed(true);
+              }}
+            >
+              Edit post
+            </Button>
+          </Box>
         )
       ) : null}
     </Box>

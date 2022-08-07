@@ -1,7 +1,7 @@
 import React from "react";
-import { Box, Divider, Typography } from "@mui/material";
 import Image from "next/image";
 import { DateFormatter } from "../../DateFormatter";
+import { Box, Divider, Typography } from "@mui/material";
 import styles from "../../../styles/news/ArticlePage.module.scss";
 
 const MobileArticle = ({ post }: any) => {
@@ -22,7 +22,9 @@ const MobileArticle = ({ post }: any) => {
       <Box className={styles.subtitle_container}>
         <Typography
           variant="overline"
-          sx={{ fontWeight: 200, fontSize: ".8rem", lineHeight: "1rem" }}
+          fontWeight={200}
+          fontSize=".8rem"
+          lineHeight="1rem"
         >
           {post.subtitle}
         </Typography>

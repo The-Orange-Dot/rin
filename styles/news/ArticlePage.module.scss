@@ -62,10 +62,18 @@
 }
 
 .article_body_container {
-  width: 90%;
-  display: flex;
-  flex-direction: column;
-  margin-top: 50px;
+  @include monitor {
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    margin-top: 50px;
+  }
+
+  @include mobile {
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+  }
 }
 
 .article_body {
@@ -121,5 +129,59 @@
     height: 10px;
     margin: 50px 0;
     width: 50%;
+  }
+}
+
+.edit_form_container {
+  @include monitor {
+    width: 90%;
+    text-align: center;
+    padding-top: 50px;
+  }
+
+  @include mobile {
+    width: 90%;
+    text-align: center;
+    padding-top: 50px;
+  }
+}
+
+.text_field {
+  background-color: #dfdfdf;
+}
+
+.edit_buttons_container {
+  width: 100%;
+  height: 50;
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 50px;
+}
+
+.button {
+  @include monitor {
+    width: 200px;
+    height: 50px;
+  }
+
+  @include mobile {
+    width: 150px;
+    height: 50px;
+  }
+}
+
+.edit_button {
+  @include monitor {
+    @include center-x;
+    margin-top: 100px;
+    width: 200px;
+    height: 50px;
+  }
+
+  @include mobile {
+    @include center-x;
+    margin-top: 50px;
+    width: 200px;
+    height: 50px;
   }
 }

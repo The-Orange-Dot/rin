@@ -11,11 +11,7 @@ const MobileInstructions: NextComponentType = () => {
     const lastCard = index === instructions.length - 1;
 
     return (
-      <Box
-        sx={{ width: "80%", textAlign: "center", mb: 2 }}
-        key={index}
-        className={`${styles.mobile_instructions_card} trigger`}
-      >
+      <Box key={index} className={`${styles.mobile_instructions_card} trigger`}>
         {item.image ? (
           <Image
             width={150}

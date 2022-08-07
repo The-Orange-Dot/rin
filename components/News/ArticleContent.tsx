@@ -40,10 +40,10 @@ const ArticleContent = ({ post }: any) => {
             onSubmit={(e) => {
               submitHandler(e);
             }}
-            style={{ width: "95%", textAlign: "center" }}
+            className={styles.edit_form_container}
           >
             <TextField
-              sx={{ mt: 5, backgroundColor: "#dfdfdf" }}
+              className={styles.text_field}
               multiline
               fullWidth
               rows={30}
@@ -51,49 +51,37 @@ const ArticleContent = ({ post }: any) => {
               onChange={(e) => setText(e.target.value)}
             />
 
-            <Box
-              sx={{ width: "100%", display: "flex", flexDirection: "column" }}
-            >
-              <Typography variant="caption" color="secondary">
-                Use &quot;/image/&quot; then a link after for images
-              </Typography>
-              <Typography variant="caption" color="secondary">
-                ex. /image//cosmetics.jpg
-              </Typography>
-            </Box>
-            <Box
-              sx={{
-                width: "100%",
-                height: 50,
-                display: "flex",
-                justifyContent: "space-evenly",
-                mt: 5,
-              }}
-            >
+            <Box className={styles.edit_buttons_container}>
               <Button
                 onClick={() => {
                   setEditPressed(false);
                 }}
                 color="secondary"
                 variant="contained"
-                sx={{ width: 150 }}
+                className={styles.button}
               >
                 Cancel
               </Button>
-              <Button type="submit" variant="contained" sx={{ width: 150 }}>
+              <Button
+                type="submit"
+                variant="contained"
+                className={styles.button}
+              >
                 Submit
               </Button>
             </Box>
           </form>
         ) : (
-          <Button
-            onClick={() => {
-              setEditPressed(true);
-            }}
-            sx={{ mt: 10 }}
-          >
-            Edit post
-          </Button>
+          <Box className={styles.edit_button}>
+            <Button
+              onClick={() => {
+                setEditPressed(true);
+              }}
+              fullWidth
+            >
+              Edit post
+            </Button>
+          </Box>
         )
       ) : null}
     </Box>
