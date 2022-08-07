@@ -1,13 +1,11 @@
 import type { NextPage } from "next";
-import styles from "../styles/home.module.scss";
-import Image from "next/image";
+import styles from "../styles/Home.module.scss";
 import HeaderImage from "../components/HeaderImage";
 import { Typography, Box, Paper } from "@mui/material";
 import { useMediaQuery } from "@mui/material";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/dist/ScrollTrigger";
 import { useEffect } from "react";
-import { panels, instructions } from "../components/Home/Texts";
 import Instructions from "../components/Home/Instructions";
 import MobileInstructions from "../components/Home/MobileInstructions";
 import AboutUsPanels from "../components/Home/AboutUsPanels";
