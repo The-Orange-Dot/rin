@@ -6,6 +6,7 @@ import { DateFormatter } from "../../DateFormatter";
 import Link from "next/link";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/dist/ScrollTrigger";
+import styles from "../../../styles/news/articles.module.scss";
 
 const MobileNews = ({ post, index, filterSelected }: any) => {
   gsap.registerPlugin(ScrollTrigger);
@@ -82,31 +83,13 @@ const MobileNews = ({ post, index, filterSelected }: any) => {
 
   if (index === 0) {
     return (
-      <Box
-        sx={{
-          width: "100%",
-          height: "85vh",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "flex-start",
-        }}
-        key={index}
-      >
+      <Box className={styles.main_post_container} key={index}>
         <Link href={`/news/${post.id}`}>
-          <Box
-            sx={{
-              width: "100%",
-              height: "100%",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <Box sx={{ width: "100%", mb: 5 }}>
+          <Box className={styles.main_post_card}>
+            <Box className={styles.main_post_top_divider}>
               <Divider />
             </Box>
-            <Box sx={{ width: "100%", height: "80%", position: "relative" }}>
+            <Box className={styles.main_post_image_container}>
               <Image
                 src={post.image}
                 layout="fill"
@@ -120,17 +103,7 @@ const MobileNews = ({ post, index, filterSelected }: any) => {
                 id="main-image"
               />
             </Box>
-            <Box
-              sx={{
-                width: "90%",
-                height: "10vh",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                textAlign: "center",
-              }}
-              id="main-title"
-            >
+            <Box className={styles.main_post_title_container} id="main-title">
               <Typography
                 variant="overline"
                 sx={{
@@ -144,23 +117,14 @@ const MobileNews = ({ post, index, filterSelected }: any) => {
               </Typography>
             </Box>
             <Box
-              sx={{
-                width: "90%",
-                height: "5vh",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                textAlign: "center",
-              }}
+              className={styles.main_post_subtitle_container}
               id="main-subtitle"
             >
               <Typography
                 variant="overline"
-                sx={{
-                  fontWeight: "100",
-                  fontSize: ".8rem",
-                  lineHeight: ".8rem",
-                }}
+                fontWeight={100}
+                fontSize=".8rem"
+                lineHeight=".8rem"
               >
                 {post.subtitle}
               </Typography>{" "}
@@ -172,70 +136,17 @@ const MobileNews = ({ post, index, filterSelected }: any) => {
             </Box>
           </Box>
         </Link>
-        <Box sx={{ width: "100%", mt: 5 }}>
+        <Box className={styles.main_post_bottom_divider}>
           <Divider />
         </Box>
       </Box>
     );
   } else {
     return (
-      <Box
-        sx={{
-          height: "15vh",
-          width: "100%",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
-        className="trigger"
-      >
+      <Box className={`${styles.post_container} trigger`}>
         <Link href={`/news/${post.id}`}>
-          <Box
-            sx={
-              even
-                ? {
-                    height: "100%",
-                    width: "100%",
-                    display: "flex",
-                    justifyContent: "center",
-                    flexDirection: "row-reverse",
-                    mx: 5,
-                    py: 2,
-                    transition: "0.3s",
-                    overflowX: "hidden",
-                    "&:hover": {
-                      backgroundColor: "#dfdfdf",
-                      transition: "0.3s",
-                      cursor: "pointer",
-                      ".image": { opacity: 0.8, transition: "0.3s" },
-                    },
-                  }
-                : {
-                    height: "100%",
-                    width: "100%",
-                    display: "flex",
-                    justifyContent: "center",
-                    flexDirection: "row",
-                    overflowX: "hidden",
-                    mx: 5,
-                    py: 2,
-                    transition: "0.3s",
-                    "&:hover": {
-                      backgroundColor: "#dfdfdf",
-                      transition: "0.3s",
-                      cursor: "pointer",
-                      ".image": { opacity: 0.8, transition: "0.3s" },
-                    },
-                  }
-            }
-          >
-            <Box
-              sx={{
-                position: "relative",
-                height: "100%",
-                flex: 0.5,
-              }}
-            >
+          <Box className={even ? styles.post_even : styles.post_odd}>
+            <Box className={styles.image_container}>
               <Image
                 src={post.image}
                 alt={post.image}
@@ -246,26 +157,14 @@ const MobileNews = ({ post, index, filterSelected }: any) => {
                 priority
               />
             </Box>
-            <Box
-              sx={{
-                flex: 1,
-                width: "100%",
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "space-between",
-              }}
-            >
-              <Box sx={{ textAlign: "center", width: "80%" }}>
-                <Typography
-                  variant="body1"
-                  sx={{ fontWeight: 600, lineHeight: "1rem" }}
-                >
+            <Box className={styles.post_content_container}>
+              <Box className={styles.post_title_container}>
+                <Typography variant="body1" lineHeight="1rem" fontWeight={600}>
                   {post.title}
                 </Typography>
               </Box>
 
-              <Box sx={{ textAlign: "center", width: "90%" }}>
+              <Box className={styles.post_subtitle_container}>
                 <Typography
                   variant="body2"
                   sx={{
