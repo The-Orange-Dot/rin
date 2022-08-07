@@ -56,7 +56,7 @@ const ArticleContent = ({ post }: any) => {
               multiline
               fullWidth
               rows={30}
-              defaultValue={post.body}
+              defaultValue={body}
               onChange={(e) => setText(e.target.value)}
             />
 

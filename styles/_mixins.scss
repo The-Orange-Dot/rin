@@ -19,3 +19,10 @@
   justify-content: $justify-content;
   align-items: $align-items;
 }
+
+@mixin center-y($align-items: center, $width: 100%, $height: 100%) {
+  width: $width;
+  height: $height;
+  display: flex;
+  align-items: $align-items;
+}

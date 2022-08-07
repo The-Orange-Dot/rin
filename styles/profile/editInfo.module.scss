@@ -4,10 +4,34 @@
   @include center-xy($height: 65vh);
 }
 
-.shipping_form_container {
+.forms_container {
   @include center-x($width: 70%);
 }
 
-.billing_checked_shipping_form {
+.billing_checked_forms {
   @include center-x();
+}
+
+.shipping_form {
+  @include center-xy;
+}
+
+.shipping_input_billing_checked {
+  @include center-xy($height: 80%, $width: 25%);
+}
+
+.shipping_input_container {
+  @include center-xy($height: 80%, $width: 80%);
+}
+
+.input_container {
+  @include center-y($height: 50px);
+}
+
+.form_text {
+  width: 200px;
+}
+
+.form_input {
+  width: 150px;
 }

@@ -1,5 +1,5 @@
 import type { NextPage } from "next";
-import styles from "../styles/Home.module.css";
+import styles from "../styles/Home.module.scss";
 import Image from "next/image";
 import HeaderImage from "../components/HeaderImage";
 import {
@@ -393,28 +393,10 @@ const Home: NextPage = () => {
   return (
     <div className={styles.main}>
       <Box
-        sx={
+        className={
           isMobile
-            ? {
-                width: "100%",
-                height: "70vh",
-                overflow: "hidden",
-                display: "flex",
-                justifyContent: "flex-start",
-                alignItems: "flex-end",
-                flexDirection: "column",
-                position: "relative",
-              }
-            : {
-                width: "100%",
-                height: "100vh",
-                overflow: "hidden",
-                display: "flex",
-                justifyContent: "flex-start",
-                alignItems: "flex-end",
-                flexDirection: "column",
-                position: "relative",
-              }
+            ? styles.mobile_main_page_container
+            : styles.main_page_container
         }
       >
         <HeaderImage isMobile={isMobile} />

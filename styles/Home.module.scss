@@ -1,0 +1,36 @@
+@import "mixins";
+
+.main {
+  min-height: 100vh;
+  padding: 4rem 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.main_page_container {
+  @include center-xy(
+    $height: 100vh,
+    $justify-content: flex-start,
+    $align-items: flex-end
+  );
+  overflow: hidden;
+  position: relative;
+}
+
+.mobile_main_page_container {
+  @include center-xy(
+    $height: 70vh,
+    $justify-content: flex-start,
+    $align-items: flex-end
+  );
+  overflow: hidden;
+  position: relative;
+}
+
+/* .kanji {
+  font-family: "Montserrat", "Mplus 1p", "Hiragino Sans",
+    "Hiragino Kaku Gothic Pro", "游ゴシック", "游ゴシック体", YuGothic,
+    "Yu Gothic", "ＭＳ ゴシック", "MS Gothic", sans-serif;
+} */
