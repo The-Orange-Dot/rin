@@ -114,33 +114,43 @@ const ProductCards = ({ product, setSelectedProduct }: ProductCardType) => {
               />
             </div>
           </CardMedia>
-          <CardContent className={styles.card_content}>
-            <Typography
-              color="primary"
-              variant="caption"
-              sx={isMobile ? { fontSize: ".6rem" } : {}}
+          <CardContent className={styles.card_content} sx={{ p: 0 }}>
+            <Box sx={{ width: "100%" }}>
+              <Typography
+                color="primary"
+                variant="caption"
+                sx={isMobile ? { fontSize: ".6rem" } : {}}
+              >
+                {product.brand}
+              </Typography>
+            </Box>
+            <Box
+              sx={
+                isMobile
+                  ? { width: "100%", minHeight: "40px" }
+                  : { width: "100%", minHeight: "50px" }
+              }
             >
-              {product.brand}
-            </Typography>
-
-            <Typography
-              onClick={() => {
-                routerHandler();
-              }}
-              color="primary"
-              variant={isMobile ? "body2" : "h6"}
-            >
-              {product.name}
-            </Typography>
-
-            <Typography
-              variant="body2"
-              color="secondary"
-              sx={isMobile ? { fontSize: ".6rem" } : {}}
-            >
-              {product.size}
-              {product?.details?.length ? ` - ${product.details}` : null}
-            </Typography>
+              <Typography
+                onClick={() => {
+                  routerHandler();
+                }}
+                color="primary"
+                variant={isMobile ? "body2" : "h6"}
+              >
+                {product.name}
+              </Typography>
+            </Box>
+            <Box sx={{ width: "100%", minHeight: "30px" }}>
+              <Typography
+                variant="body2"
+                color="secondary"
+                sx={isMobile ? { fontSize: ".6rem" } : {}}
+              >
+                {product.size}
+                {product?.details?.length ? ` - ${product.details}` : null}
+              </Typography>
+            </Box>
 
             <Box
               sx={
