@@ -2,6 +2,7 @@ import { Typography, Box, Modal } from "@mui/material";
 import Image from "next/image";
 import { useMediaQuery } from "@mui/material";
 import React, { useState } from "react";
+import styles from "../../styles/news/ArticlePage.module.scss";
 
 export const FormatParagraphs = (text: string) => {
   const isMobile = useMediaQuery("(max-width: 900px)");
@@ -18,41 +19,15 @@ export const FormatParagraphs = (text: string) => {
       if (index === 0) {
         return (
           <Typography variant="body1" key={index}>
-            &emsp;&emsp;{" "}
-            <strong style={{ fontSize: "1.5rem" }}>
-              {paragraph.slice(0, 1).toUpperCase()}
-            </strong>
+            &emsp;&emsp; {paragraph.slice(0, 1).toUpperCase()}
             {paragraph.slice(1)}
           </Typography>
         );
       } else {
         if (image) {
           return (
-            <Box
-              key={index}
-              sx={
-                isMobile
-                  ? {
-                      width: "100%",
-                      height: 250,
-                      display: "flex",
-                      justifyContent: "center",
-                    }
-                  : {
-                      width: "100%",
-                      height: 500,
-                      display: "flex",
-                      justifyContent: "center",
-                    }
-              }
-            >
-              <Box
-                sx={
-                  isMobile
-                    ? { position: "relative", width: "90%", height: "100%" }
-                    : { position: "relative", width: "50%", height: "100%" }
-                }
-              >
+            <Box key={index} className={styles.article_body}>
+              <Box className={styles.image_container}>
                 <Image
                   src={paragraph}
                   alt="Something"
@@ -73,24 +48,12 @@ export const FormatParagraphs = (text: string) => {
                 }}
               >
                 <Box
-                  sx={{
-                    width: "100%",
-                    height: "100%",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
+                  className={styles.enlarged_image_modal}
                   onClick={() => {
                     setOpenImage(false);
                   }}
                 >
-                  <Box
-                    sx={
-                      isMobile
-                        ? { width: "100%", height: 350, position: "relative" }
-                        : { width: "100%", height: 900, position: "relative" }
-                    }
-                  >
+                  <Box className={styles.enlarged_image}>
                     <Image
                       src={paragraph}
                       alt="Something"

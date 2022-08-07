@@ -2,6 +2,7 @@ import { Box, Button, TextField, Typography } from "@mui/material";
 import React, { SyntheticEvent, useState } from "react";
 import { useSession } from "next-auth/react";
 import { FormatParagraphs } from "./FormatParagraphs";
+import styles from "../../styles/news/ArticlePage.module.scss";
 
 const ArticleContent = ({ post }: any) => {
   const { data: session, status } = useSession();
@@ -28,18 +29,8 @@ const ArticleContent = ({ post }: any) => {
   };
 
   return (
-    <Box
-      sx={{
-        width: "100%",
-        display: "flex",
-        justifyContent: "center",
-        flexDirection: "column",
-        alignItems: "center",
-      }}
-    >
-      <Box
-        sx={{ width: "90%", display: "flex", flexDirection: "column", mt: 5 }}
-      >
+    <Box className={styles.container}>
+      <Box className={styles.article_body_container}>
         {FormatParagraphs(body)}
       </Box>
 

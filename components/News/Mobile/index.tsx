@@ -106,12 +106,9 @@ const MobileNews = ({ post, index, filterSelected }: any) => {
             <Box className={styles.main_post_title_container} id="main-title">
               <Typography
                 variant="overline"
-                sx={{
-                  fontWeight: "400",
-                  fontSize: "1.5rem",
-                  lineHeight: "1.5rem",
-                  my: 2,
-                }}
+                fontWeight={400}
+                fontSize="1.5rem"
+                lineHeight="1.5rem"
               >
                 {post.title}
               </Typography>
@@ -177,7 +174,7 @@ const MobileNews = ({ post, index, filterSelected }: any) => {
             </Box>
           </Box>
         </Link>
-        <Box sx={{ width: "50%" }}>
+        <Box className={styles.post_divider}>
           <Divider />
         </Box>
       </Box>

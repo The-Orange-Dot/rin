@@ -68,16 +68,11 @@ const AboutUsPanels: NextComponentType = () => {
             variant="body1"
             color="primary"
             className="trigger"
-            sx={{ fontWeight: 600 }}
+            fontWeight={600}
           >
             {panel.bodyTitle}
           </Typography>
-          <Typography
-            variant="body2"
-            color="primary"
-            className="trigger"
-            sx={{ width: "90%" }}
-          >
+          <Typography variant="body2" color="primary" className="trigger">
             {panel.bodyText}
           </Typography>
         </Box>

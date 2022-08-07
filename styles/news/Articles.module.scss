@@ -80,6 +80,7 @@
 
   @include mobile {
     @include center-xy($flex-direction: row, $height: 10vh);
+    margin: 20px 0;
   }
 }
 
@@ -221,6 +222,10 @@
   @include monitor {
     width: 60%;
     margin: 10px;
+  }
+
+  @include mobile {
+    width: 50%;
   }
 }
 

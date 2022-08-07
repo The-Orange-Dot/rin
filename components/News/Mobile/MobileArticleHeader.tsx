@@ -2,29 +2,24 @@ import React from "react";
 import { Box, Divider, Typography } from "@mui/material";
 import Image from "next/image";
 import { DateFormatter } from "../../DateFormatter";
+import styles from "../../../styles/news/ArticlePage.module.scss";
 
 const MobileArticle = ({ post }: any) => {
   const date = DateFormatter(post.createdAt);
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        width: "100%",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <Box sx={{ width: "100%", textAlign: "center" }}>
+    <Box className={styles.header_container}>
+      <Box className={styles.title_container}>
         <Typography
           variant="overline"
-          sx={{ fontWeight: 600, fontSize: "1.5rem", lineHeight: "1.5rem" }}
+          fontWeight={600}
+          fontSize="1.5rem"
+          lineHeight="1.5rem"
         >
           {post.title}
         </Typography>
       </Box>
-      <Box sx={{ width: "100%", textAlign: "center" }}>
+      <Box className={styles.subtitle_container}>
         <Typography
           variant="overline"
           sx={{ fontWeight: 200, fontSize: ".8rem", lineHeight: "1rem" }}
@@ -32,12 +27,12 @@ const MobileArticle = ({ post }: any) => {
           {post.subtitle}
         </Typography>
       </Box>
-      <Box sx={{ width: "100%", textAlign: "center" }}>
+      <Box className={styles.date_container}>
         <Typography variant="caption" color="secondary">
           Posted: {date}
         </Typography>
       </Box>
-      <Box sx={{ position: "relative", width: "100%", height: "50vh", mt: 3 }}>
+      <Box className={styles.header_image}>
         <Image
           src={post.image}
           alt={post.title}
@@ -48,7 +43,7 @@ const MobileArticle = ({ post }: any) => {
           blurDataURL={post.image}
         />
       </Box>
-      <Box sx={{ width: "50%", height: 1, my: 5 }}>
+      <Box className={styles.divider}>
         <Divider />
       </Box>
     </Box>

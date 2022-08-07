@@ -2,42 +2,39 @@ import { Box, Typography } from "@mui/material";
 import Image from "next/image";
 import React from "react";
 import { DateFormatter } from "../DateFormatter";
+import styles from "../../styles/news/ArticlePage.module.scss";
 
 const Article = ({ post }: any) => {
   const date = DateFormatter(post.createdAt);
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        width: "100%",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <Box sx={{ width: "100%", textAlign: "center" }}>
+    <Box className={styles.header_container}>
+      <Box className={styles.title_container}>
         <Typography
           variant="overline"
-          sx={{ fontWeight: 600, fontSize: "3rem", lineHeight: "3rem" }}
+          fontSize="3rem"
+          fontWeight={600}
+          lineHeight="3rem"
         >
           {post.title}
         </Typography>
       </Box>
-      <Box sx={{ width: "100%", textAlign: "center" }}>
+      <Box className={styles.subtitle_container}>
         <Typography
           variant="overline"
-          sx={{ fontWeight: 100, fontSize: "1.5rem", lineHeight: "3rem" }}
+          fontSize="1.5rem"
+          fontWeight={100}
+          lineHeight="3rem"
         >
           {post.subtitle}
         </Typography>
       </Box>
-      <Box sx={{ width: "100%", textAlign: "center" }}>
+      <Box className={styles.date_container}>
         <Typography variant="caption" color="secondary">
           Posted: {date}
         </Typography>
       </Box>
-      <Box sx={{ position: "relative", width: "60%", height: "60vh", mt: 5 }}>
+      <Box className={styles.header_image}>
         <Image
           src={post.image}
           alt={post.title}

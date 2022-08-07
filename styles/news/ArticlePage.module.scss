@@ -1,0 +1,125 @@
+@import "mixins";
+@import "media-query-mixin";
+
+.container {
+  @include center-xy;
+}
+
+.header_container {
+  @include center-xy;
+}
+
+.title_container {
+  @include monitor {
+    width: 100%;
+    text-align: center;
+  }
+
+  @include mobile {
+    width: 90%;
+    text-align: center;
+  }
+}
+
+.subtitle_container {
+  @include monitor {
+    width: 100%;
+    text-align: center;
+  }
+
+  @include mobile {
+    width: 90%;
+    text-align: center;
+  }
+}
+
+.date_container {
+  @include monitor {
+    width: 100%;
+    text-align: center;
+  }
+
+  @include mobile {
+    width: 90%;
+    text-align: center;
+  }
+}
+
+.header_image {
+  @include monitor {
+    position: relative;
+    width: 60%;
+    height: 60vh;
+    margin-top: 50px;
+  }
+
+  @include mobile {
+    position: relative;
+    width: 100%;
+    height: 50vh;
+    margin-top: 30px;
+  }
+}
+
+.article_body_container {
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  margin-top: 50px;
+}
+
+.article_body {
+  @include monitor {
+    width: 100%;
+    height: 500px;
+    display: flex;
+    justify-content: center;
+  }
+
+  @include mobile {
+    width: 100%;
+    height: 250px;
+    display: flex;
+    justify-content: center;
+  }
+}
+
+.image_container {
+  @include monitor {
+    position: relative;
+    width: 50%;
+    height: 100%;
+  }
+
+  @include mobile {
+    position: relative;
+    width: 90%;
+    height: 100%;
+  }
+}
+
+.enlarged_image_modal {
+  @include center-xy;
+}
+
+.enlarged_image {
+  @include monitor {
+    position: relative;
+    width: 1000px;
+    height: 100%;
+  }
+
+  @include mobile {
+    position: relative;
+    width: 90%;
+    height: 350px;
+  }
+}
+
+.divider {
+  @include mobile {
+    height: 10px;
+    margin: 50px 0;
+    width: 50%;
+  }
+}
