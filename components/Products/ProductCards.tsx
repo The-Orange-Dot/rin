@@ -99,9 +99,7 @@ const ProductCards = ({ product, setSelectedProduct }: ProductCardType) => {
               routerHandler();
             }}
           >
-            <div
-              style={{ position: "relative", width: "100%", height: "100%" }}
-            >
+            <Box className={styles.image}>
               <Image
                 src={product.thumbnail}
                 layout="fill"
@@ -112,10 +110,10 @@ const ProductCards = ({ product, setSelectedProduct }: ProductCardType) => {
                 quality={50}
                 priority
               />
-            </div>
+            </Box>
           </CardMedia>
           <CardContent className={styles.card_content} sx={{ p: 0 }}>
-            <Box sx={{ width: "100%" }}>
+            <Box>
               <Typography
                 color="primary"
                 variant="caption"
@@ -124,24 +122,19 @@ const ProductCards = ({ product, setSelectedProduct }: ProductCardType) => {
                 {product.brand}
               </Typography>
             </Box>
-            <Box
-              sx={
-                isMobile
-                  ? { width: "100%", minHeight: "40px" }
-                  : { width: "100%", minHeight: "50px" }
-              }
-            >
+            <Box className={styles.card_name}>
               <Typography
                 onClick={() => {
                   routerHandler();
                 }}
                 color="primary"
                 variant={isMobile ? "body2" : "h6"}
+                lineHeight={isMobile ? "1.1rem" : "2rem"}
               >
                 {product.name}
               </Typography>
             </Box>
-            <Box sx={{ width: "100%", minHeight: "30px" }}>
+            <Box className={styles.card_info}>
               <Typography
                 variant="body2"
                 color="secondary"
@@ -152,24 +145,7 @@ const ProductCards = ({ product, setSelectedProduct }: ProductCardType) => {
               </Typography>
             </Box>
 
-            <Box
-              sx={
-                isMobile
-                  ? {
-                      width: "100%",
-                      height: "20px",
-                      display: "flex",
-                      alignItems: "center",
-                      mb: 1,
-                    }
-                  : {
-                      width: "100%",
-                      height: "20px",
-                      display: "flex",
-                      alignItems: "center",
-                    }
-              }
-            >
+            <Box className={styles.rating_container}>
               <Rating
                 size="small"
                 readOnly={true}
@@ -184,9 +160,9 @@ const ProductCards = ({ product, setSelectedProduct }: ProductCardType) => {
               ) : (
                 <Typography
                   variant="caption"
+                  color="secondary"
+                  fontSize=".7rem"
                   sx={{
-                    color: "#949495",
-                    fontSize: ".7rem",
                     textDecoration: "underline",
                   }}
                 >
@@ -228,7 +204,9 @@ const ProductCards = ({ product, setSelectedProduct }: ProductCardType) => {
             }
           >
             {product.quantity <= 0 ? (
-              <Typography variant="body2">Sold out</Typography>
+              <Typography variant="body2" color="white">
+                Sold out
+              </Typography>
             ) : (
               <>
                 {isMobile ? `$${product.price}.00` : "Add to shopping cart"}
