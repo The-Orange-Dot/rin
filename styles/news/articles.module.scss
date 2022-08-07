@@ -1,0 +1,113 @@
+@import "mixins";
+@import "media-query-mixin";
+
+.main_post_container {
+  @include monitor {
+    @include center-xy($width: 90%, $height: 75vh, $justify-content: null);
+  }
+}
+
+.main_post_top_divider {
+  width: 100%;
+  margin-bottom: 50px;
+}
+
+.main_post_bottom_divider {
+  width: 100%;
+  margin-top: 100px;
+}
+
+.main_post_card {
+  @include center-xy($flex-direction: null);
+  transition: 0.3s;
+}
+
+.main_post_card_anim_complete {
+  @include center-xy($flex-direction: null);
+  transition: 0.3s;
+  &:hover {
+    background-color: #dfdfdf;
+    transition: 0.3s;
+    cursor: pointer;
+    & .main_post_image_container {
+      opacity: 0.8;
+      transition: 0.3s;
+    }
+  }
+}
+
+.main_post_card_content {
+  @include center-xy($width: 50%, $height: 40%, $justify-content: space-evenly);
+}
+
+.main_post_title_container {
+  width: 70%;
+  text-align: center;
+}
+
+.main_post_subtitle_container {
+  width: 70%;
+  text-align: center;
+}
+
+.main_post_image_container {
+  width: 50%;
+  height: 100%;
+  position: relative;
+}
+
+.post_container {
+  @include center-xy($height: 25vh, $justify-content: null);
+}
+
+.post_even {
+  @include center-xy(
+    $width: 80%,
+    $flex-direction: row-reverse,
+    $align-items: null
+  );
+  margin: 20px 200px;
+  transition: 0.3s;
+  &:hover {
+    & .image {
+      opacity: 0.8;
+      transition: 0.3s;
+    }
+    background-color: #dfdfdf;
+    transition: 0.3s;
+    cursor: pointer;
+  }
+}
+
+.post_odd {
+  @include center-xy($width: 80%, $flex-direction: row, $align-items: null);
+  margin: 20px 200px;
+  transition: 0.3s;
+  &:hover {
+    & .image {
+      opacity: 0.8;
+      transition: 0.3s;
+    }
+    background-color: #dfdfdf;
+    transition: 0.3s;
+    cursor: pointer;
+  }
+}
+
+.image_container {
+  position: relative;
+  min-width: 300px;
+  max-height: 400px;
+  height: 20vh;
+  flex: 0.7;
+}
+
+// .post_even:hover {
+//   background-color: #dfdfdf;
+//   transition: 0.3s;
+//   cursor: pointer;
+// }
+
+// .post_even:hover + .image {
+//   opacity: 0.8s;
+// }

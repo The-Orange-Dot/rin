@@ -26,11 +26,11 @@ const MobileInstructions: NextComponentType = () => {
           />
         ) : null}
         <Box className={styles.mobile_instructions_card_text}>
-          <Typography>{item.text}</Typography>
+          <Typography color="primary">{item.text}</Typography>
         </Box>
         {lastCard ? null : (
           <Box className={styles.mobile_arrows}>
-            <ArrowDownwardIcon />
+            <ArrowDownwardIcon color="primary" />
           </Box>
         )}
       </Box>

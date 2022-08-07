@@ -2,7 +2,7 @@ import { Box, Typography, Button } from "@mui/material";
 import React from "react";
 import { useRouter } from "next/router";
 import { useMediaQuery } from "@mui/material";
-import styles from "../../styles/news.module.css";
+import styles from "../../styles/news/main.module.scss";
 
 const NewsFilter = ({
   setPostsArray,

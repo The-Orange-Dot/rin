@@ -4,7 +4,7 @@ import Image from "next/image";
 import React, { useState } from "react";
 import News from "../../components/News";
 import { server } from "../../config";
-import styles from "../../styles/news.module.css";
+import styles from "../../styles/news/main.module.scss";
 import { PostType } from "../../types/newsTypes";
 import MobileNews from "../../components/News/Mobile";
 import { useMediaQuery } from "@mui/material";
@@ -37,44 +37,23 @@ const NewsPage = ({
 
   return (
     <div className={styles.main}>
-      <Box
-        sx={{
-          width: "100%",
-          mt: 10,
-          textAlign: "center",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-          maxWidth: "1500px",
-        }}
-      >
+      <Box className={styles.main_container}>
         <Typography
           variant="overline"
-          sx={{ fontWeight: 100, lineHeight: 1, fontSize: "1rem" }}
+          fontSize="1rem"
+          lineHeight="1rem"
+          fontWeight="100"
         >
           News
         </Typography>
-        <Box sx={{ width: "90%", mt: 1 }}>
+        <Box className={styles.filter_container}>
           <NewsFilter
             setPostsArray={setPostsArray}
             filterSelected={filterSelected}
             setFilterSelected={setFilterSelected}
           />
         </Box>
-        <Box
-          sx={{
-            width: "100%",
-            display: "flex",
-            justifyContent: "center",
-            flexDirection: "column",
-            alignItems: "center",
-            mt: 5,
-            overflowX: "hidden",
-          }}
-        >
-          {postElements}
-        </Box>
+        <Box className={styles.posts_container}>{postElements}</Box>
       </Box>
     </div>
   );

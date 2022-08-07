@@ -11,6 +11,7 @@ $contained: 1500px;
 
 @mixin monitor {
   @media screen and (min-width: #{$mobile-screen}) and (max-width: #{$contained}) {
+    @content;
   }
 }
 
