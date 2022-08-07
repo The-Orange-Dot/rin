@@ -17,6 +17,7 @@ import { ProductReviewType, ProductType } from "../../types/productTypes";
 import { addItem } from "../../redux/reducers/shoppingCartReducer";
 import { useSelector, useDispatch } from "react-redux";
 import Image from "next/image";
+import styles from "../../styles/products/ProductCard.module.scss";
 
 interface ProductCardType {
   product: ProductType;
@@ -90,57 +91,10 @@ const ProductCards = ({ product, setSelectedProduct }: ProductCardType) => {
 
   return (
     <Grid item xs={3.8} md={3.5}>
-      <Box
-        sx={
-          isMobile
-            ? {
-                display: "flex",
-                justifyContent: "center",
-                width: "100%",
-                height: 360,
-                maxHeight: 360,
-                mb: 3,
-              }
-            : {
-                display: "flex",
-                justifyContent: "center",
-                width: "100%",
-                height: 550,
-                mb: 8,
-              }
-        }
-      >
-        <Card
-          sx={{
-            width: "100%",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "space-between",
-            alignItems: "center",
-            opacity: 0,
-          }}
-          elevation={0}
-          square
-          className="card"
-        >
+      <Box className={styles.card_container}>
+        <Card className={`${styles.card} card`} elevation={0} square>
           <CardMedia
-            sx={
-              isMobile
-                ? {
-                    objectFit: "contain",
-                    cursor: "pointer",
-                    maxHeight: 180,
-                    minHeight: 180,
-                    width: 180,
-                  }
-                : {
-                    maxHeight: 280,
-                    minHeight: 280,
-                    width: 280,
-                    objectFit: "contain",
-                    cursor: "pointer",
-                  }
-            }
+            className={styles.card_media}
             onClick={async () => {
               routerHandler();
             }}
@@ -160,67 +114,33 @@ const ProductCards = ({ product, setSelectedProduct }: ProductCardType) => {
               />
             </div>
           </CardMedia>
-          <CardContent
-            sx={
-              isMobile
-                ? {
-                    m: 0,
-                    p: 0,
-                    flex: 1,
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "space-between",
-                    width: "100%",
-                    cursor: "pointer",
-                  }
-                : {
-                    m: 0,
-                    pl: 0,
-                    flex: 1,
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "space-between",
-                    width: "100%",
-                    cursor: "pointer",
-                  }
-            }
-          >
-            <Box sx={{ width: "100%" }}>
-              <Typography
-                color="primary"
-                variant="caption"
-                sx={isMobile ? { fontSize: ".6rem" } : {}}
-              >
-                {product.brand}
-              </Typography>
-            </Box>
-            <Box
-              sx={
-                isMobile
-                  ? { width: "100%", minHeight: "40px" }
-                  : { width: "100%", minHeight: "50px" }
-              }
+          <CardContent className={styles.card_content}>
+            <Typography
+              color="primary"
+              variant="caption"
+              sx={isMobile ? { fontSize: ".6rem" } : {}}
             >
-              <Typography
-                onClick={() => {
-                  routerHandler();
-                }}
-                color="primary"
-                variant={isMobile ? "body2" : "h6"}
-              >
-                {product.name}
-              </Typography>
-            </Box>
-            <Box sx={{ width: "100%", minHeight: "35px" }}>
-              <Typography
-                variant="body2"
-                color="secondary"
-                sx={isMobile ? { fontSize: ".7rem" } : {}}
-              >
-                {product.size}
-                {product?.details?.length ? ` - ${product.details}` : null}
-              </Typography>
-            </Box>
+              {product.brand}
+            </Typography>
+
+            <Typography
+              onClick={() => {
+                routerHandler();
+              }}
+              color="primary"
+              variant={isMobile ? "body2" : "h6"}
+            >
+              {product.name}
+            </Typography>
+
+            <Typography
+              variant="body2"
+              color="secondary"
+              sx={isMobile ? { fontSize: ".6rem" } : {}}
+            >
+              {product.size}
+              {product?.details?.length ? ` - ${product.details}` : null}
+            </Typography>
 
             <Box
               sx={

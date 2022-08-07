@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import styles from "../../styles/products.module.css";
+import styles from "../../styles/Products.module.scss";
 import { GetStaticProps, InferGetStaticPropsType } from "next";
 import { Button, Container, Grid, Box, Drawer } from "@mui/material";
 import { server } from "../../config";
@@ -14,7 +14,7 @@ import ShoppingCartButton from "../../components/Products/Mobile/ShoppingCartBut
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import MobileCheckout from "../../components/Products/Mobile/MobileCheckout";
-import Pagination from "../../components/Products/PaginationButtons";
+import PaginationButtons from "../../components/Products/PaginationButtons";
 import { useDispatch } from "react-redux";
 import { setPages } from "../../redux/reducers/productsFilterReducer";
 import dynamic from "next/dynamic";
@@ -165,17 +165,7 @@ const Products = ({
 
   return (
     <div className={styles.main}>
-      <Box
-        className="filter"
-        sx={{
-          maxWidth: 800,
-          width: "80%",
-          display: "flex",
-          justifyContent: "center",
-          height: "40px",
-          minHeight: "40px",
-        }}
-      >
+      <Box className={`${styles.product_page_filter} filter`}>
         <Button
           variant="outlined"
           color="primary"
@@ -186,38 +176,18 @@ const Products = ({
         </Button>
       </Box>
 
-      <Container
-        sx={
-          isMobile
-            ? {
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                mt: 2,
-                minHeight: "100vh",
-                flexDirection: "column",
-              }
-            : {
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                mt: 5,
-                flexDirection: "column",
-              }
-        }
-      >
+      <Container className={styles.product_page_container}>
         <Grid
           container
           columns={isMobile ? 8 : 15}
-          sx={{
-            display: "flex",
-            justifyContent: "space-around",
-            maxWidth: 2000,
-          }}
+          className={styles.product_grid}
         >
           {productCards}
         </Grid>
-        <Pagination setProducts={setProducts} setPageLoaded={setPageLoaded} />
+        <PaginationButtons
+          setProducts={setProducts}
+          setPageLoaded={setPageLoaded}
+        />
         {isMobile ? (
           <MobileProductsModal
             productModalOpen={productModalOpen}

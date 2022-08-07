@@ -15,7 +15,7 @@ import {
   Button,
   CircularProgress,
 } from "@mui/material";
-import styles from "../../../styles/products.module.css";
+import styles from "../../../styles/products.module.scss";
 import { useRouter } from "next/router";
 import MobileCheckoutButton from "./MobileCheckoutButton";
 import { ProductReviewType, ProductType } from "../../../types/productTypes";
