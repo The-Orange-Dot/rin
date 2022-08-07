@@ -26,13 +26,12 @@
   @include center-xy($flex-direction: null);
   transition: 0.3s;
   &:hover {
-    background-color: #dfdfdf;
-    transition: 0.3s;
-    cursor: pointer;
     & .main_post_image_container {
       opacity: 0.8;
       transition: 0.3s;
     }
+    background-color: #dfdfdf;
+    transition: 0.3s;
   }
 }
 
@@ -96,18 +95,19 @@
 
 .image_container {
   position: relative;
-  min-width: 300px;
+  min-width: 250px;
+  max-width: 300px;
   max-height: 400px;
   height: 20vh;
   flex: 0.7;
 }
 
-// .post_even:hover {
-//   background-color: #dfdfdf;
-//   transition: 0.3s;
-//   cursor: pointer;
-// }
+.post_content_container {
+  @include center-xy;
+  flex: 2;
+}
 
-// .post_even:hover + .image {
-//   opacity: 0.8s;
-// }
+.post_divider {
+  width: 60%;
+  margin: 10px;
+}
