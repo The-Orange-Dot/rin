@@ -1,0 +1,239 @@
+@import "mixins";
+@import "media-query-mixin";
+
+.main_post_container {
+  @include monitor {
+    @include center-xy($width: 90%, $height: 75vh, $justify-content: null);
+  }
+
+  @include mobile {
+    @include center-xy(
+      $height: 85vh,
+      $justify-content: flex-start,
+      $align-items: null
+    );
+  }
+}
+
+.main_post_top_divider {
+  width: 100%;
+  margin-bottom: 50px;
+}
+
+.main_post_bottom_divider {
+  @include monitor {
+    width: 100%;
+    margin-top: 100px;
+  }
+
+  @include mobile {
+    width: 100%;
+    margin-top: 50px;
+  }
+}
+
+.main_post_card {
+  @include monitor {
+    @include center-xy($flex-direction: null);
+    transition: 0.3s;
+  }
+
+  @include mobile {
+    @include center-xy(
+      $height: 85vh,
+      $justify-content: flex-start,
+      $align-items: null
+    );
+  }
+}
+
+.main_post_card_anim_complete {
+  @include monitor {
+    @include center-xy($flex-direction: null);
+    transition: 0.3s;
+    &:hover {
+      & .main_post_image_container {
+        opacity: 0.8;
+        transition: 0.3s;
+      }
+      background-color: #dfdfdf;
+      transition: 0.3s;
+    }
+  }
+}
+
+.main_post_card_content {
+  @include monitor {
+    @include center-xy(
+      $width: 50%,
+      $height: 40%,
+      $justify-content: space-evenly
+    );
+  }
+}
+
+.main_post_title_container {
+  @include monitor {
+    width: 90%;
+    text-align: center;
+  }
+
+  @include mobile {
+    @include center-xy($flex-direction: row, $height: 10vh);
+  }
+}
+
+.main_post_subtitle_container {
+  @include monitor {
+    width: 70%;
+    text-align: center;
+  }
+
+  @include mobile {
+    @include center-xy($flex-direction: row, $height: 5vh);
+  }
+}
+
+.main_post_image_container {
+  @include monitor {
+    width: 50%;
+    height: 100%;
+    position: relative;
+  }
+
+  @include mobile {
+    width: 100%;
+    height: 80%;
+    position: relative;
+  }
+}
+
+.post_container {
+  @include monitor {
+    @include center-xy($height: 25vh, $justify-content: null);
+  }
+
+  @include mobile {
+    @include center-xy($height: 15vh, $justify-content: null);
+  }
+}
+
+.post_even {
+  @include monitor {
+    @include center-xy(
+      $width: 80%,
+      $flex-direction: row-reverse,
+      $align-items: null
+    );
+    margin: 20px 200px;
+    transition: 0.3s;
+    &:hover {
+      & .image {
+        opacity: 0.8;
+        transition: 0.3s;
+      }
+      background-color: #dfdfdf;
+      transition: 0.3s;
+      cursor: pointer;
+    }
+  }
+
+  @include mobile {
+    @include center-xy($flex-direction: row-reverse, $align-items: null);
+    margin: 20px 500px;
+    transition: 0.3s;
+    overflow-x: "hidden";
+    &:hover {
+      & .image {
+        opacity: 0.8;
+        transition: 0.3s;
+      }
+      background-color: #dfdfdf;
+      transition: 0.3s;
+      cursor: pointer;
+    }
+  }
+}
+
+.post_odd {
+  @include monitor {
+    @include center-xy($width: 80%, $flex-direction: row, $align-items: null);
+    margin: 20px 200px;
+    transition: 0.3s;
+    &:hover {
+      & .image {
+        opacity: 0.8;
+        transition: 0.3s;
+      }
+      background-color: #dfdfdf;
+      transition: 0.3s;
+      cursor: pointer;
+    }
+  }
+
+  @include mobile {
+    @include center-xy($flex-direction: row, $align-items: null);
+    margin: 20px 500px;
+    transition: 0.3s;
+    overflow-x: "hidden";
+    &:hover {
+      & .image {
+        opacity: 0.8;
+        transition: 0.3s;
+      }
+      background-color: #dfdfdf;
+      transition: 0.3s;
+      cursor: pointer;
+    }
+  }
+}
+
+.image_container {
+  @include monitor {
+    position: relative;
+    min-width: 250px;
+    max-width: 300px;
+    max-height: 400px;
+    height: 20vh;
+    flex: 0.7;
+  }
+
+  @include mobile {
+    position: relative;
+    height: 100%;
+    flex: 0.5;
+  }
+}
+
+.post_content_container {
+  @include monitor {
+    @include center-xy;
+    flex: 2;
+  }
+
+  @include mobile {
+    @include center-xy($justify-content: space-between);
+    flex: 1;
+  }
+}
+
+.post_divider {
+  @include monitor {
+    width: 60%;
+    margin: 10px;
+  }
+}
+
+.post_title_container {
+  @include mobile {
+    width: 80%;
+    text-align: center;
+  }
+}
+
+.post_subtitle_container {
+  @include mobile {
+    width: 90%;
+    text-align: center;
+  }
+}
