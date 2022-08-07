@@ -1,0 +1,13 @@
+@import "mixins";
+
+.paper_container {
+  @include center-xy($height: 65vh);
+}
+
+.shipping_form_container {
+  @include center-x($width: 70%);
+}
+
+.billing_checked_shipping_form {
+  @include center-x();
+}

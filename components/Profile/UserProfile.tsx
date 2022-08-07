@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { Box, Paper, Typography, Button, Drawer } from "@mui/material";
 import EditInfoDrawer from "./EditInfoDrawer";
+import MobileEditInfoDrawer from "./Mobile/MobileEditInfoDrawer";
 
 const UserProfile = ({ user, isMobile }: any) => {
   const [editDrawerOpen, setEditDrawerOpen] = useState(false);
@@ -108,6 +109,24 @@ const UserProfile = ({ user, isMobile }: any) => {
         <Typography variant="overline">Home Phone: {user?.phone}</Typography>
         <Typography variant="overline">Mobile Phone: {user?.mobile}</Typography>
       </Box>
+      <Box sx={{ mt: 5 }}>
+        <Button
+          variant="contained"
+          sx={{ width: 200, height: 50 }}
+          onClick={() => setEditDrawerOpen(true)}
+        >
+          Edit info
+        </Button>
+      </Box>
+      <Drawer
+        onClose={() => {
+          setEditDrawerOpen(false);
+        }}
+        open={editDrawerOpen}
+        anchor="bottom"
+      >
+        <MobileEditInfoDrawer />
+      </Drawer>
     </Box>
   ) : (
     <Box sx={{ display: "flex", pb: 30, width: "100%", height: "100vh" }}>

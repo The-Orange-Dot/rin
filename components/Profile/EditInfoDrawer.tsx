@@ -12,6 +12,8 @@ import {
   Select,
 } from "@mui/material";
 import React, { useState } from "react";
+import { StateArray } from "../StateArray";
+import styles from "../../styles/profile/editInfo.module.scss";
 
 const EditInfoDrawer = ({ user }: any) => {
   const [firstNameInput, setFirstNameInput] = useState("");
@@ -23,67 +25,13 @@ const EditInfoDrawer = ({ user }: any) => {
   const [zipcodeInput, setZipcodeInput] = useState("");
   const [homePhoneInput, setHomePhoneInput] = useState("");
   const [mobilePhoneInput, setMobilePhoneInput] = useState("");
-
   const [billingChecked, setBillingChecked] = useState(true);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setBillingChecked(event.target.checked);
   };
 
-  const stateArray = [
-    { id: "AL", name: "Alabama" },
-    { id: "AK", name: "Alaska" },
-    { id: "AZ", name: "Arizona" },
-    { id: "AR", name: "Arkansas" },
-    { id: "CA", name: "California" },
-    { id: "CO", name: "Colorado" },
-    { id: "CT", name: "Connecticut" },
-    { id: "DE", name: "Delaware" },
-    { id: "FL", name: "Florida" },
-    { id: "GA", name: "Georgia" },
-    { id: "HI", name: "Hawaii" },
-    { id: "ID", name: "Idaho" },
-    { id: "IL", name: "Illinois" },
-    { id: "IN", name: "Indiana" },
-    { id: "IA", name: "Iowa" },
-    { id: "KS", name: "Kansas" },
-    { id: "KY", name: "Kentucky" },
-    { id: "LA", name: "Louisiana" },
-    { id: "ME", name: "Maine" },
-    { id: "MD", name: "Maryland" },
-    { id: "MA", name: "Massachusetts" },
-    { id: "MI", name: "Michigan" },
-    { id: "MN", name: "Minnesota" },
-    { id: "MS", name: "Mississippi" },
-    { id: "MO", name: "Missouri" },
-    { id: "MT", name: "Montana" },
-    { id: "NE", name: "Nebraska" },
-    { id: "NV", name: "Nevada" },
-    { id: "NH", name: "New Hampshire" },
-    { id: "NJ", name: "New Jersey" },
-    { id: "NM", name: "New Mexico" },
-    { id: "NY", name: "New York" },
-    { id: "NC", name: "North Carolina" },
-    { id: "ND", name: "North Dakota" },
-    { id: "OH", name: "Ohio" },
-    { id: "OK", name: "Oklahoma" },
-    { id: "OR", name: "Oregon" },
-    { id: "PA", name: "Pennsylvania" },
-    { id: "RI", name: "Rhode Island" },
-    { id: "SC", name: "South Carolina" },
-    { id: "SD", name: "South Dakota" },
-    { id: "TN", name: "Tennessee" },
-    { id: "TX", name: "Texas" },
-    { id: "UT", name: "Utah" },
-    { id: "VT", name: "Vermont" },
-    { id: "VA", name: "Virginia" },
-    { id: "WA", name: "Washington" },
-    { id: "WV", name: "West Virginia" },
-    { id: "WI", name: "Wisconsin" },
-    { id: "WY", name: "Wyoming" },
-  ];
-
-  const states = stateArray.map((state) => {
+  const states = StateArray.map((state) => {
     return (
       <MenuItem value={state.id} key={state.id}>
         {state.name}
@@ -115,23 +63,13 @@ const EditInfoDrawer = ({ user }: any) => {
     });
   };
 
-  console.log(user);
   return (
-    <Paper
-      sx={{
-        width: "100%",
-        height: "65vh",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
+    <Paper className={styles.paper_container}>
       <Box
-        sx={
+        className={
           billingChecked
-            ? { width: "100%", display: "flex", justifyContent: "center" }
-            : { width: "70%", display: "flex", justifyContent: "center" }
+            ? styles.billing_checked_shipping_form
+            : styles.shipping_form_container
         }
       >
         <Box

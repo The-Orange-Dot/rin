@@ -1,4 +1,5 @@
 /** @type {import('next').NextConfig} */
+const path = require("path");
 
 const ContentSecurityPolicy = `
     default-src 'self' 'unsafe-eval';
@@ -68,6 +69,9 @@ const nextConfig = {
       `${process.env.S3_UPLOAD_BUCKET}.s3.amazonaws.com`,
       `${process.env.S3_UPLOAD_BUCKET}.s3.${process.env.S3_UPLOAD_REGION}.amazonaws.com`,
     ],
+  },
+  sassOptions: {
+    includePaths: [path.join(__dirname, "styles")],
   },
 };
 
