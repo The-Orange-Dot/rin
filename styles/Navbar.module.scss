@@ -12,6 +12,7 @@
   margin-right: auto;
   padding: 0 2%;
   opacity: 0;
+  background-color: white;
 }
 
 .mobileNavbarContainer {
@@ -26,18 +27,21 @@
   right: 0%;
   padding: 0 10px;
   opacity: 0;
+  background-color: white;
 }
 
 .logo_white {
   color: white;
   font-weight: 400;
   cursor: pointer;
+  z-index: 100;
 }
 
 .logo {
   font-weight: 400;
   color: black;
   cursor: pointer;
+  z-index: 100;
 }
 
 .navbar_selector {

@@ -8,7 +8,7 @@
 
   @include mobile {
     @include center-xy(
-      $height: 85vh,
+      $height: 90vh,
       $justify-content: flex-start,
       $align-items: null
     );
@@ -79,7 +79,7 @@
   }
 
   @include mobile {
-    @include center-xy($flex-direction: row, $height: 10vh);
+    @include center-xy($height: 10vh);
     margin: 20px 0;
   }
 }
@@ -91,7 +91,7 @@
   }
 
   @include mobile {
-    @include center-xy($flex-direction: row, $height: 5vh);
+    @include center-xy($height: 6vh);
   }
 }
 

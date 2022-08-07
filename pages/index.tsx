@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import styles from "../styles/Home.module.scss";
-import HeaderImage from "../components/HeaderImage";
+import HeaderImage from "../components/Home/HeaderImage";
 import { Typography, Box, Paper } from "@mui/material";
 import { useMediaQuery } from "@mui/material";
 import gsap from "gsap";
