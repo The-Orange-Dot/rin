@@ -6,7 +6,7 @@ import { DateFormatter } from "../../DateFormatter";
 import Link from "next/link";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/dist/ScrollTrigger";
-import styles from "../../../styles/news/Articles.module.scss";
+import styles from "../../../styles/news/articles.module.scss";
 
 const MobileNews = ({ post, index, filterSelected }: any) => {
   gsap.registerPlugin(ScrollTrigger);

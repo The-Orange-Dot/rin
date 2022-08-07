@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { DateFormatter } from "../DateFormatter";
 
-import styles from "../../styles/news/Articles.module.scss";
+import styles from "../../styles/news/articles.module.scss";
 
 const MainPost = ({ post, animationComplete, index, setImageLoaded }: any) => {
   const date = DateFormatter(post.createdAt);

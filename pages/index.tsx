@@ -1,5 +1,5 @@
 import type { NextPage } from "next";
-import styles from "../styles/Home.module.scss";
+import styles from "../styles/home.module.scss";
 import HeaderImage from "../components/HeaderImage";
 import { Typography, Box, Paper } from "@mui/material";
 import { useMediaQuery } from "@mui/material";

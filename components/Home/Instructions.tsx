@@ -1,7 +1,7 @@
 import React from "react";
 import { Typography, Box, Paper } from "@mui/material";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import styles from "../../styles/Home.module.scss";
+import styles from "../../styles/home.module.scss";
 import { instructions } from "./Texts";
 import type { NextComponentType } from "next";
 

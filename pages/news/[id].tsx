@@ -1,6 +1,6 @@
 import React from "react";
 import { server } from "../../config";
-import styles from "../../styles/news/Main.module.scss";
+import styles from "../../styles/news/main.module.scss";
 import { GetStaticPaths, GetStaticProps } from "next";
 import { PostType } from "../../types/newsTypes";
 import { InferGetStaticPropsType } from "next";
