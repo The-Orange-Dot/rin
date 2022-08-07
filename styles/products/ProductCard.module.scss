@@ -1,0 +1,107 @@
+@import "mixins";
+@import "media-query-mixin";
+
+.card_container {
+  @include monitor {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 550px;
+    margin-bottom: 8;
+  }
+  @include mobile {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 350px;
+    max-height: 350px;
+    margin-bottom: 30px;
+  }
+}
+
+.card {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  opacity: 0;
+}
+
+.card_media {
+  @include monitor {
+    max-height: 260px;
+    min-height: 260px;
+    width: 260px;
+    object-fit: contain;
+    cursor: pointer;
+  }
+
+  @include mobile {
+    padding: 0 !important;
+    object-fit: contain;
+    cursor: pointer;
+    max-height: 160px;
+    min-height: 160px;
+    width: 160px;
+  }
+}
+
+.card_content {
+  @include monitor {
+    margin: 5%;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+    cursor: pointer;
+  }
+
+  @include mobile {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+    cursor: pointer;
+  }
+}
+
+.image {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.card_name {
+  @include monitor {
+    width: 100%;
+    min-height: 50px;
+  }
+
+  @include mobile {
+    width: 100%;
+    min-height: 40px;
+  }
+}
+
+.card_info {
+  width: 100%;
+  min-height: 30px;
+}
+
+.rating_container {
+  @include monitor {
+    width: 100%;
+    height: 20px;
+    display: flex;
+    align-items: center;
+  }
+  @include mobile {
+    width: 100%;
+    height: 10px;
+    display: flex;
+    align-items: center;
+  }
+}
