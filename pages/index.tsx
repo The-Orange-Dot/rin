@@ -17,6 +17,7 @@ import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/dist/ScrollTrigger";
 import { useEffect } from "react";
+import { style } from "@mui/system";
 
 const Home: NextPage = () => {
   gsap.registerPlugin(ScrollTrigger);
@@ -54,39 +55,27 @@ const Home: NextPage = () => {
   }, []);
 
   const instructionsElement = instructions.map((item, index) => {
+    const lastCard = index === instructions.length - 1;
+
     return (
       <Box
-        sx={
-          isMobile
-            ? { width: "80%", textAlign: "center", mb: 2 }
-            : index === instructions.length - 1
-            ? {
-                width: "10%",
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }
-            : {
-                width: "20%",
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }
-        }
         key={index}
+        className={
+          isMobile
+            ? styles.mobile_instructions_card_container
+            : lastCard
+            ? styles.instructions_card_container
+            : styles.instructions_last_card_container
+        }
       >
         <Box
-          sx={
-            index === instructions.length - 1
-              ? { width: "100%", textAlign: "center" }
-              : { width: "50%", textAlign: "center" }
-          }
+          className={lastCard ? styles.screen_last_card : styles.screen_cards}
         >
-          <Typography sx={{ color: "white" }}>{item.text}</Typography>
+          <Typography color="white">{item.text}</Typography>
         </Box>
         {index === instructions.length - 1 ? null : (
-          <Box sx={{ width: "50%", textAlign: "end" }}>
-            <ArrowForwardIosIcon sx={{ color: "white" }} />
+          <Box className={styles.arrows}>
+            <ArrowForwardIosIcon color="info" />
           </Box>
         )}
       </Box>
@@ -94,11 +83,13 @@ const Home: NextPage = () => {
   });
 
   const mobileInstructions = instructions.map((item, index) => {
+    const lastCard = index === instructions.length - 1;
+
     return (
       <Box
         sx={{ width: "80%", textAlign: "center", mb: 2 }}
         key={index}
-        className="trigger"
+        className={`${styles.mobile_instructions_card} trigger`}
       >
         {item.image ? (
           <Image
@@ -109,12 +100,12 @@ const Home: NextPage = () => {
             alt="test"
           />
         ) : null}
-        <Box sx={{ width: "100%", textAlign: "center" }}>
-          <Typography sx={{ color: "black" }}>{item.text}</Typography>
+        <Box className={styles.mobile_instructions_card_text}>
+          <Typography>{item.text}</Typography>
         </Box>
-        {index === instructions.length - 1 ? null : (
-          <Box sx={{ width: "100%", textAlign: "center" }}>
-            <ArrowDownwardIcon sx={{ color: "black", mb: 2, mt: 2 }} />
+        {lastCard ? null : (
+          <Box className={styles.mobile_arrows}>
+            <ArrowDownwardIcon />
           </Box>
         )}
       </Box>
@@ -394,36 +385,16 @@ const Home: NextPage = () => {
     <div className={styles.main}>
       <Box
         className={
-          isMobile
-            ? styles.mobile_main_page_container
-            : styles.main_page_container
+          isMobile ? styles.mobile_header_container : styles.header_container
         }
       >
         <HeaderImage isMobile={isMobile} />
       </Box>
       <Box
-        sx={
+        className={
           isMobile
-            ? {
-                backgroundColor: "white",
-                width: "100%",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                alignItems: "center",
-                pt: 5,
-                pb: 5,
-                mt: 5,
-              }
-            : {
-                backgroundColor: "#312f2f",
-                width: "100%",
-                height: "25vh",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                alignItems: "center",
-              }
+            ? styles.mobile_main_page_container
+            : styles.main_page_container
         }
       >
         <Typography
@@ -434,19 +405,10 @@ const Home: NextPage = () => {
           Easy as 1-2-3
         </Typography>
         <Box
-          sx={
+          className={
             isMobile
-              ? {
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "space-evenly",
-                  alignItems: "center",
-                }
-              : {
-                  display: "flex",
-                  justifyContent: "space-evenly",
-                  alignItems: "center",
-                }
+              ? styles.mobile_instructions_container
+              : styles.instructions_container
           }
         >
           {isMobile ? mobileInstructions : instructionsElement}
