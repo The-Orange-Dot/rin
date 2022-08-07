@@ -1,0 +1,21 @@
+// media aliases and breakpoints
+$mobile-screen: 900px;
+$contained: 1500px;
+
+// media devices
+@mixin mobile {
+  @media screen and (max-width: #{$mobile-screen}) {
+    @content;
+  }
+}
+
+@mixin monitor {
+  @media screen and (min-width: #{$mobile-screen}) and (max-width: #{$contained}) {
+  }
+}
+
+@mixin full-monitor {
+  @media screen and (min-width: #{$mobile-screen}) {
+    @content;
+  }
+}
