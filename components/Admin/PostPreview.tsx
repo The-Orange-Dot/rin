@@ -3,6 +3,7 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { FormatParagraphs } from "../News/FormatParagraphs";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import styles from "../../styles/admin/PostPreview.module.scss";
 
 const PostPreview = ({
   title,
@@ -21,7 +22,7 @@ const PostPreview = ({
         image.includes(".png")
       ) {
         setImagePreview(
-          <Box sx={{ width: "60%", height: "25vh", position: "relative" }}>
+          <Box className={styles.image}>
             <Image src={image} alt={image} layout="fill" objectFit="cover" />
           </Box>
         );
@@ -34,10 +35,7 @@ const PostPreview = ({
   const preview = body.split("\n").map((text: string, index: number) => {
     if (text.includes(".jpg") || text.includes(".jpeg")) {
       return (
-        <Box
-          sx={{ width: "100%", height: 200, position: "relative", m: 1 }}
-          key={index}
-        >
+        <Box className={styles.body_image} key={index}>
           <Image
             src={text}
             layout="fill"
@@ -48,135 +46,71 @@ const PostPreview = ({
       );
     }
     return (
-      <Typography sx={{ fontSize: ".4rem" }} key={index}>
+      <Typography fontSize=".4rem" key={index}>
         &emsp;&emsp;{text}
       </Typography>
     );
   });
 
   return (
-    <Box
-      sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
-    >
+    <Box className={styles.container}>
       <Box>
         <Typography>PC SCREEN PREVIEW</Typography>
       </Box>
-      <Box
-        sx={{
-          width: "100%",
-          height: "45vh",
-          border: "4px solid black",
-          borderRadius: "1rem",
-          position: "relative",
-          overflowY: "scroll",
-        }}
-      >
-        <Box
-          sx={{
-            position: "absolute",
-            width: "100%",
-            top: 40,
-            height: 130,
-            backgroundColor: "#dfdfdf",
-            zIndex: -1,
-          }}
-        />
-        <Box
-          sx={{
-            width: "100%",
-            position: "absolute",
-            top: 5,
-            left: 0,
-            display: "flex",
-            justifyContent: "space-between",
-            px: 3,
-          }}
-        >
+      <Box className={styles.screen_border}>
+        <Box className={styles.gray_bar} />
+        <Box className={styles.nav_bar_container}>
           <Typography>rin</Typography>
-          <Box
-            sx={{
-              width: "30%",
-              display: "flex",
-              justifyContent: "space-between",
-            }}
-          >
-            <Typography variant="overline" sx={{ fontSize: ".4rem" }}>
+          <Box className={styles.nav_bar_selector_container}>
+            <Typography variant="overline" fontSize=".4rem">
               Admin
             </Typography>
-            <Typography variant="overline" sx={{ fontSize: ".4rem" }}>
+            <Typography variant="overline" fontSize=".4rem">
               Home
             </Typography>
-            <Typography variant="overline" sx={{ fontSize: ".4rem" }}>
+            <Typography variant="overline" fontSize=".4rem">
               News
             </Typography>
-            <Typography variant="overline" sx={{ fontSize: ".4rem" }}>
+            <Typography variant="overline" fontSize=".4rem">
               Store
             </Typography>
-            <ShoppingCartIcon sx={{ fontSize: ".8rem" }} />
+            <ShoppingCartIcon fontSize="small" />
           </Box>
         </Box>
-        <Box
-          sx={{
-            mt: 7,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            mb: 10,
-            minHeight: "40vh",
-          }}
-        >
-          <Box sx={{ width: "90%", px: 3, textAlign: "center", minHeight: 20 }}>
+        <Box className={styles.headers_container}>
+          <Box className={styles.title_container}>
             <Typography
               variant="overline"
-              sx={{ lineHeight: ".5", fontWeight: 600, fontSize: "1rem" }}
+              lineHeight=".5rem"
+              fontWeight={600}
+              fontSize="1rem"
             >
               {title}
             </Typography>
           </Box>
 
-          <Box sx={{ width: "90%", px: 3, textAlign: "center", minHeight: 20 }}>
+          <Box className={styles.subtitle_container}>
             <Typography
               variant="overline"
-              sx={{
-                lineHeight: "1rem",
-                fontWeight: 100,
-                fontSize: ".5rem",
-                display: "flex",
-                justifyContent: "center",
-              }}
+              lineHeight="1rem"
+              fontWeight={100}
+              fontSize=".5rem"
             >
               {subtitle}
             </Typography>
           </Box>
-          <Box
-            sx={{
-              width: "100%",
-              minHeight: 245,
-              display: "flex",
-              justifyContent: "center",
-            }}
-          >
-            {imagePreview}
-          </Box>
-          <Box
-            sx={{
-              width: "90%",
-              px: 3,
-              mt: 4,
-              display: "flex",
-              flexDirection: "column",
-            }}
-          >
-            {preview}
-          </Box>
+          <Box className={styles.image_container}>{imagePreview}</Box>
+          <Box className={styles.body_container}>{preview}</Box>
         </Box>
-        <Box sx={{ width: "100%", height: "1px", mb: 10 }}>
+        <Box className={styles.bottom_divider}>
           <Divider />
         </Box>
       </Box>
-      <Button onClick={() => setOpenImageDrawer(true)} sx={{ mt: 5 }}>
-        Open Image Drawer
-      </Button>
+      <Box className={styles.open_image_button}>
+        <Button onClick={() => setOpenImageDrawer(true)} fullWidth>
+          Open Image Drawer
+        </Button>
+      </Box>
     </Box>
   );
 };

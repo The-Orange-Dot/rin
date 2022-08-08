@@ -1,0 +1,33 @@
+@import "mixins";
+@import "media-query-mixin";
+
+.container {
+  @include monitor {
+    width: 100%;
+    height: 100%;
+    display: flex;
+  }
+}
+
+.forms_container {
+  @include monitor {
+    width: 50%;
+    height: 100%;
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.forms_input {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.post_preview_container {
+  width: 50%;
+  height: 100%;
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+}

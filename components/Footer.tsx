@@ -1,17 +1,6 @@
-import {
-  Paper,
-  Typography,
-  IconButton,
-  InputBase,
-  Divider,
-  Grid,
-  Box,
-  Container,
-} from "@mui/material";
+import { Typography, IconButton, Grid, Box } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import styles from "../styles/Footer.module.scss";
-import EmailIcon from "@mui/icons-material/Email";
-import { useMediaQuery } from "@mui/material";
 import Link from "next/link";
 import type { NextComponentType } from "next";
 import TwitterIcon from "@mui/icons-material/Twitter";
@@ -20,7 +9,6 @@ import { useSession } from "next-auth/react";
 import gsap from "gsap";
 
 const Footer: NextComponentType = () => {
-  const isMobile = useMediaQuery("(max-width: 900px)");
   const [pageLoaded, setPageLoaded] = useState(false);
   const { status } = useSession();
 

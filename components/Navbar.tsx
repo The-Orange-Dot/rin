@@ -49,35 +49,20 @@ const Navbar = () => {
   }, [status]);
 
   return (
-    <div
-      className={
-        isMobile ? styles.mobileNavbarContainer : styles.navbarContainer
-      }
-      style={
-        router.pathname.includes("/products") ||
-        router.pathname.includes("/profile")
-          ? { background: "white", opacity: 0 }
-          : { opacity: 0 }
-      }
-      id={"container"}
-    >
-      <div>
+    <div className={styles.navbarContainer} id={"container"}>
+      <Box className={styles.logo_container}>
         <Link href="/">
           <Typography
             color="primary"
-            sx={{
-              width: "100%",
-              fontWeight: 200,
-              cursor: "pointer",
-              letterSpacing: 4,
-              fontSize: "2.5rem",
-            }}
+            fontSize="2.5rem"
+            letterSpacing={4}
+            fontWeight={200}
             variant="h4"
           >
             rin
           </Typography>
         </Link>
-      </div>
+      </Box>
       {isMobile ? (
         <MenuIcon
           color="primary"
@@ -165,7 +150,6 @@ const Navbar = () => {
             </Typography>
           )}
           <Box
-            sx={{ display: "flex", width: "10%" }}
             onClick={() => {
               if (shoppingCart?.length > 0) {
                 setOpenCheckoutDrawer(true);

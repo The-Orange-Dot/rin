@@ -1,47 +1,50 @@
+@import "mixins";
+@import "media-query-mixin";
+
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: white;
+}
+
 .navbarContainer {
-  position: fixed;
-  height: 8vh;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: nowrap;
-  z-index: 100;
-  left: 0;
-  right: 0;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 0 2%;
-  opacity: 0;
-  background-color: white;
+  @include monitor {
+    position: fixed;
+    height: 8vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: nowrap;
+    z-index: 100;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 2%;
+    opacity: 0;
+    background-color: white;
+    min-width: 100vw;
+  }
+
+  @include mobile {
+    position: fixed;
+    width: 100%;
+    height: 8vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;
+    left: 0%;
+    right: 0%;
+    padding: 0 10px;
+    opacity: 0;
+    background-color: white;
+  }
 }
 
-.mobileNavbarContainer {
-  position: fixed;
-  width: 100%;
-  height: 8vh;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  z-index: 1;
-  left: 0%;
-  right: 0%;
-  padding: 0 10px;
-  opacity: 0;
-  background-color: white;
-}
-
-.logo_white {
-  color: white;
-  font-weight: 400;
+.logo_container {
   cursor: pointer;
-  z-index: 100;
-}
-
-.logo {
-  font-weight: 400;
-  color: black;
-  cursor: pointer;
-  z-index: 100;
 }
 
 .navbar_selector {

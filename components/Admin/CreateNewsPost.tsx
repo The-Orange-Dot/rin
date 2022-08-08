@@ -7,11 +7,13 @@ import {
   InputLabel,
   FormControl,
 } from "@mui/material";
+import { NextComponentType } from "next";
 import React, { useState, SyntheticEvent, useEffect } from "react";
 import PostPreview from "./PostPreview";
 import { useSession } from "next-auth/react";
+import styles from "../../styles/admin/CreateNewPost.module.scss";
 
-const CreateNewsPost = ({ setOpenImageDrawer }: any) => {
+const CreateNewsPost: NextComponentType = ({ setOpenImageDrawer }: any) => {
   const [title, setTitle] = useState("");
   const [image, setImage] = useState("");
   const [subtitle, setSubtitle] = useState("");
@@ -72,69 +74,69 @@ const CreateNewsPost = ({ setOpenImageDrawer }: any) => {
   };
 
   return (
-    <Box sx={{ width: "100%", height: "100%", display: "flex" }}>
-      <Box
-        sx={{
-          width: "50%",
-          height: "100%",
-          p: 5,
-          display: "flex",
-          flexDirection: "column",
-        }}
-      >
-        <TextField
-          sx={{ width: "100%", mb: 1 }}
-          size="small"
-          label="Title"
-          onChange={(e) => {
-            setTitle(e.target.value);
-          }}
-        />
-        <TextField
-          sx={{ width: "100%", mb: 1 }}
-          size="small"
-          label="Article Image"
-          onChange={(e) => {
-            setImage(e.target.value);
-          }}
-        />
-        <TextField
-          sx={{ width: "100%", mb: 1 }}
-          size="small"
-          label="Subtitle"
-          onChange={(e) => {
-            setSubtitle(e.target.value);
-          }}
-        />
-        <FormControl>
-          <InputLabel htmlFor="category-selector" size="small">
-            Article Category
-          </InputLabel>
-          <Select
+    <Box className={styles.container}>
+      <Box className={styles.forms_container}>
+        <Box className={styles.forms_input}>
+          <TextField
             size="small"
-            sx={{ mb: 1 }}
-            labelId="category-selector"
-            label="Article Category"
-            value={categorySelector}
-            onChange={(e: any) => setCategorySelector(e.target.value)}
-          >
-            {categoryItems}
-          </Select>
-        </FormControl>
+            label="Title"
+            fullWidth
+            onChange={(e) => {
+              setTitle(e.target.value);
+            }}
+          />
+        </Box>
+        <Box className={styles.forms_input}>
+          <TextField
+            size="small"
+            label="Article Image"
+            fullWidth
+            onChange={(e) => {
+              setImage(e.target.value);
+            }}
+          />
+        </Box>
+        <Box className={styles.forms_input}>
+          <TextField
+            size="small"
+            label="Subtitle"
+            fullWidth
+            onChange={(e) => {
+              setSubtitle(e.target.value);
+            }}
+          />
+        </Box>
+        <Box className={styles.forms_input}>
+          <FormControl fullWidth>
+            <InputLabel htmlFor="category-selector" size="small">
+              Article Category
+            </InputLabel>
+            <Select
+              size="small"
+              labelId="category-selector"
+              label="Article Category"
+              value={categorySelector}
+              onChange={(e: any) => setCategorySelector(e.target.value)}
+            >
+              {categoryItems}
+            </Select>
+          </FormControl>
+        </Box>
 
-        <TextField
-          sx={{ width: "100%" }}
-          multiline
-          rows={30}
-          size="small"
-          label="Body"
-          onChange={(e) => {
-            setBody(e.target.value);
-          }}
-        />
+        <Box className={styles.forms_input}>
+          <TextField
+            multiline
+            rows={30}
+            fullWidth
+            size="small"
+            label="Body"
+            onChange={(e) => {
+              setBody(e.target.value);
+            }}
+          />
+        </Box>
 
         <Button
-          sx={{ mt: 5 }}
           onClick={() => {
             submitHandler();
           }}
@@ -143,15 +145,7 @@ const CreateNewsPost = ({ setOpenImageDrawer }: any) => {
           Submit
         </Button>
       </Box>
-      <Box
-        sx={{
-          width: "50%",
-          height: "100%",
-          p: 5,
-          display: "flex",
-          flexDirection: "column",
-        }}
-      >
+      <Box className={styles.post_preview_container}>
         <PostPreview
           title={title}
           subtitle={subtitle}
