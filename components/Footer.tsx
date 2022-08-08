@@ -43,33 +43,12 @@ const Footer: NextComponentType = () => {
   }, [pageLoaded]);
 
   return (
-    <div
-      className={
-        isMobile ? styles.mobile_footer_container : styles.footer_container
-      }
-    >
-      <Box
-        sx={
-          isMobile
-            ? {
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                width: "100%",
-                ml: 1,
-                mr: 1,
-                flex: 0.7,
-              }
-            : { display: "flex", ml: 1, mr: 1, flex: 0.7 }
-        }
-      >
+    <div className={styles.footer_container}>
+      <Box className={styles.footer_logo_sns_container}>
         <Typography
           color="primary"
-          sx={{
-            fontWeight: 200,
-            cursor: "pointer",
-            letterSpacing: 4,
-          }}
+          letterSpacing={4}
+          fontWeight={200}
           variant="h4"
         >
           rin
@@ -83,96 +62,52 @@ const Footer: NextComponentType = () => {
           </IconButton>
         </Box>
       </Box>
-      <Grid
-        sx={
-          isMobile
-            ? {
-                m: "10px 0",
-                display: "flex",
-                justifyContent: "space-between",
-                flexWrap: "wrap",
-                minWidth: "20%",
-              }
-            : {
-                display: "flex",
-                justifyContent: "space-between",
-                flexWrap: "wrap",
-                minWidth: "20%",
-                flex: 1,
-                zIndex: 1,
-              }
-        }
-        container
-        spacing={2}
-      >
+      <Grid className={styles.footer_nav_container}>
         <Grid item xl={4}>
-          <Typography
-            variant="body2"
-            sx={{ fontWeight: "bold", mb: 1 }}
-            color="primary"
-          >
+          <Typography variant="body2" color="primary" fontWeight="bold">
             Explore
           </Typography>
-          <Link href="/">
-            <Typography
-              color="primary"
-              variant="body2"
-              sx={{ cursor: "pointer", "&:hover": { opacity: 0.5 } }}
-            >
-              Home
-            </Typography>
-          </Link>
-          <Link href="/products">
-            <Typography
-              color="primary"
-              variant="body2"
-              sx={{ cursor: "pointer", "&:hover": { opacity: 0.5 } }}
-            >
-              Store
-            </Typography>
-          </Link>
-          <Link href="/news">
-            <Typography
-              color="primary"
-              variant="body2"
-              sx={{ cursor: "pointer", "&:hover": { opacity: 0.5 } }}
-            >
-              News
-            </Typography>
-          </Link>
+          <Box className={styles.nav_links}>
+            <Link href="/">
+              <Typography color="primary" variant="body2">
+                Home
+              </Typography>
+            </Link>
+          </Box>
+          <Box className={styles.nav_links}>
+            <Link href="/products">
+              <Typography color="primary" variant="body2">
+                Store
+              </Typography>
+            </Link>
+          </Box>
+          <Box className={styles.nav_links}>
+            <Link href="/news">
+              <Typography color="primary" variant="body2">
+                News
+              </Typography>
+            </Link>
+          </Box>
         </Grid>
         <Grid item xl={4}>
-          <Typography
-            variant="body2"
-            color="primary"
-            sx={{ fontWeight: "bold", mb: 1 }}
-          >
+          <Typography variant="body2" color="primary" fontWeight="bold">
             Company
           </Typography>
-          <Link href={"/about"}>
-            <Typography
-              variant="body2"
-              color="primary"
-              sx={{ cursor: "pointer", "&:hover": { opacity: 0.5 } }}
-            >
-              About
-            </Typography>
-          </Link>
+
+          <Box className={styles.nav_links}>
+            <Link href={"/about"}>
+              <Typography variant="body2" color="primary">
+                About
+              </Typography>
+            </Link>
+          </Box>
         </Grid>
         <Grid item xl={4}>
-          <Typography
-            variant="body2"
-            color="primary"
-            sx={{ fontWeight: "bold", mb: 1, min: "30%" }}
-          >
+          <Typography variant="body2" color="primary" fontWeight="bold">
             Services
           </Typography>
           {/* <Link href={"/contact"}> */}
-          <Typography
-            variant="body2"
-            color="primary"
-            sx={{ cursor: "pointer", "&:hover": { opacity: 0.5 } }}
-          >
+          <Typography variant="body2" color="primary">
             Contact us
           </Typography>
           {/* </Link> */}
