@@ -3,7 +3,10 @@
 
 .container {
   @include monitor {
-    @include center-xy;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    height: 800px;
     margin-top: 50px;
   }
 }

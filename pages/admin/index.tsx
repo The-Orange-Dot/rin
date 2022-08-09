@@ -42,16 +42,29 @@ const Admin = ({ imagesData }: any) => {
         onClick={() => {
           setSelector(page.value);
         }}
-        sx={{
-          height: "100%",
-          width: 200,
-          justifyContent: "center",
-          display: "flex",
-          alignItems: "center",
-          "&:hover": { backgroundColor: "#dfdfdf", cursor: "pointer" },
-        }}
+        sx={
+          selector === page.value
+            ? {
+                height: "100%",
+                width: 200,
+                justifyContent: "center",
+                display: "flex",
+                alignItems: "center",
+                backgroundColor: "#dfdfdf",
+              }
+            : {
+                height: "100%",
+                width: 200,
+                justifyContent: "center",
+                display: "flex",
+                alignItems: "center",
+                "&:hover": { backgroundColor: "#dfdfdf", cursor: "pointer" },
+              }
+        }
       >
-        <Typography>{page.text}</Typography>
+        <Typography fontWeight={selector === page.value ? 600 : 200}>
+          {page.text}
+        </Typography>
       </Box>
     );
   });
