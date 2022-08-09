@@ -45,3 +45,15 @@
   justify-content: space-around;
   max-width: 1500px;
 }
+
+.pagnation_container {
+  @include monitor {
+    @include center-x;
+    margin-top: 50px;
+  }
+
+  @include mobile {
+    @include center-x;
+    margin-top: 50px;
+  }
+}

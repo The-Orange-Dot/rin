@@ -6,12 +6,12 @@ import React, {
   useEffect,
 } from "react";
 import PropTypes from "prop-types";
-import { Pagination } from "@mui/material";
+import { Pagination, Box } from "@mui/material";
 import { ProductType } from "../../types/productTypes";
 import gsap from "gsap";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../redux/store";
-import { setPages } from "../../redux/reducers/productsFilterReducer";
+import styles from "../../styles/Products.module.scss";
 
 interface PaginationType {
   setProducts: Dispatch<SetStateAction<ProductType>>;
@@ -53,13 +53,15 @@ const PaginationButtons = ({ setProducts, setPageLoaded }: PaginationType) => {
   };
 
   return (
-    <Pagination
-      onChange={pageHandler}
-      count={totalPages}
-      defaultPage={1}
-      boundaryCount={2}
-      className="pagnation-buttons"
-    />
+    <Box className={styles.pagnation_container}>
+      <Pagination
+        onChange={pageHandler}
+        count={totalPages}
+        defaultPage={1}
+        boundaryCount={2}
+        className="pagnation-buttons"
+      />
+    </Box>
   );
 };
 
