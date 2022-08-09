@@ -241,16 +241,18 @@ const MobileProductsModal = ({
             >
               {imagesArray}
             </Box>
-            <Typography
-              color="secondary"
-              variant="overline"
-              sx={{ fontSize: ".7rem", lineHeight: ".0rem", mt: 1 }}
-            >
-              {product.brand}
-            </Typography>
-            <Typography variant="h6" sx={{ fontWeight: 600, mt: 1 }}>
-              {product.name}
-            </Typography>
+            <Box sx={{ textAlign: "center" }}>
+              <Typography
+                color="secondary"
+                variant="overline"
+                sx={{ fontSize: ".7rem", lineHeight: ".0rem", mt: 1 }}
+              >
+                {product.brand}
+              </Typography>
+              <Typography variant="h6" sx={{ fontWeight: 600, mt: 1 }}>
+                {product.name}
+              </Typography>
+            </Box>
             <Box sx={{ minHeight: "40px" }}>
               <Typography variant="caption" color="secondary">
                 {product.size}
