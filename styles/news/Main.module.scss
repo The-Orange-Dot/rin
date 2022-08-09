@@ -19,7 +19,7 @@
 }
 
 .filter_container {
-  width: 90%;
+  @include center-x;
   margin-top: 10px;
 }
 
