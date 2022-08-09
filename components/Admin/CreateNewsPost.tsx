@@ -7,13 +7,12 @@ import {
   InputLabel,
   FormControl,
 } from "@mui/material";
-import { NextComponentType } from "next";
-import React, { useState, SyntheticEvent, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import PostPreview from "./PostPreview";
 import { useSession } from "next-auth/react";
 import styles from "../../styles/admin/CreateNewPost.module.scss";
 
-const CreateNewsPost: NextComponentType = ({ setOpenImageDrawer }: any) => {
+const CreateNewsPost = ({ setOpenImageDrawer }: any) => {
   const [title, setTitle] = useState("");
   const [image, setImage] = useState("");
   const [subtitle, setSubtitle] = useState("");

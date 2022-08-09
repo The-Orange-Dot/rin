@@ -32,6 +32,7 @@ const Admin = ({ imagesData }: any) => {
   const pagesArray = [
     { text: "News Form", value: "news" },
     { text: "Product Form", value: "store" },
+    { text: "Customer Forms", value: "customer" },
   ];
 
   const pageSelector = pagesArray.map((page, index) => {
@@ -60,6 +61,8 @@ const Admin = ({ imagesData }: any) => {
       setPage(<CreateNewsPost setOpenImageDrawer={setOpenImageDrawer} />);
     } else if (selector === "store") {
       setPage(<ProductForms />);
+    } else if (selector === "customer") {
+      setPage(<CustomerForms />);
     }
   }, [selector]);
 
@@ -103,6 +106,7 @@ import { GetServerSideProps } from "next";
 import { getSession } from "next-auth/react";
 import { server } from "../../config";
 import { Button, Drawer, Tooltip } from "@mui/material";
+import CustomerForms from "../../components/Admin/CustomerForms";
 export const getServerSideProps: GetServerSideProps = async (context: any) => {
   const session = await getSession(context);
   if (!session) {

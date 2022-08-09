@@ -93,6 +93,7 @@ const Navbar = () => {
                   : styles.selector_text
               }
               variant="overline"
+              id="home"
             >
               Home
             </Typography>
@@ -105,6 +106,7 @@ const Navbar = () => {
                   : styles.selector_text
               }
               variant="overline"
+              id="news"
             >
               News
             </Typography>
@@ -118,6 +120,7 @@ const Navbar = () => {
                   : styles.selector_text
               }
               variant="overline"
+              id="store"
             >
               Store
             </Typography>

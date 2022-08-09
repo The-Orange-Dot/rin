@@ -1,0 +1,9 @@
+@import "mixins";
+@import "media-query-mixin";
+
+.container {
+  @include monitor {
+    @include center-xy;
+    margin-top: 50px;
+  }
+}

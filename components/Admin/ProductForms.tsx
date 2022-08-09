@@ -22,6 +22,7 @@ const ProductForms = () => {
   const fetchProducts = async () => {
     const res = await fetch("/api/products/adminFetch");
     const { products } = await res.json();
+
     setRows(products);
 
     // console.log(products);
