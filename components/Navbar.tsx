@@ -158,6 +158,7 @@ const Navbar = () => {
                 setOpenCheckoutDrawer(true);
               }
             }}
+            className={styles.nav_shopping_cart}
           >
             <ShoppingCartIcon />
             {shoppingCart?.length > 0 ? (
