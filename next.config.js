@@ -5,6 +5,8 @@ const ContentSecurityPolicy = `
     default-src 'self' 'unsafe-eval';
     style-src 'self' 'unsafe-inline';
     img-src 'self' https: data:;
+    script-src-elem 'self' https://js.stripe.com/v3;
+    frame-src 'self' https://js.stripe.com/;
     connect-src https://${process.env.S3_UPLOAD_BUCKET}.s3.amazonaws.com https://${process.env.S3_UPLOAD_BUCKET}.s3.${process.env.S3_UPLOAD_REGION}.amazonaws.com ${process.env.BASE_URL} ws://localhost:3000/_next/webpack-hmr ws://rin-ten.vercel.app/_next/webpack-hmr https://rin-ten.vercel.app/_next/static/css/94b3dd3949a444d4.css https://rin-ten.vercel.app/_next/static/css/c1189d1348be2a63.css ${process.env.NEXTAUTH_URL}; 
 `;
 
