@@ -1,0 +1,122 @@
+@import "mixins";
+@import "media-query-mixin";
+
+.post_container {
+  @include monitor {
+    @include center-xy($height: 25vh, $justify-content: null);
+  }
+
+  @include mobile {
+    @include center-xy($height: 15vh, $justify-content: null);
+  }
+}
+
+.post_odd {
+  @include monitor {
+    @include center-xy($width: 80%, $flex-direction: row, $align-items: null);
+    margin: 20px 200px;
+    transition: 0.3s;
+    &:hover {
+      & .image {
+        opacity: 0.8;
+        transition: 0.3s;
+      }
+      background-color: #dfdfdf;
+      transition: 0.3s;
+      cursor: pointer;
+    }
+  }
+
+  @include mobile {
+    @include center-xy($flex-direction: row, $align-items: null);
+    margin: 20px 500px;
+    transition: 0.3s;
+    overflow-x: "hidden";
+    &:hover {
+      & .image {
+        opacity: 0.8;
+        transition: 0.3s;
+      }
+      background-color: #dfdfdf;
+      transition: 0.3s;
+      cursor: pointer;
+    }
+  }
+}
+
+.post_even {
+  @include monitor {
+    @include center-xy(
+      $width: 80%,
+      $flex-direction: row-reverse,
+      $align-items: null
+    );
+    margin: 20px 200px;
+    transition: 0.3s;
+    &:hover {
+      & .image {
+        opacity: 0.8;
+        transition: 0.3s;
+      }
+      background-color: #dfdfdf;
+      transition: 0.3s;
+      cursor: pointer;
+    }
+  }
+
+  @include mobile {
+    @include center-xy($flex-direction: row-reverse, $align-items: null);
+    margin: 20px 500px;
+    transition: 0.3s;
+    overflow-x: "hidden";
+    &:hover {
+      & .image {
+        opacity: 0.8;
+        transition: 0.3s;
+      }
+      background-color: #dfdfdf;
+      transition: 0.3s;
+      cursor: pointer;
+    }
+  }
+}
+
+.image_container {
+  @include monitor {
+    position: relative;
+    min-width: 250px;
+    max-width: 300px;
+    max-height: 400px;
+    height: 20vh;
+    flex: 0.7;
+  }
+
+  @include mobile {
+    position: relative;
+    height: 100%;
+    flex: 0.5;
+  }
+}
+
+.post_content_container {
+  @include monitor {
+    @include center-xy;
+    flex: 2;
+  }
+
+  @include mobile {
+    @include center-xy($justify-content: space-between);
+    flex: 1;
+  }
+}
+
+.post_divider {
+  @include monitor {
+    width: 60%;
+    margin: 10px;
+  }
+
+  @include mobile {
+    width: 50%;
+  }
+}

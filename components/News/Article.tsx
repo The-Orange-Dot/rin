@@ -1,7 +1,8 @@
 import React from "react";
 import { Box, Divider, Paper, Typography } from "@mui/material";
 import Link from "next/link";
-import styles from "../../styles/news/Articles.module.scss";
+//import styles from "../../styles/news/Articles.module.scss";
+import styles from "./styles/Article.module.scss";
 import Image from "next/image";
 import { DateFormatter } from "../DateFormatter";
 

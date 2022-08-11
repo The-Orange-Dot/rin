@@ -69,6 +69,7 @@ const MobileProductNavBar = ({
         onCompleteParams: [productsData.products],
       })
       .to(".card", { onComplete: setPageLoaded, onCompleteParams: [false] });
+
     setExpandCategory(false);
     setExpandBrands(false);
     dispatch(setPages(productsData.totalProducts));
