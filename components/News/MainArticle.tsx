@@ -3,8 +3,7 @@ import { Box, Divider, Paper, Typography } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
 import { DateFormatter } from "../DateFormatter";
-
-import styles from "../../styles/news/Articles.module.scss";
+import styles from "./styles/MainArticle.module.scss";
 
 const MainPost = ({ post, animationComplete, index, setImageLoaded }: any) => {
   const date = DateFormatter(post.createdAt);

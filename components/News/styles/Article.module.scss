@@ -120,3 +120,17 @@
     width: 50%;
   }
 }
+
+.post_title_container {
+  @include mobile {
+    width: 80%;
+    text-align: center;
+  }
+}
+
+.post_subtitle_container {
+  @include mobile {
+    width: 90%;
+    text-align: center;
+  }
+}

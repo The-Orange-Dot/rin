@@ -6,7 +6,8 @@ import { DateFormatter } from "../../DateFormatter";
 import Link from "next/link";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/dist/ScrollTrigger";
-import styles from "../../../styles/news/Articles.module.scss";
+import mainStyles from "../styles/MainArticle.module.scss";
+import styles from "../styles/Article.module.scss";
 
 const MobileNews = ({ post, index, filterSelected }: any) => {
   gsap.registerPlugin(ScrollTrigger);
@@ -83,13 +84,13 @@ const MobileNews = ({ post, index, filterSelected }: any) => {
 
   if (index === 0) {
     return (
-      <Box className={styles.main_post_container} key={index}>
+      <Box className={mainStyles.main_post_container} key={index}>
         <Link href={`/news/${post.id}`}>
-          <Box className={styles.main_post_card}>
-            <Box className={styles.main_post_top_divider}>
+          <Box className={mainStyles.main_post_card}>
+            <Box className={mainStyles.main_post_top_divider}>
               <Divider />
             </Box>
-            <Box className={styles.main_post_image_container}>
+            <Box className={mainStyles.main_post_image_container}>
               <Image
                 src={post.image}
                 layout="fill"
@@ -103,7 +104,10 @@ const MobileNews = ({ post, index, filterSelected }: any) => {
                 id="main-image"
               />
             </Box>
-            <Box className={styles.main_post_title_container} id="main-title">
+            <Box
+              className={mainStyles.main_post_title_container}
+              id="main-title"
+            >
               <Typography
                 variant="overline"
                 fontWeight={400}
@@ -114,7 +118,7 @@ const MobileNews = ({ post, index, filterSelected }: any) => {
               </Typography>
             </Box>
             <Box
-              className={styles.main_post_subtitle_container}
+              className={mainStyles.main_post_subtitle_container}
               id="main-subtitle"
             >
               <Typography
@@ -133,7 +137,7 @@ const MobileNews = ({ post, index, filterSelected }: any) => {
             </Box>
           </Box>
         </Link>
-        <Box className={styles.main_post_bottom_divider}>
+        <Box className={mainStyles.main_post_bottom_divider}>
           <Divider />
         </Box>
       </Box>
