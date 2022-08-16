@@ -26,6 +26,7 @@ import CheckoutButton from "./CheckoutButton";
 import InstructionsAccordion from "./InstructionsAccordion";
 import Image from "next/image";
 import gsap from "gsap";
+import styles from "./styles/ProductModal.module.scss";
 
 interface PoductModalType {
   productModalOpen: boolean;
@@ -178,14 +179,7 @@ const ProductModal = ({
   const imagesArray = selectedProduct.images.map((image: string, i: number) => {
     return (
       <Box
-        sx={{
-          position: "relative",
-          cursor: "pointer",
-          m: 1,
-          width: 52,
-          height: 52,
-          "&:hover": { opacity: 0.5, border: "1px solid black" },
-        }}
+        className={styles.selector_images}
         key={image}
         onClick={() => {
           changeImageHandler(i);
@@ -212,28 +206,12 @@ const ProductModal = ({
       onClose={() => {
         setProductModalOpen(false);
       }}
-      sx={{
-        display: "flex",
-        justifyContent: "center",
-        zIndex: 0,
-      }}
+      className={styles.modal}
       hideBackdrop
       id="product-modal"
     >
       <Fade in={productModalOpen}>
-        <Paper
-          square
-          elevation={0}
-          sx={{
-            width: "100%",
-            display: "flex",
-            pl: 2,
-            pr: 2,
-            pt: "10vh",
-            maxWidth: 1500,
-            outline: "none",
-          }}
-        >
+        <Paper square elevation={0} className={styles.container}>
           {/* Left side */}
           <Box
             sx={{
@@ -271,18 +249,9 @@ const ProductModal = ({
               ) : null}
             </Box>
 
-            <Box
-              sx={{ width: "100%", display: "flex", justifyContent: "center" }}
-            >
-              {imagesArray}
-            </Box>
+            <Box className={styles.selector_image_container}>{imagesArray}</Box>
 
-            <Box
-              sx={{
-                width: "100%",
-                height: "15vh",
-              }}
-            >
+            <Box className={styles.checkout_button_container}>
               <CheckoutButton
                 selectedProduct={selectedProduct}
                 quantity={quantity}
@@ -292,29 +261,9 @@ const ProductModal = ({
           </Box>
 
           {/* Right Side */}
-          <Box
-            sx={{
-              width: "56%",
-              height: "100%",
-              overflowY: "scroll",
-              pb: 20,
-              pr: 3,
-            }}
-          >
-            <Box
-              sx={{
-                width: "100%",
-                textAlign: "center",
-                display: "flex",
-                flexDirection: "column",
-                pt: 5,
-              }}
-            >
-              <Typography
-                variant="h4"
-                sx={{ fontWidth: 200, mb: 1 }}
-                color="primary"
-              >
+          <Box className={styles.content_container}>
+            <Box className={styles.title_container}>
+              <Typography variant="h4" fontWeight={600} color="primary">
                 {selectedProduct.name}
               </Typography>
               <Typography variant="caption">by</Typography>
@@ -322,32 +271,19 @@ const ProductModal = ({
                 {selectedProduct.brand}
               </Typography>
               <Box>
-                <Typography
-                  variant="body1"
-                  color="secondary"
-                  sx={{ fontWeight: 200, mb: 3 }}
-                >
+                <Typography variant="body1" color="secondary" fontWeight={200}>
                   {selectedProduct.size}
                   {selectedProduct.details
                     ? ` - ${selectedProduct.details}`
                     : ""}
                 </Typography>
-                <Divider />
 
-                <Box
-                  sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    mt: 4,
-                    width: "100%",
-                  }}
-                >
-                  <Typography
-                    sx={{ mb: 2, fontWeight: 600, alignSelf: "flex-start" }}
-                  >
-                    What it is:{" "}
-                  </Typography>
+                <Box className={styles.divider}>
+                  <Divider />
+                </Box>
+
+                <Box className={styles.what_is_it}>
+                  <Typography fontWeight={600}>What it is:</Typography>
                   <Box
                     sx={{
                       display: "flex",

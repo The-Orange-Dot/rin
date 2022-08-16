@@ -15,7 +15,6 @@ import {
   Button,
   CircularProgress,
 } from "@mui/material";
-import styles from "../../../styles/Products.module.scss";
 import { useRouter } from "next/router";
 import MobileCheckoutButton from "./MobileCheckoutButton";
 import { ProductReviewType, ProductType } from "../../../types/productTypes";
@@ -24,6 +23,7 @@ import MobileProductReview from "./MobileProductReview";
 import Image from "next/image";
 import gsap from "gsap";
 import MobileInstructionsAccordion from "./MobileInstructionsAccordion";
+import styles from "../styles/ProductModal.module.scss";
 
 interface PoductModalType {
   productModalOpen: boolean;
@@ -167,16 +167,7 @@ const MobileProductsModal = ({
   const imagesArray = selectedProduct.images.map((image: string, i: number) => {
     return (
       <Box
-        sx={{
-          width: "60px",
-          height: "60px",
-          position: "relative",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          m: 0.5,
-          "&:hover": { opacity: 0.5, border: "1px solid black" },
-        }}
+        className={styles.selector_images}
         key={image}
         onClick={() => {
           changeImageHandler(i);
@@ -198,33 +189,13 @@ const MobileProductsModal = ({
   return (
     <Modal
       open={productModalOpen}
-      sx={{ display: "flex", justifyContent: "center" }}
+      className={styles.modal}
       hideBackdrop
       id="mobile-product-modal"
     >
       <Fade in={productModalOpen} timeout={500}>
-        <Paper
-          square
-          sx={{
-            width: "100%",
-            display: "flex",
-            alignItems: "center",
-            flexDirection: "column",
-          }}
-        >
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "flex-start",
-              alignItems: "center",
-              width: "90%",
-              overflow: "scroll",
-              pt: 5,
-              pb: "15vh",
-            }}
-            className={styles.productModal}
-          >
+        <Paper square className={styles.container}>
+          <Box className={styles.content_container}>
             {
               /*eslint-disable*/
               <img
@@ -236,35 +207,31 @@ const MobileProductsModal = ({
               />
               /*eslint-enable*/
             }
-            <Box
-              sx={{ width: "100%", display: "flex", justifyContent: "center" }}
-            >
-              {imagesArray}
-            </Box>
-            <Box sx={{ textAlign: "center" }}>
+            <Box className={styles.selector_image_container}>{imagesArray}</Box>
+            <Box className={styles.title_container}>
               <Typography
                 color="secondary"
                 variant="overline"
-                sx={{ fontSize: ".7rem", lineHeight: ".0rem", mt: 1 }}
+                fontSize=".7rem"
+                lineHeight=".0rem"
               >
                 {product.brand}
               </Typography>
-              <Typography variant="h6" sx={{ fontWeight: 600, mt: 1 }}>
+              <Typography variant="h6" fontWeight={600}>
                 {product.name}
               </Typography>
             </Box>
-            <Box sx={{ minHeight: "40px" }}>
+            <Box className={styles.subtitle_container}>
               <Typography variant="caption" color="secondary">
                 {product.size}
               </Typography>
               {product.details ? (
                 <Typography variant="caption" color="secondary">
-                  {" "}
                   - {product.details}
                 </Typography>
               ) : null}
             </Box>
-            <Box sx={{ display: "flex", flexDirection: "column", mb: 20 }}>
+            <Box className={styles.what_is_it}>
               <Typography variant="body2" sx={{ fontWeight: 600, mb: 2 }}>
                 What it is:
               </Typography>
