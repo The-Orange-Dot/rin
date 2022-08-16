@@ -2,7 +2,7 @@ import { Typography, Box, Modal } from "@mui/material";
 import Image from "next/image";
 import { useMediaQuery } from "@mui/material";
 import React, { useState } from "react";
-import styles from "../../styles/news/ArticlePage.module.scss";
+import styles from "./styles/FormatParagraphs.module.scss";
 
 export const FormatParagraphs = (text: string) => {
   const isMobile = useMediaQuery("(max-width: 900px)");

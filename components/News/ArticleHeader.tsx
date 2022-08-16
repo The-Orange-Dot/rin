@@ -2,7 +2,7 @@ import { Box, Typography } from "@mui/material";
 import Image from "next/image";
 import React from "react";
 import { DateFormatter } from "../DateFormatter";
-import styles from "../../styles/news/ArticlePage.module.scss";
+import styles from "./styles/ArticleHeader.module.scss";
 
 const Article = ({ post }: any) => {
   const date = DateFormatter(post.createdAt);

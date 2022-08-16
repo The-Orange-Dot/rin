@@ -1,7 +1,7 @@
 import { Box, Typography, Button } from "@mui/material";
 import React from "react";
 import { useRouter } from "next/router";
-import styles from "../../styles/news/NewsFilter.module.scss";
+import styles from "./styles/NewsFilter.module.scss";
 
 const NewsFilter = ({
   setPostsArray,
