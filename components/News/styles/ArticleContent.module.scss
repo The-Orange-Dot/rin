@@ -57,3 +57,23 @@
     height: 50px;
   }
 }
+
+.text_field {
+  background-color: #dfdfdf;
+}
+
+.edit_button {
+  @include monitor {
+    @include center-x;
+    margin-top: 100px;
+    width: 200px;
+    height: 50px;
+  }
+
+  @include mobile {
+    @include center-x;
+    margin-top: 50px;
+    width: 200px;
+    height: 50px;
+  }
+}

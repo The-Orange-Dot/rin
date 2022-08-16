@@ -1,0 +1,139 @@
+@import "mixins";
+@import "media-query-mixin";
+
+.card_container {
+  @include monitor {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 550px;
+    margin-bottom: 8px;
+  }
+  @include mobile {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 350px;
+    max-height: 350px;
+    margin-bottom: 30px;
+  }
+}
+
+.card {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  opacity: 0;
+}
+
+.card_media {
+  @include monitor {
+    max-height: 260px;
+    min-height: 260px;
+    width: 260px;
+    object-fit: contain;
+    cursor: pointer;
+  }
+  @include mobile {
+    padding: 0 !important;
+    object-fit: contain;
+    cursor: pointer;
+    max-height: 160px;
+    min-height: 160px;
+    width: 160px;
+  }
+}
+
+.image {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.card_content {
+  @include monitor {
+    margin: 5%;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+    cursor: pointer;
+  }
+
+  @include mobile {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+    cursor: pointer;
+    height: 140px;
+  }
+}
+
+.card_name {
+  @include monitor {
+    width: 100%;
+    min-height: 50px;
+  }
+
+  @include mobile {
+    width: 100%;
+    min-height: 55px;
+  }
+}
+
+.card_info {
+  width: 100%;
+  min-height: 30px;
+}
+
+.rating_container {
+  @include monitor {
+    width: 100%;
+    height: 20px;
+    display: flex;
+    align-items: center;
+  }
+  @include mobile {
+    width: 100%;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+  }
+}
+
+.add_item_button {
+  @include monitor {
+    margin: 0;
+    padding: 0;
+    max-height: 50px;
+    min-height: 50px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    color: white;
+  }
+
+  @include mobile {
+    margin: 0;
+    padding: 0;
+    border-radius: 0;
+    height: 50px;
+    width: 100%;
+  }
+}
+
+.star_rating {
+  margin-right: 5px;
+  color: #3f312b;
+}
+
+.mobile_add_button_text {
+  display: flex;
+  flex-direction: column;
+}

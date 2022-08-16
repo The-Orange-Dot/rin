@@ -2,7 +2,7 @@ import { Box, Button, TextField, Typography } from "@mui/material";
 import React, { SyntheticEvent, useState } from "react";
 import { useSession } from "next-auth/react";
 import { FormatParagraphs } from "../FormatParagraphs";
-import styles from "../../../styles/news/ArticlePage.module.scss";
+import styles from "../styles/ArticleContent.module.scss";
 
 const MobileArticleContent = ({ post }: any) => {
   const { data: session, status } = useSession();

@@ -2,7 +2,7 @@ import React from "react";
 import Image from "next/image";
 import { DateFormatter } from "../../DateFormatter";
 import { Box, Divider, Typography } from "@mui/material";
-import styles from "../../../styles/news/ArticlePage.module.scss";
+import styles from "../styles/ArticleHeader.module.scss";
 
 const MobileArticle = ({ post }: any) => {
   const date = DateFormatter(post.createdAt);

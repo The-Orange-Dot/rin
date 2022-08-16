@@ -17,7 +17,7 @@ import { ProductReviewType, ProductType } from "../../types/productTypes";
 import { addItem } from "../../redux/reducers/shoppingCartReducer";
 import { useSelector, useDispatch } from "react-redux";
 import Image from "next/image";
-import styles from "../../styles/products/ProductCard.module.scss";
+import styles from "./styles/ProductCards.module.scss";
 
 interface ProductCardType {
   product: ProductType;
@@ -176,48 +176,29 @@ const ProductCards = ({ product, setSelectedProduct }: ProductCardType) => {
           <Button
             variant="contained"
             disableElevation
+            fullWidth
             disabled={product.quantity <= 0}
             color="primary"
             onClick={() => {
               addItemToCartHandler();
             }}
-            sx={
-              isMobile
-                ? {
-                    m: 0,
-                    p: 0,
-                    maxHeight: 40,
-                    minHeight: 40,
-                    width: "100%",
-                    display: "flex",
-                    flexDirection: "column",
-                    color: "white",
-                  }
-                : {
-                    m: 0,
-                    p: 0,
-                    borderRadius: 0,
-                    height: 50,
-                    width: "100%",
-                  }
-            }
+            className={styles.add_item_button}
           >
             {product.quantity <= 0 ? (
               <Typography variant="body2" color="white">
                 Sold out
               </Typography>
+            ) : isMobile ? (
+              <Box className={styles.mobile_add_button_text}>
+                <Typography variant="caption">${product.price}.00</Typography>
+                <Typography variant="caption" fontSize=".6rem" fontWeight={200}>
+                  Add to cart
+                </Typography>
+              </Box>
             ) : (
-              <>
-                {isMobile ? `$${product.price}.00` : "Add to shopping cart"}
-                {isMobile ? (
-                  <Typography
-                    variant="caption"
-                    sx={{ fontSize: ".6rem", fontWeight: 200 }}
-                  >
-                    Add to cart
-                  </Typography>
-                ) : null}
-              </>
+              <Typography variant="body2" color="white">
+                Add to shopping cart
+              </Typography>
             )}
           </Button>
         </Card>
