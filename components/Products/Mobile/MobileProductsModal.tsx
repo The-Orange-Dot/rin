@@ -232,29 +232,20 @@ const MobileProductsModal = ({
               ) : null}
             </Box>
             <Box className={styles.what_is_it}>
-              <Typography variant="body2" sx={{ fontWeight: 600, mb: 2 }}>
+              <Typography variant="body2" fontWeight={600}>
                 What it is:
               </Typography>
               {description}
-              <Divider sx={{ mt: 2 }} />
+              <Divider />
 
               <MobileInstructionsAccordion product={product} />
               <Divider />
 
               <MobileIngredientsAccordion product={product} />
               <Divider />
-              <Box
-                sx={{
-                  width: "100%",
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                }}
-              >
-                <Typography
-                  variant="body1"
-                  sx={{ fontWeight: 600, mt: 1, fontSize: "1.2rem" }}
-                >
+
+              <Box className={styles.reviews_container}>
+                <Typography variant="body1" fontWeight={600} fontSize="1.2rem">
                   {product?._count?.reviews} Reviews
                 </Typography>
                 <Typography>Top most helpful reviews</Typography>
@@ -262,7 +253,7 @@ const MobileProductsModal = ({
                 {numberOfReviews <= selectedProduct?._count?.reviews ? (
                   <Button
                     disabled={loadMoreReviews}
-                    sx={{ mt: 2 }}
+                    className={styles.see_more_reviews_button}
                     onClick={() => fetchMoreReviews()}
                   >
                     {loadMoreReviews ? (

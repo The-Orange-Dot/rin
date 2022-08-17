@@ -70,11 +70,7 @@ const ProductModal = ({
       const productDescriptionArray = selectedProduct?.description?.map(
         (text: string) => {
           return (
-            <Typography
-              key={text.length}
-              variant="caption"
-              sx={{ textAlign: "start", fontSize: ".85rem" }}
-            >
+            <Typography key={text.length} variant="caption" fontSize=".85rem">
               {text}
             </Typography>
           );
@@ -213,26 +209,8 @@ const ProductModal = ({
       <Fade in={productModalOpen}>
         <Paper square elevation={0} className={styles.container}>
           {/* Left side */}
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              height: "100vh",
-              width: "45%",
-            }}
-          >
-            <Box
-              sx={{
-                width: "100%",
-                display: "flex",
-                flexDirection: "column",
-                mt: 2,
-                minHeight: "65vh",
-                mr: 2,
-                position: "relative",
-              }}
-            >
+          <Box className={styles.images_container}>
+            <Box className={styles.display_image}>
               {productModalOpen && selectedProduct.images.length ? (
                 <Image
                   src={selectedProduct.images[imageNum]}
@@ -284,18 +262,11 @@ const ProductModal = ({
 
                 <Box className={styles.what_is_it}>
                   <Typography fontWeight={600}>What it is:</Typography>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "flex-start",
-                      width: "90%",
-                    }}
-                  >
+                  <Box className={styles.description_container}>
                     {description}
                   </Box>
                 </Box>
-                <Divider sx={{ mt: 2 }} />
+                <Divider />
 
                 <InstructionsAccordion product={product} />
                 <Divider />
