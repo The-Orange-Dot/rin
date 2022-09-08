@@ -69,7 +69,7 @@ const MobileInstructionsAccordion = ({ product }: any) => {
       onClick={() => setOpenInstructions(!openInstructions)}
     >
       <AccordionSummary>
-        <Typography variant="body2" sx={{ fontWeight: 600 }}>
+        <Typography variant="body2" fontWeight={600}>
           Suggested usage:
         </Typography>
       </AccordionSummary>

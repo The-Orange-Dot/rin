@@ -6,6 +6,7 @@ import MuiAccordionSummary, {
 } from "@mui/material/AccordionSummary";
 import MuiAccordionDetails from "@mui/material/AccordionDetails";
 import MuiAccordion, { AccordionProps } from "@mui/material/Accordion";
+import styles from "./styles/InstructionsAccordion.module.scss";
 
 const Accordion = styled((props: AccordionProps) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -53,15 +54,7 @@ const InstructionsAccordion = ({ product }: any) => {
     const index = i + 1;
 
     return (
-      <Box
-        key={item}
-        sx={{
-          width: "100%",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "flex-start",
-        }}
-      >
+      <Box key={item} className={styles.container}>
         <Typography variant="caption">
           {index}. {item}
         </Typography>
@@ -71,16 +64,15 @@ const InstructionsAccordion = ({ product }: any) => {
 
   return (
     <Accordion
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "flex-start",
-      }}
+      className={styles.accordion}
       expanded={openInstructions}
       onClick={() => setOpenInstructions(!openInstructions)}
     >
-      <AccordionSummary sx={{ display: "flex", alignItems: "center" }}>
-        <Typography sx={{ fontWeight: 600, alignSelf: "flex-start" }}>
+      <AccordionSummary className={styles.accordion__summary}>
+        <Typography
+          className={styles.accordion__summary__title}
+          fontWeight={600}
+        >
           Suggested usage:
         </Typography>
       </AccordionSummary>

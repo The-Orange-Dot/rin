@@ -6,6 +6,7 @@ import MuiAccordionSummary, {
 } from "@mui/material/AccordionSummary";
 import MuiAccordionDetails from "@mui/material/AccordionDetails";
 import MuiAccordion, { AccordionProps } from "@mui/material/Accordion";
+import styles from "./styles/IngredientsAccordion.module.scss";
 
 const Accordion = styled((props: AccordionProps) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -63,20 +64,21 @@ const IngredientsAccordion = ({ product }: any) => {
 
   return (
     <Accordion
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-      }}
+      className={styles.accordion}
       expanded={openIngredients}
       onClick={() => setOpenIngredients(!openIngredients)}
     >
-      <AccordionSummary sx={{ display: "flex", alignItems: "center" }}>
-        <Typography sx={{ fontWeight: 600, alignSelf: "flex-start" }}>
+      <AccordionSummary className={styles.accordion__summary}>
+        <Typography
+          fontWeight={600}
+          className={styles.accordion__summary__title}
+        >
           What&apos;s in it:
         </Typography>
       </AccordionSummary>
-      <AccordionDetails>{ingredients}</AccordionDetails>
+      <AccordionDetails className={styles.accordion__items}>
+        {ingredients}
+      </AccordionDetails>
     </Accordion>
   );
 };

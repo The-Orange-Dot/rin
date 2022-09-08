@@ -1,0 +1,30 @@
+@import "mixins";
+@import "media-query-mixin";
+
+.accordion {
+  @include monitor {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+}
+
+.accordion__summary {
+  @include monitor {
+    display: flex;
+    align-items: center;
+  }
+}
+
+.accordion__summary__title {
+  @include monitor {
+    align-self: flex-start;
+  }
+}
+
+.accordion__items {
+  @include monitor {
+    align-self: flex-start;
+  }
+}

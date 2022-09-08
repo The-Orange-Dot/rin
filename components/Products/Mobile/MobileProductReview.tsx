@@ -18,6 +18,8 @@ import {
 } from "../../../redux/reducers/reviewHelpfulReducer";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
+import styles from "../styles/ProductReviews.module.scss";
+import Image from "next/image";
 
 const MobileProductReview = ({ review }: any) => {
   const [reviewTooLong, setReviewTooLong] = useState(false);
@@ -77,17 +79,17 @@ const MobileProductReview = ({ review }: any) => {
 
   return (
     <>
-      <Box key={review.createdAt} sx={{ mt: 2, minWidth: "100%" }}>
-        <Box sx={{ display: "flex", alignItems: "flex-end", mb: 1 }}>
-          {/*eslint-disable*/}
-          <img
+      <Box key={review.createdAt} className={styles.container}>
+        <Box className={styles.user_review}>
+          <Image
+            alt="User img"
             src={review.userReview.image}
             width={50}
             height={50}
-            style={{ borderRadius: "20rem" }}
+            className={styles.user_review__image}
+            unoptimized
           />
-          {/*eslint-enable*/}
-          <Box sx={{ display: "flex", flexDirection: "column" }}>
+          <Box className={styles.user_review__username}>
             <Typography
               variant="overline"
               sx={{ mb: 0, ml: 1, fontWeight: 600, lineHeight: 1.5 }}
@@ -110,18 +112,12 @@ const MobileProductReview = ({ review }: any) => {
         >
           <Typography>{description}</Typography>
         </Box>
-        <Box
-          sx={{
-            width: "100%",
-            display: "flex",
-            justifyContent: "space-between",
-          }}
-        >
+        <Box className={styles.review_details}>
           <Typography variant="caption" color="secondary">
             Posted: {DateFormatter(review.createdAt.toString())}
           </Typography>
           <Box
-            sx={{ display: "flex", alignItems: "center", cursor: "pointer" }}
+            className={styles.review_details__helpful}
             onClick={() => {
               liked ? removeLikeHandler() : likesHandler();
             }}

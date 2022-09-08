@@ -19,6 +19,8 @@ import { ProductReviewType } from "../../types/productTypes";
 import { addLike, removeLike } from "../../redux/reducers/reviewHelpfulReducer";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
+import styles from "./styles/ProductReviews.module.scss";
+import Image from "next/image";
 
 interface ProductReviewsType {
   review: ProductReviewType;
@@ -87,39 +89,27 @@ const ProductReviews = ({ review }: ProductReviewsType) => {
 
   return (
     <>
-      <Box key={review.createdAt} sx={{ mt: 2, minWidth: "100%" }}>
-        <Box
-          sx={{
-            width: "100%",
-            display: "flex",
-            justifyContent: "center",
-          }}
-        >
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              flexDirection: "column",
-              mb: 1,
-              width: "18%",
-            }}
-          >
-            {/*eslint-disable*/}
-            <img
+      <Box key={review.createdAt} className={styles.container}>
+        <Box className={styles.user_review}>
+          <Box className={styles.user_review__image_container}>
+            <Image
+              alt="User img"
               src={review.userReview.image}
               width={50}
               height={50}
-              style={{ borderRadius: "20rem" }}
+              className={styles.user_review__image}
+              unoptimized
             />
-            {/*eslint-enable*/}
             <Tooltip
               title={review?.userReview?.username}
-              sx={{ fontSize: "1rem" }}
+              className={styles.user_review__tooltip}
               enterDelay={500}
             >
               <Typography
                 variant="overline"
-                sx={{ mb: 0, ml: 1, fontWeight: 600, lineHeight: 1.5 }}
+                className={styles.user_review__username}
+                fontWeight={600}
+                lineHeight={1.5}
               >
                 {username}
               </Typography>
@@ -133,10 +123,10 @@ const ProductReviews = ({ review }: ProductReviewsType) => {
             />
           </Box>
           <Box
-            sx={
+            className={
               reviewTooLong
-                ? { width: "82%", textAlign: "start", cursor: "pointer" }
-                : { width: "82%", textAlign: "start" }
+                ? styles.user_review__text_long
+                : styles.user_review__text
             }
             onClick={() => {
               expandReviewHandler();
@@ -145,18 +135,12 @@ const ProductReviews = ({ review }: ProductReviewsType) => {
             <Typography>{description}</Typography>
           </Box>
         </Box>
-        <Box
-          sx={{
-            display: "flex",
-            width: "100%",
-            justifyContent: "space-between",
-          }}
-        >
+        <Box className={styles.review_details}>
           <Typography variant="caption" color="secondary">
             Posted: {DateFormatter(review.createdAt)}
           </Typography>
           <Box
-            sx={{ display: "flex", alignItems: "center", cursor: "pointer" }}
+            className={styles.review_details__helpful}
             onClick={() => {
               liked ? removeLikeHandler() : likesHandler();
             }}

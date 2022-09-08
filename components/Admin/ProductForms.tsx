@@ -4,10 +4,6 @@ import {
   DataGrid,
   GridColDef,
   GridCellEditCommitParams,
-  MuiEvent,
-  MuiBaseEvent,
-  GridCallbackDetails,
-  GridCellParams,
 } from "@mui/x-data-grid";
 
 const ProductForms = () => {
