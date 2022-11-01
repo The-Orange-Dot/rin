@@ -225,10 +225,7 @@ const HeaderImage = ({ isMobile }: any) => {
             }
             variant="contained"
             disableElevation
-            //onClick={routeHandler}
-            onClick={() => {
-              setImagesCounter(1);
-            }}
+            onClick={routeHandler}
             disabled={loadingStore}
             className="buttons"
           >
