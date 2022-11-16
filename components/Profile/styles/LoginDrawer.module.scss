@@ -1,0 +1,39 @@
+@import "mixins";
+@import "media-query-mixin";
+
+.login_container {
+  @include monitor {
+    max-width: 350px;
+    width: 30vw;
+    height: 100%;
+    text-align: center;
+    transition: 0.3s;
+  }
+
+  @include mobile {
+    height: 100vh;
+  }
+}
+
+.login_container__form {
+  @include monitor {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 25%;
+  }
+}
+
+.create_account_container {
+  @include monitor {
+    max-width: 550px;
+    width: 40vw;
+    height: 100%;
+    text-align: center;
+    transition: 0.3s;
+  }
+
+  @include mobile {
+  }
+}

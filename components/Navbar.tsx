@@ -6,7 +6,7 @@ import {
   Paper,
   Backdrop,
 } from "@mui/material";
-import MobileNavModal from "./Products/Mobile/MobileNavModal";
+import MobileNavModal from "./MobileNavModal";
 import React, { useEffect, useState } from "react";
 import styles from "../styles/Navbar.module.scss";
 import { useMediaQuery } from "@mui/material";

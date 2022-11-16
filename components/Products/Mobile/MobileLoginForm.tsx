@@ -8,13 +8,20 @@ import {
   InputLabel,
   CircularProgress,
   Input,
+  Drawer,
 } from "@mui/material";
 import React, { useState } from "react";
 import { signIn, SignInResponse } from "next-auth/react";
 import { VisibilityOff } from "@mui/icons-material";
 import { Visibility } from "@mui/icons-material";
+import CreateAccountForm from "../../CreateAccountForm";
 
-const MobileLoginForm = ({ setMobileNavModalOpen, setOpenLoginForm }: any) => {
+const MobileLoginForm = ({
+  setCreateAccount,
+  setMobileNavModalOpen,
+  setOpenLoginForm,
+  createAccount,
+}: any) => {
   const [usernameInput, setUsernameInput] = useState("");
   const [passwordInput, setPasswordInput] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -45,74 +52,80 @@ const MobileLoginForm = ({ setMobileNavModalOpen, setOpenLoginForm }: any) => {
 
   return (
     <>
-      <Typography variant="overline" sx={{ fontSize: "1rem" }}>
-        Sign In
-      </Typography>
+      {createAccount ? (
+        <CreateAccountForm setOpenLoginDrawer={setOpenLoginForm} />
+      ) : (
+        <>
+          <Typography variant="overline" sx={{ fontSize: "1rem" }}>
+            Sign In
+          </Typography>
 
-      <FormControl sx={{ m: 1, width: "25ch" }} variant="standard">
-        <InputLabel htmlFor="username">Username</InputLabel>
+          <FormControl sx={{ m: 1, width: "25ch" }} variant="standard">
+            <InputLabel htmlFor="username">Username</InputLabel>
 
-        <Input
-          autoFocus
-          id="username"
-          value={usernameInput}
-          inputProps={{ style: { paddingLeft: 10 } }}
-          onChange={(e) => setUsernameInput(e.target.value)}
-        />
-      </FormControl>
+            <Input
+              autoFocus
+              id="username"
+              value={usernameInput}
+              inputProps={{ style: { paddingLeft: 10 } }}
+              onChange={(e) => setUsernameInput(e.target.value)}
+            />
+          </FormControl>
 
-      <FormControl sx={{ m: 1, width: "25ch" }} variant="standard">
-        <InputLabel htmlFor="password">Password</InputLabel>
+          <FormControl sx={{ m: 1, width: "25ch" }} variant="standard">
+            <InputLabel htmlFor="password">Password</InputLabel>
 
-        <Input
-          id="password"
-          onChange={(e) => setPasswordInput(e.target.value)}
-          value={passwordInput}
-          inputProps={{ style: { paddingLeft: 10 } }}
-          type={showPassword ? "text" : "password"}
-          endAdornment={
-            <InputAdornment position="end">
-              <IconButton
-                aria-label="toggle password visibility"
-                onClick={() => setShowPassword(!showPassword)}
-              >
-                {showPassword ? <VisibilityOff /> : <Visibility />}
-              </IconButton>
-            </InputAdornment>
-          }
-        />
-      </FormControl>
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          width: "90%",
-          mt: 3,
-          mb: 1,
-        }}
-      >
-        <Button
-          sx={{ borderRadius: 0, height: 50, mb: 2, width: 160 }}
-          variant="outlined"
-          // onClick={() => setCreateAccount(true)}
-        >
-          Create Account
-        </Button>
+            <Input
+              id="password"
+              onChange={(e) => setPasswordInput(e.target.value)}
+              value={passwordInput}
+              inputProps={{ style: { paddingLeft: 10 } }}
+              type={showPassword ? "text" : "password"}
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              }
+            />
+          </FormControl>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              width: "90%",
+              mt: 3,
+              mb: 1,
+            }}
+          >
+            <Button
+              sx={{ borderRadius: 0, height: 50, mb: 2, width: 160 }}
+              variant="outlined"
+              onClick={() => setCreateAccount(true)}
+            >
+              Create Account
+            </Button>
 
-        <Button
-          disabled={signInLoading}
-          disableElevation
-          sx={{ borderRadius: 0, height: 50, mb: 2, width: 160 }}
-          variant="contained"
-          onClick={() => signInHandler()}
-        >
-          {signInLoading ? (
-            <CircularProgress color="inherit" size={25} />
-          ) : (
-            "Sign In"
-          )}
-        </Button>
-      </Box>
+            <Button
+              disabled={signInLoading}
+              disableElevation
+              sx={{ borderRadius: 0, height: 50, mb: 2, width: 160 }}
+              variant="contained"
+              onClick={() => signInHandler()}
+            >
+              {signInLoading ? (
+                <CircularProgress color="inherit" size={25} />
+              ) : (
+                "Sign In"
+              )}
+            </Button>
+          </Box>
+        </>
+      )}
     </>
   );
 };

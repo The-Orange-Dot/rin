@@ -16,6 +16,7 @@ import React, { SyntheticEvent, useState } from "react";
 import { VisibilityOff, Visibility } from "@mui/icons-material";
 import gsap from "gsap";
 import CreateAccountForm from "./CreateAccountForm";
+import styles from "./Profile/styles/LoginDrawer.module.scss";
 
 const LoginDrawer = ({ setOpenLoginDrawer }: any) => {
   const [usernameInput, setUsernameInput] = useState("");
@@ -56,22 +57,8 @@ const LoginDrawer = ({ setOpenLoginDrawer }: any) => {
 
   return (
     <Paper
-      sx={
-        createAccount
-          ? {
-              maxWidth: 500,
-              width: "40vw",
-              height: "100%",
-              textAlign: "center",
-              transition: ".3s",
-            }
-          : {
-              maxWidth: 350,
-              width: "30vw",
-              height: "100%",
-              textAlign: "center",
-              transition: ".3s",
-            }
+      className={
+        createAccount ? styles.create_account_container : styles.login_container
       }
       square
     >
@@ -84,56 +71,39 @@ const LoginDrawer = ({ setOpenLoginDrawer }: any) => {
           </Typography>
 
           <Divider />
-          <Box
-            sx={{
-              width: "100%",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              pt: 10,
-            }}
-          >
-            <Box
-              sx={{
-                width: "80%",
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-              }}
-            >
-              <FormControl sx={{ m: 1, width: "25ch" }} variant="standard">
-                <InputLabel htmlFor="username">Username</InputLabel>
+          <Box className={styles.login_container__form}>
+            <FormControl sx={{ m: 1, width: "25ch" }} variant="standard">
+              <InputLabel htmlFor="username">Username</InputLabel>
 
-                <Input
-                  id="username"
-                  value={usernameInput}
-                  inputProps={{ style: { paddingLeft: 10 } }}
-                  onChange={(e) => setUsernameInput(e.target.value)}
-                />
-              </FormControl>
+              <Input
+                id="username"
+                value={usernameInput}
+                inputProps={{ style: { paddingLeft: 10 } }}
+                onChange={(e) => setUsernameInput(e.target.value)}
+              />
+            </FormControl>
 
-              <FormControl sx={{ m: 1, width: "25ch" }} variant="standard">
-                <InputLabel htmlFor="password">Password</InputLabel>
+            <FormControl sx={{ m: 1, width: "25ch" }} variant="standard">
+              <InputLabel htmlFor="password">Password</InputLabel>
 
-                <Input
-                  id="password"
-                  onChange={(e) => setPasswordInput(e.target.value)}
-                  value={passwordInput}
-                  inputProps={{ style: { paddingLeft: 10 } }}
-                  type={showPassword ? "text" : "password"}
-                  endAdornment={
-                    <InputAdornment position="end">
-                      <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={() => setShowPassword(!showPassword)}
-                      >
-                        {showPassword ? <VisibilityOff /> : <Visibility />}
-                      </IconButton>
-                    </InputAdornment>
-                  }
-                />
-              </FormControl>
-            </Box>
+              <Input
+                id="password"
+                onChange={(e) => setPasswordInput(e.target.value)}
+                value={passwordInput}
+                inputProps={{ style: { paddingLeft: 10 } }}
+                type={showPassword ? "text" : "password"}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={() => setShowPassword(!showPassword)}
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                }
+              />
+            </FormControl>
           </Box>
           <Box>
             <Typography

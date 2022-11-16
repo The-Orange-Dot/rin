@@ -303,6 +303,14 @@ const CreateAccountForm = ({ setOpenLoginDrawer }: any) => {
             </Typography>
           </Box>
 
+          <Button
+            onClick={() => {
+              setOpenLoginDrawer(false);
+            }}
+          >
+            Cancel
+          </Button>
+
           <Button disabled={isLoading} type="submit" variant="contained">
             {isLoading ? (
               <CircularProgress color="inherit" size={25} />

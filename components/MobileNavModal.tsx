@@ -11,13 +11,15 @@ import {
 import Backdrop from "@mui/material/Backdrop";
 import styled from "@emotion/styled/types/base";
 import { useSession } from "next-auth/react";
-import MobileLoginForm from "./MobileLoginForm";
+import MobileLoginForm from "./Products/Mobile/MobileLoginForm";
 import { signOut } from "next-auth/react";
+import styles from "../styles/Navbar.module.scss";
 
 const MobileNavModal = ({ mobileNavModalOpen, setMobileNavModalOpen }: any) => {
   const [openLoginForm, setOpenLoginForm] = useState(false);
   const { data: session, status } = useSession();
   const [signoutLoader, setSignoutLoader] = useState(false);
+  const [createAccount, setCreateAccount] = useState(false);
 
   const closeDrawerHandler = () => {
     setMobileNavModalOpen(false);
@@ -33,12 +35,7 @@ const MobileNavModal = ({ mobileNavModalOpen, setMobileNavModalOpen }: any) => {
 
   return (
     <Drawer
-      sx={{
-        display: "flex",
-        width: "100%",
-        justifyContent: "flex-end",
-        textAlign: "center",
-      }}
+      className={styles.nav_menu}
       anchor="top"
       open={mobileNavModalOpen}
       onClose={() => {
@@ -47,43 +44,22 @@ const MobileNavModal = ({ mobileNavModalOpen, setMobileNavModalOpen }: any) => {
     >
       <Paper
         square
-        sx={
+        className={
           openLoginForm
-            ? {
-                width: "100%",
-                height: 280,
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "space-between",
-                alignItems: "center",
-                pb: 2,
-                transition: ".3s",
-              }
+            ? createAccount
+              ? styles.navMenu__create_account_form
+              : styles.navMenu__default_container
             : status === "authenticated"
-            ? {
-                width: "100%",
-                height: 230,
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "space-between",
-                alignItems: "center",
-                pb: 6,
-              }
-            : {
-                width: "100%",
-                height: 200,
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "space-between",
-                alignItems: "center",
-                pb: 6,
-              }
+            ? styles.navMenu__authenticated_container
+            : styles.navMenu__unauthenticated_container
         }
       >
         {openLoginForm ? (
           <MobileLoginForm
             setMobileNavModalOpen={setMobileNavModalOpen}
             setOpenLoginForm={setOpenLoginForm}
+            setCreateAccount={setCreateAccount}
+            createAccount={createAccount}
           />
         ) : (
           <>
