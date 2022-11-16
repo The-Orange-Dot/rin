@@ -140,7 +140,15 @@ const ProductCards = ({ product, setSelectedProduct }: ProductCardType) => {
                 sx={isMobile ? { fontSize: ".6rem" } : {}}
               >
                 {product.size}
-                {product?.details?.length ? ` - ${product.details}` : null}
+              </Typography>
+              <Typography
+                variant="body2"
+                color="secondary"
+                sx={isMobile ? { fontSize: ".6rem" } : {}}
+              >
+                {product.quantity !== 0
+                  ? `${product.quantity} in stock`
+                  : "Sold out"}
               </Typography>
             </Box>
 

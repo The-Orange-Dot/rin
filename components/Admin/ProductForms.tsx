@@ -1,14 +1,25 @@
-import { Box } from "@mui/material";
+import {
+  Box,
+  SpeedDial,
+  Typography,
+  SpeedDialIcon,
+  SpeedDialAction,
+} from "@mui/material";
 import React, { useEffect, useState } from "react";
 import {
   DataGrid,
   GridColDef,
   GridCellEditCommitParams,
 } from "@mui/x-data-grid";
+import styles from "./style/ProductForms.module.scss";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
+import EditIcon from "@mui/icons-material/Edit";
 
 const ProductForms = () => {
   const [rows, setRows] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [editProduct, setEditProduct] = useState(false);
+  const [addProduct, setAddProduct] = useState(false);
 
   useEffect(() => {
     setIsLoading(true);
@@ -24,6 +35,30 @@ const ProductForms = () => {
     // console.log(products);
     setIsLoading(false);
   };
+
+  const openMenu = async (action: boolean, menu: any) => {
+    await setAddProduct(false);
+    await setEditProduct(false);
+
+    menu(!action);
+  };
+
+  const actions = [
+    {
+      name: "Add new product",
+      icon: <AddCircleIcon />,
+      action: () => {
+        openMenu(addProduct, setAddProduct);
+      },
+    },
+    {
+      name: "Edit product",
+      icon: <EditIcon />,
+      action: () => {
+        openMenu(editProduct, setEditProduct);
+      },
+    },
+  ];
 
   const commitHandler = async (param: GridCellEditCommitParams) => {
     const valueChecker =
@@ -118,15 +153,7 @@ const ProductForms = () => {
   ];
 
   return (
-    <Box
-      sx={{
-        width: "90%",
-        display: "flex",
-        justifyContent: "center",
-        height: 800,
-        mt: 5,
-      }}
-    >
+    <Box className={styles.main}>
       <DataGrid
         rows={rows}
         columns={columns}
@@ -134,11 +161,27 @@ const ProductForms = () => {
         rowsPerPageOptions={[12]}
         disableSelectionOnClick
         loading={isLoading}
-        checkboxSelection
-        onCellEditCommit={(params: GridCellEditCommitParams) =>
-          commitHandler(params)
-        }
+        checkboxSelection={editProduct}
+        //FIX EDIT PRODUCT INFO WITH SUBMIT BUTTON!!
+        //onCellEditCommit={(params: GridCellEditCommitParams) =>
+        //commitHandler(params)
+        //}
       />
+
+      <SpeedDial
+        sx={{ position: "fixed", bottom: 30, right: 30 }}
+        icon={<SpeedDialIcon />}
+        ariaLabel={"Product Speed Dial"}
+      >
+        {actions.map((action) => (
+          <SpeedDialAction
+            key={action.name}
+            icon={action.icon}
+            tooltipTitle={action.name}
+            onClick={action.action}
+          />
+        ))}
+      </SpeedDial>
     </Box>
   );
 };

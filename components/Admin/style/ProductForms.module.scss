@@ -1,0 +1,12 @@
+@import "mixins";
+@import "media-query-mixin";
+
+.main {
+  @include monitor {
+    width: 90%;
+    display: flex;
+    justify-content: center;
+    height: 800px;
+    margin-top: 50px;
+  }
+}
