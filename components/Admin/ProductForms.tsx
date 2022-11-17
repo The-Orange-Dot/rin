@@ -20,6 +20,7 @@ const ProductForms = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [editProduct, setEditProduct] = useState(false);
   const [addProduct, setAddProduct] = useState(false);
+  const [editSelection, setEditSelection] = useState([]);
 
   useEffect(() => {
     setIsLoading(true);
