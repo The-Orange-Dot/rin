@@ -35,6 +35,7 @@ interface UserData {
   mobilePhone: string;
   id: string;
   state: string;
+  status: "admin" | "user";
 }
 
 interface ReviewData {
@@ -428,6 +429,7 @@ const seed = async () => {
       username: faker.internet.userName(firstName, lastName),
       password: "password",
       firstName: firstName,
+      status: "user",
       lastName: lastName,
       email: faker.internet.email(),
       city: faker.address.city(),
@@ -450,6 +452,7 @@ const seed = async () => {
     password: "password",
     firstName: "guest",
     lastName: "guest",
+    status: "user",
     email: "guest@example.com",
     city: "",
     address1: "",
@@ -466,10 +469,11 @@ const seed = async () => {
 
   const testUser: UserData = {
     id: "1",
-    username: "test_account",
-    password: "password",
-    firstName: "test",
-    lastName: "McTestFace",
+    username: "admin",
+    password: "password123",
+    firstName: "admin",
+    lastName: "mcTestFace",
+    status: "admin",
     email: faker.internet.email(),
     city: faker.address.city(),
     address1: faker.address.streetAddress(),
