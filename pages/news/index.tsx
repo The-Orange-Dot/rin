@@ -59,9 +59,39 @@ const NewsPage = ({
   );
 };
 
+import { prisma } from "../../prisma/db";
+
 export const getStaticProps: GetStaticProps = async () => {
-  const res = await fetch(`${server}/api/news`);
-  const posts = await res.json();
+  const posts = await prisma.post.findMany({
+    where: { category: { startsWith: "" } },
+    take: 5,
+    orderBy: { id: "desc" },
+    select: {
+      title: true,
+      image: true,
+      subtitle: true,
+      createdAt: true,
+      body: true,
+      writer: true,
+      category: true,
+      id: true,
+      keywords: true,
+    },
+  });
+
+  const formattedPost = posts.map((post) => {
+    const date = post.createdAt.toString();
+    let formattedPost = post;
+    //@ts-ignore
+    formattedPost.createdAt = date;
+
+    return post;
+  });
+
+  console.log(formattedPost);
+
+  // const res = await fetch(`${server}/api/news`);
+  // const posts = await res.json();
 
   try {
     return {

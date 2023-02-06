@@ -31,7 +31,7 @@ const Home: NextPage = () => {
   }, []);
 
   return (
-    <div className={styles.main}>
+    <div className={styles.main} id="main-container">
       <Box className={styles.header_container}>
         <HeaderImage isMobile={isMobile} />
       </Box>

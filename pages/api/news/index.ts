@@ -7,7 +7,7 @@ export default async function handler(
   res: NextApiResponse
 ) {
   if (req.method === "GET") {
-    const query = req.query.filter as string;
+    const query = req.query.filter as string | "";
     const take = query ? 10 : 5;
     const category: string | undefined = query ? query : "";
 

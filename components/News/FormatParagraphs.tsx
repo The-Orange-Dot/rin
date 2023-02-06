@@ -55,7 +55,9 @@ export const FormatParagraphs = (text: string) => {
                 >
                   <Box className={styles.enlarged_image}>
                     <Image
-                      src={paragraph}
+                      src={
+                        paragraph.includes("http") ? paragraph : `/${paragraph}`
+                      }
                       alt="Something"
                       layout="fill"
                       objectFit="scale-down"

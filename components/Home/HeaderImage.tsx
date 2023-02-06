@@ -25,11 +25,13 @@ const HeaderImage = ({ isMobile }: any) => {
       gsap.set("#subtitle", { opacity: 0, x: -10 });
       gsap.set("#image", { opacity: 0, x: -10 });
       gsap.set(".buttons", { opacity: 0 });
+      gsap.set("#main-container", { opacity: 0 });
     }
   }, []);
 
   useEffect(() => {
     if (imageLoaded) {
+      gsap.to("#main-container", { opacity: 1 });
       setTimeout(() => {
         gsap
           .timeline()
@@ -83,7 +85,6 @@ const HeaderImage = ({ isMobile }: any) => {
           .to("#title", { opacity: 0, duration: 0.3, y: -10 }, 0)
           .to("#subtitle", { opacity: 0, duration: 0.3, y: -10 }, 0);
       }, 10000);
-      console.log("Change!");
     }
   }, [imagesCounter]); //eslint-disable-line
 
