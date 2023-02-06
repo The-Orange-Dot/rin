@@ -1,27 +1,13 @@
 export const DateFormatter = (date: string | Date) => {
-  if (typeof date === "string") {
-    const dateArray = date.split(" ");
+  let dateString = date;
 
-    return `${dateArray[1]} ${dateArray[2]}, ${dateArray[0]}`;
-  } else {
-    const monthData = [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sept",
-      "Oct",
-      "Nov",
-      "Dec",
-    ];
-    const year = date.slice(0, 4);
-    const month = monthData[parseInt(date.slice(5, 7)) - 1];
-    const day = date.slice(8, 10);
+  if (typeof date !== "string") {
+    dateString = date.toString();
+  }
 
-    return `${month} ${day}, ${year}`;
+  if (typeof dateString === "string") {
+    const dateArray = dateString.split(" ");
+
+    return `${dateArray[1]} ${dateArray[2]}, ${dateArray[3]}`;
   }
 };
