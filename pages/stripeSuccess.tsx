@@ -3,8 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../redux/store";
 import { useRouter } from "next/router";
 import { removeItem } from "../redux/reducers/shoppingCartReducer";
-import { Container } from "@mui/system";
-import { Typography } from "@mui/material";
+import { Typography, Container } from "@mui/material";
 import { useSession } from "next-auth/react";
 import { removeShipping } from "../redux/reducers/guestAddresReducer";
 

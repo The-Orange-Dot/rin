@@ -71,8 +71,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const res = await fetch(`${server}/api/news`);
   const posts = await res.json();
 
-  console.log(posts);
-
   const paths = await posts.map((post: PostType) => ({
     params: { id: post.id.toString() },
   }));
