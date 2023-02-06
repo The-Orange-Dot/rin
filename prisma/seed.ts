@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { faker } from "@faker-js/faker";
+import bcrypt from "bcrypt";
 
 const client = new PrismaClient();
 
@@ -46,11 +47,22 @@ interface ReviewData {
   productId: string;
 }
 
+interface PostData {
+  title: string;
+  image: string;
+  subtitle: string;
+  body: string;
+  category: string;
+  writer: string;
+  keywords: string[];
+}
+
 const seed = async () => {
   console.log("Hydrating seed data...");
   await client.review.deleteMany({});
   await client.user.deleteMany({});
   await client.product.deleteMany({});
+  await client.post.deleteMany({});
 
   const products: ProductData[] = [
     {
@@ -415,15 +427,15 @@ const seed = async () => {
     },
   ];
 
-  products.map(
+  await products.map(
     async (product) => await client.product.create({ data: product as any })
   );
+  console.log("Products complete...");
 
   //Creates a lot of user data
   for (let i = 2; i < 50; i++) {
     const firstName = faker.name.firstName();
     const lastName = faker.name.lastName();
-
     const testUser: UserData = {
       id: i.toString(),
       username: faker.internet.userName(firstName, lastName),
@@ -466,27 +478,32 @@ const seed = async () => {
   await client.user.create({
     data: guest,
   });
+  const saltRounds = 10;
+  bcrypt.genSalt(saltRounds, (error, salt) => {
+    bcrypt.hash("password123", salt, async (error, hash) => {
+      const testUser: UserData = {
+        id: "1",
+        username: "admin",
+        password: hash,
+        firstName: "admin",
+        lastName: "mcTestFace",
+        status: "admin",
+        email: faker.internet.email(),
+        city: faker.address.city(),
+        address1: faker.address.streetAddress(),
+        zipcode: faker.address.zipCodeByState("NY"),
+        state: faker.address.stateAbbr(),
+        country: "US",
+        homePhone: faker.phone.number(),
+        mobilePhone: faker.phone.number(),
+      };
 
-  const testUser: UserData = {
-    id: "1",
-    username: "admin",
-    password: "password123",
-    firstName: "admin",
-    lastName: "mcTestFace",
-    status: "admin",
-    email: faker.internet.email(),
-    city: faker.address.city(),
-    address1: faker.address.streetAddress(),
-    zipcode: faker.address.zipCodeByState("NY"),
-    state: faker.address.stateAbbr(),
-    country: "US",
-    homePhone: faker.phone.number(),
-    mobilePhone: faker.phone.number(),
-  };
-
-  await client.user.create({
-    data: testUser,
+      await client.user.create({
+        data: testUser,
+      });
+    });
   });
+  console.log("Users complete...");
 
   //Creates a lot of reviews
   for (let i = 0; i < 150; i++) {
@@ -501,6 +518,65 @@ const seed = async () => {
     await client.review.create({
       data: testReviews,
     });
+  }
+  console.log("Reviews complete...");
+
+  for (let i = 0; i < 10; i++) {
+    const imageArray = [
+      "cosmetics.jpg",
+      "cute_colorful.png",
+      "cute_phone_2.jpg",
+      "cute_phone_3.jpg",
+      "cute_pink.jpg",
+      "cute_shadow_2.jpeg",
+      "cute_shadow.jpeg",
+      "face_wash.jpg",
+      "sakura.jpg",
+      "packing.jpg",
+      "smartphone_girls.jpg",
+    ];
+    const categoryArray = ["fashion", "culture", "cosmetics", "blog"];
+
+    for (let j = 0; j < 10; j++) {
+      const category = categoryArray[Math.floor(Math.random() * 4)];
+      const title = faker.lorem.words(Math.floor(Math.random() * 5) + 3);
+      const mainImage = imageArray[Math.floor(Math.random() * 11)];
+      const subtitle = faker.lorem.words(10);
+
+      let body = faker.lorem.sentences(Math.floor(Math.random() * 50) + 50);
+      let imageBoolean = Math.floor(Math.random() * 2);
+      let longerArticle = Math.floor(Math.random() * 2);
+
+      while (longerArticle) {
+        if (imageBoolean) {
+          body.concat("\n", imageArray[Math.floor(Math.random() * 11)]);
+        } else {
+          body.concat(
+            "\n",
+            faker.lorem.sentences(Math.floor(Math.random() * 50) + 50)
+          );
+        }
+
+        imageBoolean = Math.floor(Math.random() * 3);
+        longerArticle = Math.floor(Math.random() * 3);
+
+        if (!longerArticle) {
+          const newPost: PostData = {
+            title: title,
+            image: mainImage,
+            subtitle: subtitle,
+            body: body,
+            category: category,
+            writer: faker.name.firstName(),
+            keywords: ["test", "blah"],
+          };
+
+          await client.post.create({
+            data: newPost,
+          });
+        }
+      }
+    }
   }
 
   console.log("Hydration complete!");

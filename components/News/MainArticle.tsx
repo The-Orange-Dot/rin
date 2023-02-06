@@ -63,7 +63,7 @@ const MainPost = ({ post, animationComplete, index, setImageLoaded }: any) => {
           <Box className={styles.main_post_image_container}>
             <Image
               className="image"
-              src={post.image}
+              src={post.image.includes("http") ? post.image : `/${post.image}`}
               objectPosition={"50% 50%"}
               layout="fill"
               objectFit="cover"

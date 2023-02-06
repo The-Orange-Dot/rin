@@ -10,13 +10,15 @@ const Article = ({ post, index }: any) => {
   const even = index % 2 === 0;
   const date = DateFormatter(post.createdAt);
 
+  console.log(post);
+
   return (
     <Box className={`${styles.post_container} trigger`} key={index}>
       <Link href={`/news/${post.id}`}>
         <Box className={even ? styles.post_even : styles.post_odd}>
           <Box className={styles.image_container}>
             <Image
-              src={post.image}
+              src={post.image.includes("http") ? post.image : `/${post.image}`}
               alt={post.image}
               layout="fill"
               objectFit="cover"

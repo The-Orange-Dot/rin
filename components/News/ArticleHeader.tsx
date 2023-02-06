@@ -36,7 +36,7 @@ const Article = ({ post }: any) => {
       </Box>
       <Box className={styles.header_image}>
         <Image
-          src={post.image}
+          src={post.image.includes("http") ? post.image : `/${post.image}`}
           alt={post.title}
           layout="fill"
           objectFit="cover"

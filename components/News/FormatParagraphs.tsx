@@ -29,7 +29,7 @@ export const FormatParagraphs = (text: string) => {
             <Box key={index} className={styles.article_body}>
               <Box className={styles.image_container}>
                 <Image
-                  src={paragraph}
+                  src={paragraph.includes("http") ? paragraph : `/${paragraph}`}
                   alt="Something"
                   layout="fill"
                   objectFit="cover"
