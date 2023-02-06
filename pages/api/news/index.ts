@@ -20,6 +20,7 @@ export default async function handler(
         image: true,
         subtitle: true,
         createdAt: true,
+        body: true,
         writer: true,
         category: true,
         id: true,

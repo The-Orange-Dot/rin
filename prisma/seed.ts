@@ -549,10 +549,10 @@ const seed = async () => {
 
       while (longerArticle) {
         if (imageBoolean) {
-          body.concat("\n", imageArray[Math.floor(Math.random() * 11)]);
+          body.concat("'\n' +", imageArray[Math.floor(Math.random() * 11)]);
         } else {
           body.concat(
-            "\n",
+            "'\n' +",
             faker.lorem.sentences(Math.floor(Math.random() * 50) + 50)
           );
         }

@@ -10,8 +10,6 @@ const Article = ({ post, index }: any) => {
   const even = index % 2 === 0;
   const date = DateFormatter(post.createdAt);
 
-  console.log(post);
-
   return (
     <Box className={`${styles.post_container} trigger`} key={index}>
       <Link href={`/news/${post.id}`}>
