@@ -79,20 +79,6 @@ export const getStaticProps: GetStaticProps = async () => {
     },
   });
 
-  const formattedPost = posts.map((post) => {
-    const date = post.createdAt.toString();
-    let formattedPost = post;
-    //@ts-ignore
-    formattedPost.createdAt = date;
-
-    return post;
-  });
-
-  console.log(formattedPost);
-
-  // const res = await fetch(`${server}/api/news`);
-  // const posts = await res.json();
-
   try {
     return {
       props: { posts: posts },
