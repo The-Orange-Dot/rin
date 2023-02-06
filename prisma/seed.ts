@@ -18,6 +18,7 @@ interface ProductData {
   ingredients: string[];
   instructions: string[];
   id: string;
+  productCode?: string;
 }
 
 interface UserData {
@@ -45,6 +46,7 @@ interface ReviewData {
 }
 
 const seed = async () => {
+  console.log("Hydrating seed data...");
   await client.review.deleteMany({});
   await client.user.deleteMany({});
   await client.product.deleteMany({});
@@ -413,7 +415,7 @@ const seed = async () => {
   ];
 
   products.map(
-    async (product) => await client.product.create({ data: product })
+    async (product) => await client.product.create({ data: product as any })
   );
 
   //Creates a lot of user data
@@ -496,6 +498,8 @@ const seed = async () => {
       data: testReviews,
     });
   }
+
+  console.log("Hydration complete!");
 };
 
 seed();

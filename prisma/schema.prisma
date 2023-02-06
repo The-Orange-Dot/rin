@@ -9,8 +9,8 @@ datasource db {
 
 model Product {
   id          String   @id @default(cuid()) @unique
-  productCode String   @unique
-  name        String
+  productCode String?   @unique @default(cuid())
+  name        String 
   size        String
   details     String
   likes       Int      @default(0)
