@@ -2,6 +2,7 @@ import { Box, Typography, Button } from "@mui/material";
 import React from "react";
 import { useRouter } from "next/router";
 import styles from "./styles/NewsFilter.module.scss";
+import { DateFormatter } from "../../components/DateFormatter";
 
 const NewsFilter = ({
   setPostsArray,

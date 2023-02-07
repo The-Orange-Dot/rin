@@ -79,9 +79,18 @@ export const getStaticProps: GetStaticProps = async () => {
     },
   });
 
+  const formattedPost = posts.map((post) => {
+    const date = post.createdAt.toString();
+    let formattedPost = post;
+    //@ts-ignore
+    formattedPost.createdAt = date;
+
+    return post;
+  });
+
   try {
     return {
-      props: { posts: posts },
+      props: { posts: formattedPost },
       revalidate: 60,
     };
   } catch {

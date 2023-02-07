@@ -69,9 +69,6 @@ const Post = ({ post }: InferGetStaticPropsType<typeof getStaticProps>) => {
 
 import { prisma } from "../../prisma/db";
 export const getStaticPaths: GetStaticPaths = async () => {
-  // const res = await fetch(`${server}/api/news`);
-  // const posts = await res.json();
-
   const posts = await prisma.post.findMany({
     where: { category: { startsWith: "" } },
     take: 5,
@@ -101,8 +98,21 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps = async (context) => {
   try {
-    const res = await fetch(`${server}/api/news/${context.params?.id}`);
-    const post = await res.json();
+    // const res = await fetch(`${server}/api/news/${context.params?.id}`);
+    // const post = await res.json();
+
+    const id = parseInt(context.params?.id as string);
+
+    let post = await prisma.post.findFirst({
+      where: { id: id },
+    });
+
+    if (post) {
+      //@ts-ignore
+      post.createdAt = post.createdAt.toString();
+      //@ts-ignore
+      post.updatedAt = post.updatedAt.toString();
+    }
 
     return {
       props: { post: post },

@@ -1,19 +1,18 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
 import { prisma } from "../../../prisma/db";
+import { PostType } from "../../../types/newsTypes";
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
   if (req.method === "GET") {
-    const query = req.query.filter as string | "";
-    const take = query ? 10 : 5;
+    const query = req.query.filter as string;
     const category: string | undefined = query ? query : "";
 
     const posts = await prisma.post.findMany({
-      where: { category: { startsWith: category } },
-      take: take,
+      where: { category: { equals: category } },
       orderBy: { id: "desc" },
       select: {
         title: true,
@@ -28,7 +27,12 @@ export default async function handler(
       },
     });
 
-    res.status(200).json(posts);
+    const updatedPosts = posts.map((post: any) => {
+      let updatedPost = { ...post, createdAt: post.createdAt.toString() };
+      return updatedPost;
+    });
+
+    res.status(200).json(updatedPosts);
   } else if (req.method === "POST") {
     const { title, subtitle, body, image, writer, category } = req.body;
 

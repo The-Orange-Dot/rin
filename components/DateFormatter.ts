@@ -1,13 +1,5 @@
-export const DateFormatter = (date: string | Date) => {
-  let dateString = date;
+export const DateFormatter = (date: string) => {
+  const dateArray = date.split(" ");
 
-  if (typeof date !== "string") {
-    dateString = date.toString();
-  }
-
-  if (typeof dateString === "string") {
-    const dateArray = dateString.split(" ");
-
-    return `${dateArray[1]} ${dateArray[2]}, ${dateArray[3]}`;
-  }
+  return `${dateArray[1]} ${dateArray[2]}, ${dateArray[3]}`;
 };

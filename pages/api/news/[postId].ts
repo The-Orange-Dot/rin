@@ -7,7 +7,6 @@ export default async function handler(
   res: NextApiResponse
 ) {
   if (req.method === "GET") {
-    console.log(req.query);
     const postId = req.query.postId as string;
 
     const post = await prisma.post.findFirst({
@@ -18,8 +17,6 @@ export default async function handler(
   } else if (req.method === "PATCH") {
     const postId = req.query.postId as string;
     const { body } = req.body;
-
-    console.log(body);
 
     const newPost = await prisma.post.update({
       where: { id: parseInt(postId) },
