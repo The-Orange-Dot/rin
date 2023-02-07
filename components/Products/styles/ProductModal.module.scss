@@ -37,6 +37,8 @@
     display: flex;
     justify-content: center;
     z-index: 0;
+    min-width: 100vw;
+    margin-top: 5vh;
   }
   @include mobile {
     display: flex;
@@ -46,12 +48,9 @@
 
 .container {
   @include monitor {
-    width: 100%;
     display: flex;
     padding-left: 20px;
     padding-right: 30px;
-    margin-top: 5%;
-    max-width: 1500px;
     outline: none;
   }
   @include mobile {
@@ -70,6 +69,7 @@
     padding-bottom: 180px;
     padding-right: 30px;
   }
+
   @include mobile {
     display: flex;
     flex-direction: column;
