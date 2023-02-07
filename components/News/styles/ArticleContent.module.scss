@@ -60,6 +60,12 @@
 
 .text_field {
   background-color: #dfdfdf;
+  margin-bottom: 10px !important;
+}
+
+.text_field__label {
+  text-align: start;
+  color: gray;
 }
 
 .edit_button {

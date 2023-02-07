@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { server } from "../../config";
 import styles from "../../styles/news/Main.module.scss";
 import { GetStaticPaths, GetStaticProps } from "next";
@@ -11,19 +11,20 @@ import MobileArticleHeader from "../../components/News/Mobile/MobileArticleHeade
 import ArticleContent from "../../components/News/ArticleContent";
 import MobileArticleContent from "../../components/News/Mobile/MobileArticleContent";
 
-const Post = ({ post }: InferGetStaticPropsType<typeof getStaticProps>) => {
+const Post = ({ postData }: InferGetStaticPropsType<typeof getStaticProps>) => {
   const isMobile = useMediaQuery("(max-width: 900px)");
+  const [post, setPost] = useState(postData);
 
   const postHeader = isMobile ? (
     <MobileArticleHeader post={post} />
   ) : (
-    <ArticleHeader post={post} />
+    <ArticleHeader post={post} setPost={setPost} />
   );
 
   const postContent = isMobile ? (
     <MobileArticleContent post={post} />
   ) : (
-    <ArticleContent post={post} />
+    <ArticleContent post={post} setPost={setPost} />
   );
 
   return (
@@ -115,7 +116,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
     }
 
     return {
-      props: { post: post },
+      props: { postData: post },
       revalidate: 60,
     };
   } catch {

@@ -176,11 +176,7 @@ const Navbar = () => {
         </div>
       )}
 
-      <Modal
-        className={styles.admin__validation__modal}
-        open={loadingAdmin}
-        hideBackdrop
-      >
+      <Modal className={styles.admin__validation__modal} open={loadingAdmin}>
         <Paper className={styles.admin__validation__paper} elevation={0}>
           <Typography>Verifying Admin Credentials...</Typography>
         </Paper>
