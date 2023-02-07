@@ -34,10 +34,20 @@ export default async function handler(
       },
     });
 
+    let productReviews = product?.reviews.map((review: any) => {
+      let productReview = {
+        ...review,
+        updatedAt: review.updatedAt.toString(),
+        createdAt: review.createdAt.toString(),
+      };
+
+      return productReview;
+    });
+
     if (product) {
-      res.status(200).json(product.reviews);
+      res.status(200).json(productReviews);
     } else {
-      res.status(400).json("Error: Coultn't find product");
+      res.status(400).json("Error: Couldn't find product");
     }
   } else if (req.method === "POST") {
     const productId = req.query.productId as string;
