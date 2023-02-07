@@ -131,3 +131,24 @@
     transition: 0.3s;
   }
 }
+
+.admin__validation__modal {
+  @include monitor {
+    min-width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.admin__validation__paper {
+  @include monitor {
+    width: 30%;
+    height: 30%;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}

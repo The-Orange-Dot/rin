@@ -5,6 +5,7 @@ import {
   Drawer,
   Paper,
   Backdrop,
+  Modal,
 } from "@mui/material";
 import MobileNavModal from "./MobileNavModal";
 import React, { useEffect, useState } from "react";
@@ -32,6 +33,7 @@ const Navbar = () => {
   const [itemsInCart, setItemsInCart] = useState(0);
   const [openCheckoutDrawer, setOpenCheckoutDrawer] = useState<boolean>(false);
   const [openLoginDrawer, setOpenLoginDrawer] = useState(false);
+  const [loadingAdmin, setLoadingAdmin] = useState(false);
 
   useEffect(() => {
     const totalItems = shoppingCart?.reduce((total: number, item: any) => {
@@ -42,11 +44,12 @@ const Navbar = () => {
 
   useEffect(() => {
     gsap.timeline().to("#container", { opacity: 1, delay: 0.5 });
+    setLoadingAdmin(false);
 
     if (status !== "loading") {
       setPageLoaded(true);
     }
-  }, [status]);
+  }, [status, router.pathname]);
 
   return (
     <div className={styles.navbarContainer} id={"container"}>
@@ -80,6 +83,11 @@ const Navbar = () => {
                     : styles.selector_text
                 }
                 variant="overline"
+                onClick={() => {
+                  if (router.pathname !== "/admin") {
+                    setLoadingAdmin(true);
+                  }
+                }}
               >
                 ADMIN
               </Typography>
@@ -167,6 +175,16 @@ const Navbar = () => {
           </Box>
         </div>
       )}
+
+      <Modal
+        className={styles.admin__validation__modal}
+        open={loadingAdmin}
+        hideBackdrop
+      >
+        <Paper className={styles.admin__validation__paper} elevation={0}>
+          <Typography>Verifying Admin Credentials...</Typography>
+        </Paper>
+      </Modal>
 
       <MobileNavModal
         setMobileNavModalOpen={setMobileNavModalOpen}
