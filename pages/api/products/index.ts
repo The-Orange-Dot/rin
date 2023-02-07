@@ -32,7 +32,7 @@ export default async function handler(
 
     const skip = view ? parseInt(view) - 12 : 0;
 
-    const products = await prisma.product.findMany({
+    let products = await prisma.product.findMany({
       where: {
         AND: [
           {
@@ -76,6 +76,17 @@ export default async function handler(
       },
       take: 12,
       skip: skip,
+    });
+
+    //OH NO!! DOUBLE LOOPED!
+    products.forEach((product) => {
+      const reviews = product.reviews.map((review) => {
+        let updatedReviews = review;
+        //@ts-ignore
+        updatedReviews.createdAt = review.createdAt.toString();
+        return updatedReviews;
+      });
+      product.reviews = reviews;
     });
 
     const brands = await prisma.product.groupBy({

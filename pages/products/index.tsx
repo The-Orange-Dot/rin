@@ -236,7 +236,7 @@ export const getStaticProps: GetStaticProps = async () => {
       throw new Error(`Failed to fetch products, status of ${res.status}`);
     }
 
-    const { products } = productsData;
+    let { products } = productsData;
     const { totalProducts } = productsData;
     const { brands } = productsData;
 
