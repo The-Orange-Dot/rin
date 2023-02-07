@@ -17,7 +17,7 @@ const ImagesDrawer = dynamic(
   () => import("../../components/Admin/ImagesDrawer")
 );
 
-const Admin = ({ imagesData }: any) => {
+const Admin = ({ imagesData, products, customers }: any) => {
   const [selector, setSelector] = useState("news");
   const [page, setPage] = useState<any>(<Box />);
   const [openImageDrawer, setOpenImageDrawer] = useState(false);
@@ -73,9 +73,9 @@ const Admin = ({ imagesData }: any) => {
     if (selector === "news") {
       setPage(<CreateNewsPost setOpenImageDrawer={setOpenImageDrawer} />);
     } else if (selector === "store") {
-      setPage(<ProductForms />);
+      setPage(<ProductForms products={products} />);
     } else if (selector === "customer") {
-      setPage(<CustomerForms />);
+      setPage(<CustomerForms customers={customers} />);
     }
   }, [selector]);
 
@@ -118,8 +118,8 @@ const Admin = ({ imagesData }: any) => {
 import { GetServerSideProps } from "next";
 import { getSession } from "next-auth/react";
 import { server } from "../../config";
-import { Button, Drawer, Tooltip } from "@mui/material";
 import CustomerForms from "../../components/Admin/CustomerForms";
+import { prisma } from "../../prisma/db";
 export const getServerSideProps: GetServerSideProps = async (context: any) => {
   const session = await getSession(context);
   if (!session) {
@@ -131,11 +131,49 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
     };
   }
 
+  let products = await prisma.product.findMany();
+  products.forEach((product) => {
+    //@ts-ignore
+    product.createdAt = product.createdAt.toString();
+    //@ts-ignore
+    product.updatedAt = product.updatedAt.toString();
+  });
+
+  let customers = await prisma.user.findMany({
+    where: { NOT: { status: "admin" } },
+    orderBy: { lastName: "asc" },
+    select: {
+      address1: true,
+      address2: true,
+      city: true,
+      country: true,
+      createdAt: true,
+      email: true,
+      firstName: true,
+      homePhone: true,
+      id: true,
+      lastName: true,
+      mobilePhone: true,
+      state: true,
+      status: true,
+      username: true,
+      zipcode: true,
+      updatedAt: true,
+    },
+  });
+
+  customers.forEach((customer) => {
+    //@ts-ignore
+    customer.createdAt = customer.createdAt.toString();
+    //@ts-ignore
+    customer.updatedAt = customer.updatedAt.toString();
+  });
+
   const res = await fetch(`${server}/api/s3/s3Fetch`);
   const images = await res.json();
 
   return {
-    props: { imagesData: images },
+    props: { imagesData: images, products: products, customers: customers },
   };
 };
 

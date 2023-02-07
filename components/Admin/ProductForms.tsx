@@ -15,27 +15,12 @@ import styles from "./style/ProductForms.module.scss";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import EditIcon from "@mui/icons-material/Edit";
 
-const ProductForms = () => {
+const ProductForms = ({ products }: any) => {
   const [rows, setRows] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [editProduct, setEditProduct] = useState(false);
   const [addProduct, setAddProduct] = useState(false);
   const [editSelection, setEditSelection] = useState([]);
-
-  useEffect(() => {
-    setIsLoading(true);
-    fetchProducts();
-  }, []);
-
-  const fetchProducts = async () => {
-    const res = await fetch("/api/products/adminFetch");
-    const { products } = await res.json();
-
-    setRows(products);
-
-    // console.log(products);
-    setIsLoading(false);
-  };
 
   const openMenu = async (action: boolean, menu: any) => {
     await setAddProduct(false);
@@ -156,7 +141,7 @@ const ProductForms = () => {
   return (
     <Box className={styles.main}>
       <DataGrid
-        rows={rows}
+        rows={products}
         columns={columns}
         pageSize={12}
         rowsPerPageOptions={[12]}

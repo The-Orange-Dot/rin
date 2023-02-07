@@ -3,26 +3,9 @@ import React, { useEffect, useState } from "react";
 import styles from "../../styles/admin/CustomerForms.module.scss";
 import { DataGrid, GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
 
-const CustomerForms = () => {
+const CustomerForms = ({ customers }: any) => {
   const [rows, setRows] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-
-  useEffect(() => {
-    setIsLoading(true);
-    fetchCustomerData();
-  }, []);
-
-  const fetchCustomerData = async () => {
-    await fetch("/api/users/adminFetch").then((res) => {
-      if (res.ok) {
-        res.json().then((data) => {
-          setRows(data.customers);
-          setIsLoading(false);
-          console.log(data.customers);
-        });
-      }
-    });
-  };
 
   const columns: GridColDef[] = [
     { field: "id", headerName: "ID", width: 120 },
@@ -55,7 +38,7 @@ const CustomerForms = () => {
   return (
     <Box className={styles.container}>
       <DataGrid
-        rows={rows}
+        rows={customers}
         columns={columns}
         pageSize={12}
         rowsPerPageOptions={[12]}
