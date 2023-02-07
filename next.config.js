@@ -7,7 +7,7 @@ const ContentSecurityPolicy = `
     img-src 'self' https: data:;
     script-src-elem *;
     frame-src 'self' https://js.stripe.com/;
-    connect-src https://${process.env.S3_UPLOAD_BUCKET}.s3.amazonaws.com https://${process.env.S3_UPLOAD_BUCKET}.s3.${process.env.S3_UPLOAD_REGION}.amazonaws.com ${process.env.BASE_URL} 'https://rin-bjflyzojv-the-orange-dot.vercel.app/_next/data/WR_BpNsF9AqlUrY68-aJi/news/*' ws://localhost:3000/_next/webpack-hmr ws://rin-ten.vercel.app/_next/webpack-hmr https://rin-ten.vercel.app/_next/* ${process.env.NEXTAUTH_URL}; 
+    connect-src https://${process.env.S3_UPLOAD_BUCKET}.s3.amazonaws.com https://${process.env.S3_UPLOAD_BUCKET}.s3.${process.env.S3_UPLOAD_REGION}.amazonaws.com ${process.env.BASE_URL} 'https://rin-ten.vercel.app/*' ws://localhost:3000/_next/webpack-hmr ws://rin-ten.vercel.app/_next/webpack-hmr https://rin-ten.vercel.app/_next/* ${process.env.NEXTAUTH_URL}; 
 `;
 
 const securityHeaders = [
