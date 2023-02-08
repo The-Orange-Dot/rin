@@ -77,7 +77,7 @@ const Admin = ({ imagesData, products, customers }: any) => {
     } else if (selector === "customer") {
       setPage(<CustomerForms customers={customers} />);
     }
-  }, [selector]);
+  }, [selector]); //eslint-disable-line
 
   return (
     <div className={styles.main}>
